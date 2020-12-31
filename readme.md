@@ -1,6 +1,8 @@
 Auto completion (and harcoded helper files) for "IntelliJ IDEA" and a lua plugin like "EmmyLua",
 based on the ZOs distributed ESOUIDocumentationPXX.txt files (see ESOUI wiki -> APIversion history (https://wiki.esoui.com/APIVersion) -> API TXT Documentation).
 
+How to setup for IntelliJ IDEA: https://esouimods.github.io/2-setup_intellij.html
+
 Scripts for the ESODocumentationPXX.txt parser (php based) + description howto_parse are available
 https://www.dropbox.com/s/00bbhcys4ighd1g/20201031_eso_parsers_by_reaby_mod_by_Baertram.zip?dl=0
 You need an php.exe (e.g. https://windows.php.net/download/ or php for other OSs) file to run the parse scripts!
