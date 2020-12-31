@@ -13,3 +13,8 @@ And please use the "Invalidate Caches and restart" function after updating the l
 The php parse scripts were created by the user "Reaby". The original files are located in the folder "Original_php_parse_scripts_by_Reaby".
 Modified versions by Baertram, supporting events, private protected et.c. functions, and other API variables, are located in the folder "Modified_php_scripts_by_Baertram".
 
+The additional addon "DumpVars" (originally created by Ayantir, modified by Baertram), which will dump the global variable values to the SavedVariables, so that you got a
+table of "global variable name" = value, is located in the folder "DumpVars AddOn - Dump global constants".
+
+The folders contain "howTo*".txt files with descriptions.
+
