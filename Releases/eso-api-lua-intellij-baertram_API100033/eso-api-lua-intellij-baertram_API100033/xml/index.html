@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        body {
+            background: darkgray;
+        }
+
+        .tag {
+            font-weight: bold;
+        }
+
+        .attr {
+            color: darkolivegreen;
+
+        }
+
+        i {
+            font-weight: normal;
+        }
+        pre {
+            margin: 0;
+            background: #000;
+            color: white;
+
+        }
+
+    </style>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="GuiXml.js"></script>
+    <script>
+        function htmlEntities(str) {
+            return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function traverse(array, root) {
+            for (var i in array) {
+                var elem = $("<li>&lt;<span class='tag'>" + i + " </span> &gt;</li>");
+                $(root).append(elem);
+
+                if (array[i].attributes) {
+                    var attr = array[i].attributes;
+                    var add = "";
+                    for (var j in attr) {
+                        add += "<span class='attr'>" + j + "</span>" + "=<i>\"" + attr[j] + "\"</i> ";
+                    }
+
+                    var text = add;
+
+                    $("span", elem).append(text);
+                }
+
+                if (array[i].childs) {
+                    var newelem = $("<ul/>");
+                    elem.append(newelem);
+                    traverse(array[i].childs, newelem);
+                }
+
+                if (array[i].callable) {
+                    var newroot = $("<ul/>").appendTo(root);
+                    var el = $("<li><pre>function(" + array[i].callable + ")\n\t-- content here\nend </pre></li>");
+                    $(newroot).append(el);
+                }
+            }
+
+        }
+
+        $(function () {
+            traverse(GuiXml, $("#tree"));
+
+            $('li')
+                .css('pointer', 'default')
+                .css('list-style-type', '+');
+
+
+            $('#tree li:has(ul)')
+                .click(function (event) {
+                    if (this == event.target) {
+                        $("ul", this).children().toggle();
+                    } else {
+                        $("ul", $(event.target).parent()).children().toggle();
+                    }
+                    return false;
+                })
+                .css({cursor: 'pointer', 'list-style-type': 'none'});
+
+            $('li:not(:has(ul))').css({cursor: 'default', 'list-style-type': 'none'});
+
+            $('#tree ul li ul ').children().hide();
+
+        });
+
+    </script>
+</head>
+
+<body>
+<h1>Eso GuiXml browser</h1>
+<p>
+    Here's a helper for understanding valid layout xml structure for Api level 100033 Markarth.
+    <br/> You can download the structure as <a href="GuiXml.json">json</a> too.
+</p>
+
+<ul id="tree" class="collapsibleList">
+
+</ul>
+</body>
+
+</html>
