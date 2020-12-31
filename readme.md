@@ -18,6 +18,6 @@ The additional addon "DumpVars" (originally created by Ayantir, modified by Baer
 table of "global variable name" = value, is located in the folder "DumpVars AddOn - Dump global constants".
 The folders contain "howTo*".txt files with descriptions.
 
-The folder "Releases" contain 1 subfolder each for a release API version, e.g. "eso-api-lua-intellij-baertram_API100033" was the release done for IntelliJ ESO Markarth patch.
+The folder "Releases" contains 1 subfolder for each released API version, e.g. "eso-api-lua-intellij-baertram_API100033" was the release done for IntelliJ ESO Markarth patch.
 
 
