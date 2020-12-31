@@ -10,11 +10,14 @@ Instructions what to do when and how are included in a txt file "!!!howTo_parse.
 Within IntelliJ you should use the EmmyLua lua plugin in order to make CTRL+left mouse click navigation to the files work properly.
 And please use the "Invalidate Caches and restart" function after updating the lua files and your project settings to use these lua files!
 
-The php parse scripts were created by the user "Reaby". The original files are located in the folder "Original_php_parse_scripts_by_Reaby".
-Modified versions by Baertram, supporting events, private protected et.c. functions, and other API variables, are located in the folder "Modified_php_scripts_by_Baertram".
+The php parse scripts were created by the user "Reaby". The original files are located in the folder "PHP parse scripts"->"Original_php_parse_scripts_by_Reaby".
+Modified versions are located in the folder "PHP parse scripts"->"!Modified_php_parse_scripts".
+A version modified by Baertram, supporting events, private protected et.c. functions, and other API variables, are located in the folder "eso_parsers_by_reaby_mod_by_Baertram".
 
 The additional addon "DumpVars" (originally created by Ayantir, modified by Baertram), which will dump the global variable values to the SavedVariables, so that you got a
 table of "global variable name" = value, is located in the folder "DumpVars AddOn - Dump global constants".
-
 The folders contain "howTo*".txt files with descriptions.
+
+The folder "Releases" contain 1 subfolder each for a release API version, e.g. "eso-api-lua-intellij-baertram_API100033" was the release done for IntelliJ ESO Markarth patch.
+
 
