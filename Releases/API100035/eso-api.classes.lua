@@ -3,6 +3,9 @@ AddOnManager = nil
 --- @return void
 function AddOnManager:AddRelevantFilter(relevantFilter) end
 
+--- @return void
+function AddOnManager:ClearWarnOutOfDateAddOns() end
+
 --- @param addOnIndex luaindex
 --- @param addOnDependencyIndex luaindex
 --- @return name string, exists bool, active bool, minVersion integer, version integer
@@ -52,9 +55,8 @@ function AddOnManager:SetAddOnEnabled(addOnIndex, enabled) end
 --- @return void
 function AddOnManager:SetAddOnFilter(settingFilter) end
 
---- @param loadOutOfDateAddons bool
---- @return void
-function AddOnManager:SetLoadOutOfDateAddOns(loadOutOfDateAddons) end
+--- @return warnOutOfDateAddons bool
+function AddOnManager:ShouldWarnOutOfDateAddOns() end
 
 AnimationManager = nil
 --- @return timeline object
@@ -797,10 +799,10 @@ function BackdropControl:SetPixelRoundingEnabled(enabled) end
 function BackdropControl:SetTextureReleaseOption(releaseOption) end
 
 ButtonControl = nil
---- @param buttonNum integer
+--- @param button [MouseButtonIndex|#MouseButtonIndex]
 --- @param enabled bool
 --- @return void
-function ButtonControl:EnableMouseButton(buttonNum, enabled) end
+function ButtonControl:EnableMouseButton(button, enabled) end
 
 --- @return labelControl object
 function ButtonControl:GetLabelControl() end
@@ -845,7 +847,7 @@ function ButtonControl:SetDisabledTexture(textureFilename) end
 --- @return void
 function ButtonControl:SetEnabled(enabled) end
 
---- @param endCapWidth integer
+--- @param endCapWidth layout measurement
 --- @return void
 function ButtonControl:SetEndCapWidth(endCapWidth) end
 
@@ -879,8 +881,8 @@ function ButtonControl:SetMouseOverTexture(textureFilename) end
 --- @return void
 function ButtonControl:SetNormalFontColor(r, g, b, a) end
 
---- @param x number
---- @param y number
+--- @param x layout measurement
+--- @param y layout measurement
 --- @return void
 function ButtonControl:SetNormalOffset(x, y) end
 
@@ -903,8 +905,8 @@ function ButtonControl:SetPressedFontColor(r, g, b, a) end
 --- @return void
 function ButtonControl:SetPressedMouseOverTexture(textureFilename) end
 
---- @param x number
---- @param y number
+--- @param x layout measurement
+--- @param y layout measurement
 --- @return void
 function ButtonControl:SetPressedOffset(x, y) end
 
@@ -1053,6 +1055,9 @@ function Control:AddFilterForEvent(event) end
 --- @return void
 function Control:ClearAnchors() end --*protected-attributes*
 
+--- @return void
+function Control:ClearClips() end
+
 --- @param localPitch number
 --- @param localYaw number
 --- @param localRoll number
@@ -1080,10 +1085,10 @@ function Control:Convert3DWorldPositionToLocalPosition(worldX, worldY, worldZ) e
 --- @return void
 function Control:Create3DRenderSpace() end
 
---- @param arg1 string
---- @param type integer
---- @return apRet object
-function Control:CreateControl(arg1, type) end
+--- @param childControlName string
+--- @param childControlType [ControlType|#ControlType]
+--- @return childControl object
+function Control:CreateControl(childControlName, childControlType) end
 
 --- @return void
 function Control:Destroy3DRenderSpace() end
@@ -1138,6 +1143,9 @@ function Control:GetControlAlpha() end
 --- @return scale number
 function Control:GetControlScale() end
 
+--- @return space [Space|#Space]:nilable
+function Control:GetControlSpace() end
+
 --- @return height number
 function Control:GetDesiredHeight() end
 
@@ -1162,6 +1170,10 @@ function Control:GetDrawTier() end
 --- @return excludes bool
 function Control:GetExcludeFromResizeToFitExtents() end
 
+--- @param gradientIndex luaindex
+--- @return normalX number, normalY number, gradientLength number
+function Control:GetFadeGradient(gradientIndex) end
+
 --- @param handlerName string
 --- @param name string
 --- @return functionRef function
@@ -1184,6 +1196,12 @@ function Control:GetInheritsScale() end
 
 --- @return left number
 function Control:GetLeft() end
+
+--- @return normalizedThickness number
+function Control:GetMaskThresholdThickness() end
+
+--- @return normalizedEdge number
+function Control:GetMaskThresholdZeroAlphaEdge() end
 
 --- @return name string
 function Control:GetName() end
@@ -1215,6 +1233,9 @@ function Control:GetScale() end
 
 --- @return left number, top number, right number, bottom number
 function Control:GetScreenRect() end
+
+--- @return space [Space|#Space]
+function Control:GetSpace() end
 
 --- @return top number
 function Control:GetTop() end
@@ -1249,12 +1270,12 @@ function Control:IsKeyboardEnabled() end
 --- @return enabled bool
 function Control:IsMouseEnabled() end
 
---- @param x number
---- @param y number
---- @param leftOffset number
---- @param topOffset number
---- @param rightOffset number
---- @param bottomOffset number
+--- @param x render measurement
+--- @param y render measurement
+--- @param leftOffset layout measurement:nilable
+--- @param topOffset layout measurement:nilable
+--- @param rightOffset layout measurement:nilable
+--- @param bottomOffset layout measurement:nilable
 --- @return isInside bool
 function Control:IsPointInside(x, y, leftOffset, topOffset, rightOffset, bottomOffset) end
 
@@ -1308,8 +1329,8 @@ function Control:SetAlpha(alpha) end --*protected-attributes*
 --- @param whereOnMe integer
 --- @param anchorTargetControl object
 --- @param whereOnTarget integer
---- @param offsetX number
---- @param offsetY number
+--- @param offsetX layout measurement
+--- @param offsetY layout measurement
 --- @param anchorConstrains [AnchorConstrains|#AnchorConstrains]
 --- @return void
 function Control:SetAnchor(whereOnMe, anchorTargetControl, whereOnTarget, offsetX, offsetY, anchorConstrains) end --*protected-attributes*
@@ -1317,6 +1338,16 @@ function Control:SetAnchor(whereOnMe, anchorTargetControl, whereOnTarget, offset
 --- @param anchorTargetControl object
 --- @return void
 function Control:SetAnchorFill(anchorTargetControl) end --*protected-attributes*
+
+--- @param autoRectClipChildren bool
+--- @return void
+function Control:SetAutoRectClipChildren(autoRectClipChildren) end
+
+--- @param centerX number
+--- @param centerY number
+--- @param radius number
+--- @return void
+function Control:SetCircularClip(centerX, centerY, radius) end
 
 --- @param clamped bool
 --- @return void
@@ -1329,15 +1360,15 @@ function Control:SetClampedToScreen(clamped) end
 --- @return void
 function Control:SetClampedToScreenInsets(left, top, right, bottom) end
 
---- @param minWidth number
---- @param minHeight number
---- @param maxWidth number
---- @param maxHeight number
+--- @param minWidth layout measurement
+--- @param minHeight layout measurement
+--- @param maxWidth layout measurement
+--- @param maxHeight layout measurement
 --- @return void
 function Control:SetDimensionConstraints(minWidth, minHeight, maxWidth, maxHeight) end
 
---- @param width number
---- @param height number
+--- @param width layout measurement
+--- @param height layout measurement
 --- @return void
 function Control:SetDimensions(width, height) end --*protected-attributes*
 
@@ -1357,6 +1388,13 @@ function Control:SetDrawTier(tier) end --*protected-attributes*
 --- @return void
 function Control:SetExcludeFromResizeToFitExtents(exclude) end --*protected-attributes*
 
+--- @param gradientIndex luaindex
+--- @param normalX number
+--- @param normalY number
+--- @param gradientLength number
+--- @return void
+function Control:SetFadeGradient(gradientIndex, normalX, normalY, gradientLength) end
+
 --- @param handlerName string
 --- @param functionRef function
 --- @param name string
@@ -1365,7 +1403,7 @@ function Control:SetExcludeFromResizeToFitExtents(exclude) end --*protected-attr
 --- @return void
 function Control:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
 
---- @param height number
+--- @param height layout measurement
 --- @return void
 function Control:SetHeight(height) end --*protected-attributes*
 
@@ -1373,10 +1411,10 @@ function Control:SetHeight(height) end --*protected-attributes*
 --- @return void
 function Control:SetHidden(aHidden) end --*protected-attributes*
 
---- @param left number
---- @param top number
---- @param right number
---- @param bottom number
+--- @param left layout measurement
+--- @param top layout measurement
+--- @param right layout measurement
+--- @param bottom layout measurement
 --- @return void
 function Control:SetHitInsets(left, top, right, bottom) end
 
@@ -1396,6 +1434,26 @@ function Control:SetInheritScale(inheritScale) end
 --- @return void
 function Control:SetKeyboardEnabled(enabled) end --*protected-attributes*
 
+--- @param maskMode [ControlMaskMode|#ControlMaskMode]
+--- @return void
+function Control:SetMaskMode(maskMode) end
+
+--- @param fileName string
+--- @return void
+function Control:SetMaskTexture(fileName) end
+
+--- @param releaseOption [ReleaseReferenceOptions|#ReleaseReferenceOptions]
+--- @return void
+function Control:SetMaskTextureReleaseOption(releaseOption) end
+
+--- @param normalizedThickness number
+--- @return void
+function Control:SetMaskThresholdThickness(normalizedThickness) end
+
+--- @param normalizedEdge number
+--- @return void
+function Control:SetMaskThresholdZeroAlphaEdge(normalizedEdge) end
+
 --- @param enabled bool
 --- @return void
 function Control:SetMouseEnabled(enabled) end --*protected-attributes*
@@ -1407,6 +1465,13 @@ function Control:SetMovable(isMovable) end
 --- @param newParent object
 --- @return void
 function Control:SetParent(newParent) end --*protected-attributes*
+
+--- @param left number
+--- @param top number
+--- @param right number
+--- @param bottom number
+--- @return void
+function Control:SetRectangularClip(left, top, right, bottom) end
 
 --- @param handleSize number
 --- @return void
@@ -1440,7 +1505,52 @@ function Control:SetSimpleAnchor(anchorTargetControl, offsetX, offsetY) end --*p
 --- @return void
 function Control:SetSimpleAnchorParent(offsetX, offsetY) end --*protected-attributes*
 
---- @param width number
+--- @param space [Space|#Space]:nilable
+--- @return void
+function Control:SetSpace(space) end
+
+--- @param normalizedX number
+--- @param normalizedY number
+--- @return void
+function Control:SetTransformNormalizedRotationPoint(normalizedX, normalizedY) end
+
+--- @param x render measurement
+--- @return void
+function Control:SetTransformOffsetX(x) end
+
+--- @param y render measurement
+--- @return void
+function Control:SetTransformOffsetY(y) end
+
+--- @param z render measurement
+--- @return void
+function Control:SetTransformOffsetZ(z) end
+
+--- @param x render measurement
+--- @param y render measurement
+--- @param z render measurement
+--- @return void
+function Control:SetTransformOffsets(x, y, z) end
+
+--- @param xRadians number
+--- @return void
+function Control:SetTransformRotationX(xRadians) end
+
+--- @param yRadians number
+--- @return void
+function Control:SetTransformRotationY(yRadians) end
+
+--- @param zRadians number
+--- @return void
+function Control:SetTransformRotationZ(zRadians) end
+
+--- @param xRadians number
+--- @param yRadians number
+--- @param zRadians number
+--- @return void
+function Control:SetTransformRotations(xRadians, yRadians, zRadians) end
+
+--- @param width layout measurement
 --- @return void
 function Control:SetWidth(width) end --*protected-attributes*
 
@@ -1677,8 +1787,9 @@ function EditControl:SetSelection(selectionStartIndex, selectionEndIndex) end
 function EditControl:SetSelectionColor(r, g, b, a) end
 
 --- @param aText string
+--- @param aSuppressCallbackHandler bool
 --- @return void
-function EditControl:SetText(aText) end
+function EditControl:SetText(aText, aSuppressCallbackHandler) end
 
 --- @param textType integer
 --- @return void
@@ -2056,10 +2167,6 @@ function PolygonControl:SetSmoothingEnabled(isSmoothingEnabled) end
 
 RootWindow = nil
 ScrollControl = nil
---- @param gradientIndex luaindex
---- @return normalX number, normalY number, gradientLength number
-function ScrollControl:GetFadeGradient(gradientIndex) end
-
 --- @return horizontal number, vertical number
 function ScrollControl:GetScrollExtents() end
 
@@ -2069,13 +2176,6 @@ function ScrollControl:GetScrollOffsets() end
 --- @param duration integer
 --- @return void
 function ScrollControl:RestoreToExtents(duration) end
-
---- @param gradientIndex luaindex
---- @param normalX number
---- @param normalY number
---- @param gradientLength number
---- @return void
-function ScrollControl:SetFadeGradient(gradientIndex, normalX, normalY, gradientLength) end
 
 --- @param offset number
 --- @return void
@@ -2191,6 +2291,10 @@ function SliderControl:SetValue(value) end
 function SliderControl:SetValueStep(step) end
 
 StatusBarControl = nil
+--- @param value number
+--- @return mainBarSize number
+function StatusBarControl:CalculateSizeWithoutLeadingEdgeForValue(value) end
+
 --- @return void
 function StatusBarControl:ClearFadeOutLossAdjustedTopValue() end
 
@@ -2211,6 +2315,9 @@ function StatusBarControl:GetMinMax() end
 
 --- @return value number
 function StatusBarControl:GetValue() end
+
+--- @return pixelRoundingEnabled bool
+function StatusBarControl:IsPixelRoundingEnabled() end
 
 --- @param barAlignment integer
 --- @return void
@@ -2286,6 +2393,10 @@ function StatusBarControl:SetMinMax(aMin, aMax) end
 --- @param orientation integer
 --- @return void
 function StatusBarControl:SetOrientation(orientation) end
+
+--- @param pixelRoundingEnabled bool
+--- @return void
+function StatusBarControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 
 --- @param filename string
 --- @return void
@@ -2405,7 +2516,7 @@ TextureCompositeControl = nil
 --- @param right number
 --- @param top number
 --- @param bottom number
---- @return void
+--- @return surfaceIndex luaindex
 function TextureCompositeControl:AddSurface(left, right, top, bottom) end
 
 --- @return void
@@ -2493,6 +2604,18 @@ function TextureCompositeControl:SetSurfaceAlpha(surfaceIndex, a) end
 --- @param hidden bool
 --- @return void
 function TextureCompositeControl:SetSurfaceHidden(surfaceIndex, hidden) end
+
+--- @param surfaceIndex luaindex
+--- @param scale number
+--- @return void
+function TextureCompositeControl:SetSurfaceScale(surfaceIndex, scale) end
+
+--- @param surfaceIndex luaindex
+--- @param angleInRadians number
+--- @param normalizedRotationPointX number
+--- @param normalizedRotationPointY number
+--- @return void
+function TextureCompositeControl:SetSurfaceTextureRotation(surfaceIndex, angleInRadians, normalizedRotationPointX, normalizedRotationPointY) end
 
 --- @param filename string
 --- @return void
@@ -2806,18 +2929,24 @@ function TooltipControl:SetBuff(aBuffSlotId, unitTag) end
 --- @return void
 function TooltipControl:SetBuybackItem(entryIndex) end
 
---- @param disiplineIndex luaindex
---- @param skillIndex luaindex
+--- @param championSkillId integer
 --- @param numPendingPoints integer
+--- @param nextJumpPoint integer
+--- @param isPendingSlotted bool
 --- @return void
-function TooltipControl:SetChampionSkillAbility(disiplineIndex, skillIndex, numPendingPoints) end
+function TooltipControl:SetChampionSkill(championSkillId, numPendingPoints, nextJumpPoint, isPendingSlotted) end
 
 --- @param collectibleId integer
 --- @param addNickname bool
 --- @param showPurchasableHint bool
 --- @param showBlockReason bool
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return void
-function TooltipControl:SetCollectible(collectibleId, addNickname, showPurchasableHint, showBlockReason) end
+function TooltipControl:SetCollectible(collectibleId, addNickname, showPurchasableHint, showBlockReason, actorCategory) end
+
+--- @param abilityId integer
+--- @return void
+function TooltipControl:SetCompanionSkill(abilityId) end
 
 --- @param rewardIndex luaindex
 --- @return void
@@ -3027,7 +3156,7 @@ function TooltipControl:SetScrollBonusAbility(alliance, artifactType, bonusIndex
 --- @return void
 function TooltipControl:SetSkillAbility(skillType, skillLineIndex, skillIndex, badMorph) end
 
---- @param skillType integer
+--- @param skillType [SkillType|#SkillType]
 --- @param skillLineIndex luaindex
 --- @return void
 function TooltipControl:SetSkillLine(skillType, skillLineIndex) end
@@ -3039,6 +3168,10 @@ function TooltipControl:SetSkillLine(skillType, skillLineIndex) end
 --- @param morphChoice integer
 --- @return void
 function TooltipControl:SetSkillLineAbilityId(abilityId, skillType, skillLineIndex, skillLineAbilityIndex, morphChoice) end
+
+--- @param skillLineId integer
+--- @return void
+function TooltipControl:SetSkillLineById(skillLineId) end
 
 --- @param skillType integer
 --- @param skillLineIndex luaindex
@@ -3091,9 +3224,10 @@ function TooltipControl:SetTradingHouseListing(tradingHouseIndex) end
 --- @return void
 function TooltipControl:SetVerticalPadding(paddingY) end
 
---- @param equipSlot integer
+--- @param equipSlot [EquipSlot|#EquipSlot]
+--- @param bagId [Bag|#Bag]
 --- @return void
-function TooltipControl:SetWornItem(equipSlot) end
+function TooltipControl:SetWornItem(equipSlot, bagId) end
 
 --- @return void
 function TooltipControl:ShowComparativeTooltips() end
@@ -3131,24 +3265,24 @@ function WindowManager:CompareControlVisualOrder(controlA, controlB) end
 --- @param name string
 --- @param parent object
 --- @param type [ControlType|#ControlType]
---- @return apRet object
+--- @return control object
 function WindowManager:CreateControl(name, parent, type) end
 
 --- @param controlName string
 --- @param parent object
 --- @param virtualName string
 --- @param optionalSuffix string
---- @return apRet object
+--- @return control object
 function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName, optionalSuffix) end
 
 --- @param name string
---- @return apRet object
+--- @return control object
 function WindowManager:CreateTopLevelWindow(name) end
 
---- @param uiPointX number
---- @param uiPointY number
+--- @param x render measurement
+--- @param y render measurement
 --- @return mouseOverControl object
-function WindowManager:GetControlAtPoint(uiPointX, uiPointY) end
+function WindowManager:GetControlAtPoint(x, y) end
 
 --- @param name string
 --- @param suffix string
@@ -3347,6 +3481,13 @@ function WindowManager:GetMinUICanvasWidth() end
 
 --- @return minHeight number
 function WindowManager:GetMinUICanvasHeight() end
+
+--- @return FoVYRadians number
+function WindowManager:GetInterfaceVerticalFieldOfView() end
+
+--- @param FoVYRadians number
+--- @return void
+function WindowManager:SetInterfaceVerticalFieldOfView(FoVYRadians) end
 
 --- @param text string
 --- @return void

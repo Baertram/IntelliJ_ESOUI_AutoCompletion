@@ -384,6 +384,19 @@ function GetESOFullVersionString() end
 --- @return isInUI bool
 function IsInUI(guiName) end --*private*
 
+--- @param fontObject object
+--- @param text string
+--- @param scale number
+--- @return stringWidthScaledPixels number
+function GetStringWidthScaledPixels(fontObject, text, scale) end
+
+--- @return tooltipText string
+function GetTooltipStringForRenderQualitySetting() end
+
+--- @param settingId integer
+--- @return isSettingSupported bool
+function DoesPlatformSupportGraphicSetting(settingId) end
+
 --- @param system [SettingSystemType|#SettingSystemType]
 --- @param settingId integer
 --- @param value string
@@ -564,7 +577,7 @@ function UndecorateDisplayName(displayName) end
 function GetNumFriends() end
 
 --- @param friendIndex luaindex
---- @return displayName string, note string, playerStatus integer, secsSinceLogoff integer
+--- @return displayName string, note string, playerStatus [PlayerStatus|#PlayerStatus], secsSinceLogoff integer
 function GetFriendInfo(friendIndex) end
 
 --- @param friendIndex luaindex
@@ -1207,6 +1220,9 @@ function SetGamepadLeftStickConsumedByUI(consumed) end
 --- @return void
 function SetGamepadRightStickConsumedByUI(consumed) end
 
+--- @return consumed bool
+function WasGamepadLeftStickConsumedByOverlay() end
+
 --- @return gamepadTouchpadX number
 function GetGamepadTouchpadX() end
 
@@ -1389,12 +1405,6 @@ function IsChapterOwned(chapterUpgradeId) end
 
 --- @return accountTypeId integer, title string, description string, version integer
 function GetTrialInfo() end
-
---- @return currentCrowns integer
-function GetPlayerCrowns() end --*private*
-
---- @return currentCrownGems integer
-function GetPlayerCrownGems() end --*private*
 
 --- @param type [MarketCurrencyType|#MarketCurrencyType]
 --- @return currencyAmount integer
@@ -1832,6 +1842,10 @@ function GetUnitZone(unitTag) end
 function GetUnitWorldPosition(unitTag) end
 
 --- @param unitTag string
+--- @return zoneId integer, worldX integer, worldY integer, worldZ integer
+function GetUnitRawWorldPosition(unitTag) end
+
+--- @param unitTag string
 --- @return isBreadcrumb bool
 function IsUnitWorldMapPositionBreadcrumbed(unitTag) end
 
@@ -2006,6 +2020,10 @@ function GetNumPointsNeededForAvARank(rank) end
 --- @param unitTag string
 --- @return red number, green number, blue number
 function GetUnitReactionColor(unitTag) end
+
+--- @param unitTag string
+--- @return reactionColorType [UnitReactionColor|#UnitReactionColor]
+function GetUnitReactionColorType(unitTag) end
 
 --- @param unitTag string
 --- @return isInCombat bool
@@ -2187,12 +2205,14 @@ function CancelBuff(buffIndex) end
 function GetWeaponSwapUnlockedLevel() end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return abilityCost integer, mechanicType integer
-function GetSlotAbilityCost(actionSlotIndex) end
+function GetSlotAbilityCost(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return texture string, weapontexture string, activationAnimation string
-function GetSlotTexture(actionSlotIndex) end
+function GetSlotTexture(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
 --- @return name string
@@ -2207,8 +2227,9 @@ function GetSlotItemDisplayQuality(actionSlotIndex) end
 function GetSlotCooldownInfo(actionSlotIndex) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return used bool
-function IsSlotUsed(actionSlotIndex) end
+function IsSlotUsed(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
 --- @return useable bool
@@ -2307,7 +2328,7 @@ function ShareQuest(journalQuestIndex) end
 
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
---- @return stepText string, visibility integer:nilable, stepType integer, trackerOverrideText string, numConditions integer
+--- @return journalText string, visibility [QuestStepVisibility|#QuestStepVisibility]:nilable, comparisonType [QuestStepComparisonType|#QuestStepComparisonType], trackerOverrideText string, numConditions integer
 function GetJournalQuestStepInfo(journalQuestIndex, stepIndex) end
 
 --- @param journalQuestIndex luaindex
@@ -2508,15 +2529,6 @@ function GetQuestItemLink(aQuestIndex, aStepIndex, aConditionIndex, linkStyle) e
 --- @return name string
 function GetQuestItemNameFromLink(link) end
 
---- @param itemLink string
---- @return comparisonSlot1 integer:nilable, comparisonSlot2 integer:nilable
-function GetComparisonEquipSlotsFromItemLink(itemLink) end
-
---- @param bagId [Bag|#Bag]
---- @param slotIndex integer
---- @return comparisonSlot1 integer:nilable, comparisonSlot2 integer:nilable
-function GetComparisonEquipSlotsFromBagItem(bagId, slotIndex) end
-
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
 --- @return name string
@@ -2538,12 +2550,6 @@ function GetEquippedItemInfo(equipSlot) end
 
 --- @return heldMain integer, heldOff integer, lastHeldMain integer, lastHeldOff integer
 function GetHeldSlots() end
-
---- @param bagId [Bag|#Bag]
---- @param slotIndex integer
---- @param equipSlotIndex integer:nilable
---- @return void
-function EquipItem(bagId, slotIndex, equipSlotIndex) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
@@ -2938,7 +2944,7 @@ function SelectPlayerStatus(status) end
 --- @return canChangeBattleLevelPreference bool
 function CanChangeBattleLevelPreference() end
 
---- @return originatingBag integer:nilable
+--- @return originatingBagId [Bag|#Bag]:nilable
 function GetCursorBagId() end
 
 --- @return slotIndex integer:nilable
@@ -2949,6 +2955,9 @@ function GetCursorCollectibleId() end
 
 --- @return abilityId integer:nilable
 function GetCursorAbilityId() end
+
+--- @return championSkillId integer:nilable
+function GetCursorChampionSkillId() end
 
 --- @param actionSlot luaindex
 --- @return void
@@ -2992,11 +3001,19 @@ function PickupAction(actionSlot) end --*protected*
 --- @return void
 function PickupAbility(abilityIndex) end --*protected*
 
+--- @param abilityId integer
+--- @return void
+function PickupCompanionAbilityById(abilityId) end --*protected*
+
 --- @param skillType [SkillType|#SkillType]
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
 --- @return void
 function PickupAbilityBySkillLine(skillType, skillLineIndex, skillIndex) end --*protected*
+
+--- @param championSkillId integer
+--- @return void
+function PickupChampionSkillById(championSkillId) end --*protected*
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
@@ -3004,9 +3021,10 @@ function PickupAbilityBySkillLine(skillType, skillLineIndex, skillIndex) end --*
 --- @return void
 function PickupInventoryItem(bagId, slotIndex, count) end --*protected*
 
---- @param slot integer
+--- @param slotIndex integer
+--- @param bagId [Bag|#Bag]
 --- @return void
-function PickupEquippedItem(slot) end --*protected*
+function PickupEquippedItem(slotIndex, bagId) end --*protected*
 
 --- @param tradeIndex luaindex
 --- @return void
@@ -3179,6 +3197,26 @@ function GetCharacterInfo(index) end
 --- @return numAttributes integer
 function GetNumAttributes() end
 
+--- @return numCategories integer
+function GetNumAdvancedStatCategories() end
+
+--- @param categoryIndex luaindex
+--- @return categoryId integer
+function GetAdvancedStatsCategoryId(categoryIndex) end
+
+--- @param categoryId integer
+--- @return displayName string, numStats integer
+function GetAdvancedStatCategoryInfo(categoryId) end
+
+--- @param categoryId integer
+--- @param statIndex luaindex
+--- @return statType [AdvancedStatDisplayType|#AdvancedStatDisplayType], displayName string, description string, flatDescription string, percentDescription string
+function GetAdvancedStatInfo(categoryId, statIndex) end
+
+--- @param statType [AdvancedStatDisplayType|#AdvancedStatDisplayType]
+--- @return displayFormat [AdvancedStatDisplayFormat|#AdvancedStatDisplayFormat], flatValue integer:nilable, percentValue number:nilable
+function GetAdvancedStatValue(statType) end
+
 --- @return tryingToMove bool
 function IsPlayerTryingToMove() end
 
@@ -3231,6 +3269,9 @@ function IsCharacterInGroup(characterName) end
 --- @return groupSize integer
 function GetGroupSize() end
 
+--- @return numCompanions integer
+function GetNumCompanionsInGroup() end
+
 --- @param characterOrDisplayName string
 --- @return void
 function JumpToGroupMember(characterOrDisplayName) end
@@ -3243,6 +3284,9 @@ function CanJumpToGroupMember(unitTag) end
 --- @return void
 function SetVeteranDifficulty(isVeteranDifficulty) end
 
+--- @return unitTag string:nilable
+function GetLocalPlayerGroupUnitTag() end
+
 --- @param sortIndex luaindex
 --- @return unitTag string:nilable
 function GetGroupUnitTagByIndex(sortIndex) end
@@ -3250,6 +3294,18 @@ function GetGroupUnitTagByIndex(sortIndex) end
 --- @param unitTag string
 --- @return sortIndex luaindex
 function GetGroupIndexByUnitTag(unitTag) end
+
+--- @param unitTag string
+--- @return isGroupCompanionUnitTag bool
+function IsGroupCompanionUnitTag(unitTag) end
+
+--- @param groupUnitTag string
+--- @return companionUnitTag string:nilable
+function GetCompanionUnitTagByGroupUnitTag(groupUnitTag) end
+
+--- @param companionUnitTag string
+--- @return groupUnitTag string:nilable
+function GetGroupUnitTagByCompanionUnitTag(companionUnitTag) end
 
 --- @return remainingTimeMs integer:nilable, totalTimeMs integer:nilable
 function GetInstanceKickTime() end
@@ -3553,6 +3609,21 @@ function SetCurrentQuickslot(actionSlotIndex) end
 --- @return hotbarCategory [HotBarCategory|#HotBarCategory]
 function GetActiveHotbarCategory() end
 
+--- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @return durationMilliseconds integer
+function GetActionSlotEffectDuration(actionSlotIndex, hotbarCategory) end
+
+--- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @return timeRemainingMilliseconds integer
+function GetActionSlotEffectTimeRemaining(actionSlotIndex, hotbarCategory) end
+
+--- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @return stackCount integer
+function GetActionSlotEffectStackCount(actionSlotIndex, hotbarCategory) end
+
 --- @param abilityId integer
 --- @param hotbarCategory [HotBarCategory|#HotBarCategory]
 --- @return canBeUsed bool
@@ -3573,64 +3644,100 @@ function GetSkillProgressionIdForHotbarSlotOverrideRule(actionSlotIndex, hotbarC
 function GetWeaponPairFromHotbarCategory(hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return toggledOn bool
-function IsSlotToggled(actionSlotIndex) end
+function IsSlotToggled(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasCostFailure(actionSlotIndex) end
+function HasCostFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasRequirementFailure(actionSlotIndex) end
+function HasRequirementFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasWeaponSlotFailure(actionSlotIndex) end
+function HasWeaponSlotFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasTargetFailure(actionSlotIndex) end
+function HasTargetFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasRangeFailure(actionSlotIndex) end
+function HasRangeFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasLeapKeepTargetFailure(actionSlotIndex) end
+function HasLeapKeepTargetFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasSubzoneFailure(actionSlotIndex) end
+function HasSubzoneFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasStatusEffectFailure(actionSlotIndex) end
+function HasStatusEffectFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasFallingFailure(actionSlotIndex) end
+function HasFallingFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasSwimmingFailure(actionSlotIndex) end
+function HasSwimmingFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasMountedFailure(actionSlotIndex) end
+function HasMountedFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasReincarnatingFailure(actionSlotIndex) end
+function HasReincarnatingFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasActivationHighlight(actionSlotIndex) end
+function HasActivationHighlight(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
 --- @return status bool
-function HasNonCostStateFailure(actionSlotIndex) end
+function HasNonCostStateFailure(actionSlotIndex, hotbarCategory) end
+
+--- @return startActionSlotIndex luaindex, endActionSlotIndex luaindex
+function GetAssignableAbilityBarStartAndEndSlots() end
+
+--- @return startActionSlotIndex luaindex, endActionSlotIndex luaindex
+function GetAssignableChampionBarStartAndEndSlots() end
+
+--- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @return requiredDisciplineId integer
+function GetRequiredChampionDisciplineIdForSlot(actionSlotIndex, hotbarCategory) end
+
+--- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @return isLocked bool
+function IsActionSlotLocked(actionSlotIndex, hotbarCategory) end
+
+--- @param actionSlotIndex luaindex
+--- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @return slotUnlockText string
+function GetActionSlotUnlockText(actionSlotIndex, hotbarCategory) end
 
 --- @return result bool
 function HasMountSkin() end
@@ -3673,7 +3780,7 @@ function ToggleMount() end --*private*
 function UseMountAsPassenger(characterOrDisplayName) end
 
 --- @param characterOrDisplayName string
---- @return mountedState [PlayerMountedState|#PlayerMountedState], isRidingGroupMount bool, hasFreePassengerSlot bool
+--- @return mountedState [MountedState|#MountedState], isRidingGroupMount bool, hasFreePassengerSlot bool
 function GetTargetMountedStateInfo(characterOrDisplayName) end
 
 --- @param abilityIndex luaindex
@@ -3703,6 +3810,10 @@ function GetAbilityNewEffectLines(abilityId) end
 --- @param abilityId integer
 --- @return buffType [BuffType|#BuffType]
 function GetAbilityBuffType(abilityId) end
+
+--- @param abilityId integer
+--- @return showAsUsable bool
+function ShouldAbilityShowAsUsableWithDuration(abilityId) end
 
 --- @return active bool
 function IsBlockActive() end
@@ -3788,8 +3899,9 @@ function GetJournalQuestConditionType(journalQuestIndex, stepIndex, conditionInd
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
 --- @param conditionIndex luaindex
+--- @param useShortDescription bool
 --- @return conditionText string, current integer, max integer, isFailCondition bool, isComplete bool, isCreditShared bool, isVisible bool, conditionType [QuestConditionType|#QuestConditionType]
-function GetJournalQuestConditionInfo(journalQuestIndex, stepIndex, conditionIndex) end
+function GetJournalQuestConditionInfo(journalQuestIndex, stepIndex, conditionIndex, useShortDescription) end
 
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
@@ -3966,6 +4078,14 @@ function CancelRequestJournalQuestConditionAssistance(taskId) end
 --- @param journalQuestIndex luaindex
 --- @return zoneId integer
 function GetJournalQuestZoneStoryZoneId(journalQuestIndex) end
+
+--- @param questId integer
+--- @return zoneId integer
+function GetQuestZoneId(questId) end
+
+--- @param questId integer
+--- @return name string
+function GetQuestName(questId) end
 
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
@@ -4171,13 +4291,19 @@ function GetChatterOptionCount() end
 --- @return backToTOCString string, farewellString string, isImportant bool
 function GetChatterFarewell() end
 
+--- @return isInteracting bool
+function IsInteracting() end
+
 --- @return areThey bool
 function IsPlayerInteractingWithObject() end
 
 --- @return isAssistant bool
 function IsInteractingWithMyAssistant() end
 
---- @return interactMode [InteractionType|#InteractionType]
+--- @return interactingWithCompanion bool
+function IsInteractingWithMyCompanion() end
+
+--- @return interactType [InteractionType|#InteractionType]
 function GetInteractionType() end
 
 --- @return isValid bool
@@ -4208,6 +4334,28 @@ function GetItemTraitInformation(bagId, slotIndex) end
 --- @return itemTraitInformation [ItemTraitInformation|#ItemTraitInformation]
 function GetItemTraitInformationFromItemLink(itemLink) end
 
+--- @param bagId [Bag|#Bag]
+--- @param slotIndex integer
+--- @return void
+function BindItem(bagId, slotIndex) end
+
+--- @param wornBagId [Bag|#Bag]
+--- @param equipSlot [EquipSlot|#EquipSlot]
+--- @return slotHasItem bool, icon textureName, isHeldSlot bool, isHeldNow bool, isLocked bool
+function GetWornItemInfo(wornBagId, equipSlot) end
+
+--- @param bagId [Bag|#Bag]
+--- @param slotIndex integer
+--- @param wornBagId [Bag|#Bag]
+--- @param equipSlot [EquipSlot|#EquipSlot]
+--- @return void
+function RequestEquipItem(bagId, slotIndex, wornBagId, equipSlot) end
+
+--- @param wornBagId [Bag|#Bag]
+--- @param equipSlot [EquipSlot|#EquipSlot]
+--- @return void
+function RequestUnequipItem(wornBagId, equipSlot) end
+
 --- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
 --- @param itemSoundAction [ItemUISoundAction|#ItemUISoundAction]
 --- @return void
@@ -4219,28 +4367,33 @@ function PlayItemSound(itemSoundCategory, itemSoundAction) end
 function PlayLootSound(audioModelType, closeLootWindow) end
 
 --- @param visualSlot [VisualSlot|#VisualSlot]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return highestPriorityVisualLayerThatIsShowing [VisualLayer|#VisualLayer]
-function WhatIsVisualSlotShowing(visualSlot) end
+function WhatIsVisualSlotShowing(visualSlot, actorCategory) end
 
 --- @param visualLayer [VisualLayer|#VisualLayer]
 --- @return hiddenByString string
 function GetHiddenByStringForVisualLayer(visualLayer) end
 
 --- @param equipSlot [EquipSlot|#EquipSlot]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return isHidden bool, highestPriorityVisualLayerThatIsShowing [VisualLayer|#VisualLayer]
-function WouldEquipmentBeHidden(equipSlot) end
+function WouldEquipmentBeHidden(equipSlot, actorCategory) end
 
 --- @param equipSlotVisualCategory [EquipSlotVisualCategory|#EquipSlotVisualCategory]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return isHidden bool
-function IsEquipSlotVisualCategoryHidden(equipSlotVisualCategory) end
+function IsEquipSlotVisualCategoryHidden(equipSlotVisualCategory, actorCategory) end
 
 --- @param collectibleId integer
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return isHidden bool, highestPriorityVisualLayerThatIsShowing [VisualLayer|#VisualLayer]
-function WouldCollectibleBeHidden(collectibleId) end
+function WouldCollectibleBeHidden(collectibleId, actorCategory) end
 
 --- @param outfitIndex luaindex
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return isHidden bool, highestPriorityVisualLayerThatIsShowing [VisualLayer|#VisualLayer]
-function WouldOutfitBeHidden(outfitIndex) end
+function WouldOutfitBeHidden(outfitIndex, actorCategory) end
 
 --- @param collectibleId integer
 --- @return hasVisibleAppearance bool
@@ -4634,6 +4787,20 @@ function GetAutoMapNavigationNormalizedPositionForCurrentMap() end
 --- @return commonMapIndex luaindex:nilable
 function GetAutoMapNavigationCommonZoomOutMapIndex() end
 
+--- @param zoneId integer
+--- @param worldX integer
+--- @param worldY integer
+--- @param worldZ integer
+--- @return normalizedX number, normalizedY number
+function GetNormalizedWorldPosition(zoneId, worldX, worldY, worldZ) end
+
+--- @param zoneId integer
+--- @param worldX integer
+--- @param worldY integer
+--- @param worldZ integer
+--- @return normalizedX number, normalizedY number
+function GetRawNormalizedWorldPosition(zoneId, worldX, worldY, worldZ) end
+
 --- @param pingType [MapDisplayPinType|#MapDisplayPinType]
 --- @param mapDisplayType [MapDisplayType|#MapDisplayType]
 --- @param normalizedX number
@@ -4658,8 +4825,9 @@ function GenerateQuestEndingTooltipLine(questIndex) end
 --- @param questIndex luaindex
 --- @param stepIndex luaindex
 --- @param conditionIndex luaindex
+--- @param useShortDescription bool
 --- @return text string, interfaceColorType [InterfaceColorType|#InterfaceColorType], color integer
-function GenerateQuestConditionTooltipLine(questIndex, stepIndex, conditionIndex) end
+function GenerateQuestConditionTooltipLine(questIndex, stepIndex, conditionIndex, useShortDescription) end
 
 --- @param mapPingType [MapDisplayPinType|#MapDisplayPinType]
 --- @param unitTag string
@@ -6181,18 +6349,12 @@ function GetNumSkillLines(skillType) end
 
 --- @param skillType [SkillType|#SkillType]
 --- @param skillLineIndex luaindex
---- @return name string
-function GetSkillLineName(skillType, skillLineIndex) end
-
---- @param skillType [SkillType|#SkillType]
---- @param skillLineIndex luaindex
 --- @return skillLineId integer
 function GetSkillLineId(skillType, skillLineIndex) end
 
---- @param skillType [SkillType|#SkillType]
---- @param skillLineIndex luaindex
+--- @param skillLineId integer
 --- @return unlockText string
-function GetSkillLineUnlockText(skillType, skillLineIndex) end
+function GetSkillLineUnlockTextById(skillLineId) end
 
 --- @param skillType [SkillType|#SkillType]
 --- @param skillLineIndex luaindex
@@ -6359,20 +6521,21 @@ function GetSkillLineIndicesFromSkillId(skillId) end
 --- @return skillType [SkillType|#SkillType], skillLineIndex luaindex
 function GetSkillLineIndicesFromSkillLineId(skillLineId) end
 
---- @param skillType [SkillType|#SkillType]
---- @param skillLineIndex luaindex
+--- @param skillLineId integer
+--- @return gameplayActorCategory [GameplayActorCategory|#GameplayActorCategory]
+function GetSkillLineGameplayActorCategory(skillLineId) end
+
+--- @param skillLineId integer
 --- @return isWerewolfSkillLine bool
-function IsWerewolfSkillLine(skillType, skillLineIndex) end
+function IsWerewolfSkillLineById(skillLineId) end
 
---- @param skillType [SkillType|#SkillType]
---- @param skillLineIndex luaindex
+--- @param skillLineId integer
 --- @return announcementIcon textureName
-function GetSkillLineAnnouncementIcon(skillType, skillLineIndex) end
+function GetSkillLineAnnouncementIconById(skillLineId) end
 
---- @param skillType [SkillType|#SkillType]
---- @param skillLineIndex luaindex
+--- @param skillLineId integer
 --- @return craftingSkillType [TradeskillType|#TradeskillType]
-function GetSkillLineCraftingGrowthType(skillType, skillLineIndex) end
+function GetSkillLineCraftingGrowthTypeById(skillLineId) end
 
 --- @return suggestionLimit integer
 function GetSkillsAdvisorSuggestionLimit() end
@@ -6427,6 +6590,47 @@ function AddPassiveChangeToAllocationRequest(skillLineId, abilityId, isRemoval) 
 --- @param actionId integer
 --- @return void
 function AddHotbarSlotChangeToAllocationRequest(actionSlotIndex, hotbarCategory, actionType, actionId) end
+
+--- @return initialized bool
+function AreCompanionSkillsInitialized() end
+
+--- @param skillLineId integer
+--- @return name string
+function GetCompanionSkillLineNameById(skillLineId) end
+
+--- @param skillType [SkillType|#SkillType]
+--- @return numSkillLines integer
+function GetNumCompanionSkillLines(skillType) end
+
+--- @param skillType [SkillType|#SkillType]
+--- @param skillLineIndex luaindex
+--- @return skillLineId integer
+function GetCompanionSkillLineId(skillType, skillLineIndex) end
+
+--- @param skillLineId integer
+--- @return rank luaindex, active bool, discovered bool
+function GetCompanionSkillLineDynamicInfo(skillLineId) end
+
+--- @param skillLineId integer
+--- @return lastRankXP integer, nextRankXP integer, currentXP integer
+function GetCompanionSkillLineXPInfo(skillLineId) end
+
+--- @param skillLineId integer
+--- @return numAbilities integer
+function GetNumAbilitiesInCompanionSkillLine(skillLineId) end
+
+--- @param skillLineId integer
+--- @param abilityIndex luaindex
+--- @return abilityId integer
+function GetCompanionAbilityId(skillLineId, abilityIndex) end
+
+--- @param abilityId integer
+--- @return isUnlocked bool
+function IsCompanionAbilityUnlocked(abilityId) end
+
+--- @param abilityId integer
+--- @return rankRequired luaindex
+function GetCompanionAbilityRankRequired(abilityId) end
 
 --- @return level integer
 function GetSkillBuildTutorialLevel() end
@@ -6489,7 +6693,7 @@ function GetNumMailItems() end
 function GetNextMailId(lastMailId) end
 
 --- @param mailId id64
---- @return senderDisplayName string, senderCharacterName string, subject string, icon textureName, unread bool, fromSystem bool, fromCustomerService bool, returned bool, numAttachments integer, attachedMoney integer, codAmount integer, expiresInDays integer, secsSinceReceived integer
+--- @return senderDisplayName string, senderCharacterName string, subject string, icon textureName, unread bool, fromSystem bool, fromCustomerService bool, returned bool, numAttachments integer, attachedMoney integer, codAmount integer, expiresInDays integer:nilable, secsSinceReceived integer
 function GetMailItemInfo(mailId) end
 
 --- @param mailId id64
@@ -6570,7 +6774,7 @@ function GetQueuedCOD() end
 function GetMailQueuedAttachmentLink(attachmentSlot, linkStyle) end
 
 --- @param attachmentSlot luaindex
---- @return bagId integer, slotIndex integer, icon textureName, stack integer
+--- @return bagId [Bag|#Bag], slotIndex integer, icon textureName, stack integer
 function GetQueuedItemAttachmentInfo(attachmentSlot) end
 
 --- @param mailId id64
@@ -6744,6 +6948,15 @@ function GetAchievementsSearchResult(searchResultIndex) end
 --- @return numXP integer:nilable
 function GetNumExperiencePointsInLevel(level) end
 
+--- @param level integer
+--- @return numXP integer:nilable
+function GetNumExperiencePointsInCompanionLevel(level) end
+
+--- @param numXP integer
+--- @param startingLevel integer:nilable
+--- @return level integer
+function GetActiveCompanionLevelForExperiencePoints(numXP, startingLevel) end
+
 --- @return multiplier number
 function GetEnlightenedMultiplier() end
 
@@ -6788,12 +7001,6 @@ function GetProgressionSkillCurrentMorphSlot(progressionId) end
 --- @param morphSlot [MorphSlot|#MorphSlot]
 --- @return void
 function ChooseSkillProgressionMorphSlot(progressionId, morphSlot) end
-
---- @return note string
-function GetLatestAbilityRespecNote() end
-
---- @return note string
-function GetLatestAttributeRespecNote() end
 
 --- @param health integer
 --- @param magicka integer
@@ -6884,9 +7091,6 @@ function GetLoreBookIndicesFromBookId(bookId) end
 
 --- @return name string:nilable
 function GetGameCameraNonInteractableName() end
-
---- @return name bool
-function IsInteracting() end
 
 --- @return tutorialType [TutorialTrigger|#TutorialTrigger]
 function GetGameCameraTargetHoverTutorial() end
@@ -7065,6 +7269,13 @@ function GetLastCraftingResultLearnedTraitInfo(resultIndex) end
 
 --- @return numItems integer, penaltyApplied bool
 function GetNumLastCraftingResultItemsAndPenalty() end
+
+--- @return numCurrencies integer
+function GetNumLastCraftingResultCurrencies() end
+
+--- @param resultIndex luaindex
+--- @return currencyType [CurrencyType|#CurrencyType], currencyAmount integer
+function GetLastCraftingResultCurrencyInfo(resultIndex) end
 
 --- @param resultIndex luaindex
 --- @return name string, icon textureName, stack integer, sellPrice integer, meetsUsageRequirement bool, equipType [EquipType|#EquipType], itemType [ItemType|#ItemType], itemStyleId integer, displayQuality [ItemDisplayQuality|#ItemDisplayQuality], soundCategory [ItemUISoundCategory|#ItemUISoundCategory], itemInstanceId integer
@@ -8024,21 +8235,29 @@ function GetNumTelvarStonesLost() end
 --- @return isDyeable bool
 function IsRestyleSlotTypeDyeable(restyleMode, restyleSlotType) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @return name string
-function GetOutfitName(outfitIndex) end
+function GetOutfitName(actorCategory, outfitIndex) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @return collectibleId integer, itemMaterialIndex luaindex:nilable, primaryDyeId integer, secondaryDyeId integer, accentDyeId integer
-function GetOutfitSlotInfo(outfitIndex, outfitSlot) end
+function GetOutfitSlotInfo(actorCategory, outfitIndex, outfitSlot) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @return void
-function EquipOutfit(outfitIndex) end
+function EquipOutfit(actorCategory, outfitIndex) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @return void
+function UnequipOutfit(actorCategory) end
+
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return outfitIndex luaindex:nilable
-function GetEquippedOutfitIndex() end
+function GetEquippedOutfitIndex(actorCategory) end
 
 --- @param outfitStyleId integer
 --- @return freeConversionCollectibleId integer:nilable
@@ -8064,6 +8283,7 @@ function GetOutfitStyleVisualArmorType(outfitStyleId) end
 function GetOutfitChangeFlatCost() end
 
 --- @param useFlatCurrency bool
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @param collectibleId integer
@@ -8072,7 +8292,7 @@ function GetOutfitChangeFlatCost() end
 --- @param secondaryDyeId integer
 --- @param accentDyeId integer
 --- @return void
-function SendOutfitChangeRequest(useFlatCurrency, outfitIndex, outfitSlot, collectibleId, itemMaterialIndex, primaryDyeId, secondaryDyeId, accentDyeId) end
+function SendOutfitChangeRequest(useFlatCurrency, actorCategory, outfitIndex, outfitSlot, collectibleId, itemMaterialIndex, primaryDyeId, secondaryDyeId, accentDyeId) end
 
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @return collectibleCategoryId integer
@@ -8086,10 +8306,11 @@ function GetOutfitSlotDataHiddenOutfitStyleCollectibleId(outfitSlot) end
 --- @return violationCode [NamingError|#NamingError]
 function IsValidOutfitName(outfitName) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @param name string
 --- @return void
-function RenameOutfit(outfitIndex, name) end
+function RenameOutfit(actorCategory, outfitIndex, name) end
 
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @return equipSlot [EquipSlot|#EquipSlot]
@@ -8099,35 +8320,41 @@ function GetEquipSlotForOutfitSlot(outfitSlot) end
 --- @return outfitSlot [OutfitSlot|#OutfitSlot]
 function GetEligibleOutfitSlotsForCollectible(collectibleId) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param equipSlot [EquipSlot|#EquipSlot]
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @return canShowItem bool
-function CanEquippedItemBeShownInOutfitSlot(equipSlot, outfitSlot) end
+function CanEquippedItemBeShownInOutfitSlot(actorCategory, equipSlot, outfitSlot) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @param collectibleId integer
 --- @param changedDyeCount integer
 --- @return applyCostGold integer
-function GetApplyCostForIndividualOutfitSlot(outfitIndex, outfitSlot, collectibleId, changedDyeCount) end
+function GetApplyCostForIndividualOutfitSlot(actorCategory, outfitIndex, outfitSlot, collectibleId, changedDyeCount) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @param collectibleId integer
 --- @param changedDyeCount integer
 --- @return totalCostGold integer
-function GetTotalApplyCostForOutfitSlots(outfitIndex, outfitSlot, collectibleId, changedDyeCount) end
+function GetTotalApplyCostForOutfitSlots(actorCategory, outfitIndex, outfitSlot, collectibleId, changedDyeCount) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return mainHandOutfitSlot [OutfitSlot|#OutfitSlot]:nilable, offHandOutfitSlot [OutfitSlot|#OutfitSlot]:nilable
-function GetOutfitSlotsForCurrentlyHeldWeapons() end
+function GetOutfitSlotsForCurrentlyHeldWeapons(actorCategory) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return mainHandOutfitSlot [OutfitSlot|#OutfitSlot]:nilable, offHandOutfitSlot [OutfitSlot|#OutfitSlot]:nilable, backupMainHandOutfitSlot [OutfitSlot|#OutfitSlot]:nilable, backupOffHandOutfitSlot [OutfitSlot|#OutfitSlot]:nilable
-function GetOutfitSlotsForEquippedWeapons() end
+function GetOutfitSlotsForEquippedWeapons(actorCategory) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @param collectibleId integer
 --- @return primary bool, secondary bool, accent bool
-function AreDyeChannelsDyeableForOutfitSlotData(outfitSlot, collectibleId) end
+function AreDyeChannelsDyeableForOutfitSlotData(actorCategory, outfitSlot, collectibleId) end
 
 --- @return isJusticeEnabled bool
 function IsJusticeEnabled() end
@@ -8310,115 +8537,167 @@ function GetGamepadTemplate() end
 --- @return durationMS integer, coarseMotor number, fineMotor number, leftTriggerMotor number, rightTriggerMotor number, foundInfo bool, debugSourceInfo string
 function GetVibrationInfoFromTrigger(triggerType) end
 
+--- @param championSkillType [ChampionSkillType|#ChampionSkillType]
+--- @return isSlottable bool
+function CanChampionSkillTypeBeSlotted(championSkillType) end
+
 --- @return numDisciplines integer
 function GetNumChampionDisciplines() end
 
---- @param disciplineIndex luaindex
+--- @param disciplineId integer
 --- @return name string
-function GetChampionDisciplineName(disciplineIndex) end
+function GetChampionDisciplineName(disciplineId) end
 
---- @param disciplineIndex luaindex
---- @return description string
-function GetChampionDisciplineDescription(disciplineIndex) end
+--- @param disciplineId integer
+--- @return disciplineType [ChampionDisciplineType|#ChampionDisciplineType]
+function GetChampionDisciplineType(disciplineId) end
 
---- @param disciplineIndex luaindex
---- @return attribute [Attributes|#Attributes]
-function GetChampionDisciplineAttribute(disciplineIndex) end
+--- @param disciplineId integer
+--- @return texture textureName
+function GetChampionDisciplineZoomedOutBackground(disciplineId) end
+
+--- @param disciplineId integer
+--- @return texture textureName
+function GetChampionDisciplineZoomedInBackground(disciplineId) end
+
+--- @param disciplineId integer
+--- @return texture textureName
+function GetChampionDisciplineSelectedZoomedOutOverlay(disciplineId) end
 
 --- @param disciplineIndex luaindex
 --- @return numSkills integer
 function GetNumChampionDisciplineSkills(disciplineIndex) end
 
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
+--- @param championSkillId integer
 --- @return normalizedX number, normalizedY number
-function GetChampionSkillPosition(disciplineIndex, skillIndex) end
+function GetChampionSkillPosition(championSkillId) end
 
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
+--- @param championSkillId integer
+--- @return normalizedOffsetX number, normalizedOffsetY number
+function GetChampionClusterRootOffset(championSkillId) end
+
+--- @param championSkillId integer
 --- @return skillName string
-function GetChampionSkillName(disciplineIndex, skillIndex) end
+function GetChampionSkillName(championSkillId) end
 
 --- @return maxPossiblePoints integer
 function GetMaxPossiblePointsInChampionSkill() end
 
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
+--- @param championSkillId integer
 --- @return numSpentPoints integer
-function GetNumPointsSpentOnChampionSkill(disciplineIndex, skillIndex) end
+function GetNumPointsSpentOnChampionSkill(championSkillId) end
 
---- @param disciplineIndex luaindex
+--- @param disciplineId integer
 --- @return numSpentPoints integer
-function GetNumPointsSpentInChampionDiscipline(disciplineIndex) end
+function GetNumSpentChampionPoints(disciplineId) end
 
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
---- @return autoGrantLevel integer:nilable
-function GetChampionSkillUnlockLevel(disciplineIndex, skillIndex) end
-
---- @param attribute [Attributes|#Attributes]
---- @return numSpentPoints integer
-function GetNumSpentChampionPoints(attribute) end
-
---- @param attribute [Attributes|#Attributes]
+--- @param disciplineId integer
 --- @return numUnspentPoints integer
-function GetNumUnspentChampionPoints(attribute) end
+function GetNumUnspentChampionPoints(disciplineId) end
 
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
---- @return numPendingPoints integer
-function GetNumPendingChampionPoints(disciplineIndex, skillIndex) end
-
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
---- @param numPendingPoints integer
---- @return void
-function SetNumPendingChampionPoints(disciplineIndex, skillIndex, numPendingPoints) end
-
---- @param attribute [Attributes|#Attributes]
---- @return hasPoints bool
-function HasAvailableChampionPointsInAttribute(attribute) end
-
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
---- @return willBeUnlocked bool
-function WillChampionSkillBeUnlocked(disciplineIndex, skillIndex) end
-
---- @param isInRespecMode bool
---- @return void
-function SetChampionIsInRespecMode(isInRespecMode) end
-
---- @return isInRespecMode bool
-function IsChampionInRespecMode() end
-
---- @return needsRespec bool
-function IsChampionRespecNeeded() end
-
---- @return requested bool
-function SpendPendingChampionPoints() end
-
---- @param abilityId integer
+--- @param championSkillId integer
 --- @param numPendingPoints integer
 --- @return description string
-function GetChampionAbilityDescription(abilityId, numPendingPoints) end
+function GetChampionSkillDescription(championSkillId, numPendingPoints) end
 
---- @param disciplineIndex luaindex
---- @param skillIndex luaindex
+--- @param championSkillId integer
+--- @param numPendingPoints integer
+--- @return currentBonus string
+function GetChampionSkillCurrentBonusText(championSkillId, numPendingPoints) end
+
+--- @param championSkillId integer
 --- @return abilityId integer
-function GetChampionAbilityId(disciplineIndex, skillIndex) end
+function GetChampionAbilityId(championSkillId) end
 
 --- @return cost integer
 function GetChampionRespecCost() end
 
 --- @param rank integer
---- @return pointAttribute [Attributes|#Attributes]
-function GetChampionPointAttributeForRank(rank) end
+--- @return disciplineType [ChampionDisciplineType|#ChampionDisciplineType]
+function GetChampionPointPoolForRank(rank) end
 
 --- @return unlocked bool
 function IsChampionSystemUnlocked() end
 
---- @return active bool, activeReason [ChampionPointActiveReason|#ChampionPointActiveReason]
-function AreChampionPointsActive() end
+--- @param championSkillId integer
+--- @return linkedSkillId integer
+function GetChampionSkillLinkIds(championSkillId) end
+
+--- @param disciplineIndex luaindex
+--- @param championSkillIndex luaindex
+--- @return championSkillId integer
+function GetChampionSkillId(disciplineIndex, championSkillIndex) end
+
+--- @param championSkillId integer
+--- @return isRoot bool
+function IsChampionSkillRootNode(championSkillId) end
+
+--- @return numNodes integer
+function GetNumChampionNodesToPreallocate() end
+
+--- @return numLinks integer
+function GetNumChampionLinksToPreallocate() end
+
+--- @param championSkillId integer
+--- @return hasJumpPoints bool
+function DoesChampionSkillHaveJumpPoints(championSkillId) end
+
+--- @param championSkillId integer
+--- @return jumpPoint integer
+function GetChampionSkillJumpPoints(championSkillId) end
+
+--- @param championSkillId integer
+--- @return maxPoints integer
+function GetChampionSkillMaxPoints(championSkillId) end
+
+--- @param championSkillId integer
+--- @param pendingPoints integer
+--- @return unlocked bool
+function WouldChampionSkillNodeBeUnlocked(championSkillId, pendingPoints) end
+
+--- @param championSkillId integer
+--- @return championSkillType [ChampionSkillType|#ChampionSkillType]
+function GetChampionSkillType(championSkillId) end
+
+--- @param championSkillId integer
+--- @return isRoot bool
+function IsChampionSkillClusterRoot(championSkillId) end
+
+--- @param rootChampionSkillId integer
+--- @return clusterName string
+function GetChampionClusterName(rootChampionSkillId) end
+
+--- @param rootChampionSkillId integer
+--- @return texture textureName
+function GetChampionClusterBackgroundTexture(rootChampionSkillId) end
+
+--- @param rootChampionSkillId integer
+--- @return championSkillIds integer
+function GetChampionClusterSkillIds(rootChampionSkillId) end
+
+--- @param respecNeeded bool
+--- @return void
+function PrepareChampionPurchaseRequest(respecNeeded) end
+
+--- @param championSkillId integer
+--- @param newPendingPoints integer
+--- @return void
+function AddSkillToChampionPurchaseRequest(championSkillId, newPendingPoints) end
+
+--- @param slotIndex luaindex
+--- @param championSkillId integer
+--- @return void
+function AddHotbarSlotToChampionPurchaseRequest(slotIndex, championSkillId) end
+
+--- @return result [ChampionPurchaseResult|#ChampionPurchaseResult]
+function GetChampionPurchaseAvailability() end
+
+--- @return result [ChampionPurchaseResult|#ChampionPurchaseResult]
+function GetExpectedResultForChampionPurchaseRequest() end
+
+--- @param disciplineIndex luaindex
+--- @return disciplineId integer
+function GetChampionDisciplineId(disciplineIndex) end
 
 --- @return numQuickChats integer
 function GetNumDefaultQuickChats() end
@@ -10011,6 +10290,10 @@ function GetWorldEventId(worldEventInstanceId) end
 function GetWorldEventType(worldEventId) end
 
 --- @param worldEventInstanceId integer
+--- @return locationContext [WorldEventLocationContext|#WorldEventLocationContext]
+function GetWorldEventLocationContext(worldEventInstanceId) end
+
+--- @param worldEventInstanceId integer
 --- @return numUnits integer
 function GetNumWorldEventInstanceUnits(worldEventInstanceId) end
 
@@ -10023,6 +10306,15 @@ function GetWorldEventInstanceUnitTag(worldEventInstanceId, unitIndex) end
 --- @param unitTag string
 --- @return pinType [MapDisplayPinType|#MapDisplayPinType]
 function GetWorldEventInstanceUnitPinType(worldEventInstanceId, unitTag) end
+
+--- @param worldEventInstanceId integer
+--- @return zoneIndex luaindex, poiIndex luaindex
+function GetWorldEventPOIInfo(worldEventInstanceId) end
+
+--- @param zoneIndex luaindex
+--- @param poiIndex luaindex
+--- @return worldEventInstanceId integer
+function GetPOIWorldEventInstanceId(zoneIndex, poiIndex) end
 
 --- @return searchId integer:nilable
 function GuildFinderRequestSearch() end
@@ -10336,6 +10628,9 @@ function GetNextItemSetCollectionId(lastItemSetId) end
 --- @return slot id64
 function GetItemSetCollectionSlotsInMask(slotMask) end
 
+--- @return hasNewPieces bool
+function DoesItemSetCollectionsHaveAnyNewPieces() end
+
 --- @param itemSetId integer
 --- @return categoryId integer
 function GetItemSetCollectionCategoryId(itemSetId) end
@@ -10452,6 +10747,115 @@ function GetNumSubcategoriesInCollectibleCategory(topLevelIndex) end
 --- @return numCollectibles integer
 function GetNumCollectiblesInCollectibleCategory(topLevelIndex, subCategoryIndex) end
 
+--- @return hasActiveCompanion bool
+function HasActiveCompanion() end
+
+--- @return hasPendingCompanion bool
+function HasPendingCompanion() end
+
+--- @return hasBlockedCompanion bool
+function HasBlockedCompanion() end
+
+--- @return activeCompanionDefId integer
+function GetActiveCompanionDefId() end
+
+--- @return pendingCompanionId integer
+function GetPendingCompanionDefId() end
+
+--- @param companionId integer
+--- @return collectibleId integer
+function GetCompanionCollectibleId(companionId) end
+
+--- @param companionId integer
+--- @return questId integer
+function GetCompanionIntroQuestId(companionId) end
+
+--- @param companionId integer
+--- @return name string
+function GetCompanionName(companionId) end
+
+--- @param companionId integer
+--- @return abilityId integer
+function GetCompanionPassivePerkAbilityId(companionId) end
+
+--- @return level integer, currentExperience integer
+function GetActiveCompanionLevelInfo() end
+
+--- @return maxRapport integer
+function GetMaximumRapport() end
+
+--- @return minRapport integer
+function GetMinimumRapport() end
+
+--- @return rapportLevel [CompanionRapportLevel|#CompanionRapportLevel]
+function GetActiveCompanionRapportLevel() end
+
+--- @return rapport integer
+function GetActiveCompanionRapport() end
+
+--- @param rapportLevel [CompanionRapportLevel|#CompanionRapportLevel]
+--- @return rapportLevelDescription string
+function GetActiveCompanionRapportLevelDescription(rapportLevel) end
+
+--- @param companionLevel integer
+--- @return numSlots integer
+function GetCompanionNumSlotsUnlockedForLevel(companionLevel) end
+
+--- @return available bool
+function IsTimedActivitySystemAvailable() end
+
+--- @return numTimedActivities integer
+function GetNumTimedActivities() end
+
+--- @param activityType [TimedActivityType|#TimedActivityType]:nilable
+--- @return numTimedActivities integer
+function GetNumTimedActivitiesCompleted(activityType) end
+
+--- @param activityType [TimedActivityType|#TimedActivityType]
+--- @return maxActivities integer
+function GetTimedActivityTypeLimit(activityType) end
+
+--- @param index luaindex
+--- @return timedActivityId integer
+function GetTimedActivityId(index) end
+
+--- @param index luaindex
+--- @return activityName string
+function GetTimedActivityName(index) end
+
+--- @param index luaindex
+--- @return activityDescription string
+function GetTimedActivityDescription(index) end
+
+--- @param index luaindex
+--- @return activityType [TimedActivityType|#TimedActivityType]
+function GetTimedActivityType(index) end
+
+--- @param index luaindex
+--- @return difficulty [TimedActivityDifficulty|#TimedActivityDifficulty]
+function GetTimedActivityDifficulty(index) end
+
+--- @param index luaindex
+--- @return numRewards integer
+function GetNumTimedActivityRewards(index) end
+
+--- @param index luaindex
+--- @param rewardIndex luaindex
+--- @return rewardId integer, quantity integer
+function GetTimedActivityRewardInfo(index, rewardIndex) end
+
+--- @param index luaindex
+--- @return progress integer
+function GetTimedActivityProgress(index) end
+
+--- @param index luaindex
+--- @return maxProgress integer
+function GetTimedActivityMaxProgress(index) end
+
+--- @param index luaindex
+--- @return timeRemainingSeconds integer
+function GetTimedActivityTimeRemainingSeconds(index) end
+
 --- @return isActive bool
 function IsGameCameraActive() end
 
@@ -10503,12 +10907,12 @@ function SetFullscreenEffect(effectType, param1, param2, immediateUpdate) end
 --- @return isBankOpen bool
 function IsBankOpen() end
 
---- @return bankingBag [Bag|#Bag]
+--- @return bagId [Bag|#Bag]
 function GetBankingBag() end
 
---- @param bankingBag [Bag|#Bag]
+--- @param bagId [Bag|#Bag]
 --- @return doesBankHoldCurrency bool
-function DoesBankHoldCurrency(bankingBag) end
+function DoesBankHoldCurrency(bagId) end
 
 --- @return isGuildBankOpen bool
 function IsGuildBankOpen() end
@@ -10616,10 +11020,6 @@ function UseItem(bagId, slotIndex) end --*protected*
 --- @param slotIndex integer
 --- @return canInteract bool
 function CanInteractWithItem(bagId, slotIndex) end
-
---- @param equipSlot [EquipSlot|#EquipSlot]
---- @return void
-function UnequipItem(equipSlot) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
@@ -10864,6 +11264,11 @@ function GetItemId(bagId, slotIndex) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
+--- @return actorCategory [GameplayActorCategory|#GameplayActorCategory]
+function GetItemActorCategory(bagId, slotIndex) end
+
+--- @param bagId [Bag|#Bag]
+--- @param slotIndex integer
 --- @return sellPrice integer
 function GetItemSellValueWithBonuses(bagId, slotIndex) end
 
@@ -10911,6 +11316,11 @@ function GetItemFunctionalQuality(bagId, slotIndex) end
 --- @param slotIndex integer
 --- @return displayQuality [ItemDisplayQuality|#ItemDisplayQuality]
 function GetItemDisplayQuality(bagId, slotIndex) end
+
+--- @param bagId [Bag|#Bag]
+--- @param slotIndex integer
+--- @return equipType [EquipType|#EquipType]
+function GetItemEquipType(bagId, slotIndex) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
@@ -10990,10 +11400,10 @@ function HasCraftBagAccess() end
 --- @return void
 function SelectGuildBank(guildId) end
 
---- @param sourceBag [Bag|#Bag]
---- @param sourceSlot integer
+--- @param sourceBagId [Bag|#Bag]
+--- @param sourceSlotIndex integer
 --- @return void
-function TransferToGuildBank(sourceBag, sourceSlot) end
+function TransferToGuildBank(sourceBagId, sourceSlotIndex) end
 
 --- @param slotId integer
 --- @return void
@@ -11010,9 +11420,9 @@ function CanAnyItemsBeStoredInCraftBag(bagId) end
 
 --- @param destinationBagId [Bag|#Bag]
 --- @param sourceBagId [Bag|#Bag]
---- @param sourceSlot integer
+--- @param sourceSlotIndex integer
 --- @return hasSpace bool
-function DoesBagHaveSpaceFor(destinationBagId, sourceBagId, sourceSlot) end
+function DoesBagHaveSpaceFor(destinationBagId, sourceBagId, sourceSlotIndex) end
 
 --- @param destinationBagId [Bag|#Bag]
 --- @param itemLink string
@@ -11079,6 +11489,10 @@ function GetItemLinkName(itemLink) end
 --- @param itemLink string
 --- @return itemId integer
 function GetItemLinkItemId(itemLink) end
+
+--- @param itemLink string
+--- @return slot id64
+function GetItemLinkItemSetCollectionSlot(itemLink) end
 
 --- @param itemLink string
 --- @return itemIcon textureName
@@ -11447,6 +11861,10 @@ function GetItemLinkOutfitStyleId(itemLink) end
 function GetItemLinkTooltipRequiresCollectibleId(itemLink) end
 
 --- @param itemLink string
+--- @return actorCategory [GameplayActorCategory|#GameplayActorCategory]
+function GetItemLinkActorCategory(itemLink) end
+
+--- @param itemLink string
 --- @return shouldHideLevel bool
 function ShouldHideTooltipRequiredLevel(itemLink) end
 
@@ -11502,9 +11920,9 @@ function GetTelvarStoneMultiplier(thresholdIndex) end
 --- @return isAtMaxThreshold bool
 function IsMaxTelvarStoneMultiplierThreshold(thresholdIndex) end
 
---- @param bag [Bag|#Bag]
+--- @param bagId [Bag|#Bag]
 --- @return void
-function StackBag(bag) end
+function StackBag(bagId) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
@@ -11559,14 +11977,22 @@ function IsItemFromCrownStore(bagId, slotIndex) end
 --- @return isFromCrownCrate bool
 function IsItemFromCrownCrate(bagId, slotIndex) end
 
+--- @param itemLink string
+--- @return isFromCrownStore bool
+function IsItemLinkFromCrownStore(itemLink) end
+
+--- @param itemLink string
+--- @return isFromCrownCrate bool
+function IsItemLinkFromCrownCrate(itemLink) end
+
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
 --- @return bindType [BindType|#BindType]
 function GetItemBindType(bagId, slotIndex) end
 
---- @param bag [Bag|#Bag]
+--- @param bagId [Bag|#Bag]
 --- @return isHouseBankBag bool
-function IsHouseBankBag(bag) end
+function IsHouseBankBag(bagId) end
 
 --- @return currentBankUpgrade integer
 function GetCurrentBankUpgrade() end
@@ -11603,6 +12029,28 @@ function GetItemSellInformation(bagId, slotIndex) end
 --- @param itemLink string
 --- @return sellInformation [ItemSellInformation|#ItemSellInformation]
 function GetItemLinkSellInformation(itemLink) end
+
+--- @param itemLink string
+--- @return equipSlot1 [EquipSlot|#EquipSlot], equipSlot2 [EquipSlot|#EquipSlot]
+function GetItemLinkComparisonEquipSlots(itemLink) end
+
+--- @param bagId [Bag|#Bag]
+--- @param slotIndex integer
+--- @return equipSlot1 [EquipSlot|#EquipSlot], equipSlot2 [EquipSlot|#EquipSlot]
+function GetItemComparisonEquipSlots(bagId, slotIndex) end
+
+--- @param itemLink string
+--- @return equipSlot1 [EquipSlot|#EquipSlot], equipSlot2 [EquipSlot|#EquipSlot]
+function GetItemLinkEquippedComparisonEquipSlots(itemLink) end
+
+--- @param bagId [Bag|#Bag]
+--- @param slotIndex integer
+--- @return equipSlot1 [EquipSlot|#EquipSlot], equipSlot2 [EquipSlot|#EquipSlot]
+function GetItemEquippedComparisonEquipSlots(bagId, slotIndex) end
+
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @return bagId [Bag|#Bag]
+function GetWornBagForGameplayActorCategory(actorCategory) end
 
 --- @param combinationId integer
 --- @return canPerformCombination bool
@@ -11779,8 +12227,9 @@ function GetCollectibleIdFromType(collectibleCategoryType, index) end
 function IsCollectibleCategorySlottable(collectibleCategoryType) end
 
 --- @param collectibleCategoryType [CollectibleCategoryType|#CollectibleCategoryType]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return isUsable bool
-function IsCollectibleCategoryUsable(collectibleCategoryType) end
+function IsCollectibleCategoryUsable(collectibleCategoryType, actorCategory) end
 
 --- @param collectibleCategoryType [CollectibleCategoryType|#CollectibleCategoryType]
 --- @return isPlaceable bool
@@ -11803,8 +12252,9 @@ function GetCollectibleBlockReason(collectibleId) end
 function IsCollectibleSlottable(collectibleId) end
 
 --- @param collectibleId integer
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return isUsable bool
-function IsCollectibleUsable(collectibleId) end
+function IsCollectibleUsable(collectibleId, actorCategory) end
 
 --- @param collectibleId integer
 --- @return isRenameable bool
@@ -11819,8 +12269,24 @@ function GetCollectibleHint(collectibleId) end
 function DoesESOPlusUnlockCollectible(collectibleId) end
 
 --- @param collectibleId integer
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return void
-function UseCollectible(collectibleId) end
+function UseCollectible(collectibleId, actorCategory) end
+
+--- @param collectibleCategoryType [CollectibleCategoryType|#CollectibleCategoryType]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @return hasDefault bool
+function DoesCollectibleCategoryTypeHaveDefault(collectibleCategoryType, actorCategory) end
+
+--- @param collectibleCategoryType [CollectibleCategoryType|#CollectibleCategoryType]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @return isDefault bool
+function IsCollectibleCategoryTypeSetToDefault(collectibleCategoryType, actorCategory) end
+
+--- @param collectibleCategoryType [CollectibleCategoryType|#CollectibleCategoryType]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @return void
+function SetCollectibleCategoryTypeToDefault(collectibleCategoryType, actorCategory) end
 
 --- @param collectibleId integer
 --- @param linkStyle [LinkStyle|#LinkStyle]
@@ -11834,6 +12300,10 @@ function GetCollectibleCategoryTypeFromLink(link) end
 --- @param link string
 --- @return collectibleId integer:nilable
 function GetCollectibleIdFromLink(link) end
+
+--- @param collectibleId integer
+--- @return questState [CollectibleAssociatedQuestState|#CollectibleAssociatedQuestState]
+function GetCollectibleAssociatedQuestState(collectibleId) end
 
 --- @param searchString string
 --- @return void
@@ -11900,8 +12370,9 @@ function GetCollectibleUnlockStateById(collectibleId) end
 function IsCollectibleUnlocked(collectibleId) end
 
 --- @param collectibleId integer
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return isActive bool
-function IsCollectibleActive(collectibleId) end
+function IsCollectibleActive(collectibleId, actorCategory) end
 
 --- @param collectibleId integer
 --- @return owned bool
@@ -11915,8 +12386,9 @@ function GetImperialCityCollectibleId() end
 function GetCollectibleQuestPreviewInfo(collectibleId) end
 
 --- @param categoryType [CollectibleCategoryType|#CollectibleCategoryType]
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return collectibleId integer
-function GetActiveCollectibleByType(categoryType) end
+function GetActiveCollectibleByType(categoryType, actorCategory) end
 
 --- @param collectibleId integer
 --- @return cooldownRemaining integer, cooldownDuration integer
@@ -11965,12 +12437,12 @@ function GetCollectibleCategorySortOrder(topLevelIndex, categoryIndex) end
 --- @return containsSlottableCollectibles bool
 function DoesCollectibleCategoryContainSlottableCollectibles(topLevelIndex, categoryIndex) end
 
---- @param houseBankBag [Bag|#Bag]
+--- @param houseBankBagId [Bag|#Bag]
 --- @return collectibleId integer
-function GetCollectibleForHouseBankBag(houseBankBag) end
+function GetCollectibleForHouseBankBag(houseBankBagId) end
 
 --- @param collectibleId integer
---- @return houseBankBag [Bag|#Bag]:nilable
+--- @return houseBankBagId [Bag|#Bag]:nilable
 function GetCollectibleBankAccessBag(collectibleId) end
 
 --- @param lastCollectibleId integer:nilable
@@ -11993,6 +12465,11 @@ function GetNumCollectibleTags(collectibleId) end
 --- @param tagIndex luaindex
 --- @return tagDescription string, tagCategory [ItemTagCategory|#ItemTagCategory]
 function GetCollectibleTagInfo(collectibleId, tagIndex) end
+
+--- @param collectibleId integer
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @return isCollectibleAvailable bool
+function IsCollectibleAvailableToActorCategory(collectibleId, actorCategory) end
 
 --- @param displayGroup [MarketDisplayGroup|#MarketDisplayGroup]
 --- @return void
@@ -12022,26 +12499,22 @@ function IsLTODisabledForMarketProductCategory(displayGroup, topLevelIndex, cate
 --- @param displayGroup [MarketDisplayGroup|#MarketDisplayGroup]
 --- @param topLevelIndex luaindex
 --- @param categoryIndex luaindex:nilable
---- @return containsNewProducts bool
-function DoesMarketProductCategoryContainNewMarketProducts(displayGroup, topLevelIndex, categoryIndex) end
+--- @param filterTypes integer
+--- @return containsProducts bool
+function DoesMarketProductCategoryContainFilteredProducts(displayGroup, topLevelIndex, categoryIndex, filterTypes) end
 
 --- @param displayGroup [MarketDisplayGroup|#MarketDisplayGroup]
 --- @param topLevelIndex luaindex
 --- @param categoryIndex luaindex:nilable
---- @return containsNewProducts bool
-function DoesMarketProductCategoryOrSubcategoriesContainNewMarketProducts(displayGroup, topLevelIndex, categoryIndex) end
+--- @param filterTypes integer
+--- @return containsProducts bool
+function DoesMarketProductCategoryOrSubcategoriesContainFilteredProducts(displayGroup, topLevelIndex, categoryIndex, filterTypes) end
 
---- @param displayGroup [MarketDisplayGroup|#MarketDisplayGroup]
---- @param topLevelIndex luaindex
---- @param categoryIndex luaindex:nilable
---- @return containsEsoPlusProducts bool
-function DoesMarketProductCategoryOrSubcategoriesContainEsoPlusMarketProducts(displayGroup, topLevelIndex, categoryIndex) end
-
---- @param displayGroup [MarketDisplayGroup|#MarketDisplayGroup]
---- @param topLevelIndex luaindex
---- @param categoryIndex luaindex:nilable
---- @return containsNewEsoPlusProducts bool
-function DoesMarketProductCategoryOrSubcategoriesContainNewEsoPlusMarketProducts(displayGroup, topLevelIndex, categoryIndex) end
+--- @param marketProductId integer
+--- @param presentationIndex luaindex:nilable
+--- @param filterTypes integer
+--- @return matchesFilter bool
+function DoesMarketProductMatchFilter(marketProductId, presentationIndex, filterTypes) end
 
 --- @param marketProductId integer
 --- @return name string, description string, icon textureName, isNew bool, isFeatured bool
@@ -12270,6 +12743,13 @@ function GetActiveChapterUpgradeMarketProductListings(displayGroup) end
 --- @return void
 function OnMarketClose() end --*private*
 
+--- @return hasShownAnnouncement bool
+function HasShownMarketAnnouncement() end
+
+--- @param shouldSendGift bool
+--- @return void
+function RespondToSendPartiallyOwnedGift(shouldSendGift) end
+
 --- @return completedDailyLoginRewardClaimsBackground textureName
 function GetMarketAnnouncementCompletedDailyLoginRewardClaimsBackground() end
 
@@ -12481,9 +12961,14 @@ function GetDyeColorsById(dyeId) end
 --- @return primaryDyeIndex integer, secondaryDyeIndex integer, accentDyeIndex integer
 function GetCurrentItemDyes(bagId, slotIndex) end
 
+--- @param restyleMode [RestyleMode|#RestyleMode]
 --- @param collectibleId integer
 --- @return primaryDyeIndex integer, secondaryDyeIndex integer, accentDyeIndex integer
-function GetCurrentCollectibleDyes(collectibleId) end
+function GetCurrentCollectibleDyes(restyleMode, collectibleId) end
+
+--- @param restyleMode [RestyleMode|#RestyleMode]
+--- @return void
+function ApplyPendingDyes(restyleMode) end
 
 --- @return numSavedDyeSets integer
 function GetNumSavedDyeSets() end
@@ -12567,12 +13052,14 @@ function GetRestyleSlotDyeData(restyleMode, restyleSetIndex, restyleSlot) end
 --- @return primaryDyeId integer, secondaryDyeId integer, accentDyeId integer
 function GetRestyleSlotCurrentDyes(restyleMode, restyleSetIndex, restyleSlot) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return numOutfits integer
-function GetNumUnlockedOutfits() end
+function GetNumUnlockedOutfits(actorCategory) end
 
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param collectibleId integer
 --- @return isPresent bool
-function IsCollectiblePresentInEffectivelyEquippedOutfit(collectibleId) end
+function IsCollectiblePresentInEffectivelyEquippedOutfit(actorCategory, collectibleId) end
 
 --- @param outfitStyleId integer
 --- @return numItemMaterials integer
@@ -12598,18 +13085,6 @@ function GetOutfitStyleItemStyleId(outfitStyleId) end
 --- @return canPreview bool
 function IsCharacterPreviewingAvailable() end
 
---- @return previewCollectionId integer
-function AddPreviewCollection() end
-
---- @param previewCollectionId integer
---- @return void
-function RemovePreviewCollection(previewCollectionId) end
-
---- @param previewCollectionId integer
---- @param show bool
---- @return success bool
-function SetPreviewCollectionShown(previewCollectionId, show) end
-
 --- @param forceDismount bool
 --- @return void
 function EnablePreviewMode(forceDismount) end
@@ -12623,18 +13098,18 @@ function GetPreviewModeEnabled() end
 --- @return isPreviewing bool
 function IsCurrentlyPreviewing() end
 
+--- @param furnitureId id64
+--- @return isPreviewing bool
+function IsCurrentlyPreviewingPlacedFurniture(furnitureId) end
+
 --- @param collectibleId integer
 --- @return isPreviewing bool
-function IsCurrentlyPreviewingCollectibleAsFurniture(collectibleId) end
+function IsCurrentlyPreviewingFurnitureCollectible(collectibleId) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
 --- @return isPreviewing bool
-function IsCurrentlyPreviewingInventoryItemAsFurniture(bagId, slotIndex) end
-
---- @param furnitureId id64
---- @return isPreviewing bool
-function IsCurrentlyPreviewingPlacedFurniture(furnitureId) end
+function IsCurrentlyPreviewingInventoryItem(bagId, slotIndex) end
 
 --- @return canSpin bool
 function CanSpinPreviewCharacter() end
@@ -12657,48 +13132,31 @@ function SetPreviewInEmptyWorld(sunlightAzimuthRadians, sunlightAltitudeRadians)
 --- @return void
 function SetPreviewDynamicFramingOpening(openingWidthUI, openingHeightUI, cameraAngleRadians) end
 
---- @param previewCollectionId integer
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @param outfitIndex luaindex
 --- @return void
-function SetPreviewingOutfitIndexInPreviewCollection(previewCollectionId, outfitIndex) end
+function SetPreviewingOutfitIndexInPreviewCollection(actorCategory, outfitIndex) end
 
---- @param previewCollectionId integer
+--- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
 --- @return void
-function SetPreviewingUnequippedOutfitInPreviewCollection(previewCollectionId) end
+function SetPreviewingUnequippedOutfitInPreviewCollection(actorCategory) end
 
---- @param previewCollectionId integer
---- @return void
-function ClearPreviewingOutfitIndexInPreviewCollection(previewCollectionId) end
-
---- @param previewCollectionId integer
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @param collectibleDefId integer
 --- @param itemMaterialIndex luaindex:nilable
 --- @param primaryDyeDefId integer
 --- @param secondaryDyeDefId integer
 --- @param accentDyeDefId integer
---- @param refreshIfShowing bool
 --- @return void
-function AddOutfitSlotPreviewElementToPreviewCollection(previewCollectionId, outfitSlot, collectibleDefId, itemMaterialIndex, primaryDyeDefId, secondaryDyeDefId, accentDyeDefId, refreshIfShowing) end --*private*
+function AddOutfitSlotPreviewElementToPreviewCollection(outfitSlot, collectibleDefId, itemMaterialIndex, primaryDyeDefId, secondaryDyeDefId, accentDyeDefId) end --*private*
 
---- @param previewCollectionId integer
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
---- @param refreshIfShowing bool
 --- @return void
-function ClearOutfitSlotPreviewElementFromPreviewCollection(previewCollectionId, outfitSlot, refreshIfShowing) end
+function ClearOutfitSlotPreviewElementFromPreviewCollection(outfitSlot) end
 
---- @param previewCollectionId integer
---- @param refreshIfShowing bool
---- @return void
-function ClearAllOutfitSlotPreviewElementsFromPreviewCollection(previewCollectionId, refreshIfShowing) end
-
---- @return previewCollectionId integer
-function GetPreviewCollectionCurrentlyShown() end
-
---- @param previewCollectionId integer
 --- @param outfitSlot [OutfitSlot|#OutfitSlot]
 --- @return collectibleDefId integer, itemMaterialIndex luaindex:nilable, primaryDyeDefId integer, secondaryDyeDefId integer, accentDyeDefId integer
-function GetOutfitSlotInfoForOutfitSlotInPreviewCollection(previewCollectionId, outfitSlot) end
+function GetOutfitSlotInfoForOutfitSlotInPreviewCollection(outfitSlot) end
 
 --- @param dyeStampId integer
 --- @param itemType [ItemUseType|#ItemUseType]
@@ -12732,15 +13190,18 @@ function PreviewCollectibleAsFurniture(collectibleDefId, variation) end --*priva
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
---- @param dyeBrushId integer
---- @return void
-function PreviewInventoryItem(bagId, slotIndex, dyeBrushId) end
+--- @return canPreview bool
+function CanInventoryItemBePreviewed(bagId, slotIndex) end
+
+--- @param itemLink string
+--- @return canPreview bool
+function CanItemLinkBePreviewed(itemLink) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
 --- @param variation luaindex
 --- @return void
-function PreviewInventoryItemAsFurniture(bagId, slotIndex, variation) end
+function PreviewInventoryItem(bagId, slotIndex, variation) end
 
 --- @param entryIndex luaindex
 --- @param variation luaindex
@@ -12748,30 +13209,15 @@ function PreviewInventoryItemAsFurniture(bagId, slotIndex, variation) end
 --- @return void
 function PreviewStoreEntry(entryIndex, variation, dyeBrushId) end
 
---- @param entryIndex luaindex
---- @param variation luaindex
---- @return void
-function PreviewStoreEntryAsFurniture(entryIndex, variation) end
-
---- @param index luaindex
---- @param dyeBrushId integer
---- @return void
-function PreviewTradingHouseSearchResultItem(index, dyeBrushId) end
-
 --- @param index luaindex
 --- @param variation luaindex
 --- @return void
-function PreviewTradingHouseSearchResultItemAsFurniture(index, variation) end
+function PreviewTradingHouseSearchResultItem(index, variation) end
 
 --- @param itemLink string
 --- @param variation luaindex
 --- @return void
-function PreviewTradingHouseSearchResultItemLinkAsFurniture(itemLink, variation) end
-
---- @param itemLink string
---- @param dyeBrushId integer
---- @return void
-function PreviewArmorByItemLink(itemLink, dyeBrushId) end --*private*
+function PreviewItemLink(itemLink, variation) end
 
 --- @param recipeListIndex luaindex
 --- @param recipeIndex luaindex
@@ -12810,13 +13256,22 @@ function GetCollectibleAsFurniturePreviewVariationDisplayName(collectibleDefId, 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
 --- @return numVariations integer
-function GetNumInventoryItemAsFurniturePreviewVariations(bagId, slotIndex) end
+function GetNumInventoryItemPreviewVariations(bagId, slotIndex) end
 
 --- @param bagId [Bag|#Bag]
 --- @param slotIndex integer
 --- @param variation luaindex
 --- @return variationDisplayName string
-function GetInventoryItemAsFurniturePreviewVariationDisplayName(bagId, slotIndex, variation) end
+function GetInventoryItemPreviewVariationDisplayName(bagId, slotIndex, variation) end
+
+--- @param itemLink string
+--- @return numVariations integer
+function GetNumItemLinkPreviewVariations(itemLink) end
+
+--- @param itemLink string
+--- @param variation luaindex
+--- @return variationDisplayName string
+function GetItemLinkPreviewVariationDisplayName(itemLink, variation) end
 
 --- @param entryIndex luaindex
 --- @return numVariations integer
@@ -12827,32 +13282,14 @@ function GetNumStoreEntryPreviewVariations(entryIndex) end
 --- @return variationDisplayName string
 function GetStoreEntryPreviewVariationDisplayName(entryIndex, variation) end
 
---- @param entryIndex luaindex
---- @return numVariations integer
-function GetNumStoreEntryAsFurniturePreviewVariations(entryIndex) end
-
---- @param entryIndex luaindex
---- @param variation luaindex
---- @return variationDisplayName string
-function GetStoreEntryAsFurniturePreviewVariationDisplayName(entryIndex, variation) end
-
 --- @param index luaindex
 --- @return numVariations integer
-function GetNumTradingHouseSearchResultItemAsFurniturePreviewVariations(index) end
+function GetNumTradingHouseSearchResultItemPreviewVariations(index) end
 
 --- @param index luaindex
 --- @param variation luaindex
 --- @return variationDisplayName string
-function GetTradingHouseSearchResultItemAsFurniturePreviewVariationDisplayName(index, variation) end
-
---- @param itemLink string
---- @return numVariations integer
-function GetNumTradingHouseSearchResultItemLinkAsFurniturePreviewVariations(itemLink) end
-
---- @param itemLink string
---- @param variation luaindex
---- @return variationDisplayName string
-function GetTradingHouseSearchResultItemLinkAsFurniturePreviewVariationDisplayName(itemLink, variation) end
+function GetTradingHouseSearchResultItemPreviewVariationDisplayName(index, variation) end
 
 --- @param recipeListIndex luaindex
 --- @param recipeIndex luaindex
@@ -12906,8 +13343,9 @@ function GetMarketProductPreviewVariationDisplayName(marketProductId, variation)
 function GetMarketProductChapterUpgradeId(marketProductId) end
 
 --- @param houseId integer
+--- @param jumpOutside bool
 --- @return void
-function RequestJumpToHouse(houseId) end
+function RequestJumpToHouse(houseId, jumpOutside) end
 
 --- @param houseTemplateId integer
 --- @return void
@@ -13060,6 +13498,10 @@ function GetCrownCrateRewardCrateId(rewardId) end
 --- @param rewardId integer
 --- @return instantUnlockId integer
 function GetInstantUnlockRewardInstantUnlockId(rewardId) end
+
+--- @param rewardId integer
+--- @return skillLineId integer
+function GetSkillLineExperienceRewardSkillLineId(rewardId) end
 
 --- @param rewardId integer
 --- @return canPreview bool
@@ -13418,23 +13860,27 @@ function GetAbilityName(abilityId) end
 
 --- @param abilityId integer
 --- @param overrideRank integer:nilable
+--- @param casterUnitTag string
 --- @return channeled bool, castTime integer, channelTime integer
-function GetAbilityCastInfo(abilityId, overrideRank) end
+function GetAbilityCastInfo(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
 --- @param overrideRank integer:nilable
+--- @param casterUnitTag string
 --- @return targetDescription string:nilable
-function GetAbilityTargetDescription(abilityId, overrideRank) end
+function GetAbilityTargetDescription(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
 --- @param overrideRank integer:nilable
+--- @param casterUnitTag string
 --- @return minRangeCM integer, maxRangeCM integer
-function GetAbilityRange(abilityId, overrideRank) end
+function GetAbilityRange(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
 --- @param overrideRank integer:nilable
+--- @param casterUnitTag string
 --- @return radius integer
-function GetAbilityRadius(abilityId, overrideRank) end
+function GetAbilityRadius(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
 --- @return angleDistance integer
@@ -13446,8 +13892,14 @@ function IsAbilityDurationToggled(abilityId) end
 
 --- @param abilityId integer
 --- @param overrideRank integer:nilable
---- @return duration integer
-function GetAbilityDuration(abilityId, overrideRank) end
+--- @param casterUnitTag string
+--- @return durationMs integer
+function GetAbilityDuration(abilityId, overrideRank, casterUnitTag) end
+
+--- @param abilityId integer
+--- @param casterUnitTag string
+--- @return durationMs integer
+function GetAbilityCooldown(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
 --- @return icon textureName
@@ -13468,17 +13920,23 @@ function GetAbilityCostOverTime(abilityId, overrideRank) end
 function GetAbilityRoles(abilityId) end
 
 --- @param abilityId integer
+--- @param casterUnitTag string
 --- @return header string
-function GetAbilityDescriptionHeader(abilityId) end
+function GetAbilityDescriptionHeader(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
 --- @param overrideRank integer:nilable
+--- @param casterUnitTag string
 --- @return description string
-function GetAbilityDescription(abilityId, overrideRank) end
+function GetAbilityDescription(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
 --- @return isPassive bool
 function IsAbilityPassive(abilityId) end
+
+--- @param abilityId integer
+--- @return isUltimate bool
+function IsAbilityUltimate(abilityId) end
 
 --- @return supportsCodeRedemption bool
 function DoesPlatformSupportCodeRedemption() end
@@ -13486,4 +13944,20 @@ function DoesPlatformSupportCodeRedemption() end
 --- @param pieceId integer
 --- @return isUnlocked bool
 function IsItemSetCollectionPieceUnlocked(pieceId) end
+
+--- @param marketCurrencyType [MarketCurrencyType|#MarketCurrencyType]
+--- @return currencyType [CurrencyType|#CurrencyType]
+function GetCurrencyTypeFromMarketCurrencyType(marketCurrencyType) end
+
+--- @param currencyType [CurrencyType|#CurrencyType]
+--- @return marketCurrencyType [MarketCurrencyType|#MarketCurrencyType]
+function GetMarketCurrencyTypeFromCurrencyType(currencyType) end
+
+--- @param skillLineId integer
+--- @return name string
+function GetSkillLineNameById(skillLineId) end
+
+--- @param skillLineId integer
+--- @return detailedIcon textureName
+function GetSkillLineDetailedIconById(skillLineId) end
 

@@ -1,3 +1,5 @@
+var GuiXml =
+		/* copy the complete GuiXml.json file contents here to make this work. */
 {
     "GuiXml": {
         "childs": {
@@ -188,7 +190,7 @@
                     "Button": {
                         "attributes": {
                             "clickSound": "string",
-                            "endCapWidth": "integer",
+                            "endCapWidth": "layout measurement",
                             "font": "string",
                             "horizontalAlignment": "[TextAlignment|#TextAlignment]",
                             "modifyTextType": "[ModifyTextType|#ModifyTextType]",
@@ -216,14 +218,14 @@
                             },
                             "MouseButton": {
                                 "attributes": {
-                                    "button": "integer",
+                                    "button": "#MouseButtonIndex",
                                     "enabled": "bool"
                                 }
                             },
                             "NormalOffset": {
                                 "attributes": {
-                                    "x": "number",
-                                    "y": "number"
+                                    "x": "layout measurement",
+                                    "y": "layout measurement"
                                 }
                             },
                             "OnClicked": {
@@ -231,8 +233,8 @@
                             },
                             "PressedOffset": {
                                 "attributes": {
-                                    "x": "number",
-                                    "y": "number"
+                                    "x": "layout measurement",
+                                    "y": "layout measurement"
                                 }
                             },
                             "TextureCoords": {
@@ -296,6 +298,7 @@
                     "Control": {
                         "attributes": {
                             "alpha": "number",
+                            "autoRectClipChildren": "bool",
                             "clampedToScreen": "bool",
                             "excludeFromResizeToFitExtents": "bool",
                             "hidden": "bool",
@@ -306,26 +309,39 @@
                             "keyboardEnabled": "bool",
                             "layer": "string",
                             "level": "integer",
+                            "maskMode": "[ControlMaskMode|#ControlMaskMode]",
+                            "maskTextureFile": "string",
+                            "maskTextureFileReleaseOption": "[ReleaseReferenceOptions|#ReleaseReferenceOptions]",
+                            "maskThresholdNormalizedThickness": "number",
+                            "maskThresholdNormalizedZeroAlphaEdge": "number",
                             "mouseEnabled": "bool",
                             "movable": "bool",
                             "resizeHandleSize": "number",
                             "resizeToFitDescendents": "bool",
                             "scale": "number",
                             "shape": "[ShapeType|#ShapeType]",
+                            "space": "[Space|#Space]",
                             "tier": "string"
                         },
                         "childs": {
                             "Anchor": {
                                 "attributes": {
                                     "constrains": "#AnchorConstrains",
-                                    "offsetX": "number",
-                                    "offsetY": "number",
+                                    "offsetX": "layout measurement",
+                                    "offsetY": "layout measurement",
                                     "point": "#AnchorPosition",
                                     "relativePoint": "#AnchorPosition",
                                     "relativeTo": "string"
                                 }
                             },
                             "AnchorFill": [],
+                            "CircularClip": {
+                                "attributes": {
+                                    "centerX": "number",
+                                    "centerY": "number",
+                                    "radius": "number"
+                                }
+                            },
                             "ClampedToScreenInsets": {
                                 "attributes": {
                                     "bottom": "number",
@@ -335,26 +351,37 @@
                                 }
                             },
                             "ClearAnchors": [],
+                            "ClearClips": [],
                             "DimensionConstraints": {
                                 "attributes": {
-                                    "maxX": "number",
-                                    "maxY": "number",
-                                    "minX": "number",
-                                    "minY": "number"
+                                    "maxX": "layout measurement",
+                                    "maxY": "layout measurement",
+                                    "minX": "layout measurement",
+                                    "minY": "layout measurement"
                                 }
                             },
                             "Dimensions": {
                                 "attributes": {
-                                    "x": "number",
-                                    "y": "number"
+                                    "x": "layout measurement",
+                                    "y": "layout measurement"
+                                }
+                            },
+                            "FadeGradient": {
+                                "attributes": {
+                                    "size1": "number",
+                                    "size2": "number",
+                                    "x1": "number",
+                                    "x2": "number",
+                                    "y1": "number",
+                                    "y2": "number"
                                 }
                             },
                             "HitInsets": {
                                 "attributes": {
-                                    "bottom": "number",
-                                    "left": "number",
-                                    "right": "number",
-                                    "top": "number"
+                                    "bottom": "layout measurement",
+                                    "left": "layout measurement",
+                                    "right": "layout measurement",
+                                    "top": "layout measurement"
                                 }
                             },
                             "OnChar": {
@@ -431,6 +458,14 @@
                             },
                             "OnUpdate": {
                                 "callable": "local self, time = ..."
+                            },
+                            "RectangularClip": {
+                                "attributes": {
+                                    "bottom": "number",
+                                    "left": "number",
+                                    "right": "number",
+                                    "top": "number"
+                                }
                             },
                             "ResizeToFitPadding": {
                                 "attributes": {
@@ -650,16 +685,6 @@
                     },
                     "Scroll": {
                         "childs": {
-                            "FadeGradient": {
-                                "attributes": {
-                                    "size1": "number",
-                                    "size2": "number",
-                                    "x1": "number",
-                                    "x2": "number",
-                                    "y1": "number",
-                                    "y2": "number"
-                                }
-                            },
                             "OnScrollExtentsChanged": {
                                 "callable": "local self, horizontal, vertical = ..."
                             },
@@ -871,6 +896,7 @@
                                     "insetLeft": "number",
                                     "insetRight": "number",
                                     "insetTop": "number",
+                                    "scale": "number",
                                     "texCoordBottom": "number",
                                     "texCoordLeft": "number",
                                     "texCoordRight": "number",
@@ -920,3 +946,4 @@
         }
     }
 }
+;

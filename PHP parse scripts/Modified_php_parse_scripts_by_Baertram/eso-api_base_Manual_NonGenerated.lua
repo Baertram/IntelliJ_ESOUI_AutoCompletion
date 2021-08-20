@@ -996,13 +996,16 @@ function ZO_TabButtonGroup:GetClickedButton() end
 
 -------------------------------------------------------------------------------
 --[ZO_TableUtils]
+function NonContiguousCount(t)  end
 function ZO_TableOrderingFunction(entry1, entry2, sortKey, sortKeys, sortOrder) end
 function ZO_ClearNumericallyIndexedTable(t) end
 function ZO_ClearTable(t) end
 function ZO_ClearTableWithCallback(t, c) end
 function ZO_ShallowTableCopy(source, dest) end
 function ZO_DeepTableCopy(source, dest) end
+function ZO_IsTableEmpty(t) end
 function ZO_CombineNumericallyIndexedTables(dest, ...) end
+function ZO_CombineNonContiguousTables(dest, ...) end
 function ZO_IsElementInNumericallyIndexedTable(table, element) end
 function ZO_IndexOfElementInNumericallyIndexedTable(table, element) end
 function ZO_TableRandomInsert(t, element) end
@@ -1012,6 +1015,7 @@ function ZO_FilteredNumericallyIndexedTableIterator(table, filterFunctions) end
 function ZO_FilteredNonContiguousTableIterator(table, filterFunctions) end
 function ZO_DeepAcyclicTableCompare(t1, t2, maxTablesVisited) end
 function ZO_CreateSetFromArguments(...) end
+function ZO_AreNumericallyIndexedTablesEqual(left, right) end
 
 -------------------------------------------------------------------------------
 --[ZO_TreeNode]
@@ -3978,3 +3982,6 @@ CALLBACK_MANAGER    = {}
 function CALLBACK_MANAGER:RegisterCallback(uniqueCallbackName, func) end
 function CALLBACK_MANAGER:UnregisterCallback(uniqueCallbackName, func) end
 function CALLBACK_MANAGER:FireCallbacks(uniqueCallbackName, optional_controlOrFuncOrVariable) end
+
+--Utility functions
+function NumberFromBoolean(boolean) end

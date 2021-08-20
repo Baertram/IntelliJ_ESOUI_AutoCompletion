@@ -1,7 +1,7 @@
 ## Title: DumpVars
 ## Author: Baertram
 ## Version: 0.0.1
-## APIVersion: 100022
+## APIVersion: 100035 101031
 ## Description: Dumps constant variables to the SavedVariables
 ## SavedVariables: DumpVars_Dump
 
