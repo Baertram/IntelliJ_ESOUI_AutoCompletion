@@ -103,14 +103,14 @@ class game_api
                         }
                     }
                 }
-    			else {
-	                $matches = null;
-	                //Only match event name without parameters
-	                if (preg_match('/\* (?P<method>.*)/', $line, $matches)) {
-	                    $method = $matches['method'];
-	                    $methodClean = $matches['method'];
+                else {
+                    $matches = null;
+                    //Only match event name without parameters
+                    if (preg_match('/\* (?P<method>.*)/', $line, $matches)) {
+                        $method = $matches['method'];
+                        $methodClean = $matches['method'];
                         $objects[$methodClean] = $method;
-	                }
+                    }
                 }
 
 

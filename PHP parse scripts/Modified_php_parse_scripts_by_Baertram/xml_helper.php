@@ -8,7 +8,6 @@
 	You can use this with interactive browser at xml-folder. or write something 
 	Copy the file contents to guixml.js. There's a variable defined and a help text, where to 
 	paste the contents.
-	
 */
 
 class parser

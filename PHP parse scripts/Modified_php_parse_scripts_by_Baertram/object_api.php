@@ -3,7 +3,6 @@
 * Class API parser
 * --------------------
 * Parses classes and generates helper functions with luaDoc.
-*
 */
 
 class object_api
@@ -25,23 +24,23 @@ class object_api
             foreach ($method as $function => $value) {
                 $docblock = "";
                 $luablock = "function $class:$function(";
-	            $addPrivOrProtEnding = false;
+                $addPrivOrProtEnding = false;
 
                 if (isset($value['params'])) {
                     foreach ($value['params'] as $param => $type) {
                         $docblock .= "--- @param ".$param." ".$type."\n";
                     }
                     $luablock .= implode(", ", array_keys($value['params'])).") end";
-	                $addPrivOrProtEnding = true;
+                    $addPrivOrProtEnding = true;
                 } else {
                     $luablock .= ") end";
-	                $addPrivOrProtEnding = true;
+                    $addPrivOrProtEnding = true;
                 }
-	            if ($addPrivOrProtEnding == true) {
-	                if (isset($value['privOrProt'])) {
-	                    $luablock .= ' --' . $value['privOrProt'];
-	                }
-	            }
+                if ($addPrivOrProtEnding == true) {
+                    if (isset($value['privOrProt'])) {
+                        $luablock .= ' --' . $value['privOrProt'];
+                    }
+                }
 
                 if (isset($value['return'])) {
                     $add = [];
@@ -87,8 +86,8 @@ class object_api
                 if ($tag) {
                     $matches = null;
                     if (preg_match('/\* (?P<method>.*)?\((?P<params>(.*?))\)/', $line, $matches)) {
-						$methodClean = null;
-						$matchesPriv = null;
+                        $methodClean = null;
+                        $matchesPriv = null;
                         $method = $matches['method'];
 //print_r(">Class: $tag, method: $method\n");
 
@@ -98,13 +97,13 @@ class object_api
                         if (preg_match('/\*?.*(?P<privOrProt>\*protected-attributes\*|\*protected\*|\*private-attributes\*|\*private\*|\*public\*|\*public-attributes\*)/m', $method, $matchesPriv)) {
 //print_r('  >Found *priv/prot*: ' . $matchesPriv['privOrProt'] . ' on: ' . $method);
                             $methodClean = str_replace(' ' . $matchesPriv['privOrProt'] . ' ', '', $method);
-	                        $objects[$tag][$methodClean] = [];
+                            $objects[$tag][$methodClean] = [];
                             $objects[$tag][$methodClean]['privOrProt'] = $matchesPriv['privOrProt'];
 //print_r('  >method after: ' . $method . '\n');
-						}
-						else {
-	                        $methodClean = $method;
-	                        $objects[$tag][$methodClean] = [];
+                        }
+                        else {
+                            $methodClean = $method;
+                            $objects[$tag][$methodClean] = [];
                         }
 
 
