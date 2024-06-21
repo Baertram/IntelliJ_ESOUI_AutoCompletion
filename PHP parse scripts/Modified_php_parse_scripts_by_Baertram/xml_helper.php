@@ -41,7 +41,7 @@ class parser
         //    print_r($out);
 
 
-        file_put_contents("GuiXml.json", json_encode($out, JSON_PRETTY_PRINT));
+        file_put_contents("xml/GuiXml.json", json_encode($out, JSON_PRETTY_PRINT));
 
 
         echo "t1: ".count($tree, 1)." t2:".count($out, 1)."\n";
