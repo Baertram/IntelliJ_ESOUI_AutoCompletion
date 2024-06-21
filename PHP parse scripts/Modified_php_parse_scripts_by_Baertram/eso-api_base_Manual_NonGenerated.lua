@@ -66,10 +66,12 @@ function RegisterConcreteClass(concreteClass, stackLevel) end
 function RemoveConcreteClass(concreteClass) end
 function ZO_VerifyConcreteClasses() end
 
---[ZO_Object]
-ZO_Object = nil
+---@class ZO_Object
+ZO_Object = {}
 
+---@return ZO_Object
 function ZO_Object:New(template) end
+---@return table
 function ZO_Object:Subclass() end
 function ZO_Object:MUST_IMPLEMENT() end
 function ZO_Object:IsInstanceOf(checkClass) end
@@ -86,6 +88,7 @@ function B:InitializeB()
     self.text = "B"
 end
 C = ZO_Object.MultiSubclass(A, B)
+---@return C
 function C:New()
     local obj = ZO_Object.New(self)
     obj:Initialize()
@@ -100,9 +103,10 @@ function ZO_Object:MultiSubclass(subClassA, subClassB, ...) end
 
 -------------------------------------------------------------------------------
 
---[ZO_DataSourceObject]
-ZO_DataSourceObject = nil
+---@class ZO_DataSourceObject
+ZO_DataSourceObject = {}
 function ZO_GenerateDataSourceMetaTableIndexFunction(template) end
+---@return ZO_DataSourceObject
 function ZO_DataSourceObject:New(template) end
 function ZO_DataSourceObject:GetDataSource() end
 function ZO_DataSourceObject:SetDataSource(dataSource) end
@@ -110,77 +114,86 @@ function ZO_DataSourceObject:Subclass() end
 
 -------------------------------------------------------------------------------
 
---[ZO_InitializingObject ]
-ZO_DataSourceObject = nil
+---@class ZO_InitializingObject 
+ZO_DataSourceObject = {}
+---@return ZO_InitializingObject
 function ZO_InitializingObject:New(...) end
 
 -------------------------------------------------------------------------------
---[Event Manager]
-EVENT_MANAGER = nil
+---@class Event Manager
+EVENT_MANAGER = {}
 
--- @return EventManager#EventManager eventManager
+---@return EventManager eventManager
 function GetEventManager() end
 
--- @param #EventManager self
--- @param #string namespace
--- @param #integer event
--- @param #function callback
--- @return bool#bool success
-function EVENT_MANAGER:RegisterForEvent(namespace, event, callbackFunc) end
+---@param self EventManager
+---@param namespace string
+---@param event integer
+---@param callback function
+---@return boolean success
+function EVENT_MANAGER:RegisterForEvent(namespace, event, callback) end
 
--- @param #EventManager self
--- @param #string namespace
--- @param #function callback
-function EVENT_MANAGER:RegisterForAllEvents(namespace, callbackFunc) end
+---@param self EventManager
+---@param namespace string
+---@param callback function
+function EVENT_MANAGER:RegisterForAllEvents(namespace, callback) end
 
--- @param #EventManager self
--- @param #string namespace
--- @param #integer event
--- @return bool#bool success
+---@param self EventManager
+---@param namespace string
+---@param event integer
+---@return boolean success
 function EVENT_MANAGER:UnregisterForEvent(namespace, event) end
 
--- @param #EventManager self
--- @param #string namespace
--- @param #integer event
--- @param #RegisterForEventFilterType filterType
--- @param # filterValue
--- @param # ...
--- @return bool#bool success
+---@param self EventManager
+---@param namespace string
+---@param event integer
+---@param filterType RegisterForEventFilterType
+---@param filterValue any
+---@return boolean success
 function EVENT_MANAGER:AddFilterForEvent(namespace, event, filterType, filterValue, ...) end
 
--- @param #EventManager self
--- @param #string namespace
--- @param #integer interval
--- @param #function callback
--- @return bool#bool success
-function EVENT_MANAGER:RegisterForUpdate(namespace, interval, callbackFunc) end
+---@param self EventManager
+---@param namespace string
+---@param interval integer
+---@param callback function
+---@return boolean success
+function EVENT_MANAGER:RegisterForUpdate(namespace, interval, callback) end
 
--- @param #EventManager self
--- @param #string namespace
--- @return bool#bool success
+---@param self EventManager
+---@param namespace string
+---@return boolean success
 function EVENT_MANAGER:UnregisterForUpdate(namespace) end
 
 -------------------------------------------------------------------------------
---[Animation Manager]
-ANIMATION_MANAGER = nil
+---@class Animation Manager
+ANIMATION_MANAGER = {}
 
--- @return AnimationManager#AnimationManager animationManager
+---@return AnimationManager animationManager
 function GetAnimationManager() end
 
--- @param #AnimationManager self
--- @param #string timelineName
--- @param #object animatedControl
--- @return object#object timeline
+---@param self AnimationManager
+---@param timelineName string
+---@param animatedControl object
+---@return object timeline
 function ANIMATION_MANAGER:CreateTimelineFromVirtual(timelineName, animatedControl) end
 
 -------------------------------------------------------------------------------
---[Addon Manager]
---ADDON_MANAGER = nil
+---@class Addon Manager
+--ADDON_MANAGER = {}
 
--- @return AddOnManager#AddOnManager addOnManager
+---@return AddOnManager addOnManager
 function GetAddOnManager() end
 
---[Chat]
+---@class Window
+---@field buffer Control
+
+---@class WindowObjectPool: ZO_ObjectPool
+WindowObjectPool = {}
+---@return table<integer, Window>
+function WindowObjectPool:GetActiveObjects() end
+
+---@class Chat
+---@field windowPool WindowObjectPool
 CHAT_SYSTEM = KEYBOARD_CHAT_SYSTEM
 CHAT_ROUTER = ZO_ChatRouter:New()
 
@@ -188,11 +201,18 @@ function ZO_GetChatSystem() end
 function ZO_ChatSystem_DoesPlatformUseGamepadChatSystem()  end
 function ZO_ChatSystem_DoesPlatformUseKeyboardChatSystem()  end
 function ZO_ChatSystem_ShouldUseKeyboardChatSystem() end
+---@return table
 function ZO_ChatSystem_GetChannelInfo() end
+function ZO_ChatSystem_GetChannelSwitchLookupTable() end
+function ZO_ChatSystem_GetCategoryColorFromChannel(channelId) end
+---@return table<EventCode, table<ChannelType, ChatChannelCategories>>, table<EventCode, ChatCategory>
+function ZO_ChatSystem_GetEventCategoryMappings() end
+function ZO_ChatSystem_GetTrialEventMappings() end
 function StartChatInput(chatText, CHAT_CHANNEL_CONSTANT, targetName) end
 
---[ChatContainer]
-ChatContainer = nil
+---@class ChatContainer
+ChatContainer = {}
+---@return ChatContainer
 function ChatContainer:New(...) end
 function ChatContainer:Initialize(control, windowPool, tabPool) end
 function ChatContainer:UpdateInteractivity(isInteractive) end
@@ -212,7 +232,9 @@ function ChatContainer:UpdateOverflowArrow() end
 function SharedChatContainer:ShowContextMenu(tabIndex) end
 
 
---[ZO_ChatSystem]
+---@class ZO_ChatSystem
+ZO_ChatSystem = {}
+---@return ZO_ChatSystem
 function ZO_ChatSystem:New(...) end
 function ZO_ChatSystem:Initialize(control) end
 function ZO_ChatSystem:LoadChatFromSettings() end
@@ -258,10 +280,12 @@ function ZO_ChatSystem_OnNotificationsExit(control) end
 function ZO_ChatSystem_OnMinMaxClicked() end
 function ZO_ChatSystem_OnInitialized(control) end
 
---[ZO_ChatRouter]
-ZO_ChatRouter = nil
+---@class ZO_ChatRouter
+ZO_ChatRouter = {}
+---@return ZO_ChatRouter
 function ZO_ChatRouter:New(...) end
 function ZO_ChatRouter:Initialize() end
+---@return table<any, function>
 function ZO_ChatRouter:GetRegisteredMessageFormatters() end
 function ZO_ChatRouter:RegisterMessageFormatter(eventKey, messageFormatter) end
 function ZO_ChatRouter:FormatAndAddChatMessage(eventKey, ...) end
@@ -272,10 +296,11 @@ function ZO_ChatRouter:SetCurrentChannelData(channelData, channelTarget) end
 function ZO_ChatRouter:GetCurrentChannelData() end
 
 -------------------------------------------------------------------------------
---[ZO_AlphaAnimation]
-ZO_AlphaAnimation = nil
+---@class ZO_AlphaAnimation
+ZO_AlphaAnimation = {}
 function ZO_AlphaAnimation_GetAnimation(control) end
 
+---@return ZO_AlphaAnimation
 function ZO_AlphaAnimation:New() end
 function ZO_AlphaAnimation:GetControl() end
 function ZO_AlphaAnimation:SetMinMaxAlpha(minAlpha, maxAlpha) end
@@ -289,8 +314,9 @@ function ZO_AlphaAnimation:SetPlaybackLoopCount(loopCount) end
 function ZO_AlphaAnimation:GetPlaybackLoopsRemaining() end
 
 -------------------------------------------------------------------------------
---[ZO_Anchor]
-ZO_Anchor = nil
+---@class ZO_Anchor
+ZO_Anchor = {}
+---@return ZO_Anchor
 function ZO_Anchor:New(pointOnMe, target, pointOnTarget, offsetX, offsetY, constraints) end
 function ZO_Anchor:ResetToAnchor(anchorObj) end
 function ZO_Anchor:SetFromControlAnchor(control, anchorIndex) end
@@ -321,9 +347,10 @@ function ZO_GetAnchorPointNearestScreenCenter(controlCenterX, controlCenterY) en
 
 
 -------------------------------------------------------------------------------
---[ZO_AutoComplete]
-ZO_AutoComplete = nil
+---@class ZO_AutoComplete
+ZO_AutoComplete = {}
 function ZO_AutoComplete.AddFlag(handler) end
+---@return ZO_AutoComplete
 function ZO_AutoComplete:New(...) end
 function ZO_AutoComplete:Initialize(editControl, includeFlags, excludeFlags, onlineOnly, maxResults, mode, allowArrows, dontCallHookedHandlers) end
 function ZO_AutoComplete:SetEnabled(enabled) end
@@ -351,8 +378,8 @@ function ZO_AutoComplete:GetAutoCompleteIndex() end
 function ZO_AutoComplete:OnCommit(commitBehavior, commitMethod) end
 
 -------------------------------------------------------------------------------
---[ZO_CallbackObjectMixin]
-ZO_CallbackObjectMixin = nil
+---@class ZO_CallbackObjectMixin
+ZO_CallbackObjectMixin = {}
 function ZO_CallbackObjectMixin:RegisterCallback(eventName, callback, arg, priority) end
 function ZO_CallbackObjectMixin:UnregisterCallback(eventName, callback) end
 function ZO_CallbackObjectMixin:UnregisterAllCallbacks(eventName) end
@@ -365,8 +392,8 @@ function ZO_CallbackObjectMixin:GetFireCallbackDepth() end
 
 
 -------------------------------------------------------------------------------
---[ZO_CallbackObject]
-ZO_CallbackObject = nil
+---@class ZO_CallbackObject
+ZO_CallbackObject = {}
 function ZO_CallbackObject:RegisterCallback(eventName, callback, arg, priority) end
 function ZO_CallbackObject:UnregisterCallback(eventName, callback) end
 function ZO_CallbackObject:UnregisterAllCallbacks(eventName) end
@@ -378,8 +405,8 @@ function ZO_CallbackObject:GetFireCallbackDepth() end
 function ZO_CallbackObject:GetFireCallbackDepth() end
 
 -------------------------------------------------------------------------------
---[ZO_InitializingCallbackObject]
-ZO_InitializingCallbackObject  = nil
+---@class ZO_InitializingCallbackObject
+ZO_InitializingCallbackObject  = {}
 function ZO_InitializingCallbackObject:RegisterCallback(eventName, callback, arg, priority) end
 function ZO_InitializingCallbackObject:UnregisterCallback(eventName, callback) end
 function ZO_InitializingCallbackObject:UnregisterAllCallbacks(eventName) end
@@ -391,8 +418,9 @@ function ZO_InitializingCallbackObject:GetFireCallbackDepth() end
 function ZO_InitializingCallbackObject:GetFireCallbackDepth() end
 
 -------------------------------------------------------------------------------
---[ZO_CategoryManager]
-ZO_CategoryManager = nil
+---@class ZO_CategoryManager
+ZO_CategoryManager = {}
+---@return ZO_CategoryManager
 function ZO_CategoryManager:New() end
 function ZO_CategoryManager:GetCategoryCache() end
 function ZO_CategoryManager:GetCategoryCacheData(catId) end
@@ -406,8 +434,9 @@ function ZO_CategoryManager:InsertDataHelper(nodeList, comparator, level) end
 function ZO_CategoryManager:InsertAtLevel(node, comparator, level) end
 
 -------------------------------------------------------------------------------
---[ZO_CircularBuffer]
-ZO_CircularBuffer = nil
+---@class ZO_CircularBuffer
+ZO_CircularBuffer = {}
+---@return ZO_CircularBuffer
 function ZO_CircularBuffer:New(maxSize) end
 function ZO_CircularBuffer:Add(item) end
 function ZO_CircularBuffer:CalculateIndex(index) end
@@ -420,8 +449,10 @@ function ZO_CircularBuffer:SetMaxSize(maxSize) end
 function ZO_CircularBuffer:GetEnumerator() end
 
 -------------------------------------------------------------------------------
---[ZO_ColorDef]
-ZO_ColorDef = nil
+---@class ZO_ColorDef
+ZO_ColorDef = {}
+---@return ZO_ColorDef
+---@return ZO_ColorDef
 function ZO_ColorDef:New(r, g, b, a) end
 function ZO_ColorDef.FromInterfaceColor(colorType, fieldValue) end
 function ZO_ColorDef:UnpackRGB() end
@@ -431,6 +462,7 @@ function ZO_ColorDef:SetRGBA(r, g, b, a) end
 function ZO_ColorDef:SetAlpha(a) end
 function ZO_ColorDef:IsEqual(other) end
 function ZO_ColorDef:Clone() end
+---@return string
 function ZO_ColorDef:ToHex() end
 function ZO_ColorDef:ToARGBHex() end
 function ZO_ColorDef:Colorize(text) end
@@ -450,7 +482,7 @@ function ZO_ColorDef.HexToRGBA(hexColor) end
 function ZO_ColorDef.HexToFloats(hexColor) end
 
 -------------------------------------------------------------------------------
---[ZO_Easing]
+---@class ZO_Easing
 function ZO_LinearEase(progress) end
 function ZO_EaseInQuadratic(progress) end
 function ZO_EaseOutQuadratic(progress) end
@@ -470,19 +502,21 @@ function ZO_EaseNormalizedZoom(progress) end
 function ZO_GenerateLinearPiecewiseEase(progressValues) end
 
 -------------------------------------------------------------------------------
---[ZO_EditControlGroup]
-ZO_EditControlGroup = nil
+---@class ZO_EditControlGroup
+ZO_EditControlGroup = {}
+---@return ZO_EditControlGroup
 function ZO_EditControlGroup:New() end
 function ZO_EditControlGroup:Initialize() end
 function ZO_EditControlGroup:OnTabPressed(control) end
 function ZO_EditControlGroup:AddEditControl(control, autoCompleteObject) end
     
 -------------------------------------------------------------------------------
---[ZO_FadingControlBuffer]
-ZO_FadingControlBuffer = nil
+---@class ZO_FadingControlBuffer
+ZO_FadingControlBuffer = {}
 function ZO_FadingControlBuffer_GetEntryControl(entry) end
 function ZO_FadingControlBuffer_GetHeaderControl(header) end
 function ZO_FadingControlBuffer_GetLineControl(line) end
+---@return ZO_FadingControlBuffer
 function ZO_FadingControlBuffer:New(...) end
 function ZO_FadingControlBuffer:Initialize(control, maxDisplayedEntries, maxHeight, maxLinesPerEntry, fadeAnimationName, translateAnimationName, anchor) end
 function ZO_FadingControlBuffer:SetTranslateDuration(translateDuration) end
@@ -525,8 +559,9 @@ function ZO_FadingControlBuffer:TryCondenseBuffer() end
 function ZO_FadingControlBuffer:MoveEntriesOrLinesCalculations(control, targetBottomY, topY, preserveFade) end
 
 -------------------------------------------------------------------------------
---[ZO_FadingStationaryControlBuffer]
-ZO_FadingStationaryControlBuffer = nil
+---@class ZO_FadingStationaryControlBuffer
+ZO_FadingStationaryControlBuffer = {}
+---@return ZO_FadingStationaryControlBuffer
 function ZO_FadingStationaryControlBuffer:New(...) end
 function ZO_FadingStationaryControlBuffer:Initialize(control, maxDisplayedEntries, fadeAnimationName, iconAnimationName, containerAnimationName, anchor, controllerType) end
 function ZO_FadingStationaryControlBuffer:OnUpdateBuffer(timeMs) end
@@ -556,7 +591,7 @@ function ZO_FadingStationaryControlBuffer:AddToBatch(templateName, queuedEntry, 
 function ZO_FadingStationaryControlBuffer:DisplayBatches() end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadUtils]
+---@class ZO_GamepadUtils
 function ZO_Gamepad_GetLeftStickEasedX() end
 function ZO_Gamepad_GetLeftStickEasedY() end
 function ZO_Gamepad_GetRightStickEasedX() end
@@ -590,7 +625,7 @@ function ZO_PropagateHandlerToParent(handlerName, propagateFrom, ...) end
 function ZO_PropagateHandlerFromControl(propagateTo, handlerName, propagateFrom, ...) end
 
 -------------------------------------------------------------------------------
---[ZO_LinkHandler]
+---@class ZO_LinkHandler
 function ZO_LinkHandler_InsertLink(link) end
 function ZO_LinkHandler_InsertLinkAndSubmit(link) end
 function ZO_LinkHandler_OnLinkClicked(link, button, control) end
@@ -608,8 +643,9 @@ function ZO_LinkHandler_CreateChatLink(linkFunction, ...) end
 function ZO_ExtractLinksFromText(text, validLinkTypes, linksTable) end
 
 -------------------------------------------------------------------------------
---[ZO_ListBox]
-ZO_ListBox = nil
+---@class ZO_ListBox
+ZO_ListBox = {}
+---@return ZO_ListBox
 function ZO_ListBox:New(rowTemplate, container, displayedRowCount, maxRowCount, rowPopulationFunction, scrollUpdateFunction, rowPadding) end
 function ZO_ListBox:SetScrollUpdateFunction(updateFunction) end
 function ZO_ListBox:SetPopulatorFunction(populatorFunction) end
@@ -620,14 +656,16 @@ function ZO_ListBox:Refresh() end
 function ZO_ListBox:SetMaxRows(maxRows) end
 
 -------------------------------------------------------------------------------
---[ZO_ObjectPool]
-ZO_ObjectPool = nil
+---@class ZO_ObjectPool
+ZO_ObjectPool = {}
+---@return ZO_ObjectPool
 function ZO_ObjectPool:New(factoryFunctionOrObjectClass, resetFunction) end
 function ZO_ObjectPool:GetNextFree() end
 function ZO_ObjectPool:GetNextControlId() end
 function ZO_ObjectPool:GetTotalObjectCount() end
 function ZO_ObjectPool:GetActiveObjectCount() end
 function ZO_ObjectPool:HasActiveObjects() end
+---@return table<integer, ZO_Object>
 function ZO_ObjectPool:GetActiveObjects() end
 function ZO_ObjectPool:GetActiveObject(objectKey) end
 function ZO_ObjectPool:ActiveObjectIterator(filterFunctions) end
@@ -644,7 +682,7 @@ function ZO_ObjectPool_CreateNamedControl(name, templateName, objectPool, parent
 function ZO_ObjectPool_DefaultResetControl(control) end
 
 -------------------------------------------------------------------------------
---[ZO_PlatformUtils]
+---@class ZO_PlatformUtils
 function ZO_FormatUserFacingDisplayName(name) end
 function ZO_FormatUserFacingCharacterName(name) end
 function ZO_FormatUserFacingHeronName(name) end
@@ -666,7 +704,7 @@ function ZO_IsIngameUI()  end
 function ZO_IsPregameUI() end
 
 -------------------------------------------------------------------------------
---[ZO_PrimaryPlayerName]
+---@class ZO_PrimaryPlayerName
 function ZO_ShouldPreferUserId() end
 function ZO_GetPrimaryPlayerNameFromUnitTag(unitTag, useInternalFormat) end
 function ZO_GetSecondaryPlayerNameFromUnitTag(unitTag, useInternalFormat) end
@@ -677,8 +715,9 @@ function ZO_GetPrimaryPlayerNameWithSecondary(displayName, characterName) end
 function ZO_GetPrimaryPlayerNameHeader() end
 
 -------------------------------------------------------------------------------
---[ZO_PrioritizedVisibility]
-ZO_PrioritizedVisibility = nil
+---@class ZO_PrioritizedVisibility
+ZO_PrioritizedVisibility = {}
+---@return ZO_PrioritizedVisibility
 function ZO_PrioritizedVisibility:New(...) end
 function ZO_PrioritizedVisibility:Initialize() end
 function ZO_PrioritizedVisibility:Add(objectToControl, priority) end
@@ -688,8 +727,9 @@ function ZO_PrioritizedVisibility:SetSupressed(supressed) end
 function ZO_PrioritizedVisibility:IsSuppressed() end
 
 -------------------------------------------------------------------------------
---[ZO_QueuedSoundPlayer]
-ZO_QueuedSoundPlayer = nil    
+---@class ZO_QueuedSoundPlayer
+ZO_QueuedSoundPlayer = {}    
+---@return ZO_QueuedSoundPlayer
 function ZO_QueuedSoundPlayer:New(...) end
 function ZO_QueuedSoundPlayer:Initialize(soundPaddingMs) end
 function ZO_QueuedSoundPlayer:SetFinishedAllSoundsCallback(finishedAllSoundsCallback) end
@@ -700,8 +740,9 @@ function ZO_QueuedSoundPlayer:StartSound(soundName, soundLength) end
 function ZO_QueuedSoundPlayer:OnSoundFinished() end
 
 -------------------------------------------------------------------------------
---[ZO_RadioButtonGroup]
-ZO_RadioButtonGroup = nil
+---@class ZO_RadioButtonGroup
+ZO_RadioButtonGroup = {}
+---@return ZO_RadioButtonGroup
 function ZO_RadioButtonGroup:New(...) end
 function ZO_RadioButtonGroup:Initialize() end
 function ZO_RadioButtonGroup:SetLabelColors(enabledColor, disabledColor) end
@@ -718,15 +759,16 @@ function ZO_RadioButtonGroup:SetSelectionChangedCallback(callback) end
 function ZO_RadioButtonGroup:IterateButtons() end
 
 -------------------------------------------------------------------------------
---[ZO_SavedVars]
-ZO_SavedVars = nil
+---@class ZO_SavedVars
+ZO_SavedVars = {}
+---@return ZO_SavedVars
 function ZO_SavedVars:New(savedVariableTable, version, namespace, defaults, profile, displayName, characterName, characterId, characterKeyType) end
 function ZO_SavedVars:NewCharacterNameSettings(savedVariableTable, version, namespace, defaults, profile) end
 function ZO_SavedVars:NewCharacterIdSettings(savedVariableTable, version, namespace, defaults, profile) end
 function ZO_SavedVars:NewAccountWide(savedVariableTable, version, namespace, defaults, profile, displayName) end
 
 -------------------------------------------------------------------------------
---[ZO_ScrollAnimationUtils]
+---@class ZO_ScrollAnimationUtils
 function ZO_SetSliderValueAnimated(self, targetValue) end
 function ZO_UpdateScrollFade(useFadeGradient, scroll, scrollDirection, maxFadeGradientSize) end
 function ZO_OnAnimationStop(animationObject, control) end
@@ -739,8 +781,8 @@ function ZO_ScrollAnimation_MoveWindow(self, value) end
 function ZO_ScrollAnimation_OnExtentsChanged(self) end
 
 -------------------------------------------------------------------------------
---[ZO_TabButtonGroup]
-ZO_TabButtonGroup = nil
+---@class ZO_TabButtonGroup
+ZO_TabButtonGroup = {}
 function ZO_TabButton_HandleClickEvent(self, callback, callbackOptions) end
 function ZO_TabButton_Select(self, callbackOptions) end
 function ZO_TabButton_Unselect(self, callbackOptions) end
@@ -762,6 +804,7 @@ function ZO_TabButton_Text_GetText(self) end
 function ZO_TabButton_Text_SetTextColor(self, color) end
 function ZO_TabButton_Text_AllowColorChanges(self, allow) end
 function ZO_TabButton_Text_RestoreDefaultColors(self) end
+---@return ZO_TabButtonGroup
 function ZO_TabButtonGroup:New() end
 function ZO_TabButtonGroup:HandleMouseDown(tabButton, buttonId) end
 function ZO_TabButtonGroup:Add(tabButton) end
@@ -771,12 +814,13 @@ function ZO_TabButtonGroup:SetClickedButton(tabButton) end
 function ZO_TabButtonGroup:GetClickedButton() end
 
 -------------------------------------------------------------------------------
---[ZO_TableUtils]
+---@class ZO_TableUtils
 function NonContiguousCount(t)  end
 function ZO_TableOrderingFunction(entry1, entry2, sortKey, sortKeys, sortOrder) end
 function ZO_ClearNumericallyIndexedTable(t) end
 function ZO_ClearTable(t) end
 function ZO_ClearTableWithCallback(t, c) end
+---@return table
 function ZO_ShallowTableCopy(source, dest) end
 function ZO_DeepTableCopy(source, dest) end
 function ZO_IsTableEmpty(t) end
@@ -804,8 +848,9 @@ function ZO_AreIntersectingNumericallyIndexedTables(t1, t2) end
 function ZO_AreEqualSets(s1, s2) end
 
 -------------------------------------------------------------------------------
---[ZO_TreeControlNode]
-ZO_TreeNode = nil
+---@class ZO_TreeControlNode
+ZO_TreeNode = {}
+---@return ZO_TreeControlNode
 function ZO_TreeControlNode:New(myTree, controlData, myParent, childIndent) end
 function ZO_TreeControlNode:SetExpandedCallback(callback) end
 function ZO_TreeControlNode:ToggleExpanded(expanded) end
@@ -821,7 +866,9 @@ function ZO_TreeControlNode:GetChildIndent() end
 function ZO_TreeControlNode:SetOffsetY(offsetY) end
 
 -------------------------------------------------------------------------------
---[ZO_TreeControl]
+---@class ZO_TreeControl
+ZO_TreeControl = {}
+---@return ZO_TreeControl
 function ZO_TreeControl:New(initialAnchor, indentXOffset, verticalSpacing) end
 function ZO_TreeControl:AddChild(atNode, insertedControl, childIndent) end
 function ZO_TreeControl:AddSibling(atNode, insertedControl, childIndent) end
@@ -833,7 +880,7 @@ function ZO_TreeControl:SetRelativePoint(relativePoint) end
 function ZO_TreeControl:SetIndent(indentX) end
 
 -------------------------------------------------------------------------------
---[Animation]
+---@class Animation
 function ZO_Animation_PlayForwardOrInstantlyToEnd(timeline, instant) end
 function ZO_Animation_PlayFromStartOrInstantlyToEnd(timeline, instant) end
 function ZO_Animation_PlayBackwardOrInstantlyToStart(timeline, instant) end
@@ -843,7 +890,8 @@ function ZO_TranslateFromRightSceneAnimation_OnPlay(self, animatingControl) end
 function ZO_TranslateFromBottomSceneAnimation_OnPlay(self, animatingControl) end
 function ZO_TranslateFromTopSceneAnimation_OnPlay(self, animatingControl) end
 
-ZO_ReversibleAnimationProvider = nil
+ZO_ReversibleAnimationProvider = {}
+---@return ZO_ReversibleAnimationProvider
 function ZO_ReversibleAnimationProvider:New(...) end
 function ZO_ReversibleAnimationProvider:Initialize(virtualTimelineName) end
 function ZO_ReversibleAnimationProvider:PlayForward(control, instant) end
@@ -902,6 +950,9 @@ function zo_strmatch         (subject, pattern) end -- string.match
 function zo_strgmatch        (subject, pattern) end -- string.gmatch
 function zo_strfind          (subject, searchString) end -- string.find
 function zo_plainstrfind     (subject, searchString) end -- PlainStringFind
+---@param string charToSplitAt
+---@param string subject
+---@return string ...
 function zo_strsplit         (charToSplitAt, subject) end -- SplitString
 function zo_loadstring       (subject) end -- LoadString
 function zo_floor            (number) end -- math.floor
@@ -999,8 +1050,11 @@ function CreateSimpleAnimation(animationType, controlToAnimate, delay) end
 --[Localization]
 function zo_strformat(formatString, ...) end
 function ZO_SetCachedStrFormatterOnlyStoreOne(formatter) end
+---@return string
 function ZO_CachedStrFormat(formatter, ...) end
 function ZO_ResetCachedStrFormat(formatter) end
+---@param string str
+---@return string
 function zo_strtrim(str) end
 function ZO_CommaDelimitNumber(amount) end
 function ZO_CommaDelimitDecimalNumber(amount) end
@@ -1039,8 +1093,9 @@ function ZO_GetHoursSinceMidnightPerHourTable() end
 function ZO_PopulateHoursSinceMidnightPerHourComboBox(comboBox, onSelectionCallback, selectedValue) end
 
 -------------------------------------------------------------------------------
---[ZO_Refresh]
-ZO_Refresh = nil
+---@class ZO_Refresh
+ZO_Refresh = {}
+---@return ZO_Refresh
 function ZO_Refresh:New() end
 function ZO_Refresh:AddRefreshGroup(refreshGroup, data) end
 function ZO_Refresh:RefreshAll(refreshGroup) end
@@ -1048,16 +1103,18 @@ function ZO_Refresh:RefreshSingle(refreshGroup, ...) end
 function ZO_Refresh:UpdateRefreshGroups() end
 
 -------------------------------------------------------------------------------
---[ZO_OrderedRefreshGroupManager]
-ZO_OrderedRefreshGroupManager = nil
+---@class ZO_OrderedRefreshGroupManager
+ZO_OrderedRefreshGroupManager = {}
+---@return ZO_OrderedRefreshGroupManager
 function ZO_OrderedRefreshGroupManager:New(...) end
 function ZO_OrderedRefreshGroupManager:Initialize() end
 function ZO_OrderedRefreshGroupManager:AddGroupForPerFrameClean(addGroup) end
 function ZO_OrderedRefreshGroupManager:OnUpdate() end
 
 -------------------------------------------------------------------------------
---[ZO_OrderedRefreshGroup]
-ZO_OrderedRefreshGroup = nil
+---@class ZO_OrderedRefreshGroup
+ZO_OrderedRefreshGroup = {}
+---@return ZO_OrderedRefreshGroup
 function ZO_OrderedRefreshGroup:New(...) end
 function ZO_OrderedRefreshGroup:Initialize(autoCleanMode) end
 function ZO_OrderedRefreshGroup:SetActive(activeOrActiveFunction) end
@@ -1071,8 +1128,9 @@ function ZO_OrderedRefreshGroup:TryScheduleClean() end
 function ZO_OrderedRefreshGroup:TryClean() end
 
 -------------------------------------------------------------------------------
---[ZO_BulletList]
-ZO_BulletList = nil
+---@class ZO_BulletList
+ZO_BulletList = {}
+---@return ZO_BulletList
 function ZO_BulletList:New(control, labelTemplate, bulletTemplate, secondaryBulletTemplate) end
 function ZO_BulletList:SetLinePaddingY(padding) end
 function ZO_BulletList:SetBulletPaddingX(padding) end
@@ -1080,8 +1138,9 @@ function ZO_BulletList:AddLine(text, useSecondaryBullet) end
 function ZO_BulletList:Clear() end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadButtonTabBar]
-ZO_GamepadButtonTabBar = nil
+---@class ZO_GamepadButtonTabBar
+ZO_GamepadButtonTabBar = {}
+---@return ZO_GamepadButtonTabBar
 function ZO_GamepadButtonTabBar:New(...) end
 function ZO_GamepadButtonTabBar:Initialize(control, onSelectedCallback, onUnselectedCallback, onPressedCallback) end
 function ZO_GamepadButtonTabBar:AddButton(control, data) end
@@ -1092,14 +1151,16 @@ function ZO_GamepadButtonTabBar:SetSelectedButton(index) end
 function ZO_GamepadButtonTabBar:IsActivated() end
 
 -------------------------------------------------------------------------------
---[ZO_PaletteButtonManager]
-ZO_PaletteButtonManager = nil
+---@class ZO_PaletteButtonManager
+ZO_PaletteButtonManager = {}
+---@return ZO_PaletteButtonManager
 function ZO_PaletteButtonManager:New() end
 function ZO_PaletteButtonManager:ResetObject(control) end
 
 -------------------------------------------------------------------------------
---[ZO_ColorSwatchPicker]
-ZO_ColorSwatchPicker = nil
+---@class ZO_ColorSwatchPicker
+ZO_ColorSwatchPicker = {}
+---@return ZO_ColorSwatchPicker
 function ZO_ColorSwatchPicker:New(control) end
 function ZO_ColorSwatchPicker:AddEntry(paletteIndex, r, g, b) end
 function ZO_ColorSwatchPicker:Clear() end
@@ -1117,12 +1178,13 @@ function ZO_ColorSwatchPicker_SetSelected(colorPicker, index) end
 function ZO_ColorSwatchPicker_SetEnabled(colorPicker, enabled) end
 
 -------------------------------------------------------------------------------
---[ZO_ComboBox_Base]
-ZO_ComboBox_Base = nil
+---@class ZO_ComboBox_Base
+ZO_ComboBox_Base = {}
 function ZO_ComboBox_Base:ShowDropdownInternal() end
 function ZO_ComboBox_Base:HideDropdownInternal() end
 function ZO_ComboBox_Base:OnClearItems() end
 function ZO_ComboBox_Base:OnItemAdded() end
+---@return ZO_ComboBox_Base
 function ZO_ComboBox_Base:New(...) end
 function ZO_ComboBox_Base:Initialize(container) end
 function ZO_ComboBox_Base:GetContainer() end
@@ -1176,8 +1238,9 @@ function ZO_ComboBox_Enable(container) end
 function ZO_ComboBox_Disable(container) end
 
 -------------------------------------------------------------------------------
---[ZO_ComboBox]
-ZO_ComboBox = nil
+---@class ZO_ComboBox
+ZO_ComboBox = {}
+---@return ZO_ComboBox
 function ZO_ComboBox:New(container) end
 function ZO_ComboBox:AddMenuItems() end
 function ZO_ComboBox:ShowDropdownInternal() end
@@ -1187,8 +1250,9 @@ function ZO_ComboBox:SetHideDropdownCallback(callback) end
 function ZO_ComboBox_DropdownClicked(container) end
 
 -------------------------------------------------------------------------------
---[ZO_ScrollableComboBox]
-ZO_ScrollableComboBox = nil
+---@class ZO_ScrollableComboBox
+ZO_ScrollableComboBox = {}
+---@return ZO_ScrollableComboBox
 function ZO_ScrollableComboBox:New(container) end
 function ZO_ScrollableComboBox:Initialize(container) end
 function ZO_ScrollableComboBox:GetEntryTemplateHeightWithSpacing() end
@@ -1208,8 +1272,9 @@ function ZO_ScrollableComboBox_Entry_OnMouseExit(entry) end
 function ZO_ScrollableComboBox_Entry_OnSelected(entry) end
 
 -------------------------------------------------------------------------------
---[ZO_MultiSelectComboBox]
-ZO_MultiSelectComboBox = nil
+---@class ZO_MultiSelectComboBox
+ZO_MultiSelectComboBox = {}
+---@return ZO_MultiSelectComboBox
 function ZO_MultiSelectComboBox:New(container) end
 function ZO_MultiSelectComboBox:Initialize(container) end
 function ZO_MultiSelectComboBox:AddMenuItems() end
@@ -1229,8 +1294,9 @@ function ZO_MultiSelectComboBox:ClearAllSelections() end
 
 
 -------------------------------------------------------------------------------
---[ZO_ComboBox_Gamepad]
-ZO_ComboBox_Gamepad = nil
+---@class ZO_ComboBox_Gamepad
+ZO_ComboBox_Gamepad = {}
+---@return ZO_ComboBox_Gamepad
 function ZO_ComboBox_Gamepad:New(...) end
 function ZO_ComboBox_Gamepad:Initialize(control) end
 function ZO_ComboBox_Gamepad:ShowDropdownInternal() end
@@ -1262,8 +1328,9 @@ function ZO_ComboBox_Gamepad:InitializeKeybindStripDescriptors() end
 function ZO_ComboBox_Gamepad:UpdateAnchors(selectedControl) end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadComboBoxDropdown]
-ZO_GamepadComboBoxDropdown = nil
+---@class ZO_GamepadComboBoxDropdown
+ZO_GamepadComboBoxDropdown = {}
+---@return ZO_GamepadComboBoxDropdown
 function ZO_GamepadComboBoxDropdown:New(...) end
 function ZO_GamepadComboBoxDropdown:Initialize(control) end
 function ZO_GamepadComboBoxDropdown:SetPadding(padding) end
@@ -1279,8 +1346,9 @@ function ZO_GamepadComboBoxDropdown:GetControlPoolFromTemplate(template) end
 function ZO_ComboBox_Gamepad_Dropdowm_Initialize(control) end
 
 -------------------------------------------------------------------------------
---[ZO_MultiSelection_ComboBox_Gamepad]
-ZO_MultiSelection_ComboBox_Gamepad = nil
+---@class ZO_MultiSelection_ComboBox_Gamepad
+ZO_MultiSelection_ComboBox_Gamepad = {}
+---@return ZO_MultiSelection_ComboBox_Gamepad
 function ZO_MultiSelection_ComboBox_Gamepad:New(...) end
 function ZO_MultiSelection_ComboBox_Gamepad:Initialize(control) end
 function ZO_MultiSelection_ComboBox_Gamepad:SelectHighlightedItem() end
@@ -1294,8 +1362,9 @@ function ZO_MultiSelection_ComboBox_Gamepad:RefreshSelectedItemText() end
 function ZO_MultiSelection_ComboBox_Gamepad:GetNumSelectedEntries() end
 
 -------------------------------------------------------------------------------
---[ZO_MultiSelection_ComboBox_Data_Gamepad]
-ZO_MultiSelection_ComboBox_Data_Gamepad = nil
+---@class ZO_MultiSelection_ComboBox_Data_Gamepad
+ZO_MultiSelection_ComboBox_Data_Gamepad = {}
+---@return ZO_MultiSelection_ComboBox_Data_Gamepad
 function ZO_MultiSelection_ComboBox_Data_Gamepad:New() end
 function ZO_MultiSelection_ComboBox_Data_Gamepad:Initialize() end
 function ZO_MultiSelection_ComboBox_Data_Gamepad:Clear() end
@@ -1350,7 +1419,8 @@ function ZO_CrossfadeBG_GetObject(control) end
 function ZO_CrossfadeBG_OnCrossfadeComplete(timeline, completedPlaying) end
 
 -------------------------------------------------------------------------------
---[ZO_Dialog]
+---@class ZO_Dialog
+ZO_Dialog = {}
 function ZO_Dialogs_SetupCustomButton(button, text, keybind, clickSound, callback) end
 function ZO_Dialogs_SetDialogLoadingIcon(loadingIcon, textControl, showLoadingIconData) end
 function ZO_Dialogs_FindDialog(name, filterFunction) end
@@ -1391,8 +1461,9 @@ function ZO_DialogButton_OnInitialized(self) end
 function ZO_TwoButtonDialogEditBox_OnTextChanged(control) end
 
 -------------------------------------------------------------------------------
---[ZO_ListDialog]
-ZO_ListDialog = nil
+---@class ZO_ListDialog: ZO_Dialog
+ZO_ListDialog = {}
+---@return ZO_ListDialog
 function ZO_ListDialog:New(...) end
 function ZO_ListDialog:Initialize(listTemplate, listItemHeight, listSetupFunction) end
 function ZO_ListDialog:SetAboveText(text) end
@@ -1414,7 +1485,8 @@ function ZO_ListDialog:OnHide() end
 function ZO_ListDialog_OnHide(dialog) end
 
 -------------------------------------------------------------------------------
---[ZO_GenericGamepadDialog]
+---@class ZO_GenericGamepadDialog: ZO_Dialog
+ZO_GenericGamepadDialog = {}
 function ZO_GenericGamepadDialog_RefreshKeybinds(dialog) end
 function ZO_GenericGamepadDialog_UpdateDirectionalInput(dialog) end
 function ZO_GenericGamepadDialog_SetupDirectionalInput(dialog) end
@@ -1447,12 +1519,13 @@ function ZO_GenericGamepadDialog_Parametric_TextFieldFocusLost(control) end
 
 -------------------------------------------------------------------------------
 --[ZO_DirectionalInput]
-DIRECTIONAL_INPUT  = nil
-CLIENT_INPUT  = nil
+DIRECTIONAL_INPUT  = {}
+CLIENT_INPUT  = {}
 
 -------------------------------------------------------------------------------
---[ZO_EditBox]
-ZO_EditBox = nil
+---@class ZO_EditBox
+ZO_EditBox = {}
+---@return ZO_EditBox
 function ZO_EditBox:New(...) end
 function ZO_EditBox:Initialize(control) end
 function ZO_EditBox:SetDefaultText(defaultText) end
@@ -1466,8 +1539,9 @@ function ZO_EditBox:TakeFocus() end
 function ZO_EditBox:LoseFocus() end
 
 -------------------------------------------------------------------------------
---[ZO_SavingEditBox]
-ZO_SavingEditBox = nil
+---@class ZO_SavingEditBox
+ZO_SavingEditBox = {}
+---@return ZO_SavingEditBox
 function ZO_SavingEditBox:New(...) end
 function ZO_SavingEditBox:Initialize(control) end
 function ZO_SavingEditBox:SetDefaultText(defaultText) end
@@ -1493,21 +1567,24 @@ function ZO_SavingEditBox:OnModifyClicked() end
 function ZO_SavingEditBox:RefreshButtons() end
 
 -------------------------------------------------------------------------------
---[ZO_SavingEditBoxGroup]
-ZO_SavingEditBoxGroup  = nil
+---@class ZO_SavingEditBoxGroup
+ZO_SavingEditBoxGroup  = {}
+---@return ZO_SavingEditBoxGroup
 function ZO_SavingEditBoxGroup:New(...) end
 function ZO_SavingEditBoxGroup:Add(savingEditBox) end
 
 -------------------------------------------------------------------------------
---[ZO_ScrollingSavingEditBox]
-ZO_ScrollingSavingEditBox = nil
+---@class ZO_ScrollingSavingEditBox
+ZO_ScrollingSavingEditBox = {}
+---@return ZO_ScrollingSavingEditBox
 function ZO_ScrollingSavingEditBox:New(...) end
 function ZO_ScrollingSavingEditBox:Initialize(control) end
 function ZO_ScrollingSavingEditBox:SetEditing(editing, forceUpdate) end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadMultiFocusArea_Base]
-ZO_GamepadMultiFocusArea_Base = nil
+---@class ZO_GamepadMultiFocusArea_Base
+ZO_GamepadMultiFocusArea_Base = {}
+---@return ZO_GamepadMultiFocusArea_Base
 function ZO_GamepadMultiFocusArea_Base:New(...) end
 function ZO_GamepadMultiFocusArea_Base:Initialize(manager, activateCallback, deactivateCallback) end
 function ZO_GamepadMultiFocusArea_Base:SetupSiblings(previous, next) end
@@ -1526,8 +1603,9 @@ function ZO_GamepadMultiFocusArea_Base:CanBeSelected() end
 function ZO_GamepadMultiFocusArea_Base:IsFocused() end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadMultiFocusArea_Manager]
-ZO_GamepadMultiFocusArea_Manager = nil
+---@class ZO_GamepadMultiFocusArea_Manager
+ZO_GamepadMultiFocusArea_Manager = {}
+---@return ZO_GamepadMultiFocusArea_Manager
 function ZO_GamepadMultiFocusArea_Manager:New(...) end
 function ZO_GamepadMultiFocusArea_Manager:Initialize() end
 function ZO_GamepadMultiFocusArea_Manager:GetPreviousSelectableFocusArea(startFocusArea) end
@@ -1546,8 +1624,9 @@ function ZO_GamepadMultiFocusArea_Manager:AddPreviousFocusArea(focusArea) end
 function ZO_GamepadMultiFocusArea_Manager:UpdateDirectionalInput() end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadFocus]
-ZO_GamepadFocus = nil
+---@class ZO_GamepadFocus
+ZO_GamepadFocus = {}
+---@return ZO_GamepadFocus
 function ZO_GamepadFocus:New(...) end
 function ZO_GamepadFocus:Initialize(control, movementController, direction) end
 function ZO_GamepadFocus:InitializeMovementController(movementController, direction) end
@@ -1577,16 +1656,17 @@ function ZO_GamepadFocus:SetPlaySoundFunction(fn) end
 function ZO_GamepadFocus:SetDirectionalInputEnabled(enabled) end
 
 -------------------------------------------------------------------------------
---[ZO_FractionDisplay]
-ZO_FractionDisplay = nil
+---@class ZO_FractionDisplay
+ZO_FractionDisplay = {}
+---@return ZO_FractionDisplay
 function ZO_FractionDisplay:New(...) end
 function ZO_FractionDisplay:Initialize(control, font, dividerThickness) end
 function ZO_FractionDisplay:SetHorizontalAlignment(alignment) end
 function ZO_FractionDisplay:SetValues(numerator, denominator) end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadSlider]
-ZO_GamepadSlider = nil
+---@class ZO_GamepadSlider
+ZO_GamepadSlider = {}
 function ZO_GamepadSlider:Initialize() end
 function ZO_GamepadSlider:Activate() end
 function ZO_GamepadSlider:Deactivate() end
@@ -1599,16 +1679,17 @@ function ZO_GamepadSlider_OnInitialized(control) end
 function ZO_GamepadSlider_OnValueChanged(control, value) end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadConstrainedSlider]
-ZO_GamepadConstrainedSlider = nil
+---@class ZO_GamepadConstrainedSlider
+ZO_GamepadConstrainedSlider = {}
 function ZO_GamepadConstrainedSlider:SetValueConstraints(minValueFunction, maxValueFunction) end
 function ZO_GamepadConstrainedSlider:MoveLeft() end
 function ZO_GamepadConstrainedSlider:MoveRight() end
 function ZO_GamepadConstrainedSlider_OnInitialized(control) end
 
 -------------------------------------------------------------------------------
---[ZO_HiddenReasons]
-ZO_HiddenReasons = nil
+---@class ZO_HiddenReasons
+ZO_HiddenReasons = {}
+---@return ZO_HiddenReasons
 function ZO_HiddenReasons:New() end
 function ZO_HiddenReasons:AddShowReason(reason) end
 function ZO_HiddenReasons:RemoveShowReason(reason) end
@@ -1619,8 +1700,9 @@ function ZO_HiddenReasons:SetShownForReason(reason, shown) end
 function ZO_HiddenReasons:IsHidden() end
 
 -------------------------------------------------------------------------------
---[ZO_HorizontalMenu]
-ZO_HorizontalMenu = nil
+---@class ZO_HorizontalMenu
+ZO_HorizontalMenu = {}
+---@return ZO_Horizontal_Menu
 function ZO_Horizontal_Menu:New(...) end
 function ZO_Horizontal_Menu:Initialize(control, anchorStyle) end
 function ZO_Horizontal_Menu:AddTemplate(templateName, setupFunction, spacing) end
@@ -1631,9 +1713,10 @@ function ZO_Horizontal_Menu:Reset() end
 function ZO_HorizontalMenu_LabelHeader_MouseUp(control, upInside) end
 
 -------------------------------------------------------------------------------
---[ZO_HorizontalScrollList]
-ZO_HorizontalScrollList = nil
+---@class ZO_HorizontalScrollList
+ZO_HorizontalScrollList = {}
 function ZO_HorizontalScrollListPlaySound(type) end
+---@return ZO_HorizontalScrollList
 function ZO_HorizontalScrollList:New(...) end
 function ZO_HorizontalScrollList:Initialize(control, templateName, numVisibleEntries, setupFunction, equalityFunction, onCommitWithItemsFunction, onClearedFunction) end
 function ZO_HorizontalScrollList:SetAllowWrapping(allowWrapping) end
@@ -1685,8 +1768,9 @@ function ZO_HorizontalScrollList:SetPlaySoundFunction(fn) end
 function ZO_HorizontalScrollList_OnMouseWheel(control, delta) end
 
 -------------------------------------------------------------------------------
---[ZO_HorizontalScrollList_Gamepad]
-ZO_HorizontalScrollList_Gamepad = nil
+---@class ZO_HorizontalScrollList_Gamepad
+ZO_HorizontalScrollList_Gamepad = {}
+---@return ZO_HorizontalScrollList_Gamepad
 function ZO_HorizontalScrollList_Gamepad:New(...) end
 function ZO_HorizontalScrollList_Gamepad:Initialize(control, templateName, numVisibleEntries, setupFunction, equalityFunction, onCommitWithItemsFunction, onClearedFunction) end
 function ZO_HorizontalScrollList_Gamepad:SetOnActivatedChangedFunction(onActivatedChangedFunction) end
@@ -1698,8 +1782,8 @@ function ZO_HorizontalScrollList_Gamepad:Deactivate() end
 function ZO_HorizontalScrollList_Gamepad:UpdateDirectionalInput() end
 
 -------------------------------------------------------------------------------
---[ZO_KeybindButtonMixin]
-ZO_KeybindButtonMixin = nil
+---@class ZO_KeybindButtonMixin
+ZO_KeybindButtonMixin = {}
 function ZO_KeybindButtonMixin:GetKeybind() end
 function ZO_KeybindButtonMixin:GetKeyboardKeybind() end
 function ZO_KeybindButtonMixin:GetGamepadKeybind() end
@@ -1736,8 +1820,8 @@ function ZO_KeybindButtonTemplate_OnInitialized(self) end
 function ZO_KeybindButtonTemplate_Setup(self, keybind, callbackFunction, text) end
 
 -------------------------------------------------------------------------------
---[ZO_ChromaKeybindButtonMixin]
-ZO_ChromaKeybindButtonMixin = nil
+---@class ZO_ChromaKeybindButtonMixin
+ZO_ChromaKeybindButtonMixin = {}
 function ZO_ChromaKeybindButtonMixin:SetChromaEnabled(enabled) end
 function ZO_ChromaKeybindButtonMixin:AddChromaEffect() end
 function ZO_ChromaKeybindButtonMixin:RemoveChromaEffect() end
@@ -1751,8 +1835,8 @@ function ZO_KeybindButton_ChromaBehavior_OnEffectivelyShown(self) end
 function ZO_KeybindButton_ChromaBehavior_OnEffectivelyHidden(self) end
 
 -------------------------------------------------------------------------------
---[ZO_ClickableKeybindLabelMixin ]
-ZO_ClickableKeybindLabelMixin = nil
+---@class ZO_ClickableKeybindLabelMixin 
+ZO_ClickableKeybindLabelMixin = {}
 function ZO_ClickableKeybindLabelMixin:GetKeybind() end
 function ZO_ClickableKeybindLabelMixin:GetKeyboardKeybind() end
 function ZO_ClickableKeybindLabelMixin:GetGamepadKeybind() end
@@ -1776,8 +1860,9 @@ function ZO_ClickableKeybindLabelTemplate_OnInitialized(self) end
 function ZO_ClickableKeybindLabelTemplate_Setup(self, keybind, callbackFunction, text) end
 
 -------------------------------------------------------------------------------
---[ZO_KeybindStrip]
-ZO_KeybindStrip = nil
+---@class ZO_KeybindStrip
+ZO_KeybindStrip = {}
+---@return ZO_KeybindStrip
 function ZO_KeybindStrip:New(...) end
 function ZO_KeybindStrip:Initialize(control, keybindButtonTemplate, styleInfo) end
 function ZO_KeybindStrip:PushKeybindGroupState() end
@@ -1819,8 +1904,8 @@ function ZO_KeybindStrip:UpdateAnchorsInternal(anchorTable, anchor, relativeAnch
 function ZO_KeybindStrip:UpdateAnchors() end
 
 -------------------------------------------------------------------------------
---[ZO_LerpInterpolator]
-ZO_LerpInterpolator = nil
+---@class ZO_LerpInterpolator
+ZO_LerpInterpolator = {}
 function ZO_LerpInterpolator:Initialize(initialValue) end
 function ZO_LerpInterpolator:SetApproachFactor(approachFactor) end
 function ZO_LerpInterpolator:SetFluxParams(params) end
@@ -1887,8 +1972,9 @@ function ZO_MenuBarButtonTemplateWithTooltip_OnMouseEnter(self) end
 function ZO_MenuBarButtonTemplateWithTooltip_OnMouseExit(self) end
 
 -------------------------------------------------------------------------------
---[ZO_SceneFragmentBar]
-ZO_SceneFragmentBar = nil
+---@class ZO_SceneFragmentBar
+ZO_SceneFragmentBar = {}
+---@return ZO_SceneFragmentBar
 function ZO_SceneFragmentBar:New(...) end
 function ZO_SceneFragmentBar:Initialize(menuBar) end
 function ZO_SceneFragmentBar:SelectFragment(name) end
@@ -1904,8 +1990,8 @@ function ZO_SceneFragmentBar:Add(name, fragmentGroup, buttonData, keybindButton)
 function ZO_SceneFragmentBar:UpdateButtons(forceSelection) end
 
 -------------------------------------------------------------------------------
---[ZO_SceneGroupBar ]
-ZO_SceneGroupBar = nil
+---@class ZO_SceneGroupBar 
+ZO_SceneGroupBar = {}
 function ZO_SceneGroupBar:Initialize(menuBarControl) end
 function ZO_SceneGroupBar:Clear() end
 function ZO_SceneGroupBar:RemoveAll() end
@@ -1915,8 +2001,9 @@ function ZO_SceneGroupBar:CreateSceneGroup(name, tabDataList, activeSceneName) e
 function ZO_SceneGroupBar:UpdateButtons(forceSelection) end
 
 -------------------------------------------------------------------------------
---[ZO_MostRecentEventHandler]
-ZO_MostRecentEventHandler = nil
+---@class ZO_MostRecentEventHandler
+ZO_MostRecentEventHandler = {}
+---@return ZO_MostRecentEventHandler
 function ZO_MostRecentEventHandler:New(...) end
 function ZO_MostRecentEventHandler:Initialize(namespace, event, equalityFunction, handlerFunction) end
 function ZO_MostRecentEventHandler:AddFilterForEvent(...) end
@@ -1924,8 +2011,9 @@ function ZO_MostRecentEventHandler:OnEvent(...) end
 function ZO_MostRecentEventHandler:OnUpdate() end
 
 -------------------------------------------------------------------------------
---[ZO_MouseInputGroup]
-ZO_MouseInputGroup = nil
+---@class ZO_MouseInputGroup
+ZO_MouseInputGroup = {}
+---@return ZO_MouseInputGroup
 function ZO_MouseInputGroup:New(...) end
 function ZO_MouseInputGroup:Initialize(rootControl) end
 function ZO_MouseInputGroup:GetInputTypeGroup(inputType) end
@@ -1938,8 +2026,9 @@ function ZO_MouseInputGroup:RefreshMouseOver() end
 function ZO_MouseOverGroupFromChildren_OnInitialized(self) end
 
 -------------------------------------------------------------------------------
---[ZO_MovementController]
-ZO_MovementController = nil
+---@class ZO_MovementController
+ZO_MovementController = {}
+---@return ZO_MovementController
 function ZO_MovementController:New(...) end
 function ZO_MovementController:Initialize(direction, accumulationPerSecondForChange, magnitudeQueryFunctionOverride) end
 function ZO_MovementController:SetAllowAcceleration(allowAcceleration) end
@@ -1952,8 +2041,9 @@ function ZO_MovementController:GetMagnitude() end
 function ZO_MovementController:CalculateAccelerationFactor() end
 
 -------------------------------------------------------------------------------
---[MultiIconTimer]
-MultiIconTimer = nil
+---@class MultiIconTimer
+MultiIconTimer = {}
+---@return MultiIconTimer
 function MultiIconTimer:New() end
 function MultiIconTimer:SetupMultiIconTexture(multiIcon) end
 function MultiIconTimer:AddMultiIcon(multiIcon) end
@@ -1967,10 +2057,11 @@ function ZO_MultiIcon_OnHide(self) end
 function ZO_MultiIcon_Initialize(self) end
 
 -------------------------------------------------------------------------------
---[ZO_PagedList]
-ZO_PagedList = nil
+---@class ZO_PagedList
+ZO_PagedList = {}
 function ZO_PagedListPlaySound(type) end
 function ZO_PagedListSetupFooter(footerControl) end
+---@return ZO_PagedList
 function ZO_PagedList:New(...) end
 function ZO_PagedList:BuildMasterList() end
 function ZO_PagedList:FilterList() end
@@ -2016,8 +2107,9 @@ function ZO_PagedList:SetPlaySoundFunction(fn) end
 function ZO_PagedList:SetRememberSpotInList(rememberSpot) end
 
 -------------------------------------------------------------------------------
---[ZO_AbstractSingleTemplateGridScrollList]
-ZO_AbstractSingleTemplateGridScrollList = nil
+---@class ZO_AbstractSingleTemplateGridScrollList
+ZO_AbstractSingleTemplateGridScrollList = {}
+---@return ZO_AbstractSingleTemplateGridScrollList
 function ZO_AbstractSingleTemplateGridScrollList:New(...) end
 function ZO_AbstractSingleTemplateGridScrollList:Initialize(control, autofillRows) end
 function ZO_AbstractSingleTemplateGridScrollList:SetHeaderTemplate(templateName, height, setupFunc, onHideFunc, resetControlFunc) end
@@ -2026,8 +2118,9 @@ function ZO_AbstractSingleTemplateGridScrollList:SetGridEntryVisibilityFunction(
 function ZO_AbstractSingleTemplateGridScrollList:AddEntry(data) end
 
 -------------------------------------------------------------------------------
---[ZO_AbstractGridScrollList]
-ZO_AbstractGridScrollList = nil
+---@class ZO_AbstractGridScrollList
+ZO_AbstractGridScrollList = {}
+---@return ZO_AbstractGridScrollList
 function ZO_AbstractGridScrollList:New(...) end
 function ZO_AbstractGridScrollList:Initialize(control) end
 function ZO_AbstractGridScrollList:SetHeaderPrePadding(prePadding) end
@@ -2065,33 +2158,40 @@ function ZO_GridEntry_SetIconScaledUp(control, scaledUp, instant) end
 function ZO_GridEntry_SetIconScaledUpInstantly(control, scaledUp) end
 
 -------------------------------------------------------------------------------
---[ZO_AbstractSingleTemplateGridScrollList_Keyboard]
-ZO_AbstractSingleTemplateGridScrollList_Keyboard = nil
+---@class ZO_AbstractSingleTemplateGridScrollList_Keyboard
+ZO_AbstractSingleTemplateGridScrollList_Keyboard = {}
+---@return ZO_AbstractSingleTemplateGridScrollList_Keyboard
 function ZO_AbstractSingleTemplateGridScrollList_Keyboard:New(...) end
 function ZO_AbstractSingleTemplateGridScrollList_Keyboard:Initialize(control) end
+---@return ZO_SingleTemplateGridScrollList_Keyboard
 function ZO_SingleTemplateGridScrollList_Keyboard:New(...) end
 function ZO_SingleTemplateGridScrollList_Keyboard:Initialize(control, fillRowWithEmptyCells) end
 
 -------------------------------------------------------------------------------
---[ZO_AbstractGridScrollList_Keyboard]
-ZO_AbstractGridScrollList_Keyboard = nil
+---@class ZO_AbstractGridScrollList_Keyboard
+ZO_AbstractGridScrollList_Keyboard = {}
+---@return ZO_AbstractGridScrollList_Keyboard
 function ZO_AbstractGridScrollList_Keyboard:New(...) end
 function ZO_AbstractGridScrollList_Keyboard:Initialize(control) end
+---@return ZO_GridScrollList_Keyboard
 function ZO_GridScrollList_Keyboard:New(...) end
 function ZO_GridScrollList_Keyboard:Initialize(control) end
 
 -------------------------------------------------------------------------------
---[ZO_AbstractSingleTemplateGridScrollList_Gamepad]
-ZO_AbstractSingleTemplateGridScrollList_Gamepad = nil
+---@class ZO_AbstractSingleTemplateGridScrollList_Gamepad
+ZO_AbstractSingleTemplateGridScrollList_Gamepad = {}
+---@return ZO_AbstractSingleTemplateGridScrollList_Gamepad
 function ZO_AbstractSingleTemplateGridScrollList_Gamepad:New(...) end
 function ZO_AbstractSingleTemplateGridScrollList_Gamepad:Initialize(control, selectionTemplate) end
 function ZO_AbstractSingleTemplateGridScrollList_Gamepad:CommitGridList() end
+---@return ZO_SingleTemplateGridScrollList_Gamepad
 function ZO_SingleTemplateGridScrollList_Gamepad:New(...) end
 function ZO_SingleTemplateGridScrollList_Gamepad:Initialize(control, fillRowWithEmptyCells, selectionTemplate) end
 
 -------------------------------------------------------------------------------
---[ZO_AbstractGridScrollList_Gamepad]
-ZO_AbstractGridScrollList_Gamepad = nil
+---@class ZO_AbstractGridScrollList_Gamepad
+ZO_AbstractGridScrollList_Gamepad = {}
+---@return ZO_AbstractGridScrollList_Gamepad
 function ZO_AbstractGridScrollList_Gamepad:New(...) end
 function ZO_AbstractGridScrollList_Gamepad:Initialize(control, selectionTemplate) end
 function ZO_AbstractGridScrollList_Gamepad:InitializeTriggerKeybinds() end
@@ -2114,13 +2214,15 @@ function ZO_AbstractGridScrollList_Gamepad:AddTriggerKeybinds() end
 function ZO_AbstractGridScrollList_Gamepad:RemoveTriggerKeybinds() end
 function ZO_AbstractGridScrollList_Gamepad:ScrollDataToCenter(data, onScrollCompleteCallback, animateInstantly) end
 function ZO_AbstractGridScrollList_Gamepad:SelectNextCategory(direction) end
+---@return ZO_GridScrollList_Gamepad
 function ZO_GridScrollList_Gamepad:New(...) end
 function ZO_GridScrollList_Gamepad:Initialize(control, selectionTemplate) end
 
 -------------------------------------------------------------------------------
---[ZO_ParametricScrollList]
-ZO_ParametricScrollList = nil
+---@class ZO_ParametricScrollList
+ZO_ParametricScrollList = {}
 function ZO_ParametricScrollList_DefaultMenuEntryWithHeaderSetup(control, data, selected, selectedDuringRebuild, enabled, activated) end
+---@return ZO_ParametricScrollList
 function ZO_ParametricScrollList:New(...) end
 function ZO_ParametricScrollList:Initialize(control, mode, onActivatedChangedFunction, onCommitWithItemsFunction, onClearedFunction) end
 function ZO_ParametricScrollList:HasDataTemplate(templateName) end
@@ -2243,8 +2345,9 @@ function ZO_ParametricScrollList:SetDefaultSelectedIndex(defaultSelectedIndex) e
 function ZO_ParametricScrollList:WhenInactiveSetTargetControlHidden(hidden) end
 function ZO_ParametricScrollList_OnMouseWheel(control, delta) end
 -------------------------------------------------------------------------------
---[ZO_Particle]
+---@class ZO_Particle
 ZO_Particle = new
+---@return ZO_Particle
 function ZO_Particle:New(...) end
 function ZO_Particle:Initialize() end
 function ZO_Particle:GetKey() end
@@ -2263,6 +2366,7 @@ function ZO_Particle:InitializeEasedLerpParameter(startName, endName, defaultVal
 function ZO_Particle:ComputedEasedLerpParameter(startName, endName, easingName, defaultValue, progress) end
 function ZO_Particle:OnUpdate(timeS) end
 function ZO_Particle:GetDimensionsFromParameters() end
+---@return ZO_SceneGraphParticle
 function ZO_SceneGraphParticle:New(...) end
 function ZO_SceneGraphParticle:Initialize() end
 function ZO_SceneGraphParticle:SetParentNode(parentNode) end
@@ -2270,14 +2374,16 @@ function ZO_SceneGraphParticle:Start(parentControl, startTimeS, nowS) end
 function ZO_SceneGraphParticle:OnUpdate(timeS) end
 function ZO_SceneGraphParticle:Stop() end
 function ZO_SceneGraphParticle:SetPosition(x, y, z) end
+---@return ZO_ControlParticle
 function ZO_ControlParticle:New(...) end
 function ZO_ControlParticle:Start(parentControl, startTimeS, nowS) end
 function ZO_ControlParticle:AddAnimationsOnStart(durationS) end
 function ZO_ControlParticle:SetPosition(x, y, z) end
 
 -------------------------------------------------------------------------------
---[ZO_ParticleSystem]
-ZO_ParticleSystem = nil
+---@class ZO_ParticleSystem
+ZO_ParticleSystem = {}
+---@return ZO_ParticleSystem
 function ZO_ParticleSystem:New(...) end
 function ZO_ParticleSystem:Initialize(particleClass) end
 function ZO_ParticleSystem:SetDuration(durationS) end
@@ -2300,15 +2406,17 @@ function ZO_ParticleSystem:Stop() end
 function ZO_ParticleSystem:Finish() end
 
 -------------------------------------------------------------------------------
---[ZO_SceneGraphParticleSystem]
-ZO_SceneGraphParticleSystem = nil
+---@class ZO_SceneGraphParticleSystem
+ZO_SceneGraphParticleSystem = {}
+---@return ZO_SceneGraphParticleSystem
 function ZO_SceneGraphParticleSystem:New(...) end
 function ZO_SceneGraphParticleSystem:Initialize(particleClass, parentNode) end
 function ZO_SceneGraphParticleSystem:StartParticle(particle, startTimeS, nowS) end
 
 -------------------------------------------------------------------------------
---[ZO_ParticleSystemManager]
-ZO_ParticleSystemManager = nil
+---@class ZO_ParticleSystemManager
+ZO_ParticleSystemManager = {}
+---@return ZO_ParticleSystemManager
 function ZO_ParticleSystemManager:New(...) end
 function ZO_ParticleSystemManager:Initialize() end
 function ZO_ParticleSystemManager:OnUpdate(timeS) end
@@ -2321,84 +2429,96 @@ function ZO_ParticleSystemManager:FinishBuildingAnimationTimelines() end
 function ZO_ParticleSystemManager:ReleaseAnimationTimelines(animationTimelines) end
 
 -------------------------------------------------------------------------------
---[ZO_BentArcParticle_SceneGraph]
-ZO_BentArcParticle_SceneGraph = nil
+---@class ZO_BentArcParticle_SceneGraph
+ZO_BentArcParticle_SceneGraph = {}
 function ZO_BentArcParticle_SceneGraph:OnUpdate(timeS) end
+---@return ZO_BentArcParticle_SceneGraph
 function ZO_BentArcParticle_SceneGraph:New(...) end
 function ZO_BentArcParticle_OnUpdate(self, timeS) end
 
 -------------------------------------------------------------------------------
---[ZO_BentArcParticle_Control]
-ZO_BentArcParticle_Control = nil
+---@class ZO_BentArcParticle_Control
+ZO_BentArcParticle_Control = {}
 function ZO_BentArcParticle_Control:OnUpdate(timeS) end
+---@return ZO_BentArcParticle_Control
 function ZO_BentArcParticle_Control:New(...) end
 
 -------------------------------------------------------------------------------
---[ZO_PhysicsParticle_Control]
-ZO_PhysicsParticle_Control = nil
+---@class ZO_PhysicsParticle_Control
+ZO_PhysicsParticle_Control = {}
+---@return ZO_PhysicsParticle_Control
 function ZO_PhysicsParticle_Control:New(...) end
 function ZO_PhysicsParticle_Control:Start(...) end
 
 -------------------------------------------------------------------------------
---[ZO_NumericalPhysicsParticle_Control]
-ZO_NumericalPhysicsParticle_Control = nil
+---@class ZO_NumericalPhysicsParticle_Control
+ZO_NumericalPhysicsParticle_Control = {}
+---@return ZO_NumericalPhysicsParticle_Control
 function ZO_NumericalPhysicsParticle_Control:New(...) end
 function ZO_NumericalPhysicsParticle_Control:Start(...) end
 function ZO_NumericalPhysicsParticle_Control:OnUpdate(timeS) end
 
 -------------------------------------------------------------------------------
---[ZO_AnalyticalPhysicsParticle_Control]
-ZO_AnalyticalPhysicsParticle_Control = nil
+---@class ZO_AnalyticalPhysicsParticle_Control
+ZO_AnalyticalPhysicsParticle_Control = {}
+---@return ZO_AnalyticalPhysicsParticle_Control
 function ZO_AnalyticalPhysicsParticle_Control:New(...) end
 function ZO_AnalyticalPhysicsParticle_Control:OnUpdate(timeS) end
 
 -------------------------------------------------------------------------------
---[ZO_StationaryParticle_Control]
-ZO_StationaryParticle_Control = nil
+---@class ZO_StationaryParticle_Control
+ZO_StationaryParticle_Control = {}
+---@return ZO_StationaryParticle_Control
 function ZO_StationaryParticle_Control:New(...) end
 function ZO_StationaryParticle_Control:OnUpdate(timeS) end
 
 -------------------------------------------------------------------------------
---[ZO_LeafParticle_Control]
-ZO_LeafParticle_Control = nil
+---@class ZO_LeafParticle_Control
+ZO_LeafParticle_Control = {}
+---@return ZO_LeafParticle_Control
 function ZO_LeafParticle_Control:New(...) end
 function ZO_LeafParticle_Control:Start(...) end
 function ZO_LeafParticle_Control:OnUpdate(timeS) end
 
 -------------------------------------------------------------------------------
---[ZO_FlowParticle_Control]
-ZO_FlowParticle_Control = nil
+---@class ZO_FlowParticle_Control
+ZO_FlowParticle_Control = {}
+---@return ZO_FlowParticle_Control
 function ZO_FlowParticle_Control:New(...) end
 function ZO_FlowParticle_Control:Start(...) end
 function ZO_FlowParticle_Control:OnUpdate(timeS) end
 
 -------------------------------------------------------------------------------
---[ZO_ParticleValueGenerator]
-ZO_ParticleValueGenerator = nil
+---@class ZO_ParticleValueGenerator
+ZO_ParticleValueGenerator = {}
+---@return ZO_ParticleValueGenerator
 function ZO_ParticleValueGenerator:New(...) end
 function ZO_ParticleValueGenerator:Initialize() end
 function ZO_ParticleValueGenerator:Generate() end
 function ZO_ParticleValueGenerator:GetValue(i) end
 
 -------------------------------------------------------------------------------
---[ZO_UniformRangeGenerator]
-ZO_UniformRangeGenerator = nil
+---@class ZO_UniformRangeGenerator
+ZO_UniformRangeGenerator = {}
+---@return ZO_UniformRangeGenerator
 function ZO_UniformRangeGenerator:New(...) end
 function ZO_UniformRangeGenerator:Initialize(...) end
 function ZO_UniformRangeGenerator:Generate() end
 function ZO_UniformRangeGenerator:GetValue(i) end
 
 -------------------------------------------------------------------------------
---[ZO_WeightedChoiceGenerator]
-ZO_WeightedChoiceGenerator = nil
+---@class ZO_WeightedChoiceGenerator
+ZO_WeightedChoiceGenerator = {}
+---@return ZO_WeightedChoiceGenerator
 function ZO_WeightedChoiceGenerator:New(...) end
 function ZO_WeightedChoiceGenerator:Initialize(...) end
 function ZO_WeightedChoiceGenerator:Generate() end
 function ZO_WeightedChoiceGenerator:GetValue(i) end
 
 -------------------------------------------------------------------------------
---[ZO_SmoothCycleGenerator]
-ZO_SmoothCycleGenerator = nil
+---@class ZO_SmoothCycleGenerator
+ZO_SmoothCycleGenerator = {}
+---@return ZO_SmoothCycleGenerator
 function ZO_SmoothCycleGenerator:New(...) end
 function ZO_SmoothCycleGenerator:Initialize(...) end
 function ZO_SmoothCycleGenerator:SetCycleDurationS(cycleDurationS) end
@@ -2406,8 +2526,9 @@ function ZO_SmoothCycleGenerator:Generate() end
 function ZO_SmoothCycleGenerator:GetValue(i) end
 
 -------------------------------------------------------------------------------
---[ZO_ListDialog]
-ZO_PixelUnitControl = nil
+---@class ZO_ListDialog
+ZO_PixelUnitControl = {}
+---@return ZO_PixelUnitControl
 function ZO_PixelUnitControl:New(control, pixelSource, baseObject) end
 function ZO_PixelUnitControl:Initialize(control, pixelSource) end
 function ZO_PixelUnitControl:ConvertToUIUnits(measurement) end
@@ -2426,8 +2547,9 @@ function ZO_PixelUnitControl:UnlockApply() end
 function ZO_PixelUnitControl:ApplyToControl() end
 
 -------------------------------------------------------------------------------
---[ZO_PixelUnits]
-ZO_PixelUnits = nil    
+---@class ZO_PixelUnits
+ZO_PixelUnits = {}    
+---@return ZO_PixelUnits
 function ZO_PixelUnits:New(namespace, baseObject) end
 function ZO_PixelUnits:Initialize(namespace, baseObject) end
 function ZO_PixelUnits:OnScreenResized() end
@@ -2444,23 +2566,26 @@ function ZO_PixelUnits:SetScale(control, scale) end
 function ZO_PixelUnitsControl_OnInitialized(self) end
 
 -------------------------------------------------------------------------------
---[ZO_PlatformStyleManager]
-ZO_PlatformStyleManager = nil
+---@class ZO_PlatformStyleManager
+ZO_PlatformStyleManager = {}
+---@return ZO_PlatformStyleManager
 function ZO_PlatformStyleManager:New() end
 function ZO_PlatformStyleManager:Initialize() end
 function ZO_PlatformStyleManager:Add(object) end
 function ZO_PlatformStyleManager:OnGamepadPreferredModeChanged() end
 
 -------------------------------------------------------------------------------
---[ZO_PlatformStyle]
-ZO_PlatformStyle = nil
+---@class ZO_PlatformStyle
+ZO_PlatformStyle = {}
+---@return ZO_PlatformStyle
 function ZO_PlatformStyle:New(...) end
 function ZO_PlatformStyle:Initialize(applyFunction, keyboardStyle, gamepadStyle) end
 function ZO_PlatformStyle:Apply() end
 
 -------------------------------------------------------------------------------
---[ZO_PointerBox_Keyboard]
-ZO_PointerBox_Keyboard = nil
+---@class ZO_PointerBox_Keyboard
+ZO_PointerBox_Keyboard = {}
+---@return ZO_PointerBox_Keyboard
 function ZO_PointerBox_Keyboard:New(...) end
 function ZO_PointerBox_Keyboard:Initialize(control) end
 function ZO_PointerBox_Keyboard:GetPoolKey() end
@@ -2484,16 +2609,18 @@ function ZO_PointerBox_Keyboard:Hide(skipAnimation) end
 function ZO_PointerBox_Keyboard:Release() end
 
 -------------------------------------------------------------------------------
---[ZO_PointerBoxManager]
-ZO_PointerBoxManager = nil
+---@class ZO_PointerBoxManager
+ZO_PointerBoxManager = {}
+---@return ZO_PointerBoxManager
 function ZO_PointerBoxManager:New(...) end
 function ZO_PointerBoxManager:Initialize() end
 function ZO_PointerBoxManager:Acquire() end
 function ZO_PointerBoxManager:Release(pointerBox) end
 
 -------------------------------------------------------------------------------
---[ZO_RadialMenuController]
-ZO_RadialMenuController = nil
+---@class ZO_RadialMenuController
+ZO_RadialMenuController = {}
+---@return ZO_RadialMenuController
 function ZO_RadialMenuController:New(...) end
 function ZO_RadialMenuController:Initialize(control, entryTemplate, animationTemplate, entryAnimationTemplate) end
 function ZO_RadialMenuController:ShowMenu() end
@@ -2502,8 +2629,9 @@ function ZO_RadialMenuController:OnSelectionChangedCallback(selectedEntry) end
 function ZO_RadialMenuController:PopulateMenu() end
 
 -------------------------------------------------------------------------------
---[ZO_InteractiveRadialMenuController]
-ZO_InteractiveRadialMenuController = nil
+---@class ZO_InteractiveRadialMenuController
+ZO_InteractiveRadialMenuController = {}
+---@return ZO_InteractiveRadialMenuController
 function ZO_InteractiveRadialMenuController:New(...) end
 function ZO_InteractiveRadialMenuController:Initialize(control, entryTemplate, animationTemplate, entryAnimationTemplate ) end
 function ZO_InteractiveRadialMenuController:StartInteraction() end
@@ -2516,8 +2644,9 @@ function ZO_InteractiveRadialMenuController:OnSelectionChangedCallback(selectedE
 function ZO_InteractiveRadialMenuController:PopulateMenu() end
 
 -------------------------------------------------------------------------------
---[ZO_RadialMenu]
-ZO_RadialMenu = nil
+---@class ZO_RadialMenu
+ZO_RadialMenu = {}
+---@return ZO_RadialMenu
 function ZO_RadialMenu:New(...) end
 function ZO_RadialMenu.ForceActiveMenuClosed() end
 function ZO_RadialMenu:Initialize(control, entryTemplate, animationTemplate, entryAnimationTemplate, actionLayerName, directionInputs, enableMouse, selectIfCentered) end
@@ -2550,8 +2679,9 @@ function ZO_RadialMenu:IsShown() end
 function ZO_RadialMenu:GetEntries() end
 
 -------------------------------------------------------------------------------
---[ZO_RecentMessages]
-ZO_RecentMessages = nil
+---@class ZO_RecentMessages
+ZO_RecentMessages = {}
+---@return ZO_RecentMessages
 function ZO_RecentMessages:New(...) end
 function ZO_RecentMessages:Initialize(expiryDelayMilliseconds) end
 function ZO_RecentMessages:AddRecent(message) end
@@ -2560,8 +2690,9 @@ function ZO_RecentMessages:Update(timeNowMilliseconds) end
 function ZO_RecentMessages:ShouldDisplayMessage(message) end
 
 -------------------------------------------------------------------------------
---[ZO_SavingEditBox]
-ZO_SavingEditBox = nil
+---@class ZO_SavingEditBox
+ZO_SavingEditBox = {}
+---@return ZO_SavingEditBox
 function ZO_SavingEditBox:New(...) end
 function ZO_SavingEditBox:Initialize(control) end
 function ZO_SavingEditBox:SetDefaultText(defaultText) end
@@ -2587,21 +2718,24 @@ function ZO_SavingEditBox:OnModifyClicked() end
 function ZO_SavingEditBox:RefreshButtons() end
 
 -------------------------------------------------------------------------------
---[ZO_SavingEditBoxGroup]
-ZO_SavingEditBoxGroup = nil
+---@class ZO_SavingEditBoxGroup
+ZO_SavingEditBoxGroup = {}
+---@return ZO_SavingEditBoxGroup
 function ZO_SavingEditBoxGroup:New() end
 function ZO_SavingEditBoxGroup:Add(savingEditBox) end
 
 -------------------------------------------------------------------------------
---[ZO_ScrollingSavingEditBox]
-ZO_ScrollingSavingEditBox = nil
+---@class ZO_ScrollingSavingEditBox
+ZO_ScrollingSavingEditBox = {}
+---@return ZO_ScrollingSavingEditBox
 function ZO_ScrollingSavingEditBox:New(...) end
 function ZO_ScrollingSavingEditBox:Initialize(control) end
 function ZO_ScrollingSavingEditBox:SetEditing(editing, forceUpdate) end
 
 -------------------------------------------------------------------------------
---[ZO_StackFragmentGroup]
-ZO_StackFragmentGroup = nil
+---@class ZO_StackFragmentGroup
+ZO_StackFragmentGroup = {}
+---@return ZO_StackFragmentGroup
 function ZO_StackFragmentGroup:New(fragment, object) end
 function ZO_StackFragmentGroup:Add(fragment, object) end
 function ZO_StackFragmentGroup:SetOnActivatedCallback(onActivatedCallback) end
@@ -2611,8 +2745,9 @@ function ZO_StackFragmentGroup:GetFragments() end
 function ZO_StackFragmentGroup:SetActive(active) end
 
 -------------------------------------------------------------------------------
---[ZO_Scene]
-ZO_Scene = nil
+---@class ZO_Scene
+ZO_Scene = {}
+---@return ZO_Scene
 function ZO_Scene:New(...) end
 function ZO_Scene:Initialize(name, sceneManager) end
 function ZO_Scene:AddFragment(fragment) end
@@ -2665,8 +2800,9 @@ function ZO_Scene:Log(message) end
 function ZO_Scene_GetOriginColor() end
 
 -------------------------------------------------------------------------------
---[ZO_RemoteScene]
-ZO_RemoteScene = nil
+---@class ZO_RemoteScene
+ZO_RemoteScene = {}
+---@return ZO_RemoteScene
 function ZO_RemoteScene:New(...) end
 function ZO_RemoteScene:Initialize(name, sceneManager) end
 function ZO_RemoteScene:SetState(newState) end
@@ -2678,8 +2814,9 @@ function ZO_RemoteScene:AreFragmentsDoneTransitioning() end
 function ZO_RemoteScene:OnRemoteSceneFinishedFragmentTransition(sequenceNumber) end
 
 -------------------------------------------------------------------------------
---[ZO_SceneFragment]
-ZO_SceneFragment = nil
+---@class ZO_SceneFragment
+ZO_SceneFragment = {}
+---@return ZO_SceneFragment
 function ZO_SceneFragment:New(...) end
 function ZO_SceneFragment:Initialize() end
 function ZO_SceneFragment:IsValidSceneManagerChange(newSceneManager) end
@@ -2711,18 +2848,20 @@ function ZO_SceneFragment:ComputeIfFragmentShouldShow() end
 function ZO_SceneFragment:Refresh(customShowParam, customHideParam, asAResultOfSceneStateChange, refreshedForScene) end
 
 -------------------------------------------------------------------------------
---[ZO_SimpleSceneFragment]
-ZO_SimpleSceneFragment = nil
+---@class ZO_SimpleSceneFragment
+ZO_SimpleSceneFragment = {}
+---@return ZO_SimpleSceneFragment
 function ZO_SimpleSceneFragment:New(...) end
 function ZO_SimpleSceneFragment:Initialize(control) end
 function ZO_SimpleSceneFragment:Show() end
 function ZO_SimpleSceneFragment:Hide() end
 
 -------------------------------------------------------------------------------
---[ZO_AnimatedSceneFragment]
-ZO_AnimatedSceneFragment = nil
+---@class ZO_AnimatedSceneFragment
+ZO_AnimatedSceneFragment = {}
 function AcquireAnimation(animationTemplate) end
 function ReleaseAnimation(animationTemplate, key) end
+---@return ZO_AnimatedSceneFragment
 function ZO_AnimatedSceneFragment:New(...) end
 function ZO_AnimatedSceneFragment:Initialize(animationTemplate, control, alwaysAnimate, duration) end
 function ZO_AnimatedSceneFragment:GetAnimation() end
@@ -2733,33 +2872,39 @@ function ZO_AnimatedSceneFragment:Show() end
 function ZO_AnimatedSceneFragment:Hide() end
 
 -------------------------------------------------------------------------------
---[ZO_FadeSceneFragment]
-ZO_FadeSceneFragment = nil
+---@class ZO_FadeSceneFragment
+ZO_FadeSceneFragment = {}
+---@return ZO_FadeSceneFragment
 function ZO_FadeSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---[ZO_TranslateFromLeftSceneFragment]
-ZO_TranslateFromLeftSceneFragment = nil
+---@class ZO_TranslateFromLeftSceneFragment
+ZO_TranslateFromLeftSceneFragment = {}
+---@return ZO_TranslateFromLeftSceneFragment
 function ZO_TranslateFromLeftSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---[ZO_TranslateFromRightSceneFragment]
-ZO_TranslateFromRightSceneFragment = nil
+---@class ZO_TranslateFromRightSceneFragment
+ZO_TranslateFromRightSceneFragment = {}
+---@return ZO_TranslateFromRightSceneFragment
 function ZO_TranslateFromRightSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---[ZO_TranslateFromBottomSceneFragment]
-ZO_TranslateFromBottomSceneFragment = nil
+---@class ZO_TranslateFromBottomSceneFragment
+ZO_TranslateFromBottomSceneFragment = {}
+---@return ZO_TranslateFromBottomSceneFragment
 function ZO_TranslateFromBottomSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---[ZO_TranslateFromTopSceneFragment]
-ZO_TranslateFromTopSceneFragment = nil
+---@class ZO_TranslateFromTopSceneFragment
+ZO_TranslateFromTopSceneFragment = {}
+---@return ZO_TranslateFromTopSceneFragment
 function ZO_TranslateFromTopSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---[ZO_ConveyorSceneFragment]
-ZO_ConveyorSceneFragment = nil
+---@class ZO_ConveyorSceneFragment
+ZO_ConveyorSceneFragment = {}
+---@return ZO_ConveyorSceneFragment
 function ZO_ConveyorSceneFragment:New(...) end
 function ZO_ConveyorSceneFragment:Initialize(control, alwaysAnimate, inAnimation, outAnimation) end
 function ZO_ConveyorSceneFragment:ChooseAnimation() end
@@ -2780,15 +2925,16 @@ function ZO_ConveyorSceneFragment_SetMovingBackward() end
 function ZO_ConveyorSceneFragment_ResetMovement() end
 
 -------------------------------------------------------------------------------
---[ZO_HideableSceneFragmentMixin]
-ZO_HideableSceneFragmentMixin = nil
+---@class ZO_HideableSceneFragmentMixin
+ZO_HideableSceneFragmentMixin = {}
 function ZO_HideableSceneFragmentMixin:SetHiddenForReason(reason, hidden, customShowDuration, customHideDuration) end
 function ZO_HideableSceneFragmentMixin:IsHiddenForReason(reason) end
 function ZO_MixinHideableSceneFragment(self) end
 
 -------------------------------------------------------------------------------
---[ZO_HUDFadeSceneFragment]
-ZO_HUDFadeSceneFragment = nil
+---@class ZO_HUDFadeSceneFragment
+ZO_HUDFadeSceneFragment = {}
+---@return ZO_HUDFadeSceneFragment
 function ZO_HUDFadeSceneFragment:New(...) end
 function ZO_HUDFadeSceneFragment:Initialize(control, showDuration, hideDuration) end
 function ZO_HUDFadeSceneFragment:GetAnimation() end
@@ -2798,15 +2944,16 @@ function ZO_HUDFadeSceneFragment:OnShown() end
 function ZO_HUDFadeSceneFragment:OnHidden() end
 
 -------------------------------------------------------------------------------
---[ZO_AnchorSceneFragment]
-ZO_AnchorSceneFragment = nil
+---@class ZO_AnchorSceneFragment
+ZO_AnchorSceneFragment = {}
+---@return ZO_AnchorSceneFragment
 function ZO_AnchorSceneFragment:New(...) end
 function ZO_AnchorSceneFragment:Initialize(control, anchor) end
 function ZO_AnchorSceneFragment:Show() end
 
 -------------------------------------------------------------------------------
---[ZO_BackgroundFragment]
-ZO_BackgroundFragment = nil
+---@class ZO_BackgroundFragment
+ZO_BackgroundFragment = {}
 function ZO_BackgroundFragment:ResetOnHiding() end
 function ZO_BackgroundFragment:ResetOnHidden() end
 function ZO_BackgroundFragment:Mixin(baseFragment) end
@@ -2818,16 +2965,18 @@ function ZO_BackgroundFragment:SetHighlightHidden(hidden) end
 function ZO_BackgroundFragment:FadeRightDivider(fadeIn, instant) end
 
 -------------------------------------------------------------------------------
---[ZO_ActionLayerFragment]
-ZO_ActionLayerFragment = nil
+---@class ZO_ActionLayerFragment
+ZO_ActionLayerFragment = {}
+---@return ZO_ActionLayerFragment
 function ZO_ActionLayerFragment:New(...) end
 function ZO_ActionLayerFragment:Initialize(actionLayerName) end
 function ZO_ActionLayerFragment:Show() end
 function ZO_ActionLayerFragment:Hide() end
 
 -------------------------------------------------------------------------------
---[ZO_SceneGroup]
-ZO_SceneGroup = nil
+---@class ZO_SceneGroup
+ZO_SceneGroup = {}
+---@return ZO_SceneGroup
 function ZO_SceneGroup:New(...) end
 function ZO_SceneGroup:Initialize(...) end
 function ZO_SceneGroup:AddScene(sceneName) end
@@ -2842,8 +2991,9 @@ function ZO_SceneGroup:GetState() end
 function ZO_SceneGroup:IsShowing() end
 
 -------------------------------------------------------------------------------
---[ZO_SceneManager_Base]
-ZO_SceneManager_Base = nil
+---@class ZO_SceneManager_Base
+ZO_SceneManager_Base = {}
+---@return ZO_SceneManager_Base
 function ZO_SceneManager_Base:New() end
 function ZO_SceneManager_Base:Initialize() end
 function ZO_SceneManager_Base:Add(scene) end
@@ -2895,8 +3045,9 @@ function ZO_SceneManager_Base:WasSceneOnStack(sceneName) end
 function ZO_SceneManager_Base:WasSceneOnTopOfStack(sceneName) end
 
 -------------------------------------------------------------------------------
---[ZO_SceneManager_Follower]
-ZO_SceneManager_Follower = nil
+---@class ZO_SceneManager_Follower
+ZO_SceneManager_Follower = {}
+---@return ZO_SceneManager_Follower
 function ZO_SceneManager_Follower:New(...) end
 function ZO_SceneManager_Follower:Initialize(...) end
 function ZO_SceneManager_Follower:OnLeaderToFollowerSync(messageOrigin, syncType, currentSceneName, nextSceneName, sequenceNumber, currentSceneFragmentsComplete) end
@@ -2913,9 +3064,10 @@ function ZO_SceneManager_Follower:SendFragmentCompleteMessage() end
 function ZO_SceneManager_Follower:Log(message, sceneName) end
 
 -------------------------------------------------------------------------------
---[ZO_SceneManager_Leader]
-ZO_SceneManager_Leader = nil
+---@class ZO_SceneManager_Leader
+ZO_SceneManager_Leader = {}
 function ZO_SceneManager_Leader.AddBypassHideSceneConfirmationReason(name) end
+---@return ZO_SceneManager_Leader
 function ZO_SceneManager_Leader:New(...) end
 function ZO_SceneManager_Leader:Initialize(...) end
 function ZO_SceneManager_Leader:GetNextSequenceNumber() end
@@ -2947,8 +3099,9 @@ function ZO_SceneManager_Leader:SendFragmentCompleteMessage() end
 function ZO_SceneManager_Leader:RequestShowLeaderBaseScene() end
 
 -------------------------------------------------------------------------------
---[ZO_SceneGraph]
-ZO_SceneGraph = nil
+---@class ZO_SceneGraph
+ZO_SceneGraph = {}
+---@return ZO_SceneGraph
 function ZO_SceneGraph:New(...) end
 function ZO_SceneGraph:Initialize(canvasControl, debugModeEnabled) end
 function ZO_SceneGraph:IsHidden() end
@@ -2972,8 +3125,9 @@ function ZO_SceneGraph:OnUpdate() end
 function ZO_SceneGraph:Render(node, dirtyUpstream) end
 
 -------------------------------------------------------------------------------
---[ZO_SceneGraphNode]
-ZO_SceneGraphNode = nil
+---@class ZO_SceneGraphNode
+ZO_SceneGraphNode = {}
+---@return ZO_SceneGraphNode
 function ZO_SceneGraphNode:New(...) end
 function ZO_SceneGraphNode:Initialize(sceneGraph, name) end
 function ZO_SceneGraphNode:GetSceneGraph() end
@@ -3014,8 +3168,9 @@ function ZO_SceneGraphNode:SetControlAnchorPoint(control, anchorPoint) end
 function ZO_SceneGraphNode:SetControlUseRotation(control, useRotation) end
 
 -------------------------------------------------------------------------------
---[ZO_SceneNodeRing]
-ZO_SceneNodeRing = nil
+---@class ZO_SceneNodeRing
+ZO_SceneNodeRing = {}
+---@return ZO_SceneNodeRing
 function ZO_SceneNodeRing:New(...) end
 function ZO_SceneNodeRing:Initialize(rootNode) end
 function ZO_SceneNodeRing:SetRadius(radius) end
@@ -3037,8 +3192,9 @@ function ZO_SceneNodeRing:Update(delta) end
 function ZO_ScriptProfiler_GenerateReport() end
 
 -------------------------------------------------------------------------------
---[ZO_SelectionIndicator]
-ZO_SelectionIndicator = nil
+---@class ZO_SelectionIndicator
+ZO_SelectionIndicator = {}
+---@return ZO_SelectionIndicator
 function ZO_SelectionIndicator:New(...) end
 function ZO_SelectionIndicator:Initialize(control) end
 function ZO_SelectionIndicator:OnButtonClicked(button) end
@@ -3055,8 +3211,9 @@ function ZO_SelectionIndicator:SetSelectionByIndex(index) end
 function ZO_SelectionIndicator_OnInitialized(control) end
 
 -------------------------------------------------------------------------------
---[ZO_SmoothSlider]
-ZO_SmoothSlider = nil
+---@class ZO_SmoothSlider
+ZO_SmoothSlider = {}
+---@return ZO_SmoothSlider
 function ZO_SmoothSlider:New(...) end
 function ZO_SmoothSlider:Initialize(control, buttonTemplate, buttonWidth, buttonHeight, buttonPadding, buttonScaleFactor) end
 function ZO_SmoothSlider:EnableHighlight(normalTexture, highlightTexture) end
@@ -3076,8 +3233,9 @@ function ZO_SmoothSlider:Button_OnClicked(button) end
 function ZO_SmoothSliderButton_OnClicked(self) end
 
 -------------------------------------------------------------------------------
---[ZO_SortFilterListBase]
-ZO_SortFilterListBase = nil
+---@class ZO_SortFilterListBase
+ZO_SortFilterListBase = {}
+---@return ZO_SortFilterListBase
 function ZO_SortFilterListBase:New(...) end
 function ZO_SortFilterListBase:Initialize() end
 function ZO_SortFilterListBase:RefreshVisible() end
@@ -3086,8 +3244,9 @@ function ZO_SortFilterListBase:RefreshFilters() end
 function ZO_SortFilterListBase:RefreshData() end
 
 -------------------------------------------------------------------------------
---[ZO_SortFilterList]
-ZO_SortFilterList = nil
+---@class ZO_SortFilterList
+ZO_SortFilterList = {}
+---@return ZO_SortFilterList
 function ZO_SortFilterList:New(...) end
 function ZO_SortFilterList:Initialize(control, ...) end
 function ZO_SortFilterList:BuildMasterList() end
@@ -3131,8 +3290,9 @@ function ZO_SortFilterList:Row_OnMouseEnter(control) end
 function ZO_SortFilterList:Row_OnMouseExit(control) end
 
 -------------------------------------------------------------------------------
---[ZO_SortFilterList_Gamepad]
-ZO_SortFilterList_Gamepad = nil
+---@class ZO_SortFilterList_Gamepad
+ZO_SortFilterList_Gamepad = {}
+---@return ZO_SortFilterList_Gamepad
 function ZO_SortFilterList_Gamepad:New(...) end
 function ZO_SortFilterList_Gamepad:Initialize(...) end
 function ZO_SortFilterList_Gamepad:InitializeSortFilterList(control, highlightTemplate) end
@@ -3146,8 +3306,9 @@ function ZO_SortFilterList_Gamepad:UpdateDirectionalInput() end
 function ZO_SortFilterList_Gamepad:SetEmptyText(emptyText) end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadInteractiveSortFilterList]
-ZO_GamepadInteractiveSortFilterList = nil
+---@class ZO_GamepadInteractiveSortFilterList
+ZO_GamepadInteractiveSortFilterList = {}
+---@return ZO_GamepadInteractiveSortFilterList
 function ZO_GamepadInteractiveSortFilterList:New(...) end
 function ZO_GamepadInteractiveSortFilterList:Initialize(control) end
 function ZO_GamepadInteractiveSortFilterList:InitializeSortFilterList(control) end
@@ -3196,15 +3357,17 @@ function ZO_GamepadInteractiveSortFilterList:DeselectListData() end
 function ZO_GamepadInteractiveSortFilterHeader_Initialize(control, text, sortKey, textAlignment) end
 
 -------------------------------------------------------------------------------
---[ZO_GamepadInteractiveSortFilterList]
-ZO_NoSelectionSortFilterList_Gamepad = nil
+---@class ZO_GamepadInteractiveSortFilterList
+ZO_NoSelectionSortFilterList_Gamepad = {}
+---@return ZO_NoSelectionSortFilterList_Gamepad
 function ZO_NoSelectionSortFilterList_Gamepad:New(...) end
 function ZO_NoSelectionSortFilterList_Gamepad:SetDirectionalInputEnabled(enabled) end
 function ZO_NoSelectionSortFilterList_Gamepad:UpdateDirectionalInput() end
 
 -------------------------------------------------------------------------------
---[ZO_SortHeaderGroup]
-ZO_SortHeaderGroup = nil
+---@class ZO_SortHeaderGroup
+ZO_SortHeaderGroup = {}
+---@return ZO_SortHeaderGroup
 function ZO_SortHeaderGroup:New(headerContainer, showArrows) end
 function ZO_SortHeaderGroup:AddHeader(header) end
 function ZO_SortHeaderGroup:AddHeadersFromContainer() end
@@ -3245,8 +3408,9 @@ function ZO_SortHeader_OnMouseExit(control) end
 function ZO_SortHeader_OnMouseUp(control, upInside) end
 
 -------------------------------------------------------------------------------
---[ZO_Spinner]
-ZO_Spinner = nil
+---@class ZO_Spinner
+ZO_Spinner = {}
+---@return ZO_Spinner
 function ZO_Spinner:New(...) end
 function ZO_Spinner:Initialize(control, min, max, isGamepad, spinnerMode, accelerationTime) end
 function ZO_Spinner:InitializeHandlers() end
@@ -3281,8 +3445,9 @@ function ZO_Spinner:SetButtonsHidden(hideButtons) end
 function ZO_Spinner:SetSounds(upSound, downSound) end
 
 -------------------------------------------------------------------------------
---[ZO_Spinner_Gamepad]
-ZO_Spinner_Gamepad = nil
+---@class ZO_Spinner_Gamepad
+ZO_Spinner_Gamepad = {}
+---@return ZO_Spinner_Gamepad
 function ZO_Spinner_Gamepad:New(...) end
 function ZO_Spinner_Gamepad:Initialize(control, min, max, stickDirection, spinnerMode, accelerationTime, magnitudeQueryFunction) end
 function ZO_Spinner_Gamepad:SetActive(active) end
@@ -3291,8 +3456,9 @@ function ZO_Spinner_Gamepad:Deactivate() end
 function ZO_Spinner_Gamepad:UpdateDirectionalInput() end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_TriggerBase]
-ZO_StateMachine_TriggerBase = nil
+---@class ZO_StateMachine_TriggerBase
+ZO_StateMachine_TriggerBase = {}
+---@return ZO_StateMachine_TriggerBase
 function ZO_StateMachine_TriggerBase:New(...) end
 function ZO_StateMachine_TriggerBase:Initialize() end
 function ZO_StateMachine_TriggerBase:RegisterEdge(edge) end
@@ -3300,16 +3466,18 @@ function ZO_StateMachine_TriggerBase:UnregisterEdge() end
 function ZO_StateMachine_TriggerBase:Trigger() end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_TriggerKeybind]
-ZO_StateMachine_TriggerKeybind = nil
+---@class ZO_StateMachine_TriggerKeybind
+ZO_StateMachine_TriggerKeybind = {}
+---@return ZO_StateMachine_TriggerKeybind
 function ZO_StateMachine_TriggerKeybind:New(...) end
 function ZO_StateMachine_TriggerKeybind:Initialize(keybindDescriptor) end
 function ZO_StateMachine_TriggerKeybind:RegisterEdge(edge) end
 function ZO_StateMachine_TriggerKeybind:UnregisterEdge() end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_TriggerStateCallback]
-ZO_StateMachine_TriggerStateCallback = nil
+---@class ZO_StateMachine_TriggerStateCallback
+ZO_StateMachine_TriggerStateCallback = {}
+---@return ZO_StateMachine_TriggerStateCallback
 function ZO_StateMachine_TriggerStateCallback:New(...) end
 function ZO_StateMachine_TriggerStateCallback:Initialize(eventName) end
 function ZO_StateMachine_TriggerStateCallback:RegisterEdge(edge) end
@@ -3317,8 +3485,9 @@ function ZO_StateMachine_TriggerStateCallback:UnregisterEdge() end
 function ZO_StateMachine_TriggerStateCallback:SetEventCount(countOrCallback) end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_TriggerEventManager]
-ZO_StateMachine_TriggerEventManager = nil
+---@class ZO_StateMachine_TriggerEventManager
+ZO_StateMachine_TriggerEventManager = {}
+---@return ZO_StateMachine_TriggerEventManager
 function ZO_StateMachine_TriggerEventManager:New(...) end
 function ZO_StateMachine_TriggerEventManager:Initialize(eventId) end
 function ZO_StateMachine_TriggerEventManager:RegisterEdge(edge) end
@@ -3326,22 +3495,25 @@ function ZO_StateMachine_TriggerEventManager:UnregisterEdge() end
 function ZO_StateMachine_TriggerEventManager:SetFilterCallback(callback) end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_TriggerAnimNote]
-ZO_StateMachine_TriggerAnimNote = nil
+---@class ZO_StateMachine_TriggerAnimNote
+ZO_StateMachine_TriggerAnimNote = {}
+---@return ZO_StateMachine_TriggerAnimNote
 function ZO_StateMachine_TriggerAnimNote:New(...) end
 function ZO_StateMachine_TriggerAnimNote:Initialize(expectedNote) end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_MultiTrigger]
-ZO_StateMachine_MultiTrigger = nil
+---@class ZO_StateMachine_MultiTrigger
+ZO_StateMachine_MultiTrigger = {}
+---@return ZO_StateMachine_MultiTrigger
 function ZO_StateMachine_MultiTrigger:New(...) end
 function ZO_StateMachine_MultiTrigger:Initialize(...) end
 function ZO_StateMachine_MultiTrigger:RegisterEdge(edge) end
 function ZO_StateMachine_MultiTrigger:UnregisterEdge() end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_Edge]
-ZO_StateMachine_Edge = nil
+---@class ZO_StateMachine_Edge
+ZO_StateMachine_Edge = {}
+---@return ZO_StateMachine_Edge
 function ZO_StateMachine_Edge:New(...) end
 function ZO_StateMachine_Edge:Initialize(fromState, toState) end
 function ZO_StateMachine_Edge:GetParentMachine() end
@@ -3353,8 +3525,9 @@ function ZO_StateMachine_Edge:Deactivate() end
 function ZO_StateMachine_Edge:Trigger() end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_State]
-ZO_StateMachine_State = nil
+---@class ZO_StateMachine_State
+ZO_StateMachine_State = {}
+---@return ZO_StateMachine_State
 function ZO_StateMachine_State:New(...) end
 function ZO_StateMachine_State:Initialize(parentMachine, name) end
 function ZO_StateMachine_State:GetName() end
@@ -3366,8 +3539,9 @@ function ZO_StateMachine_State:Activate() end
 function ZO_StateMachine_State:Deactivate() end
 
 -------------------------------------------------------------------------------
---[ZO_StateMachine_Base]
-ZO_StateMachine_Base = nil
+---@class ZO_StateMachine_Base
+ZO_StateMachine_Base = {}
+---@return ZO_StateMachine_Base
 function ZO_StateMachine_Base:New(...) end
 function ZO_StateMachine_Base:Initialize(name) end
 function ZO_StateMachine_Base:GetName() end
@@ -3378,8 +3552,9 @@ function ZO_StateMachine_Base:SetDebugLoggingEnabled(enabled) end
 function ZO_StateMachine_Base:GetDebugLoggingEnabled() end
 
 -------------------------------------------------------------------------------
---[ZO_StringSearch]
-ZO_StringSearch = nil
+---@class ZO_StringSearch
+ZO_StringSearch = {}
+---@return ZO_StringSearch
 function ZO_StringSearch:New(doCaching) end
 function ZO_StringSearch:AddProcessor(typeId, processingFunction) end
 function ZO_StringSearch:Insert(data) end
@@ -3392,8 +3567,9 @@ function ZO_StringSearch:IsMatch(str, data) end
 function ZO_StringSearch:GetFromCache(data, cache, dataFunction, ...) end
 
 -------------------------------------------------------------------------------
---[ZO_Systems]
-ZO_Systems = nil
+---@class ZO_Systems
+ZO_Systems = {}
+---@return ZO_Systems
 function ZO_Systems:New() end
 function ZO_Systems:Initialize() end
 function ZO_Systems:GetSystem(systemName) end
@@ -3415,8 +3591,9 @@ function ZO_Systems:HideScene(systemName) end
 function ZO_Systems:IsShowing(systemName) end
 
 -------------------------------------------------------------------------------
---[ZO_TextureLayerRevealAnimation]
-ZO_TextureLayerRevealAnimation = nil
+---@class ZO_TextureLayerRevealAnimation
+ZO_TextureLayerRevealAnimation = {}
+---@return ZO_TextureLayerRevealAnimation
 function ZO_TextureLayerRevealAnimation:New(...) end
 function ZO_TextureLayerRevealAnimation:Initialize(container) end
 function ZO_TextureLayerRevealAnimation:RemoveAllLayers() end
@@ -3426,8 +3603,9 @@ function ZO_TextureLayerRevealAnimation:Commit() end
 function ZO_TextureLayerRevealAnimation:GetAnimationTimeline() end
 
 -------------------------------------------------------------------------------
---[ZO_Tile]
-ZO_Tile = nil
+---@class ZO_Tile
+ZO_Tile = {}
+---@return ZO_Tile
 function ZO_Tile:New(...) end
 function ZO_Tile:Initialize(control) end
 function ZO_Tile:PostInitialize() end
@@ -3447,8 +3625,9 @@ function ZO_DefaultGridTileEntrySetup(control, data) end
 function ZO_DefaultGridTileEntryReset(control) end
 
 -------------------------------------------------------------------------------
---[ZO_ContextualActionsTile]
-ZO_ContextualActionsTile = nil
+---@class ZO_ContextualActionsTile
+ZO_ContextualActionsTile = {}
+---@return ZO_ContextualActionsTile
 function ZO_ContextualActionsTile:New(...) end
 function ZO_ContextualActionsTile:Initialize(control) end
 function ZO_ContextualActionsTile:GetTitleLabel() end
@@ -3469,8 +3648,9 @@ function ZO_ContextualActionsTile:UpdateKeybinds() end
 function ZO_ContextualActionsTile:OnControlHidden() end
 
 -------------------------------------------------------------------------------
---[ZO_ClaimTile]
-ZO_ClaimTile = nil
+---@class ZO_ClaimTile
+ZO_ClaimTile = {}
+---@return ZO_ClaimTile
 function ZO_ClaimTile:New(...) end
 function ZO_ClaimTile:Initialize(control) end
 function ZO_ClaimTile:PostInitialize() end
@@ -3487,8 +3667,9 @@ function ZO_ClaimTile:OnAnimationTransitionCompleted() end
 function ZO_ClaimTile:OnClaimCompleted() end
 
 -------------------------------------------------------------------------------
---[ZO_ActivationTile]
-ZO_ActivationTile = nil
+---@class ZO_ActivationTile
+ZO_ActivationTile = {}
+---@return ZO_ActivationTile
 function ZO_ActivationTile:New(...) end
 function ZO_ActivationTile:Initialize(control) end
 function ZO_ActivationTile:SetTitle(titleText) end
@@ -3497,8 +3678,9 @@ function ZO_ActivationTile:Activate() end
 function ZO_ActivationTile:SetDeactivateCallback(deactivateCallback) end
 
 -------------------------------------------------------------------------------
---[ZO_ActionTile]
-ZO_ActionTile = nil
+---@class ZO_ActionTile
+ZO_ActionTile = {}
+---@return ZO_ActionTile
 function ZO_ActionTile:New(...) end
 function ZO_ActionTile:Initialize(control) end
 function ZO_ActionTile:SetHeaderText(headerText) end
@@ -3520,8 +3702,8 @@ function ZO_ActionTile:SetHighlightHidden(hidden, instant) end
 function ZO_ActionTile:OnControlHidden() end
 
 -------------------------------------------------------------------------------
---[ZO_ActionTile_Keyboard]
-ZO_ActionTile_Keyboard = nil
+---@class ZO_ActionTile_Keyboard
+ZO_ActionTile_Keyboard = {}
 function ZO_ActionTile_Keyboard:PostInitializePlatform() end
 function ZO_ActionTile_Keyboard:OnMouseEnter() end
 function ZO_ActionTile_Keyboard:OnMouseExit() end
@@ -3530,14 +3712,14 @@ function ZO_ActionTile_Keyboard:SetActionText(actionText) end
 function ZO_ActionTile_Keyboard:SetActionSound(actionSound) end
 
 -------------------------------------------------------------------------------
---[ZO_ClaimTile_Keyboard]
-ZO_ClaimTile_Keyboard = nil
+---@class ZO_ClaimTile_Keyboard
+ZO_ClaimTile_Keyboard = {}
 function ZO_ClaimTile_Keyboard:InitializePlatform() end
 function ZO_ClaimTile_Keyboard:PostInitializePlatform() end
 
 -------------------------------------------------------------------------------
---[ZO_ContextualActionsTile_Keyboard]
-ZO_ContextualActionsTile_Keyboard = nil
+---@class ZO_ContextualActionsTile_Keyboard
+ZO_ContextualActionsTile_Keyboard = {}
 function ZO_ContextualActionsTile_Keyboard:InitializePlatform() end
 function ZO_ContextualActionsTile_Keyboard:PostInitializePlatform() end
 function ZO_ContextualActionsTile_Keyboard:OnMouseEnter() end
@@ -3545,8 +3727,8 @@ function ZO_ContextualActionsTile_Keyboard:OnMouseExit() end
 function ZO_ContextualActionsTile_Keyboard:OnMouseDoubleClick(button) end
 
 -------------------------------------------------------------------------------
---[ZO_Tile_Keyboard]
-ZO_Tile_Keyboard = nil
+---@class ZO_Tile_Keyboard
+ZO_Tile_Keyboard = {}
 function ZO_Tile_Keyboard:InitializePlatform() end
 function ZO_Tile_Keyboard:PostInitializePlatform() end
 function ZO_Tile_Keyboard:OnMouseEnter() end
@@ -3555,8 +3737,8 @@ function ZO_Tile_Keyboard:IsMousedOver() end
 function ZO_Tile_Keyboard:OnMouseUp(button, upInside) end
 
 -------------------------------------------------------------------------------
---[ZO_ActionTile_Gamepad]
-ZO_ActionTile_Gamepad = nil
+---@class ZO_ActionTile_Gamepad
+ZO_ActionTile_Gamepad = {}
 function ZO_ActionTile_Gamepad:InitializePlatform() end
 function ZO_ActionTile_Gamepad:PostInitializePlatform() end
 function ZO_ActionTile_Gamepad:OnSelectionChanged() end
@@ -3571,8 +3753,9 @@ function ZO_ActionTile_Gamepad:GetFocusEntryData() end
 function ZO_ActionTile_Gamepad:GetKeybindDescriptor() end
 
 -------------------------------------------------------------------------------
---[ZO_CheckboxTile_Gamepad]
-ZO_CheckboxTile_Gamepad = nil
+---@class ZO_CheckboxTile_Gamepad
+ZO_CheckboxTile_Gamepad = {}
+---@return ZO_CheckboxTile_Gamepad
 function ZO_CheckboxTile_Gamepad:New(...) end
 function ZO_CheckboxTile_Gamepad:PostInitializePlatform() end
 function ZO_CheckboxTile_Gamepad:OnSelectionChanged() end
@@ -3584,21 +3767,21 @@ function ZO_CheckboxTile_Gamepad:UpdateVisualDisplay() end
 function ZO_CheckboxTile_Gamepad_OnInitialized(control) end
 
 -------------------------------------------------------------------------------
---[ZO_ClaimTile_Gamepad]
-ZO_ClaimTile_Gamepad = nil
+---@class ZO_ClaimTile_Gamepad
+ZO_ClaimTile_Gamepad = {}
 function ZO_ClaimTile_Gamepad:InitializePlatform() end
 function ZO_ClaimTile_Gamepad:PostInitializePlatform() end
 
 -------------------------------------------------------------------------------
---[ZO_ContextualActionsTile_Gamepad]
-ZO_ContextualActionsTile_Gamepad = nil
+---@class ZO_ContextualActionsTile_Gamepad
+ZO_ContextualActionsTile_Gamepad = {}
 function ZO_ContextualActionsTile_Gamepad:InitializePlatform() end
 function ZO_ContextualActionsTile_Gamepad:PostInitializePlatform() end
 function ZO_ContextualActionsTile_Gamepad:OnSelectionChanged() end
 
 -------------------------------------------------------------------------------
---[ZO_Tile_Gamepad]
-ZO_Tile_Gamepad = nil
+---@class ZO_Tile_Gamepad
+ZO_Tile_Gamepad = {}
 function ZO_Tile_Gamepad:InitializePlatform() end
 function ZO_Tile_Gamepad:PostInitializePlatform() end
 function ZO_Tile_Gamepad:LayoutPlatform(data) end
@@ -3607,8 +3790,9 @@ function ZO_Tile_Gamepad:SetSelected(isSelected) end
 function ZO_Tile_Gamepad:OnSelectionChanged() end
 
 -------------------------------------------------------------------------------
---[ZO_TimerBar]
-ZO_TimerBar = nil
+---@class ZO_TimerBar
+ZO_TimerBar = {}
+---@return ZO_TimerBar
 function ZO_TimerBar:New(control) end
 function ZO_TimerBar:SetLabel(text) end
 function ZO_TimerBar:SetDirection(direction) end
@@ -3623,8 +3807,8 @@ function ZO_TimerBar:Stop() end
 function ZO_TimerBar:Update(time) end
 
 -------------------------------------------------------------------------------
---[ZO_TooltipStyledObject]
-ZO_TooltipStyledObject = nil
+---@class ZO_TooltipStyledObject
+ZO_TooltipStyledObject = {}
 function ZO_TooltipStyledObject:Initialize(parent) end
 function ZO_TooltipStyledObject:GetParent() end
 function ZO_TooltipStyledObject:GetProperty(propertyName, ...) end
@@ -3639,8 +3823,8 @@ function ZO_TooltipStyledObject:ApplyStyles() end
 function ZO_Tooltip_CopyStyle(style) end
 
 -------------------------------------------------------------------------------
---[ZO_TooltipStatValuePair]
-ZO_TooltipStatValuePair = nil
+---@class ZO_TooltipStatValuePair
+ZO_TooltipStatValuePair = {}
 function ZO_TooltipStatValuePair:Initialize(parent) end
 function ZO_TooltipStatValuePair:SetStat(statText, ...) end
 function ZO_TooltipStatValuePair:SetValue(valueText, ...) end
@@ -3648,21 +3832,21 @@ function ZO_TooltipStatValuePair:ComputeDimensions() end
 function ZO_TooltipStatValuePair:UpdateFontOffset() end
 
 -------------------------------------------------------------------------------
---[ZO_TooltipStatValueSlider]
-ZO_TooltipStatValueSlider = nil
+---@class ZO_TooltipStatValueSlider
+ZO_TooltipStatValueSlider = {}
 function ZO_TooltipStatValueSlider:SetValue(value, maxValue, valueText, ...) end
 function ZO_TooltipStatValueSlider:ComputeDimensions() end
 function ZO_TooltipStatValueSlider:Initialize(parent) end
 function ZO_TooltipStatValueSlider:SetStat(statText, ...) end
 
 -------------------------------------------------------------------------------
---[ZO_TooltipStatusBar]
-ZO_TooltipStatusBar = nil
+---@class ZO_TooltipStatusBar
+ZO_TooltipStatusBar = {}
 function ZO_TooltipStatusBar:ApplyStyles() end
 
 -------------------------------------------------------------------------------
---[ZO_TooltipSection]
-ZO_TooltipSection = nil
+---@class ZO_TooltipSection
+ZO_TooltipSection = {}
 function ZO_TooltipSection.InitializeStaticPools(class) end
 function ZO_TooltipSection:CreateMetaControlPool(sourcePool) end
 function ZO_TooltipSection:Initialize(parent) end
@@ -3711,8 +3895,8 @@ function ZO_TooltipSection:AcquireStatusBar(...) end
 function ZO_TooltipSection:AddStatusBar(statusBar) end
 
 -------------------------------------------------------------------------------
---[ZO_Tooltip]
-ZO_Tooltip = nil
+---@class ZO_Tooltip
+ZO_Tooltip = {}
 function ZO_Tooltip:Initialize(control, styleNamespace, style) end
 function ZO_Tooltip:SetClearOnHidden(clearOnHidden) end
 function ZO_Tooltip:SetOwner(owner, point, offsetX, offsetY, relativePoint) end
@@ -3722,8 +3906,8 @@ function ZO_Tooltip:LayoutTitleAndDescriptionTooltip(title, description) end
 function ZO_Tooltip:LayoutTitleAndMultiSectionDescriptionTooltip(title, ...) end
 
 -------------------------------------------------------------------------------
---[ZO_ScrollTooltip_Gamepad]
-ZO_ScrollTooltip_Gamepad = nil
+---@class ZO_ScrollTooltip_Gamepad
+ZO_ScrollTooltip_Gamepad = {}
 function ZO_ScrollTooltip_Gamepad:Initialize(control, styleNamespace, style) end
 function ZO_ScrollTooltip_Gamepad:SetInputEnabled(enabled) end
 function ZO_ScrollTooltip_Gamepad:OnEffectivelyShown() end
@@ -3741,8 +3925,9 @@ function ZO_ScrollTooltip_Gamepad:LayoutTradeItem(tradeType, tradeIndex) end
 function ZO_ResizingFloatingScrollTooltip_Gamepad_OnInitialized(control, tooltipStyles, screenResizeHandler, scrollIndicatorSide, scrollIndicatorOffsetX) end
 
 -------------------------------------------------------------------------------
---[ZO_Tree]
-ZO_Tree = nil
+---@class ZO_Tree
+ZO_Tree = {}
+---@return ZO_Tree
 function ZO_Tree:New(control, defaultIndent, defaultSpacing, width) end
 function ZO_Tree:OnScreenResized() end
 function ZO_Tree:Reset() end
@@ -3781,8 +3966,9 @@ function ZO_Tree:IsAnimated() end
 function ZO_Tree:FindScrollControl() end
 
 -------------------------------------------------------------------------------
---[ZO_TreeNode]
-ZO_TreeNode = nil
+---@class ZO_TreeNode
+ZO_TreeNode = {}
+---@return ZO_TreeNode
 function ZO_TreeNode:New(tree, templateInfo, parentNode, data, childIndent, childSpacing, open) end
 function ZO_TreeNode:ComputeTotalIndentFrom(treeNode) end
 function ZO_TreeNode:AddChild(treeNode) end
@@ -3829,17 +4015,19 @@ function ZO_TreeEntry_OnMouseUp(self, upInside) end
 function ZO_TreeControl_GetNode(self) end
 
 -------------------------------------------------------------------------------
---[ZO_Trees]
-ZO_Trees = nil
+---@class ZO_Trees
+ZO_Trees = {}
+---@return ZO_Trees
 function ZO_Trees:New(...) end
 function ZO_Trees:Initialize() end
 function ZO_Trees:Add(tree) end
 function ZO_Trees:OnScreenResized() end
 
 -------------------------------------------------------------------------------
---[ZO_Triangle]
-ZO_Triangle = nil
+---@class ZO_Triangle
+ZO_Triangle = {}
 function ZO_TrianglePoints_SetPoint(points, index, p, isMirrored) end
+---@return ZO_Triangle
 function ZO_Triangle:New(points, isMirrored) end
 function ZO_Triangle:SetPoints(points) end
 function ZO_Triangle:GetPoint(pointIndex) end
@@ -3850,8 +4038,9 @@ function ZO_Triangle:GetTriangleParams(x, y) end
 function ZO_Triangle:PointFromParams(a, b) end
 
 -------------------------------------------------------------------------------
---[ZO_TrianglePicker]
-ZO_TrianglePicker = nil
+---@class ZO_TrianglePicker
+ZO_TrianglePicker = {}
+---@return ZO_TrianglePicker
 function ZO_TrianglePicker:New(...) end
 function ZO_TrianglePicker:Initialize(width, height, parent, control) end
 function ZO_TrianglePicker:UpdateTriangle() end
@@ -3874,8 +4063,9 @@ function ZO_TrianglePicker_OnMouseEnter(control) end
 function ZO_TrianglePicker_OnMouseExit(control) end
 
 -------------------------------------------------------------------------------
---[ZO_ValidTextInstructions]
-ZO_ValidTextInstructions = nil
+---@class ZO_ValidTextInstructions
+ZO_ValidTextInstructions = {}
+---@return ZO_ValidTextInstructions
 function ZO_ValidTextInstructions:New(...) end
 function ZO_ValidTextInstructions:Initialize(control, template) end
 function ZO_ValidTextInstructions:GetControl() end
@@ -3887,18 +4077,30 @@ function ZO_ValidTextInstructions:Show(editControl, ruleViolations) end
 function ZO_ValidTextInstructions:Hide() end
 
 -------------------------------------------------------------------------------
---[ZO_ValidNameInstructions]
-ZO_ValidNameInstructions = nil
+---@class ZO_ValidNameInstructions
+ZO_ValidNameInstructions = {}
+---@return ZO_ValidNameInstructions
 function ZO_ValidNameInstructions:New(...) end
 function ZO_ValidNameInstructions:AddInstructions() end
 function ZO_ValidNameInstructions_GetViolationString(name, ruleViolations, hideUnviolatedRules, format) end
 
 -------------------------------------------------------------------------------
---[ZO_ValidAccountNameInstructions]
-ZO_ValidAccountNameInstructions = nil
+---@class ZO_ValidAccountNameInstructions
+ZO_ValidAccountNameInstructions = {}
+---@return ZO_ValidAccountNameInstructions
 function ZO_ValidAccountNameInstructions:New(...) end
 function ZO_ValidAccountNameInstructions:AddInstructions() end
 
+-------------------------------------------------------------------------------
+---@class ZO_GroupList_Manager: ZO_SocialManger
+---@field ZO_Group_IsGroupUnitTag function(string unitTag): boolean
+---@field masterList {}[]
+GROUP_LIST_MANAGER = {}
+
+---@return boolean
+function ZO_Group_IsGroupUnitTag(unitTag)
+
+-------------------------------------------------------------------------------
 --TODO:
 --esoui/libraries/zo_templates/*
 --esoui/libraries/zo_tile/*

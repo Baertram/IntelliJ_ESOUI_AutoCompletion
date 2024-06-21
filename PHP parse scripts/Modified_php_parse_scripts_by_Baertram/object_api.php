@@ -18,7 +18,7 @@ class object_api
             $classStr = strval($class);
             if ( !array_key_exists($classStr, $classesAdded) ) {
                 $classesAdded[$classStr] = true;
-                $out .= "---@class $classStr\n";
+                $out .= "--- @class $classStr\n";
                 $out .= "$classStr = {}\n";
             }
 

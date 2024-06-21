@@ -1,4 +1,4 @@
----@class AddOnManager
+--- @class AddOnManager
 AddOnManager = {}
 --- @param relevantFilter string
 --- @return void
@@ -81,7 +81,7 @@ function AddOnManager:ShouldWarnOutOfDateAddOns() end
 --- @return boolean wasDetected
 function AddOnManager:WasAddOnDetected(addOnName) end
 
----@class AnimationManager
+--- @class AnimationManager
 AnimationManager = {}
 --- @return object timeline
 function AnimationManager:CreateTimeline() end
@@ -91,7 +91,7 @@ function AnimationManager:CreateTimeline() end
 --- @return object timeline
 function AnimationManager:CreateTimelineFromVirtual(timelineName, animatedControl) end
 
----@class AnimationObject
+--- @class AnimationObject
 AnimationObject = {}
 --- @return object animatedControl
 function AnimationObject:GetAnimatedControl() end
@@ -154,7 +154,7 @@ function AnimationObject:SetHandler(eventName, functionRef, name, controlHandler
 --- @return void
 function AnimationObject:SetOffsetInParent(offset) end
 
----@class AnimationObject3DRotate
+--- @class AnimationObject3DRotate
 AnimationObject3DRotate = {}
 --- @return number endPitchRadians
 function AnimationObject3DRotate:GetEndPitch() end
@@ -207,7 +207,7 @@ function AnimationObject3DRotate:SetStartRoll(startRollRadians) end
 --- @return void
 function AnimationObject3DRotate:SetStartYaw(startYawRadians) end
 
----@class AnimationObject3DTranslate
+--- @class AnimationObject3DTranslate
 AnimationObject3DTranslate = {}
 --- @return void
 function AnimationObject3DTranslate:ClearBezierControlPoints() end
@@ -304,7 +304,7 @@ function AnimationObject3DTranslate:SetTranslateDeltas(deltaX, deltaY, deltaZ, t
 --- @return void
 function AnimationObject3DTranslate:SetTranslateOffsets(startX, startY, startZ, endX, endY, endZ) end
 
----@class AnimationObjectAlpha
+--- @class AnimationObjectAlpha
 AnimationObjectAlpha = {}
 --- @return number endAlpha
 function AnimationObjectAlpha:GetEndAlpha() end
@@ -325,7 +325,7 @@ function AnimationObjectAlpha:SetEndAlpha(endAlpha) end
 --- @return void
 function AnimationObjectAlpha:SetStartAlpha(startAlpha) end
 
----@class AnimationObjectColor
+--- @class AnimationObjectColor
 AnimationObjectColor = {}
 --- @return boolean applyAlpha
 function AnimationObjectColor:GetApplyAlpha() end
@@ -365,13 +365,13 @@ function AnimationObjectColor:SetEndColor(endR, endG, endB, endA) end
 --- @return void
 function AnimationObjectColor:SetStartColor(startR, startG, startB, startA) end
 
----@class AnimationObjectCustom
+--- @class AnimationObjectCustom
 AnimationObjectCustom = {}
 --- @param functionRef function
 --- @return void
 function AnimationObjectCustom:SetUpdateFunction(functionRef) end
 
----@class AnimationObjectDesaturation
+--- @class AnimationObjectDesaturation
 AnimationObjectDesaturation = {}
 --- @return number endDesaturation
 function AnimationObjectDesaturation:GetEndDesaturation() end
@@ -392,7 +392,7 @@ function AnimationObjectDesaturation:SetEndDesaturation(endDesaturation) end
 --- @return void
 function AnimationObjectDesaturation:SetStartDesaturation(startDesaturation) end
 
----@class AnimationObjectScale
+--- @class AnimationObjectScale
 AnimationObjectScale = {}
 --- @return number endScale
 function AnimationObjectScale:GetEndScale() end
@@ -413,7 +413,7 @@ function AnimationObjectScale:SetScaleValues(startScale, endScale) end
 --- @return void
 function AnimationObjectScale:SetStartScale(startScale) end
 
----@class AnimationObjectScroll
+--- @class AnimationObjectScroll
 AnimationObjectScroll = {}
 --- @param endX number
 --- @return void
@@ -441,7 +441,7 @@ function AnimationObjectScroll:SetVerticalRelative(offsetY) end
 --- @return void
 function AnimationObjectScroll:SetVerticalStartAndEnd(startY, endY) end
 
----@class AnimationObjectSize
+--- @class AnimationObjectSize
 AnimationObjectSize = {}
 --- @param endHeight number
 --- @return void
@@ -469,7 +469,7 @@ function AnimationObjectSize:SetStartHeight(startHeight) end
 --- @return void
 function AnimationObjectSize:SetStartWidth(startWidth) end
 
----@class AnimationObjectTexture
+--- @class AnimationObjectTexture
 AnimationObjectTexture = {}
 --- @return integer aNumCellsHigh
 function AnimationObjectTexture:GetCellsHigh() end
@@ -508,7 +508,7 @@ function AnimationObjectTexture:SetMirrorAlongX(mirroring) end
 --- @return void
 function AnimationObjectTexture:SetMirrorAlongY(mirroring) end
 
----@class AnimationObjectTextureRotate
+--- @class AnimationObjectTextureRotate
 AnimationObjectTextureRotate = {}
 --- @return number endRadians
 function AnimationObjectTextureRotate:GetEndRotation() end
@@ -529,7 +529,7 @@ function AnimationObjectTextureRotate:SetRotationValues(startRadians, endRadians
 --- @return void
 function AnimationObjectTextureRotate:SetStartRotation(startRadians) end
 
----@class AnimationObjectTextureSlide
+--- @class AnimationObjectTextureSlide
 AnimationObjectTextureSlide = {}
 --- @param left number
 --- @param right number
@@ -551,7 +551,7 @@ function AnimationObjectTextureSlide:SetDeltaVFromStart(slideDistanceV) end
 --- @return void
 function AnimationObjectTextureSlide:SetSlideDistances(slideDistanceU, slideDistanceV) end
 
----@class AnimationObjectTransformOffset
+--- @class AnimationObjectTransformOffset
 AnimationObjectTransformOffset = {}
 --- @return number? endX, number? endY, number? endZ
 function AnimationObjectTransformOffset:GetEndOffset() end
@@ -604,7 +604,7 @@ function AnimationObjectTransformOffset:SetStartOffsetY(startY) end
 --- @return void
 function AnimationObjectTransformOffset:SetStartOffsetZ(startZ) end
 
----@class AnimationObjectTransformRotation
+--- @class AnimationObjectTransformRotation
 AnimationObjectTransformRotation = {}
 --- @param endXRadians number
 --- @param endYRadians number
@@ -655,7 +655,7 @@ function AnimationObjectTransformRotation:SetStartY(startYRadians) end
 --- @return void
 function AnimationObjectTransformRotation:SetStartZ(startZRadians) end
 
----@class AnimationObjectTransformScale
+--- @class AnimationObjectTransformScale
 AnimationObjectTransformScale = {}
 --- @param endScale number
 --- @return void
@@ -681,7 +681,7 @@ function AnimationObjectTransformScale:SetStartScaleX(startScaleX) end
 --- @return void
 function AnimationObjectTransformScale:SetStartScaleY(startScaleY) end
 
----@class AnimationObjectTransformSkew
+--- @class AnimationObjectTransformSkew
 AnimationObjectTransformSkew = {}
 --- @param endSkewXRadians number
 --- @return void
@@ -699,7 +699,7 @@ function AnimationObjectTransformSkew:SetStartSkewX(startSkewXRadians) end
 --- @return void
 function AnimationObjectTransformSkew:SetStartSkewY(startSkewYRadians) end
 
----@class AnimationObjectTranslate
+--- @class AnimationObjectTranslate
 AnimationObjectTranslate = {}
 --- @return integer anchorIndex
 function AnimationObjectTranslate:GetAnchorIndex() end
@@ -784,7 +784,7 @@ function AnimationObjectTranslate:SetTranslateDeltas(deltaX, deltaY, translateAn
 --- @return void
 function AnimationObjectTranslate:SetTranslateOffsets(startX, startY, endX, endY) end
 
----@class AnimationTimeline
+--- @class AnimationTimeline
 AnimationTimeline = {}
 --- @param animatedControl object
 --- @return void
@@ -989,7 +989,7 @@ function AnimationTimeline:SetSkipAnimationsBehindPlayheadOnInitialPlay(skipAnim
 --- @return void
 function AnimationTimeline:Stop() end
 
----@class BackdropControl
+--- @class BackdropControl
 BackdropControl = {}
 --- @return TextureBlendMode blendMode
 function BackdropControl:GetBlendMode() end
@@ -1051,7 +1051,7 @@ function BackdropControl:SetPixelRoundingEnabled(enabled) end
 --- @return void
 function BackdropControl:SetTextureReleaseOption(releaseOption) end
 
----@class ButtonControl
+--- @class ButtonControl
 ButtonControl = {}
 --- @param button MouseButtonIndex
 --- @param enabled boolean
@@ -1206,7 +1206,7 @@ function ButtonControl:SetTextureReleaseOption(releaseOption) end
 --- @return void
 function ButtonControl:SetVerticalAlignment(verticalAlign) end
 
----@class ColorSelectControl
+--- @class ColorSelectControl
 ColorSelectControl = {}
 --- @return number hue, number saturation, number value
 function ColorSelectControl:GetColorAsHSV() end
@@ -1254,7 +1254,7 @@ function ColorSelectControl:SetThumbNormalizedPosition(normalizedX, normalizedY)
 --- @return void
 function ColorSelectControl:SetValue(value) end
 
----@class CompassDisplayControl
+--- @class CompassDisplayControl
 CompassDisplayControl = {}
 --- @param pinType MapDisplayPinType
 --- @return number closeAlpha, number farAlpha, number closeAlphaDistanceM, number farAlphaDistanceM
@@ -1339,7 +1339,7 @@ function CompassDisplayControl:SetPinInfo(type, pinSize, pinTexture, areaTexture
 --- @return void
 function CompassDisplayControl:SetScaleDropoffBehavior(pinType, closeScale, farScale, closeScaleDistanceM, farScaleDistanceM) end
 
----@class Control
+--- @class Control
 Control = {}
 --- @param event integer
 --- @param filterParameter variant
@@ -2274,7 +2274,7 @@ function Control:ToggleHidden() end --*protected-attributes*
 --- @return boolean success
 function Control:UnregisterForEvent(event) end
 
----@class CooldownControl
+--- @class CooldownControl
 CooldownControl = {}
 --- @return integer duration
 function CooldownControl:GetDuration() end
@@ -2355,7 +2355,7 @@ function CooldownControl:StartCooldown(remain, duration, cooldownType, cooldownT
 --- @return void
 function CooldownControl:StartFixedCooldown(percentComplete, cooldownType, cooldownTimeType, drawLeadingEdge) end
 
----@class DebugTextControl
+--- @class DebugTextControl
 DebugTextControl = {}
 --- @return void
 function DebugTextControl:Clear() end
@@ -2364,7 +2364,7 @@ function DebugTextControl:Clear() end
 --- @return void
 function DebugTextControl:SetFont(fontStr) end
 
----@class EditControl
+--- @class EditControl
 EditControl = {}
 --- @param validCharacter string
 --- @return void
@@ -2549,7 +2549,7 @@ function EditControl:TakeFocus() end
 --- @return boolean fromVirtual
 function EditControl:WasLastChangeVirtualKeyboard() end
 
----@class FontObject
+--- @class FontObject
 FontObject = {}
 --- @return string face, integer size, string option
 function FontObject:GetFontInfo() end
@@ -2558,7 +2558,7 @@ function FontObject:GetFontInfo() end
 --- @return void
 function FontObject:SetFont(fontDescriptor) end
 
----@class LabelControl
+--- @class LabelControl
 LabelControl = {}
 --- @param toLabel object
 --- @param offsetX layout_measurement
@@ -2716,7 +2716,7 @@ function LabelControl:SetWrapMode(wrapMode) end
 --- @return boolean wasTruncated
 function LabelControl:WasTruncated() end
 
----@class LineControl
+--- @class LineControl
 LineControl = {}
 --- @return void
 function LineControl:ClearGradientColors() end
@@ -2802,7 +2802,7 @@ function LineControl:SetThickness(thickness) end
 --- @return void
 function LineControl:SetVertexColors(vertexPoints, red, green, blue, alpha) end
 
----@class MapDisplayControl
+--- @class MapDisplayControl
 MapDisplayControl = {}
 --- @return number normalizedRadius
 function MapDisplayControl:GetZoom() end
@@ -2839,7 +2839,7 @@ function MapDisplayControl:SetPinFont(pinFont) end
 --- @return void
 function MapDisplayControl:SetZoom(normalizedRadius) end
 
----@class PolygonControl
+--- @class PolygonControl
 PolygonControl = {}
 --- @param normalizedX number
 --- @param normalizedY number
@@ -2979,9 +2979,9 @@ function PolygonControl:SetPointLayout(pointLayout) end
 --- @return void
 function PolygonControl:SetSmoothingEnabled(isSmoothingEnabled) end
 
----@class RootWindow
+--- @class RootWindow
 RootWindow = {}
----@class ScrollControl
+--- @class ScrollControl
 ScrollControl = {}
 --- @return number offset
 function ScrollControl:GetHorizontalScroll() end
@@ -3020,7 +3020,7 @@ function ScrollControl:SetScrollBounding(bounding) end
 --- @return void
 function ScrollControl:SetVerticalScroll(offset) end
 
----@class SliderControl
+--- @class SliderControl
 SliderControl = {}
 --- @return boolean allow
 function SliderControl:DoesAllowDraggingFromThumb() end
@@ -3135,7 +3135,7 @@ function SliderControl:SetValue(value) end
 --- @return void
 function SliderControl:SetValueStep(step) end
 
----@class StatusBarControl
+--- @class StatusBarControl
 StatusBarControl = {}
 --- @param value number
 --- @return number mainBarSize
@@ -3266,7 +3266,7 @@ function StatusBarControl:SetValue(aValue) end
 --- @return void
 function StatusBarControl:SetupScrollingOverlay(textureFile, width, height, duration) end
 
----@class SynchronizingObject
+--- @class SynchronizingObject
 SynchronizingObject = {}
 --- @return string state
 function SynchronizingObject:GetState() end
@@ -3299,7 +3299,7 @@ function SynchronizingObject:SetStateFromTable(stateTable) end
 --- @return void
 function SynchronizingObject:Show() end
 
----@class TextBufferControl
+--- @class TextBufferControl
 TextBufferControl = {}
 --- @param text string
 --- @param r number
@@ -3394,7 +3394,7 @@ function TextBufferControl:SetSplitLongMessages(splitLongMessages) end
 --- @return void
 function TextBufferControl:ShowFadedLines() end
 
----@class TextureCompositeControl
+--- @class TextureCompositeControl
 TextureCompositeControl = {}
 --- @param left number
 --- @param right number
@@ -3517,7 +3517,7 @@ function TextureCompositeControl:SetTextureCoords(surfaceIndex, left, right, top
 --- @return void
 function TextureCompositeControl:SetTextureReleaseOption(releaseOption) end
 
----@class TextureControl
+--- @class TextureControl
 TextureControl = {}
 --- @return void
 function TextureControl:ClearGradientColors() end
@@ -3661,7 +3661,7 @@ function TextureControl:SetVertexColors(vertexPoints, red, green, blue, alpha) e
 --- @return void
 function TextureControl:SetVertexUV(vertex, u, v) end
 
----@class TooltipControl
+--- @class TooltipControl
 TooltipControl = {}
 --- @param control object
 --- @param cell integer
@@ -4190,7 +4190,7 @@ function TooltipControl:SetWornItem(equipSlot, bagId) end
 --- @return void
 function TooltipControl:ShowComparativeTooltips() end
 
----@class TopLevelWindow
+--- @class TopLevelWindow
 TopLevelWindow = {}
 --- @return boolean allow
 function TopLevelWindow:AllowBringToTop() end
@@ -4210,7 +4210,7 @@ function TopLevelWindow:SetDrawWhenGuiHidden(drawWhenHidden) end --*private*
 --- @return void
 function TopLevelWindow:SetTopmost(isTopmost) end
 
----@class VectorControl
+--- @class VectorControl
 VectorControl = {}
 --- @param objectFit ObjectFit
 --- @return void
@@ -4224,7 +4224,7 @@ function VectorControl:SetPictureIndex(index) end
 --- @return void
 function VectorControl:SetSlugAsset(filename) end
 
----@class WindowManager
+--- @class WindowManager
 WindowManager = {}
 --- @param control object
 --- @param virtualName string
