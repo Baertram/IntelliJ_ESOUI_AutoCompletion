@@ -134,6 +134,7 @@ class parser
                 }
 
                 if ($tag) {
+                    @$xmlTags[$tag]->{"attributes"} = new stdClass();
                     $matches = null;
                     if (preg_match('/\* _attribute\:_ \*(?P<type>.*?)\* _(?P<name>.*?)_/', $line, $matches)) {
                         $matches2 = null;

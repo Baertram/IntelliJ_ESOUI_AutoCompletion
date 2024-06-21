@@ -36,7 +36,11 @@ class game_api
             if (isset($value['return'])) {
                 $add = [];
                 foreach ($value['return'] as $param => $type) {
-                    $add [] = $param." ".$type;
+                    if ($type) {
+                        $add [] = $type." ".$param;
+                    } else {
+                        $add [] = $param;
+                    }
                 }
                 $docblock .= "--- @return ".implode(", ", $add)."\n";
             } else {
@@ -74,6 +78,7 @@ class game_api
                     $matchesPriv = null;
                     $method = $matches['method'];
                     $methodClean = $matches['method'];
+                    $variableReturns = false;
 //print_r($method);
 
                         //Find *private* or *protected* or *private-attributes* or *protected-attributes* or *public* or *public-attributes *in front of the ( of a function
@@ -90,14 +95,22 @@ class game_api
                     $parts = explode(",", $matches['params']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-                        $partClean = str_replace('function', 'functionName', $part);
 
                         //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
                         //* IsTrustedFunction(*function* _function_)
-                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $partClean, $matches2)) {
-                            $objects[$methodClean]['params'][$matches2['param']] = $matches2['type'];
+                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
+                            $type = $this->processType($matches2['type']);
+                            if ($type == '...') {
+                                $matches2['param'] = '...';
+                                $type = 'any';
+                            }
+                            $objects[$methodClean]['params'][$matches2['param']] = $type;
                         }
                     }
+                }
+
+                if (strpos($line, '_Uses variable returns..._') !== false) {
+                    $variableReturns = true;
                 }
 
                 $matches = null;
@@ -105,17 +118,47 @@ class game_api
                     $parts = explode(",", $matches['parts']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-                        $partClean = str_replace('function', 'functionName', $part);
 
-                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $partClean, $matches2)) {
-                            $objects[$methodClean]['return'][$matches2['param']] = $matches2['type'];
+                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
+                            $type = $this->processType($matches2['type']);
+                            if ($type == '...') {
+                                if ($methodClean == 'CallSecureProtected') {
+                                    $matches2['param'] = 'reason';
+                                    $type = 'string';
+                                } else {
+                                    print('Please verify additional types for ' . $methodClean);
+                                    $matches2['param'] = '...';
+                                    $type = 'any';
+                                }
+                            }
+                            $objects[$methodClean]['return'][$matches2['param']] = $type;
                         }
+                    }
+
+                    if ($variableReturns) {
+                        $objects[$methodClean]['return']['...'] = '';
                     }
                 }
             }
         }
 
         return $objects;
+    }
+
+    function processType($type)
+    {
+        $matches = null;
+        if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
+            $type = $matches['class'] . $matches['remainder'];
+        }
+        if ($type == 'bool') {
+            $type = 'boolean';
+        }
+        if ($type == 'types') {
+            $type = '...';
+        }
+        $type = str_replace(':nilable', '?', $type);
+        return $type;
     }
 
 }

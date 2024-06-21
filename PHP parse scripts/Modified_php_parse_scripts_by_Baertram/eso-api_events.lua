@@ -8,7 +8,7 @@ function EVENT_ABILITY_LIST_CHANGED(eventId) end
 --- @return void
 function EVENT_ABILITY_PROGRESSION_RANK_UPDATE (eventId, progressionIndex, rank, maxRank, morph) end
 
---- @param reason [AbilityProgressionResult|#AbilityProgressionResult]
+--- @param reason AbilityProgressionResult
 --- @return void
 function EVENT_ABILITY_PROGRESSION_RESULT (eventId, reason) end
 
@@ -16,7 +16,7 @@ function EVENT_ABILITY_PROGRESSION_RESULT (eventId, reason) end
 --- @param lastRankXP integer
 --- @param nextRankXP integer
 --- @param currentXP integer
---- @param atMorph bool
+--- @param atMorph boolean
 --- @return void
 function EVENT_ABILITY_PROGRESSION_XP_UPDATE (eventId, progressionIndex, lastRankXP, nextRankXP, currentXP, atMorph) end
 
@@ -48,17 +48,17 @@ function EVENT_ACHIEVEMENT_AWARDED (eventId, name, points, id, link) end
 --- @return void
 function EVENT_ACHIEVEMENT_UPDATED (eventId, id) end
 
---- @param isRepeccableBarState bool
+--- @param isRepeccableBarState boolean
 --- @return void
 function EVENT_ACTION_BAR_IS_RESPECCABLE_BAR_STATE_CHANGED (eventId, isRepeccableBarState) end
 
---- @param actionBarLockedReason [ActionBarLockedReason|#ActionBarLockedReason]
+--- @param actionBarLockedReason ActionBarLockedReason
 --- @return void
 function EVENT_ACTION_BAR_LOCKED_REASON_CHANGED (eventId, actionBarLockedReason) end
 
---- @param didActiveHotbarChange bool
---- @param shouldUpdateAbilityAssignments bool
---- @param activeHotbarCategory [HotBarCategory|#HotBarCategory]
+--- @param didActiveHotbarChange boolean
+--- @param shouldUpdateAbilityAssignments boolean
+--- @param activeHotbarCategory HotBarCategory
 --- @return void
 function EVENT_ACTION_SLOTS_ACTIVE_HOTBAR_UPDATED (eventId, didActiveHotbarChange, shouldUpdateAbilityAssignments, activeHotbarCategory) end
 
@@ -69,14 +69,14 @@ function EVENT_ACTION_SLOTS_ALL_HOTBARS_UPDATED(eventId) end
 --- @return void
 function EVENT_ACTION_SLOT_ABILITY_USED (eventId, actionSlotIndex) end
 
---- @param weaponConfigType [WeaponConfigType|#WeaponConfigType]
+--- @param weaponConfigType WeaponConfigType
 --- @return void
 function EVENT_ACTION_SLOT_ABILITY_USED_WRONG_WEAPON (eventId, weaponConfigType) end
 
 --- @return void
 function EVENT_ACTION_SLOT_EFFECTS_CLEARED(eventId) end
 
---- @param hotbar [HotBarCategory|#HotBarCategory]
+--- @param hotbar HotBarCategory
 --- @param actionSlot luaindex
 --- @return void
 function EVENT_ACTION_SLOT_EFFECT_UPDATE (eventId, hotbar, actionSlot) end
@@ -92,12 +92,12 @@ function EVENT_ACTION_SLOT_UPDATED (eventId, actionSlotIndex) end
 --- @return void
 function EVENT_ACTION_UPDATE_COOLDOWNS(eventId) end
 
---- @param newState [CompanionState|#CompanionState]
---- @param oldState [CompanionState|#CompanionState]
+--- @param newState CompanionState
+--- @param oldState CompanionState
 --- @return void
 function EVENT_ACTIVE_COMPANION_STATE_CHANGED (eventId, newState, oldState) end
 
---- @param artifactId integer:nilable
+--- @param artifactId integer?
 --- @return void
 function EVENT_ACTIVE_DAEDRIC_ARTIFACT_CHANGED (eventId, artifactId) end
 
@@ -116,8 +116,8 @@ function EVENT_ACTIVE_QUEST_TOOL_CLEARED(eventId) end
 --- @return void
 function EVENT_ACTIVE_QUICKSLOT_CHANGED (eventId, actionSlotIndex) end
 
---- @param activeWeaponPair [ActiveWeaponPair|#ActiveWeaponPair]
---- @param locked bool
+--- @param activeWeaponPair ActiveWeaponPair
+--- @param locked boolean
 --- @return void
 function EVENT_ACTIVE_WEAPON_PAIR_CHANGED (eventId, activeWeaponPair, locked) end
 
@@ -127,11 +127,11 @@ function EVENT_ACTIVITY_FINDER_ACTIVITY_COMPLETE(eventId) end
 --- @return void
 function EVENT_ACTIVITY_FINDER_COOLDOWNS_UPDATE(eventId) end
 
---- @param result [ActivityFinderStatus|#ActivityFinderStatus]
+--- @param result ActivityFinderStatus
 --- @return void
 function EVENT_ACTIVITY_FINDER_STATUS_UPDATE (eventId, result) end
 
---- @param result [ActivityQueueResult|#ActivityQueueResult]
+--- @param result ActivityQueueResult
 --- @return void
 function EVENT_ACTIVITY_QUEUE_RESULT (eventId, result) end
 
@@ -151,9 +151,9 @@ function EVENT_AGENT_CHAT_REQUESTED(eventId) end
 function EVENT_AGENT_CHAT_TERMINATED(eventId) end
 
 --- @param alliancePoints integer
---- @param playSound bool
+--- @param playSound boolean
 --- @param difference integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @param reasonSupplementaryInfo integer
 --- @return void
 function EVENT_ALLIANCE_POINT_UPDATE (eventId, alliancePoints, playSound, difference, reason, reasonSupplementaryInfo) end
@@ -165,15 +165,15 @@ function EVENT_ANIMATION_NOTE (eventId, animNote) end
 --- @return void
 function EVENT_ANTIQUITIES_UPDATED(eventId) end
 
---- @param result [DiggingActiveSkillUseResult|#DiggingActiveSkillUseResult]
+--- @param result DiggingActiveSkillUseResult
 --- @return void
 function EVENT_ANTIQUITY_DIGGING_ACTIVE_SKILL_USE_RESULT (eventId, result) end
 
---- @param accept bool
+--- @param accept boolean
 --- @return void
 function EVENT_ANTIQUITY_DIGGING_EXIT_RESPONSE (eventId, accept) end
 
---- @param mousedOverSkill [DiggingActiveSkills|#DiggingActiveSkills]:nilable
+--- @param mousedOverSkill DiggingActiveSkills?
 --- @return void
 function EVENT_ANTIQUITY_DIGGING_MOUSE_OVER_ACTIVE_SKILL_CHANGED (eventId, mousedOverSkill) end
 
@@ -219,17 +219,17 @@ function EVENT_ARMORY_BUILDS_FULL_UPDATE(eventId) end
 --- @return void
 function EVENT_ARMORY_BUILD_COUNT_UPDATED(eventId) end
 
---- @param operationType [ArmoryBuildOperationType|#ArmoryBuildOperationType]
+--- @param operationType ArmoryBuildOperationType
 --- @param buildIndex luaindex
 --- @return void
 function EVENT_ARMORY_BUILD_OPERATION_STARTED (eventId, operationType, buildIndex) end
 
---- @param result [ArmoryBuildRestoreResult|#ArmoryBuildRestoreResult]
+--- @param result ArmoryBuildRestoreResult
 --- @param buildIndex luaindex
 --- @return void
 function EVENT_ARMORY_BUILD_RESTORE_RESPONSE (eventId, result, buildIndex) end
 
---- @param result [ArmoryBuildSaveResult|#ArmoryBuildSaveResult]
+--- @param result ArmoryBuildSaveResult
 --- @param buildIndex luaindex
 --- @return void
 function EVENT_ARMORY_BUILD_SAVE_RESPONSE (eventId, result, buildIndex) end
@@ -241,9 +241,9 @@ function EVENT_ARMORY_BUILD_UPDATED (eventId, buildIndex) end
 --- @param artifactName string
 --- @param keepId integer
 --- @param characterName string
---- @param playerAlliance [Alliance|#Alliance]
---- @param objectiveControlEvent [ObjectiveControlEvent|#ObjectiveControlEvent]
---- @param objectiveControlState [ObjectiveControlState|#ObjectiveControlState]
+--- @param playerAlliance Alliance
+--- @param objectiveControlEvent ObjectiveControlEvent
+--- @param objectiveControlState ObjectiveControlState
 --- @param campaignId integer
 --- @param displayName string
 --- @return void
@@ -253,13 +253,13 @@ function EVENT_ARTIFACT_CONTROL_STATE (eventId, artifactName, keepId, characterN
 --- @param objectiveObjectiveId integer
 --- @param battlegroundContext integer
 --- @param objectiveName string
---- @param objectiveControlEvent [ObjectiveControlEvent|#ObjectiveControlEvent]
---- @param objectiveControlState [ObjectiveControlState|#ObjectiveControlState]
---- @param originalOwnerAlliance [Alliance|#Alliance]
---- @param holderAlliance [Alliance|#Alliance]
---- @param lastHolderAlliance [Alliance|#Alliance]
+--- @param objectiveControlEvent ObjectiveControlEvent
+--- @param objectiveControlState ObjectiveControlState
+--- @param originalOwnerAlliance Alliance
+--- @param holderAlliance Alliance
+--- @param lastHolderAlliance Alliance
 --- @param capturedAtKeepId integer
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pinType MapDisplayPinType
 --- @return void
 function EVENT_ARTIFACT_SCROLL_STATE_CHANGED (eventId, objectiveKeepId, objectiveObjectiveId, battlegroundContext, objectiveName, objectiveControlEvent, objectiveControlState, originalOwnerAlliance, holderAlliance, lastHolderAlliance, capturedAtKeepId, pinType) end
 
@@ -275,7 +275,7 @@ function EVENT_ARTIFICIAL_EFFECT_REMOVED (eventId, artificialEffectId) end
 --- @return void
 function EVENT_ASSIGNED_CAMPAIGN_CHANGED (eventId, newAssignedCampaignId) end
 
---- @param result [RespecResult|#RespecResult]
+--- @param result RespecResult
 --- @return void
 function EVENT_ATTRIBUTE_RESPEC_RESULT (eventId, result) end
 
@@ -292,7 +292,7 @@ function EVENT_AUTO_MAP_NAVIGATION_TARGET_SET(eventId) end
 --- @return void
 function EVENT_AVENGE_KILL (eventId, avengedCharacterName, killedCharacterName, avengedDisplayName, killedDisplayName) end
 
---- @param currency [CurrencyType|#CurrencyType]
+--- @param currency CurrencyType
 --- @param newValue integer
 --- @param oldValue integer
 --- @return void
@@ -314,16 +314,16 @@ function EVENT_BATTLEGROUND_INACTIVITY_WARNING(eventId) end
 
 --- @param killedPlayerCharacterName string
 --- @param killedPlayerDisplayName string
---- @param killedPlayerBattlegroundTeam [BattlegroundTeam|#BattlegroundTeam]
+--- @param killedPlayerBattlegroundTeam BattlegroundTeam
 --- @param killingPlayerCharacterName string
 --- @param killingPlayerDisplayName string
---- @param killingPlayerBattlegroundTeam [BattlegroundTeam|#BattlegroundTeam]
---- @param battlegroundKillType [BattlegroundKillType|#BattlegroundKillType]
+--- @param killingPlayerBattlegroundTeam BattlegroundTeam
+--- @param battlegroundKillType BattlegroundKillType
 --- @param killingAbilityId integer
 --- @return void
 function EVENT_BATTLEGROUND_KILL (eventId, killedPlayerCharacterName, killedPlayerDisplayName, killedPlayerBattlegroundTeam, killingPlayerCharacterName, killingPlayerDisplayName, killingPlayerBattlegroundTeam, battlegroundKillType, killingAbilityId) end
 
---- @param battlegroundType [BattlegroundLeaderboardType|#BattlegroundLeaderboardType]
+--- @param battlegroundType BattlegroundLeaderboardType
 --- @return void
 function EVENT_BATTLEGROUND_LEADERBOARD_DATA_RECEIVED (eventId, battlegroundType) end
 
@@ -333,12 +333,12 @@ function EVENT_BATTLEGROUND_RULESET_CHANGED(eventId) end
 --- @return void
 function EVENT_BATTLEGROUND_SCOREBOARD_UPDATED(eventId) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EVENT_BATTLEGROUND_SHUTDOWN_TIMER (eventId, enabled) end
 
---- @param previousState [BattlegroundState|#BattlegroundState]
---- @param currentState [BattlegroundState|#BattlegroundState]
+--- @param previousState BattlegroundState
+--- @param currentState BattlegroundState
 --- @return void
 function EVENT_BATTLEGROUND_STATE_CHANGED (eventId, previousState, currentState) end
 
@@ -354,7 +354,7 @@ function EVENT_BEGIN_SIEGE_CONTROL(eventId) end
 --- @return void
 function EVENT_BEGIN_SIEGE_UPGRADE(eventId) end
 
---- @param forceReset bool
+--- @param forceReset boolean
 --- @return void
 function EVENT_BOSSES_CHANGED (eventId, forceReset) end
 
@@ -365,21 +365,21 @@ function EVENT_BROADCAST (eventId, message) end
 --- @param itemLink string
 --- @param itemQuantity integer
 --- @param money integer
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_BUYBACK_RECEIPT (eventId, itemLink, itemQuantity, money, itemSoundCategory) end
 
 --- @param entryName string
---- @param entryType [StoreEntryType|#StoreEntryType]
+--- @param entryType StoreEntryType
 --- @param entryQuantity integer
 --- @param money integer
---- @param specialCurrencyType1 [CurrencyType|#CurrencyType]
+--- @param specialCurrencyType1 CurrencyType
 --- @param specialCurrencyInfo1 string
 --- @param specialCurrencyQuantity1 integer
---- @param specialCurrencyType2 [CurrencyType|#CurrencyType]
+--- @param specialCurrencyType2 CurrencyType
 --- @param specialCurrencyInfo2 string
 --- @param specialCurrencyQuantity2 integer
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_BUY_RECEIPT (eventId, entryName, entryType, entryQuantity, money, specialCurrencyType1, specialCurrencyInfo1, specialCurrencyQuantity1, specialCurrencyType2, specialCurrencyInfo2, specialCurrencyQuantity2, itemSoundCategory) end
 
@@ -388,17 +388,17 @@ function EVENT_BUY_RECEIPT (eventId, entryName, entryType, entryQuantity, money,
 function EVENT_CADWELL_PROGRESSION_LEVEL_CHANGED (eventId, progressionLevel) end
 
 --- @param campaignId integer
---- @param wasLockedToAlliance [Alliance|#Alliance]
+--- @param wasLockedToAlliance Alliance
 --- @return void
 function EVENT_CAMPAIGN_ALLIANCE_LOCK_ACTIVATED (eventId, campaignId, wasLockedToAlliance) end
 
 --- @param campaignId integer
---- @param lockedToAlliance [Alliance|#Alliance]
+--- @param lockedToAlliance Alliance
 --- @param timeLeftS integer
 --- @return void
 function EVENT_CAMPAIGN_ALLIANCE_LOCK_PENDING (eventId, campaignId, lockedToAlliance, timeLeftS) end
 
---- @param result [CampaignReassignmentErrorReason|#CampaignReassignmentErrorReason]
+--- @param result CampaignReassignmentErrorReason
 --- @return void
 function EVENT_CAMPAIGN_ASSIGNMENT_RESULT (eventId, result) end
 
@@ -410,30 +410,30 @@ function EVENT_CAMPAIGN_EMPEROR_CHANGED (eventId, campaignId) end
 function EVENT_CAMPAIGN_HISTORY_WINDOW_CHANGED(eventId) end
 
 --- @param campaignId integer
---- @param alliance [Alliance|#Alliance]
+--- @param alliance Alliance
 --- @return void
 function EVENT_CAMPAIGN_LEADERBOARD_DATA_RECEIVED (eventId, campaignId, alliance) end
 
 --- @param campaignId integer
---- @param isGroupMember bool
---- @param willLockToAlliance [Alliance|#Alliance]
+--- @param isGroupMember boolean
+--- @param willLockToAlliance Alliance
 --- @return void
 function EVENT_CAMPAIGN_QUEUE_JOINED (eventId, campaignId, isGroupMember, willLockToAlliance) end
 
 --- @param campaignId integer
---- @param isGroup bool
+--- @param isGroup boolean
 --- @return void
 function EVENT_CAMPAIGN_QUEUE_LEFT (eventId, campaignId, isGroup) end
 
 --- @param campaignId integer
---- @param isGroup bool
+--- @param isGroup boolean
 --- @param position integer
 --- @return void
 function EVENT_CAMPAIGN_QUEUE_POSITION_CHANGED (eventId, campaignId, isGroup, position) end
 
 --- @param campaignId integer
---- @param isGroup bool
---- @param state [CampaignQueueRequestStateType|#CampaignQueueRequestStateType]
+--- @param isGroup boolean
+--- @param state CampaignQueueRequestStateType
 --- @return void
 function EVENT_CAMPAIGN_QUEUE_STATE_CHANGED (eventId, campaignId, isGroup, state) end
 
@@ -447,7 +447,7 @@ function EVENT_CAMPAIGN_SELECTION_DATA_CHANGED(eventId) end
 --- @return void
 function EVENT_CAMPAIGN_STATE_INITIALIZED (eventId, campaignId) end
 
---- @param result [UnassignCampaignResult|#UnassignCampaignResult]
+--- @param result UnassignCampaignResult
 --- @return void
 function EVENT_CAMPAIGN_UNASSIGNMENT_RESULT (eventId, result) end
 
@@ -477,8 +477,8 @@ function EVENT_CANNOT_DO_THAT_WHILE_HIDDEN(eventId) end
 --- @param objectiveKeepId integer
 --- @param objectiveObjectiveId integer
 --- @param battlegroundContext integer
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
---- @param hasMoved bool
+--- @param pinType MapDisplayPinType
+--- @param hasMoved boolean
 --- @return void
 function EVENT_CAPTURE_AREA_SPAWNED (eventId, objectiveKeepId, objectiveObjectiveId, battlegroundContext, pinType, hasMoved) end
 
@@ -486,10 +486,10 @@ function EVENT_CAPTURE_AREA_SPAWNED (eventId, objectiveKeepId, objectiveObjectiv
 --- @param objectiveObjectiveId integer
 --- @param battlegroundContext integer
 --- @param objectiveName string
---- @param objectiveControlEvent [ObjectiveControlEvent|#ObjectiveControlEvent]
---- @param objectiveControlState [ObjectiveControlState|#ObjectiveControlState]
---- @param owningAlliance [Alliance|#Alliance]
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param objectiveControlEvent ObjectiveControlEvent
+--- @param objectiveControlState ObjectiveControlState
+--- @param owningAlliance Alliance
+--- @param pinType MapDisplayPinType
 --- @return void
 function EVENT_CAPTURE_AREA_STATE_CHANGED (eventId, objectiveKeepId, objectiveObjectiveId, battlegroundContext, objectiveName, objectiveControlEvent, objectiveControlState, owningAlliance, pinType) end
 
@@ -500,8 +500,8 @@ function EVENT_CAPTURE_AREA_STATE_CHANGED (eventId, objectiveKeepId, objectiveOb
 --- @param capturePoolMax integer
 --- @param capturingPlayers integer
 --- @param contestingPlayers integer
---- @param owningAlliance [Alliance|#Alliance]
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param owningAlliance Alliance
+--- @param pinType MapDisplayPinType
 --- @return void
 function EVENT_CAPTURE_AREA_STATUS (eventId, keepId, objectiveId, battlegroundContext, capturePoolValue, capturePoolMax, capturingPlayers, contestingPlayers, owningAlliance, pinType) end
 
@@ -509,24 +509,24 @@ function EVENT_CAPTURE_AREA_STATUS (eventId, keepId, objectiveId, battlegroundCo
 --- @param objectiveObjectiveId integer
 --- @param battlegroundContext integer
 --- @param objectiveName string
---- @param objectiveControlEvent [ObjectiveControlEvent|#ObjectiveControlEvent]
---- @param objectiveControlState [ObjectiveControlState|#ObjectiveControlState]
---- @param originalOwnerAlliance [Alliance|#Alliance]
---- @param holderAlliance [Alliance|#Alliance]
---- @param lastHolderAlliance [Alliance|#Alliance]
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param objectiveControlEvent ObjectiveControlEvent
+--- @param objectiveControlState ObjectiveControlState
+--- @param originalOwnerAlliance Alliance
+--- @param holderAlliance Alliance
+--- @param lastHolderAlliance Alliance
+--- @param pinType MapDisplayPinType
 --- @return void
 function EVENT_CAPTURE_FLAG_STATE_CHANGED (eventId, objectiveKeepId, objectiveObjectiveId, battlegroundContext, objectiveName, objectiveControlEvent, objectiveControlState, originalOwnerAlliance, holderAlliance, lastHolderAlliance, pinType) end
 
---- @param currency [CurrencyType|#CurrencyType]
+--- @param currency CurrencyType
 --- @param newValue integer
 --- @param oldValue integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @param reasonSupplementaryInfo integer
 --- @return void
 function EVENT_CARRIED_CURRENCY_UPDATE (eventId, currency, newValue, oldValue, reason, reasonSupplementaryInfo) end
 
---- @param wasChampionSystemUnlocked bool
+--- @param wasChampionSystemUnlocked boolean
 --- @return void
 function EVENT_CHAMPION_LEVEL_ACHIEVED (eventId, wasChampionSystemUnlocked) end
 
@@ -540,7 +540,7 @@ function EVENT_CHAMPION_POINT_GAINED (eventId, championPointsDelta) end
 --- @return void
 function EVENT_CHAMPION_POINT_UPDATE (eventId, unitTag, oldChampionPoints, currentChampionPoints) end
 
---- @param result [ChampionPurchaseResult|#ChampionPurchaseResult]
+--- @param result ChampionPurchaseResult
 --- @return void
 function EVENT_CHAMPION_PURCHASE_RESULT (eventId, result) end
 
@@ -562,23 +562,23 @@ function EVENT_CHATTER_END(eventId) end
 --- @return void
 function EVENT_CHAT_CATEGORY_COLOR_CHANGED (eventId, categoryId, red, green, blue) end
 
---- @param opened bool
+--- @param opened boolean
 --- @return void
 function EVENT_CHAT_LOG_TOGGLED (eventId, opened) end
 
---- @param channelType [ChannelType|#ChannelType]
+--- @param channelType ChannelType
 --- @param fromName string
 --- @param text string
---- @param isCustomerService bool
+--- @param isCustomerService boolean
 --- @param fromDisplayName string
 --- @return void
 function EVENT_CHAT_MESSAGE_CHANNEL (eventId, channelType, fromName, text, isCustomerService, fromDisplayName) end
 
---- @param result [ClaimRewardResult|#ClaimRewardResult]
+--- @param result ClaimRewardResult
 --- @return void
 function EVENT_CLAIM_REWARD_RESULT (eventId, result) end
 
---- @param result [ClientInteractResult|#ClientInteractResult]
+--- @param result ClientInteractResult
 --- @param interactTargetName string
 --- @return void
 function EVENT_CLIENT_INTERACT_RESULT (eventId, result, interactTargetName) end
@@ -623,7 +623,7 @@ function EVENT_COLLECTIBLE_NOTIFICATION_NEW (eventId, collectibleId, notificatio
 --- @return void
 function EVENT_COLLECTIBLE_NOTIFICATION_REMOVED (eventId, notificationId, collectibleId) end
 
---- @param errorReason [NamingError|#NamingError]
+--- @param errorReason NamingError
 --- @return void
 function EVENT_COLLECTIBLE_RENAME_ERROR (eventId, errorReason) end
 
@@ -640,27 +640,27 @@ function EVENT_COLLECTIBLE_SET_IN_WATER_ALERT(eventId) end
 --- @return void
 function EVENT_COLLECTIBLE_USER_FLAGS_UPDATED (eventId, collectibleId, oldFlags, newFlags) end
 
---- @param result [CollectibleUsageBlockReason|#CollectibleUsageBlockReason]
---- @param isAttemptingActivation bool
+--- @param result CollectibleUsageBlockReason
+--- @param isAttemptingActivation boolean
 --- @return void
 function EVENT_COLLECTIBLE_USE_RESULT (eventId, result, isAttemptingActivation) end
 
 --- @return void
 function EVENT_COLLECTION_UPDATED(eventId) end
 
---- @param result [ActionResult|#ActionResult]
---- @param isError bool
+--- @param result ActionResult
+--- @param isError boolean
 --- @param abilityName string
 --- @param abilityGraphic integer
---- @param abilityActionSlotType [ActionSlotType|#ActionSlotType]
+--- @param abilityActionSlotType ActionSlotType
 --- @param sourceName string
---- @param sourceType [CombatUnitType|#CombatUnitType]
+--- @param sourceType CombatUnitType
 --- @param targetName string
---- @param targetType [CombatUnitType|#CombatUnitType]
+--- @param targetType CombatUnitType
 --- @param hitValue integer
---- @param powerType [CombatMechanicFlags|#CombatMechanicFlags]
---- @param damageType [DamageType|#DamageType]
---- @param log bool
+--- @param powerType CombatMechanicFlags
+--- @param damageType DamageType
+--- @param log boolean
 --- @param sourceUnitId integer
 --- @param targetUnitId integer
 --- @param abilityId integer
@@ -685,11 +685,11 @@ function EVENT_COMPANION_EXPERIENCE_GAIN (eventId, companionId, level, previousE
 --- @param companionId integer
 --- @param previousRapport integer
 --- @param currentRapport integer
---- @param adjustmentAmountType [CompanionRapportAdjustmentAmount|#CompanionRapportAdjustmentAmount]
+--- @param adjustmentAmountType CompanionRapportAdjustmentAmount
 --- @return void
 function EVENT_COMPANION_RAPPORT_UPDATE (eventId, companionId, previousRapport, currentRapport, adjustmentAmountType) end
 
---- @param isInit bool
+--- @param isInit boolean
 --- @return void
 function EVENT_COMPANION_SKILLS_FULL_UPDATE (eventId, isInit) end
 
@@ -710,12 +710,12 @@ function EVENT_COMPANION_SKILL_RANK_UPDATE (eventId, skillLineId, rank) end
 --- @return void
 function EVENT_COMPANION_SKILL_XP_UPDATE (eventId, skillLineId, reason, rank, previousXP, currentXP) end
 
---- @param summonResult [CompanionSummonResult|#CompanionSummonResult]
+--- @param summonResult CompanionSummonResult
 --- @param companionId integer
 --- @return void
 function EVENT_COMPANION_SUMMON_RESULT (eventId, summonResult, companionId) end
 
---- @param reason [CompanionUltimateFailureReason|#CompanionUltimateFailureReason]
+--- @param reason CompanionUltimateFailureReason
 --- @param companionName string
 --- @return void
 function EVENT_COMPANION_ULTIMATE_FAILURE (eventId, reason, companionName) end
@@ -750,53 +750,53 @@ function EVENT_CONVERSATION_UPDATED (eventId, conversationBodyText, conversation
 
 --- @param campaignId integer
 --- @param emperorCharacterName string
---- @param emperorAlliance [Alliance|#Alliance]
+--- @param emperorAlliance Alliance
 --- @param emperorDisplayName string
 --- @return void
 function EVENT_CORONATE_EMPEROR_NOTIFICATION (eventId, campaignId, emperorCharacterName, emperorAlliance, emperorDisplayName) end
 
 --- @param craftedAbilityDefId integer
---- @param isUnlocked bool
+--- @param isUnlocked boolean
 --- @return void
 function EVENT_CRAFTED_ABILITY_LOCK_STATE_CHANGED (eventId, craftedAbilityDefId, isUnlocked) end
 
 --- @param craftedAbilityDefId integer
 --- @param totalNumReset integer
---- @param isLastReset bool
+--- @param isLastReset boolean
 --- @return void
 function EVENT_CRAFTED_ABILITY_RESET (eventId, craftedAbilityDefId, totalNumReset, isLastReset) end
 
 --- @param craftedAbilityScriptDefId integer
---- @param isUnlocked bool
+--- @param isUnlocked boolean
 --- @return void
 function EVENT_CRAFTED_ABILITY_SCRIPT_LOCK_STATE_CHANGED (eventId, craftedAbilityScriptDefId, isUnlocked) end
 
 --- @return void
 function EVENT_CRAFTED_ABILITY_SEARCH_RESULTS_READY(eventId) end
 
---- @param craftSkill [TradeskillType|#TradeskillType]
---- @param sameStation bool
---- @param craftMode [CraftingInteractionMode|#CraftingInteractionMode]
+--- @param craftSkill TradeskillType
+--- @param sameStation boolean
+--- @param craftMode CraftingInteractionMode
 --- @return void
 function EVENT_CRAFTING_STATION_INTERACT (eventId, craftSkill, sameStation, craftMode) end
 
 --- @return void
 function EVENT_CRAFT_BAG_AUTO_TRANSFER_NOTIFICATION_CLEARED(eventId) end
 
---- @param craftSkill [TradeskillType|#TradeskillType]
+--- @param craftSkill TradeskillType
 --- @return void
 function EVENT_CRAFT_COMPLETED (eventId, craftSkill) end
 
---- @param tradeskillResult [TradeskillResult|#TradeskillResult]
+--- @param tradeskillResult TradeskillResult
 --- @return void
 function EVENT_CRAFT_FAILED (eventId, tradeskillResult) end
 
---- @param craftSkill [TradeskillType|#TradeskillType]
---- @param context [CraftingProcessContext|#CraftingProcessContext]
+--- @param craftSkill TradeskillType
+--- @param context CraftingProcessContext
 --- @return void
 function EVENT_CRAFT_STARTED (eventId, craftSkill, context) end
 
---- @param crownCratesSystemState [LootCratesSystemState|#LootCratesSystemState]
+--- @param crownCratesSystemState LootCratesSystemState
 --- @return void
 function EVENT_CROWN_CRATES_SYSTEM_STATE_CHANGED (eventId, crownCratesSystemState) end
 
@@ -804,7 +804,7 @@ function EVENT_CROWN_CRATES_SYSTEM_STATE_CHANGED (eventId, crownCratesSystemStat
 function EVENT_CROWN_CRATE_INVENTORY_UPDATED(eventId) end
 
 --- @param crownCrateId integer
---- @param response [LootCrateOpenResponse|#LootCrateOpenResponse]
+--- @param response LootCrateOpenResponse
 --- @return void
 function EVENT_CROWN_CRATE_OPEN_RESPONSE (eventId, crownCrateId, response) end
 
@@ -824,7 +824,7 @@ function EVENT_CURRENT_CAMPAIGN_CHANGED (eventId, newCurrentCampaignId) end
 --- @return void
 function EVENT_CURRENT_SUBZONE_LIST_CHANGED(eventId) end
 
---- @param type [MouseContentType|#MouseContentType]
+--- @param type MouseContentType
 --- @param param1 integer
 --- @param param2 integer
 --- @param param3 integer
@@ -834,24 +834,24 @@ function EVENT_CURRENT_SUBZONE_LIST_CHANGED(eventId) end
 --- @return void
 function EVENT_CURSOR_DROPPED (eventId, type, param1, param2, param3, param4, param5, param6) end
 
---- @param type [MouseContentType|#MouseContentType]
+--- @param type MouseContentType
 --- @param param1 integer
 --- @param param2 integer
 --- @param param3 integer
 --- @param param4 integer
 --- @param param5 integer
 --- @param param6 integer
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_CURSOR_PICKUP (eventId, type, param1, param2, param3, param4, param5, param6, itemSoundCategory) end
 
 --- @param responseMessage string
---- @param success bool
+--- @param success boolean
 --- @return void
 function EVENT_CUSTOMER_SERVICE_FEEDBACK_SUBMITTED (eventId, responseMessage, success) end
 
 --- @param responseMessage string
---- @param success bool
+--- @param success boolean
 --- @return void
 function EVENT_CUSTOMER_SERVICE_TICKET_SUBMITTED (eventId, responseMessage, success) end
 
@@ -861,14 +861,14 @@ function EVENT_DAEDRIC_ARTIFACT_OBJECTIVE_SPAWNED_BUT_NOT_REVEALED (eventId, dae
 
 --- @param objectiveKeepId integer
 --- @param objectiveObjectiveId integer
---- @param battlegroundContext [BattlegroundQueryContextType|#BattlegroundQueryContextType]
---- @param objectiveControlEvent [ObjectiveControlEvent|#ObjectiveControlEvent]
---- @param objectiveControlState [ObjectiveControlState|#ObjectiveControlState]
---- @param holderAlliance [Alliance|#Alliance]
---- @param lastHolderAlliance [Alliance|#Alliance]
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param battlegroundContext BattlegroundQueryContextType
+--- @param objectiveControlEvent ObjectiveControlEvent
+--- @param objectiveControlState ObjectiveControlState
+--- @param holderAlliance Alliance
+--- @param lastHolderAlliance Alliance
+--- @param pinType MapDisplayPinType
 --- @param daedricArtifactId integer
---- @param lastObjectiveControlState [ObjectiveControlState|#ObjectiveControlState]
+--- @param lastObjectiveControlState ObjectiveControlState
 --- @return void
 function EVENT_DAEDRIC_ARTIFACT_OBJECTIVE_STATE_CHANGED (eventId, objectiveKeepId, objectiveObjectiveId, battlegroundContext, objectiveControlEvent, objectiveControlState, holderAlliance, lastHolderAlliance, pinType, daedricArtifactId, lastObjectiveControlState) end
 
@@ -876,14 +876,14 @@ function EVENT_DAEDRIC_ARTIFACT_OBJECTIVE_STATE_CHANGED (eventId, objectiveKeepI
 function EVENT_DAILY_LOGIN_MONTH_CHANGED(eventId) end
 
 --- @param mailId id64
---- @param success bool
+--- @param success boolean
 --- @return void
 function EVENT_DELETE_MAIL_RESPONSE (eventId, mailId, success) end
 
 --- @param campaignId integer
 --- @param emperorCharacterName string
---- @param emperorAlliance [Alliance|#Alliance]
---- @param abdication bool
+--- @param emperorAlliance Alliance
+--- @param abdication boolean
 --- @param emperorDisplayName string
 --- @return void
 function EVENT_DEPOSE_EMPEROR_NOTIFICATION (eventId, campaignId, emperorCharacterName, emperorAlliance, abdication, emperorDisplayName) end
@@ -906,7 +906,7 @@ function EVENT_DISABLE_SIEGE_PACKUP_ABILITY(eventId) end
 function EVENT_DISCOVERY_EXPERIENCE (eventId, areaName, level, previousExperience, currentExperience, championPoints) end
 
 --- @param unitTag string
---- @param disguiseState [DisguiseState|#DisguiseState]
+--- @param disguiseState DisguiseState
 --- @return void
 function EVENT_DISGUISE_STATE_CHANGED (eventId, unitTag, disguiseState) end
 
@@ -924,7 +924,7 @@ function EVENT_DISPLAY_ALERT (eventId, alertText, soundId) end
 --- @param iconFilename string
 --- @param soundId string
 --- @param lifespanMS integer
---- @param category [CenterScreenAnnouncementCategory|#CenterScreenAnnouncementCategory]
+--- @param category CenterScreenAnnouncementCategory
 --- @return void
 function EVENT_DISPLAY_ANNOUNCEMENT (eventId, primaryText, secondaryText, iconFilename, soundId, lifespanMS, category) end
 
@@ -933,7 +933,7 @@ function EVENT_DISPLAY_ANNOUNCEMENT (eventId, primaryText, secondaryText, iconFi
 function EVENT_DISPLAY_TUTORIAL (eventId, tutorialIndex) end
 
 --- @param tutorialIndex luaindex
---- @param anchor [AnchorPosition|#AnchorPosition]
+--- @param anchor AnchorPosition
 --- @param offsetX number
 --- @param offsetY number
 --- @return void
@@ -947,12 +947,12 @@ function EVENT_DISPOSITION_UPDATE (eventId, unitTag) end
 --- @return void
 function EVENT_DUEL_COUNTDOWN (eventId, startTimeMS) end
 
---- @param duelResult [DuelResult|#DuelResult]
---- @param wasLocalPlayersResult bool
+--- @param duelResult DuelResult
+--- @param wasLocalPlayersResult boolean
 --- @param opponentCharacterName string
 --- @param opponentDisplayName string
---- @param opponentAlliance [Alliance|#Alliance]
---- @param opponentGender [Gender|#Gender]
+--- @param opponentAlliance Alliance
+--- @param opponentGender Gender
 --- @param opponentClassId integer
 --- @param opponentRaceId integer
 --- @return void
@@ -967,7 +967,7 @@ function EVENT_DUEL_INVITE_CANCELED(eventId) end
 --- @return void
 function EVENT_DUEL_INVITE_DECLINED(eventId) end
 
---- @param reason [DuelInviteFailReason|#DuelInviteFailReason]
+--- @param reason DuelInviteFailReason
 --- @param targetCharacterName string
 --- @param targetDisplayName string
 --- @return void
@@ -987,7 +987,7 @@ function EVENT_DUEL_INVITE_REMOVED(eventId) end
 --- @return void
 function EVENT_DUEL_INVITE_SENT (eventId, inviteeCharacterName, inviteeDisplayName) end
 
---- @param isInWarningArea bool
+--- @param isInWarningArea boolean
 --- @return void
 function EVENT_DUEL_NEAR_BOUNDARY (eventId, isInWarningArea) end
 
@@ -1003,14 +1003,14 @@ function EVENT_DYEING_STATION_INTERACT_START(eventId) end
 --- @return void
 function EVENT_DYES_SEARCH_RESULTS_READY(eventId) end
 
---- @param reason [DyeStampUseResult|#DyeStampUseResult]
+--- @param reason DyeStampUseResult
 --- @return void
 function EVENT_DYE_STAMP_USE_FAIL (eventId, reason) end
 
 --- @return void
 function EVENT_EFFECTS_FULL_UPDATE(eventId) end
 
---- @param changeType [EffectResult|#EffectResult]
+--- @param changeType EffectResult
 --- @param effectSlot integer
 --- @param effectName string
 --- @param unitTag string
@@ -1019,13 +1019,13 @@ function EVENT_EFFECTS_FULL_UPDATE(eventId) end
 --- @param stackCount integer
 --- @param iconName string
 --- @param deprecatedBuffType string
---- @param effectType [BuffEffectType|#BuffEffectType]
---- @param abilityType [AbilityType|#AbilityType]
---- @param statusEffectType [StatusEffectType|#StatusEffectType]
+--- @param effectType BuffEffectType
+--- @param abilityType AbilityType
+--- @param statusEffectType StatusEffectType
 --- @param unitName string
 --- @param unitId integer
 --- @param abilityId integer
---- @param sourceType [CombatUnitType|#CombatUnitType]
+--- @param sourceType CombatUnitType
 --- @return void
 function EVENT_EFFECT_CHANGED (eventId, changeType, effectSlot, effectName, unitTag, beginTime, endTime, stackCount, iconName, deprecatedBuffType, effectType, abilityType, statusEffectType, unitName, unitId, abilityId, sourceType) end
 
@@ -1041,7 +1041,7 @@ function EVENT_ENABLE_SIEGE_PACKUP_ABILITY(eventId) end
 --- @return void
 function EVENT_ENDLESS_DUNGEON_BUFF_SELECTOR_CHOICES_RECEIVED(eventId) end
 
---- @param buffType [EndlessDungeonBuffType|#EndlessDungeonBuffType]
+--- @param buffType EndlessDungeonBuffType
 --- @param abilityId integer
 --- @param stackCount integer
 --- @return void
@@ -1055,18 +1055,18 @@ function EVENT_ENDLESS_DUNGEON_COMPLETED (eventId, flags) end
 --- @return void
 function EVENT_ENDLESS_DUNGEON_CONFIRM_COMPANION_SUMMONING (eventId, collectibleId) end
 
---- @param counterType [EndlessDungeonCounterType|#EndlessDungeonCounterType]
+--- @param counterType EndlessDungeonCounterType
 --- @param counterValue integer
 --- @return void
 function EVENT_ENDLESS_DUNGEON_COUNTER_VALUE_CHANGED (eventId, counterType, counterValue) end
 
 --- @param endlessDungeonId integer
 --- @param flags integer
---- @param completed bool
+--- @param completed boolean
 --- @return void
 function EVENT_ENDLESS_DUNGEON_INITIALIZED (eventId, endlessDungeonId, flags, completed) end
 
---- @param endlessDungeonGroupType [EndlessDungeonGroupType|#EndlessDungeonGroupType]
+--- @param endlessDungeonGroupType EndlessDungeonGroupType
 --- @param endlessDungeonId integer
 --- @param classId integer
 --- @return void
@@ -1077,7 +1077,7 @@ function EVENT_ENDLESS_DUNGEON_LEADERBOARD_PLAYER_DATA_CHANGED(eventId) end
 
 --- @param endlessDungeonName string
 --- @param score integer
---- @param isWeekly bool
+--- @param isWeekly boolean
 --- @return void
 function EVENT_ENDLESS_DUNGEON_NEW_BEST_SCORE (eventId, endlessDungeonName, score, isWeekly) end
 
@@ -1085,20 +1085,20 @@ function EVENT_ENDLESS_DUNGEON_NEW_BEST_SCORE (eventId, endlessDungeonName, scor
 function EVENT_ENDLESS_DUNGEON_OF_THE_WEEK_TURNOVER(eventId) end
 
 --- @param endlessDungeonName string
---- @param isWeekly bool
+--- @param isWeekly boolean
 --- @return void
 function EVENT_ENDLESS_DUNGEON_RESET_BEST_SCORE (eventId, endlessDungeonName, isWeekly) end
 
 --- @param currentScore integer
---- @param reason [EndlessDungeonPointReason|#EndlessDungeonPointReason]
+--- @param reason EndlessDungeonPointReason
 --- @return void
 function EVENT_ENDLESS_DUNGEON_SCORE_UPDATED (eventId, currentScore, reason) end
 
 --- @return void
 function EVENT_ENDLESS_DUNGEON_STARTED(eventId) end
 
---- @param craftSkill [TradeskillType|#TradeskillType]
---- @param craftMode [CraftingInteractionMode|#CraftingInteractionMode]
+--- @param craftSkill TradeskillType
+--- @param craftMode CraftingInteractionMode
 --- @return void
 function EVENT_END_CRAFTING_STATION_INTERACT (eventId, craftSkill, craftMode) end
 
@@ -1135,7 +1135,7 @@ function EVENT_ENTER_GROUND_TARGET_MODE(eventId) end
 --- @return void
 function EVENT_ESO_PLUS_FREE_TRIAL_NOTIFICATION_CLEARED(eventId) end
 
---- @param reason [ProgressReason|#ProgressReason]
+--- @param reason ProgressReason
 --- @param level integer
 --- @param previousExperience integer
 --- @param currentExperience integer
@@ -1146,7 +1146,7 @@ function EVENT_EXPERIENCE_GAIN (eventId, reason, level, previousExperience, curr
 --- @param unitTag string
 --- @param currentExp integer
 --- @param maxExp integer
---- @param reason [ProgressReason|#ProgressReason]
+--- @param reason ProgressReason
 --- @return void
 function EVENT_EXPERIENCE_UPDATE (eventId, unitTag, currentExp, maxExp, reason) end
 
@@ -1157,11 +1157,11 @@ function EVENT_EXPIRING_MARKET_CURRENCY_NOTIFICATION(eventId) end
 function EVENT_EXPIRING_MARKET_CURRENCY_NOTIFICATION_CLEARED(eventId) end
 
 --- @param linkIndex luaindex
---- @param linkType [FastTravelLinkType|#FastTravelLinkType]
---- @param owningAlliance [Alliance|#Alliance]
---- @param oldLinkType [FastTravelLinkType|#FastTravelLinkType]
---- @param oldOwningAlliance [Alliance|#Alliance]
---- @param isLocal bool
+--- @param linkType FastTravelLinkType
+--- @param owningAlliance Alliance
+--- @param oldLinkType FastTravelLinkType
+--- @param oldOwningAlliance Alliance
+--- @param isLocal boolean
 --- @return void
 function EVENT_FAST_TRAVEL_KEEP_NETWORK_LINK_CHANGED (eventId, linkIndex, linkType, owningAlliance, oldLinkType, oldOwningAlliance, isLocal) end
 
@@ -1183,7 +1183,7 @@ function EVENT_FEEDBACK_TOO_FREQUENT_SCREENSHOT(eventId) end
 --- @param rankNum luaindex
 --- @param name string
 --- @param xpBonus integer
---- @param loot bool
+--- @param loot boolean
 --- @return void
 function EVENT_FINESSE_RANK_CHANGED (eventId, unitTag, rankNum, name, xpBonus, loot) end
 
@@ -1194,7 +1194,7 @@ function EVENT_FISHING_LURE_CLEARED(eventId) end
 --- @return void
 function EVENT_FISHING_LURE_SET (eventId, fishingLure) end
 
---- @param respecType [RespecType|#RespecType]
+--- @param respecType RespecType
 --- @return void
 function EVENT_FORCE_RESPEC (eventId, respecType) end
 
@@ -1220,14 +1220,14 @@ function EVENT_GAME_CAMERA_DEACTIVATED(eventId) end
 --- @return void
 function EVENT_GAME_CAMERA_UI_MODE_CHANGED(eventId) end
 
---- @param hasFocus bool
+--- @param hasFocus boolean
 --- @return void
 function EVENT_GAME_FOCUS_CHANGED (eventId, hasFocus) end
 
 --- @return void
 function EVENT_GIFTING_GRACE_PERIOD_STARTED(eventId) end
 
---- @param isGiftingUnlocked bool
+--- @param isGiftingUnlocked boolean
 --- @return void
 function EVENT_GIFTING_UNLOCKED_STATUS_CHANGED (eventId, isGiftingUnlocked) end
 
@@ -1250,7 +1250,7 @@ function EVENT_GROUPING_TOOLS_LFG_JOINED (eventId, locationName) end
 --- @return void
 function EVENT_GROUPING_TOOLS_NO_LONGER_LFG(eventId) end
 
---- @param reason [LFGReadyCheckCancelReason|#LFGReadyCheckCancelReason]
+--- @param reason LFGReadyCheckCancelReason
 --- @return void
 function EVENT_GROUPING_TOOLS_READY_CHECK_CANCELLED (eventId, reason) end
 
@@ -1260,7 +1260,7 @@ function EVENT_GROUPING_TOOLS_READY_CHECK_UPDATED(eventId) end
 --- @return void
 function EVENT_GROUP_CAMPAIGN_ASSIGNMENTS_CHANGED(eventId) end
 
---- @param failureReason [GroupElectionFailure|#GroupElectionFailure]
+--- @param failureReason GroupElectionFailure
 --- @param descriptor string
 --- @return void
 function EVENT_GROUP_ELECTION_FAILED (eventId, failureReason, descriptor) end
@@ -1278,7 +1278,7 @@ function EVENT_GROUP_ELECTION_PROGRESS_UPDATED(eventId) end
 --- @return void
 function EVENT_GROUP_ELECTION_REQUESTED (eventId, descriptor) end
 
---- @param electionResult [GroupElectionResult|#GroupElectionResult]
+--- @param electionResult GroupElectionResult
 --- @param descriptor string
 --- @return void
 function EVENT_GROUP_ELECTION_RESULT (eventId, electionResult, descriptor) end
@@ -1287,11 +1287,11 @@ function EVENT_GROUP_ELECTION_RESULT (eventId, electionResult, descriptor) end
 --- @return void
 function EVENT_GROUP_FINDER_APPLICATION_RECEIVED (eventId, applicantCharId) end
 
---- @param result [GroupFinderActionResult|#GroupFinderActionResult]
+--- @param result GroupFinderActionResult
 --- @return void
 function EVENT_GROUP_FINDER_APPLY_TO_GROUP_LISTING_RESULT (eventId, result) end
 
---- @param result [GroupFinderActionResult|#GroupFinderActionResult]
+--- @param result GroupFinderActionResult
 --- @return void
 function EVENT_GROUP_FINDER_CREATE_GROUP_LISTING_RESULT (eventId, result) end
 
@@ -1308,7 +1308,7 @@ function EVENT_GROUP_FINDER_LONG_SEARCH_WARNING(eventId) end
 --- @return void
 function EVENT_GROUP_FINDER_MAX_SEARCHABLE(eventId) end
 
---- @param alert [GroupFinderMemberAlert|#GroupFinderMemberAlert]
+--- @param alert GroupFinderMemberAlert
 --- @return void
 function EVENT_GROUP_FINDER_MEMBER_ALERT (eventId, alert) end
 
@@ -1318,15 +1318,15 @@ function EVENT_GROUP_FINDER_REFRESH_SEARCH(eventId) end
 --- @return void
 function EVENT_GROUP_FINDER_REMOVE_GROUP_LISTING_APPLICATION(eventId) end
 
---- @param result [RemoveGroupListingReason|#RemoveGroupListingReason]
+--- @param result RemoveGroupListingReason
 --- @return void
 function EVENT_GROUP_FINDER_REMOVE_GROUP_LISTING_RESULT (eventId, result) end
 
---- @param result [ResolveGroupListingApplicationResponse|#ResolveGroupListingApplicationResponse]
+--- @param result ResolveGroupListingApplicationResponse
 --- @return void
 function EVENT_GROUP_FINDER_RESOLVE_GROUP_LISTING_APPLICATION_RESULT (eventId, result) end
 
---- @param result [GroupFinderActionResult|#GroupFinderActionResult]
+--- @param result GroupFinderActionResult
 --- @param searchId integer
 --- @return void
 function EVENT_GROUP_FINDER_SEARCH_COMPLETE (eventId, result, searchId) end
@@ -1339,14 +1339,14 @@ function EVENT_GROUP_FINDER_SEARCH_COOLDOWN_UPDATE (eventId, cooldownMs) end
 --- @return void
 function EVENT_GROUP_FINDER_SEARCH_UPDATED (eventId, searchId) end
 
---- @param status [GroupFinderStatus|#GroupFinderStatus]
+--- @param status GroupFinderStatus
 --- @return void
 function EVENT_GROUP_FINDER_STATUS_UPDATED (eventId, status) end
 
 --- @return void
 function EVENT_GROUP_FINDER_UPDATE_APPLICATIONS(eventId) end
 
---- @param result [GroupFinderActionResult|#GroupFinderActionResult]
+--- @param result GroupFinderActionResult
 --- @return void
 function EVENT_GROUP_FINDER_UPDATE_GROUP_LISTING_RESULT (eventId, result) end
 
@@ -1362,7 +1362,7 @@ function EVENT_GROUP_INVITE_RECEIVED (eventId, inviterCharacterName, inviterDisp
 function EVENT_GROUP_INVITE_REMOVED(eventId) end
 
 --- @param inviterName string
---- @param response [GroupInviteResponse|#GroupInviteResponse]
+--- @param response GroupInviteResponse
 --- @param inviterDisplayName string
 --- @return void
 function EVENT_GROUP_INVITE_RESPONSE (eventId, inviterName, response, inviterDisplayName) end
@@ -1372,41 +1372,41 @@ function EVENT_GROUP_INVITE_RESPONSE (eventId, inviterName, response, inviterDis
 function EVENT_GROUP_LISTING_INFO_REQUEST_COMPLETE (eventId, groupListingId) end
 
 --- @param unitTag string
---- @param isOnline bool
+--- @param isOnline boolean
 --- @return void
 function EVENT_GROUP_MEMBER_CONNECTED_STATUS (eventId, unitTag, isOnline) end
 
 --- @param unitTag string
---- @param isInRemoteRegion bool
+--- @param isInRemoteRegion boolean
 --- @return void
 function EVENT_GROUP_MEMBER_IN_REMOTE_REGION (eventId, unitTag, isInRemoteRegion) end
 
 --- @param memberCharacterName string
 --- @param memberDisplayName string
---- @param isLocalPlayer bool
+--- @param isLocalPlayer boolean
 --- @return void
 function EVENT_GROUP_MEMBER_JOINED (eventId, memberCharacterName, memberDisplayName, isLocalPlayer) end
 
 --- @param memberCharacterName string
---- @param reason [GroupLeaveReason|#GroupLeaveReason]
---- @param isLocalPlayer bool
---- @param isLeader bool
+--- @param reason GroupLeaveReason
+--- @param isLocalPlayer boolean
+--- @param isLeader boolean
 --- @param memberDisplayName string
---- @param actionRequiredVote bool
+--- @param actionRequiredVote boolean
 --- @return void
 function EVENT_GROUP_MEMBER_LEFT (eventId, memberCharacterName, reason, isLocalPlayer, isLeader, memberDisplayName, actionRequiredVote) end
 
 --- @param taskId integer
 --- @param charId id64
---- @param isGroupLeader bool
---- @param isBreadcrumb bool
+--- @param isGroupLeader boolean
+--- @param isBreadcrumb boolean
 --- @param teleportNPCId integer
 --- @param waypointId integer
 --- @return void
 function EVENT_GROUP_MEMBER_POSITION_REQUEST_COMPLETE (eventId, taskId, charId, isGroupLeader, isBreadcrumb, teleportNPCId, waypointId) end
 
 --- @param unitTag string
---- @param newRole [LFGRole|#LFGRole]
+--- @param newRole LFGRole
 --- @return void
 function EVENT_GROUP_MEMBER_ROLE_CHANGED (eventId, unitTag, newRole) end
 
@@ -1417,23 +1417,23 @@ function EVENT_GROUP_MEMBER_SUBZONE_CHANGED(eventId) end
 --- @return void
 function EVENT_GROUP_NOTIFICATION_MESSAGE (eventId, messageId) end
 
---- @param result [GroupOperationResult|#GroupOperationResult]
+--- @param result GroupOperationResult
 --- @return void
 function EVENT_GROUP_OPERATION_RESULT (eventId, result) end
 
 --- @param unitTag string
---- @param status bool
+--- @param status boolean
 --- @return void
 function EVENT_GROUP_SUPPORT_RANGE_UPDATE (eventId, unitTag, status) end
 
---- @param largeGroup bool
+--- @param largeGroup boolean
 --- @return void
 function EVENT_GROUP_TYPE_CHANGED (eventId, largeGroup) end
 
 --- @return void
 function EVENT_GROUP_UPDATE(eventId) end
 
---- @param isVeteranDifficulty bool
+--- @param isVeteranDifficulty boolean
 --- @return void
 function EVENT_GROUP_VETERAN_DIFFICULTY_CHANGED (eventId, isVeteranDifficulty) end
 
@@ -1449,20 +1449,20 @@ function EVENT_GUILD_BANK_DESELECTED(eventId) end
 function EVENT_GUILD_BANK_ITEMS_READY(eventId) end
 
 --- @param slotId integer
---- @param addedByLocalPlayer bool
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
---- @param isLastUpdateForMessage bool
+--- @param addedByLocalPlayer boolean
+--- @param itemSoundCategory ItemUISoundCategory
+--- @param isLastUpdateForMessage boolean
 --- @return void
 function EVENT_GUILD_BANK_ITEM_ADDED (eventId, slotId, addedByLocalPlayer, itemSoundCategory, isLastUpdateForMessage) end
 
 --- @param slotId integer
---- @param addedByLocalPlayer bool
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
---- @param isLastUpdateForMessage bool
+--- @param addedByLocalPlayer boolean
+--- @param itemSoundCategory ItemUISoundCategory
+--- @param isLastUpdateForMessage boolean
 --- @return void
 function EVENT_GUILD_BANK_ITEM_REMOVED (eventId, slotId, addedByLocalPlayer, itemSoundCategory, isLastUpdateForMessage) end
 
---- @param reason [GuildBankResult|#GuildBankResult]
+--- @param reason GuildBankResult
 --- @return void
 function EVENT_GUILD_BANK_OPEN_ERROR (eventId, reason) end
 
@@ -1470,7 +1470,7 @@ function EVENT_GUILD_BANK_OPEN_ERROR (eventId, reason) end
 --- @return void
 function EVENT_GUILD_BANK_SELECTED (eventId, guildId) end
 
---- @param reason [GuildBankResult|#GuildBankResult]
+--- @param reason GuildBankResult
 --- @return void
 function EVENT_GUILD_BANK_TRANSFER_ERROR (eventId, reason) end
 
@@ -1479,7 +1479,7 @@ function EVENT_GUILD_BANK_TRANSFER_ERROR (eventId, reason) end
 function EVENT_GUILD_BANK_UPDATED_QUANTITY (eventId, slotId) end
 
 --- @param guildId integer
---- @param result [GuildApplicationResponse|#GuildApplicationResponse]
+--- @param result GuildApplicationResponse
 --- @return void
 function EVENT_GUILD_FINDER_APPLICATION_RESPONSE (eventId, guildId, result) end
 
@@ -1492,7 +1492,7 @@ function EVENT_GUILD_FINDER_APPLICATION_RESULTS_PLAYER(eventId) end
 
 --- @param guildId integer
 --- @param accountName string
---- @param result [GuildBlacklistResponse|#GuildBlacklistResponse]
+--- @param result GuildBlacklistResponse
 --- @return void
 function EVENT_GUILD_FINDER_BLACKLIST_RESPONSE (eventId, guildId, accountName, result) end
 
@@ -1517,7 +1517,7 @@ function EVENT_GUILD_FINDER_PLAYER_APPLICATIONS_CHANGED (eventId, numApplication
 
 --- @param guildId integer
 --- @param accountName string
---- @param result [GuildProcessApplicationResponse|#GuildProcessApplicationResponse]
+--- @param result GuildProcessApplicationResponse
 --- @return void
 function EVENT_GUILD_FINDER_PROCESS_APPLICATION_RESPONSE (eventId, guildId, accountName, result) end
 
@@ -1530,8 +1530,8 @@ function EVENT_GUILD_FINDER_SEARCH_COMPLETE (eventId, searchId) end
 function EVENT_GUILD_FINDER_SEARCH_COOLDOWN_UPDATE (eventId, cooldownMs) end
 
 --- @param guildId integer
---- @param eventCategory [GuildHistoryEventCategory|#GuildHistoryEventCategory]
---- @param flags [GuildHistoryCategoryUpdateFlags|#GuildHistoryCategoryUpdateFlags]
+--- @param eventCategory GuildHistoryEventCategory
+--- @param flags GuildHistoryCategoryUpdateFlags
 --- @return void
 function EVENT_GUILD_HISTORY_CATEGORY_UPDATED (eventId, guildId, eventCategory, flags) end
 
@@ -1545,7 +1545,7 @@ function EVENT_GUILD_ID_CHANGED (eventId, unitTag, oldGuildId, newGuildId) end
 --- @return void
 function EVENT_GUILD_INFO_REQUEST_COMPLETE (eventId, guildId) end
 
---- @param channel [ChannelType|#ChannelType]
+--- @param channel ChannelType
 --- @param numGuardsKilled integer
 --- @param numAttackers integer
 --- @param location string
@@ -1553,7 +1553,7 @@ function EVENT_GUILD_INFO_REQUEST_COMPLETE (eventId, guildId) end
 function EVENT_GUILD_KEEP_ATTACK_UPDATE (eventId, channel, numGuardsKilled, numAttackers, location) end
 
 --- @param guildId integer
---- @param result [SocialActionResult|#SocialActionResult]
+--- @param result SocialActionResult
 --- @return void
 function EVENT_GUILD_KIOSK_ACTIVE_BIDS_RESPONSE (eventId, guildId, result) end
 
@@ -1569,11 +1569,11 @@ function EVENT_GUILD_KIOSK_CONSIDER_PURCHASE_START(eventId) end
 --- @return void
 function EVENT_GUILD_KIOSK_CONSIDER_PURCHASE_STOP(eventId) end
 
---- @param reason [GuildKioskResult|#GuildKioskResult]
+--- @param reason GuildKioskResult
 --- @return void
 function EVENT_GUILD_KIOSK_ERROR (eventId, reason) end
 
---- @param guildKioskResult [GuildKioskResult|#GuildKioskResult]
+--- @param guildKioskResult GuildKioskResult
 --- @return void
 function EVENT_GUILD_KIOSK_RESULT (eventId, guildKioskResult) end
 
@@ -1617,46 +1617,46 @@ function EVENT_HOLIDAYS_CHANGED(eventId) end
 
 --- @param newAbilityId integer
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @param hotbarCategory HotBarCategory
 --- @return void
 function EVENT_HOTBAR_SLOT_CHANGE_REQUESTED (eventId, newAbilityId, actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory [HotBarCategory|#HotBarCategory]
+--- @param hotbarCategory HotBarCategory
 --- @return void
 function EVENT_HOTBAR_SLOT_STATE_UPDATED (eventId, actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory [HotBarCategory|#HotBarCategory]
---- @param justUnlocked bool
+--- @param hotbarCategory HotBarCategory
+--- @param justUnlocked boolean
 --- @return void
 function EVENT_HOTBAR_SLOT_UPDATED (eventId, actionSlotIndex, hotbarCategory, justUnlocked) end
 
---- @param reason [HotBarResult|#HotBarResult]
+--- @param reason HotBarResult
 --- @return void
 function EVENT_HOT_BAR_RESULT (eventId, reason) end
 
 --- @return void
 function EVENT_HOUSING_ADD_PERMISSIONS_CANT_ADD_SELF(eventId) end
 
---- @param userGroup [HousePermissionUserGroup|#HousePermissionUserGroup]
+--- @param userGroup HousePermissionUserGroup
 --- @param attemptedName string
 --- @return void
 function EVENT_HOUSING_ADD_PERMISSIONS_FAILED (eventId, userGroup, attemptedName) end
 
---- @param result [HousingEditorCommandResult|#HousingEditorCommandResult]
+--- @param result HousingEditorCommandResult
 --- @return void
 function EVENT_HOUSING_EDITOR_COMMAND_RESULT (eventId, result) end
 
 --- @return void
 function EVENT_HOUSING_EDITOR_LINK_TARGET_CHANGED(eventId) end
 
---- @param oldMode [HousingEditorMode|#HousingEditorMode]
---- @param newMode [HousingEditorMode|#HousingEditorMode]
+--- @param oldMode HousingEditorMode
+--- @param newMode HousingEditorMode
 --- @return void
 function EVENT_HOUSING_EDITOR_MODE_CHANGED (eventId, oldMode, newMode) end
 
---- @param requestResult [HousingRequestResult|#HousingRequestResult]
+--- @param requestResult HousingRequestResult
 --- @return void
 function EVENT_HOUSING_EDITOR_REQUEST_RESULT (eventId, requestResult) end
 
@@ -1706,11 +1706,11 @@ function EVENT_HOUSING_FURNITURE_REMOVED (eventId, furnitureId, collectibleId) e
 --- @param objectStateIndex integer
 --- @param previousObjectStateId integer
 --- @param triggeredByFurnitureId id64
---- @param reason [HousingSetStateReason|#HousingSetStateReason]
+--- @param reason HousingSetStateReason
 --- @return void
 function EVENT_HOUSING_FURNITURE_STATE_CHANGED (eventId, furnitureId, objectStateIndex, previousObjectStateId, triggeredByFurnitureId, reason) end
 
---- @param loadResult [HousingLoadPermissionsResult|#HousingLoadPermissionsResult]
+--- @param loadResult HousingLoadPermissionsResult
 --- @return void
 function EVENT_HOUSING_LOAD_PERMISSIONS_RESULT (eventId, loadResult) end
 
@@ -1727,13 +1727,13 @@ function EVENT_HOUSING_OCCUPANT_DEPARTED (eventId, accountName, characterName) e
 --- @return void
 function EVENT_HOUSING_PATH_NODE_SELECTION_CHANGED(eventId) end
 
---- @param userGroup [HousePermissionUserGroup|#HousePermissionUserGroup]
+--- @param userGroup HousePermissionUserGroup
 --- @return void
 function EVENT_HOUSING_PERMISSIONS_CHANGED (eventId, userGroup) end
 
---- @param wasOwner bool
---- @param permissionsChanged bool
---- @param oldVisitorRole [HousingVisitorRole|#HousingVisitorRole]
+--- @param wasOwner boolean
+--- @param permissionsChanged boolean
+--- @param oldVisitorRole HousingVisitorRole
 --- @return void
 function EVENT_HOUSING_PLAYER_INFO_CHANGED (eventId, wasOwner, permissionsChanged, oldVisitorRole) end
 
@@ -1742,7 +1742,7 @@ function EVENT_HOUSING_PLAYER_INFO_CHANGED (eventId, wasOwner, permissionsChange
 --- @return void
 function EVENT_HOUSING_POPULATION_CHANGED (eventId, newPopulation, previousPopulation) end
 
---- @param isPreviewInspectionEnabled bool
+--- @param isPreviewInspectionEnabled boolean
 --- @return void
 function EVENT_HOUSING_PREVIEW_INSPECTION_STATE_CHANGED (eventId, isPreviewInspectionEnabled) end
 
@@ -1760,8 +1760,8 @@ function EVENT_IMPACTFUL_HIT(eventId) end
 --- @return void
 function EVENT_INSTANCE_KICK_TIME_UPDATE (eventId, timeRemainingMs) end
 
---- @param interactType [InteractionType|#InteractionType]
---- @param cancelContext [InteractCancelContext|#InteractCancelContext]
+--- @param interactType InteractionType
+--- @param cancelContext InteractCancelContext
 --- @return void
 function EVENT_INTERACTION_ENDED (eventId, interactType, cancelContext) end
 
@@ -1801,7 +1801,7 @@ function EVENT_INVENTORY_BUY_BANK_SPACE (eventId, cost) end
 --- @return void
 function EVENT_INVENTORY_CLOSE_BUY_SPACE(eventId) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param mythicSlotIndex integer
 --- @return void
 function EVENT_INVENTORY_EQUIP_MYTHIC_FAILED (eventId, bagId, mythicSlotIndex) end
@@ -1817,49 +1817,49 @@ function EVENT_INVENTORY_IS_FULL (eventId, numSlotsRequested, numSlotsFree) end
 --- @return void
 function EVENT_INVENTORY_ITEMS_AUTO_TRANSFERRED_TO_CRAFT_BAG(eventId) end
 
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_INVENTORY_ITEM_DESTROYED (eventId, itemSoundCategory) end
 
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_INVENTORY_ITEM_USED (eventId, itemSoundCategory) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param slotIndex integer
---- @param isNewItem bool
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param isNewItem boolean
+--- @param itemSoundCategory ItemUISoundCategory
 --- @param inventoryUpdateReason integer
 --- @param stackCountChange integer
---- @param triggeredByCharacterName string:nilable
---- @param triggeredByDisplayName string:nilable
---- @param isLastUpdateForMessage bool
---- @param bonusDropSource [BonusDropSource|#BonusDropSource]
+--- @param triggeredByCharacterName string?
+--- @param triggeredByDisplayName string?
+--- @param isLastUpdateForMessage boolean
+--- @param bonusDropSource BonusDropSource
 --- @return void
 function EVENT_INVENTORY_SINGLE_SLOT_UPDATE (eventId, bagId, slotIndex, isNewItem, itemSoundCategory, inventoryUpdateReason, stackCountChange, triggeredByCharacterName, triggeredByDisplayName, isLastUpdateForMessage, bonusDropSource) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param slotIndex integer
 --- @return void
 function EVENT_INVENTORY_SLOT_LOCKED (eventId, bagId, slotIndex) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param slotIndex integer
 --- @return void
 function EVENT_INVENTORY_SLOT_UNLOCKED (eventId, bagId, slotIndex) end
 
---- @param itemCombinationResult [ItemCombinationResult|#ItemCombinationResult]
+--- @param itemCombinationResult ItemCombinationResult
 --- @return void
 function EVENT_ITEM_COMBINATION_RESULT (eventId, itemCombinationResult) end
 
---- @param result [ItemLaunderResult|#ItemLaunderResult]
+--- @param result ItemLaunderResult
 --- @return void
 function EVENT_ITEM_LAUNDER_RESULT (eventId, result) end
 
 --- @return void
 function EVENT_ITEM_ON_COOLDOWN(eventId) end
 
---- @param reason [ItemRepairReason|#ItemRepairReason]
+--- @param reason ItemRepairReason
 --- @return void
 function EVENT_ITEM_REPAIR_FAILURE (eventId, reason) end
 
@@ -1879,17 +1879,17 @@ function EVENT_ITEM_SET_COLLECTION_SLOT_NEW_STATUS_CLEARED (eventId, itemSetId, 
 --- @return void
 function EVENT_ITEM_SET_COLLECTION_UPDATED (eventId, itemSetId, slotsJustUnlockedMask) end
 
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_ITEM_SLOT_CHANGED (eventId, itemSoundCategory) end
 
---- @param quitGame bool
+--- @param quitGame boolean
 --- @return void
 function EVENT_JUSTICE_BEING_ARRESTED (eventId, quitGame) end
 
 --- @param oldBounty integer
 --- @param newBounty integer
---- @param isInitialize bool
+--- @param isInitialize boolean
 --- @return void
 function EVENT_JUSTICE_BOUNTY_PAYOFF_AMOUNT_UPDATED (eventId, oldBounty, newBounty, isInitialize) end
 
@@ -1908,8 +1908,8 @@ function EVENT_JUSTICE_GOLD_REMOVED (eventId, goldAmount) end
 
 --- @param oldInfamy integer
 --- @param newInfamy integer
---- @param oldInfamyLevel [InfamyThresholdsType|#InfamyThresholdsType]
---- @param newInfamyLevel [InfamyThresholdsType|#InfamyThresholdsType]
+--- @param oldInfamyLevel InfamyThresholdsType
+--- @param newInfamyLevel InfamyThresholdsType
 --- @return void
 function EVENT_JUSTICE_INFAMY_UPDATED (eventId, oldInfamy, newInfamy, oldInfamyLevel, newInfamyLevel) end
 
@@ -1930,8 +1930,8 @@ function EVENT_KEEPS_INITIALIZED(eventId) end
 
 --- @param keepId integer
 --- @param battlegroundContext integer
---- @param owningAlliance [Alliance|#Alliance]
---- @param oldOwningAlliance [Alliance|#Alliance]
+--- @param owningAlliance Alliance
+--- @param oldOwningAlliance Alliance
 --- @return void
 function EVENT_KEEP_ALLIANCE_OWNER_CHANGED (eventId, keepId, battlegroundContext, owningAlliance, oldOwningAlliance) end
 
@@ -1939,7 +1939,7 @@ function EVENT_KEEP_ALLIANCE_OWNER_CHANGED (eventId, keepId, battlegroundContext
 function EVENT_KEEP_END_INTERACTION(eventId) end
 
 --- @param keepId integer
---- @param open bool
+--- @param open boolean
 --- @return void
 function EVENT_KEEP_GATE_STATE_CHANGED (eventId, keepId, open) end
 
@@ -1955,13 +1955,13 @@ function EVENT_KEEP_INITIALIZED (eventId, keepId, battlegroundContext) end
 
 --- @param keepId integer
 --- @param battlegroundContext integer
---- @param isPassable bool
+--- @param isPassable boolean
 --- @return void
 function EVENT_KEEP_IS_PASSABLE_CHANGED (eventId, keepId, battlegroundContext, isPassable) end
 
 --- @param keepId integer
 --- @param battlegroundContext integer
---- @param directionalAccess [KeepPieceDirectionalAccess|#KeepPieceDirectionalAccess]
+--- @param directionalAccess KeepPieceDirectionalAccess
 --- @return void
 function EVENT_KEEP_PIECE_DIRECTIONAL_ACCESS_CHANGED (eventId, keepId, battlegroundContext, directionalAccess) end
 
@@ -1974,7 +1974,7 @@ function EVENT_KEEP_START_INTERACTION(eventId) end
 
 --- @param keepId integer
 --- @param battlegroundContext integer
---- @param underAttack bool
+--- @param underAttack boolean
 --- @return void
 function EVENT_KEEP_UNDER_ATTACK_CHANGED (eventId, keepId, battlegroundContext, underAttack) end
 
@@ -1993,7 +1993,7 @@ function EVENT_LEADERBOARD_SCORE_NOTIFICATION_REMOVED (eventId, notificationId) 
 --- @return void
 function EVENT_LEADER_UPDATE (eventId, leaderTag) end
 
---- @param response [LeaveCampaignQueueResponseType|#LeaveCampaignQueueResponseType]
+--- @param response LeaveCampaignQueueResponseType
 --- @return void
 function EVENT_LEAVE_CAMPAIGN_QUEUE_RESPONSE (eventId, response) end
 
@@ -2028,18 +2028,18 @@ function EVENT_LOCKPICK_FAILED(eventId) end
 function EVENT_LOCKPICK_SUCCESS(eventId) end
 
 --- @param deferMilliseconds integer
---- @param quitRequested bool
+--- @param quitRequested boolean
 --- @return void
 function EVENT_LOGOUT_DEFERRED (eventId, deferMilliseconds, quitRequested) end
 
---- @param quitRequested bool
+--- @param quitRequested boolean
 --- @return void
 function EVENT_LOGOUT_DISALLOWED (eventId, quitRequested) end
 
 --- @return void
 function EVENT_LOOT_CLOSED(eventId) end
 
---- @param reason [LootItemResult|#LootItemResult]
+--- @param reason LootItemResult
 --- @param itemLink string
 --- @return void
 function EVENT_LOOT_ITEM_FAILED (eventId, reason, itemLink) end
@@ -2047,13 +2047,13 @@ function EVENT_LOOT_ITEM_FAILED (eventId, reason, itemLink) end
 --- @param receivedBy string
 --- @param itemName string
 --- @param quantity integer
---- @param soundCategory [ItemUISoundCategory|#ItemUISoundCategory]
---- @param lootType [LootItemType|#LootItemType]
---- @param self bool
---- @param isPickpocketLoot bool
+--- @param soundCategory ItemUISoundCategory
+--- @param lootType LootItemType
+--- @param self boolean
+--- @param isPickpocketLoot boolean
 --- @param questItemIcon string
 --- @param itemId integer
---- @param isStolen bool
+--- @param isStolen boolean
 --- @return void
 function EVENT_LOOT_RECEIVED (eventId, receivedBy, itemName, quantity, soundCategory, lootType, self, isPickpocketLoot, questItemIcon, itemId, isStolen) end
 
@@ -2068,7 +2068,7 @@ function EVENT_LORE_BOOK_ALREADY_KNOWN (eventId, bookTitle) end
 --- @param collectionIndex luaindex
 --- @param bookIndex luaindex
 --- @param guildIndex luaindex
---- @param isMaxRank bool
+--- @param isMaxRank boolean
 --- @return void
 function EVENT_LORE_BOOK_LEARNED (eventId, categoryIndex, collectionIndex, bookIndex, guildIndex, isMaxRank) end
 
@@ -2076,7 +2076,7 @@ function EVENT_LORE_BOOK_LEARNED (eventId, categoryIndex, collectionIndex, bookI
 --- @param collectionIndex luaindex
 --- @param bookIndex luaindex
 --- @param guildIndex luaindex
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param rank luaindex
 --- @param previousXP integer
@@ -2087,14 +2087,14 @@ function EVENT_LORE_BOOK_LEARNED_SKILL_EXPERIENCE (eventId, categoryIndex, colle
 --- @param categoryIndex luaindex
 --- @param collectionIndex luaindex
 --- @param guildIndex luaindex
---- @param isMaxRank bool
+--- @param isMaxRank boolean
 --- @return void
 function EVENT_LORE_COLLECTION_COMPLETED (eventId, categoryIndex, collectionIndex, guildIndex, isMaxRank) end
 
 --- @param categoryIndex luaindex
 --- @param collectionIndex luaindex
 --- @param guildIndex luaindex
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param rank luaindex
 --- @param previousXP integer
@@ -2145,7 +2145,7 @@ function EVENT_MAIL_READABLE (eventId, mailId) end
 --- @return void
 function EVENT_MAIL_REMOVED (eventId, mailId) end
 
---- @param reason [SendMailResult|#SendMailResult]
+--- @param reason SendMailResult
 --- @return void
 function EVENT_MAIL_SEND_FAILED (eventId, reason) end
 
@@ -2153,9 +2153,9 @@ function EVENT_MAIL_SEND_FAILED (eventId, reason) end
 --- @return void
 function EVENT_MAIL_SEND_SUCCESS (eventId, playerName) end
 
---- @param result [MailTakeAttachmentResult|#MailTakeAttachmentResult]
---- @param category [MailCategory|#MailCategory]
---- @param headersRemoved bool
+--- @param result MailTakeAttachmentResult
+--- @param category MailCategory
+--- @param headersRemoved boolean
 --- @return void
 function EVENT_MAIL_TAKE_ALL_ATTACHMENTS_IN_CATEGORY_RESPONSE (eventId, result, category, headersRemoved) end
 
@@ -2167,17 +2167,17 @@ function EVENT_MAIL_TAKE_ATTACHED_ITEM_SUCCESS (eventId, mailId) end
 --- @return void
 function EVENT_MAIL_TAKE_ATTACHED_MONEY_SUCCESS (eventId, mailId) end
 
---- @param hasAttachments bool
---- @param hasExpiringAttachments bool
+--- @param hasAttachments boolean
+--- @param hasExpiringAttachments boolean
 --- @return void
 function EVENT_MAIL_WITH_ATTACHMENTS_AVAILABLE (eventId, hasAttachments, hasExpiringAttachments) end
 
---- @param pingEventType [MapPingEventType|#MapPingEventType]
---- @param pingType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pingEventType MapPingEventType
+--- @param pingType MapDisplayPinType
 --- @param pingTag string
 --- @param offsetX number
 --- @param offsetY number
---- @param isLocalPlayerOwner bool
+--- @param isLocalPlayerOwner boolean
 --- @return void
 function EVENT_MAP_PING (eventId, pingEventType, pingType, pingTag, offsetX, offsetY, isLocalPlayerOwner) end
 
@@ -2202,16 +2202,16 @@ function EVENT_MEDAL_AWARDED (eventId, medalId, name, iconFilename, value) end
 
 --- @param newMoney integer
 --- @param oldMoney integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @param reasonSupplementaryInfo integer
 --- @return void
 function EVENT_MONEY_UPDATE (eventId, newMoney, oldMoney, reason, reasonSupplementaryInfo) end
 
---- @param mounted bool
+--- @param mounted boolean
 --- @return void
 function EVENT_MOUNTED_STATE_CHANGED (eventId, mounted) end
 
---- @param reason [MountFailureReason|#MountFailureReason]
+--- @param reason MountFailureReason
 --- @param arg1 integer
 --- @return void
 function EVENT_MOUNT_FAILURE (eventId, reason, arg1) end
@@ -2224,15 +2224,15 @@ function EVENT_MOUNT_INFO_UPDATED(eventId) end
 --- @return void
 function EVENT_MOUSE_REQUEST_ABANDON_QUEST (eventId, journalIndex, name) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param slotIndex integer
 --- @param itemCount integer
 --- @param name string
---- @param needsConfirm bool
+--- @param needsConfirm boolean
 --- @return void
 function EVENT_MOUSE_REQUEST_DESTROY_ITEM (eventId, bagId, slotIndex, itemCount, name, needsConfirm) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param slotIndex integer
 --- @param itemCount integer
 --- @param name string
@@ -2248,15 +2248,15 @@ function EVENT_MULTIPLE_RECIPES_LEARNED (eventId, numRecipesUnlocked) end
 --- @param objectiveObjectiveId integer
 --- @param battlegroundContext integer
 --- @param objectiveName string
---- @param objectiveControlEvent [ObjectiveControlEvent|#ObjectiveControlEvent]
---- @param objectiveControlState [ObjectiveControlState|#ObjectiveControlState]
---- @param holderAlliance [Alliance|#Alliance]
---- @param lastHolderAlliance [Alliance|#Alliance]
+--- @param objectiveControlEvent ObjectiveControlEvent
+--- @param objectiveControlState ObjectiveControlState
+--- @param holderAlliance Alliance
+--- @param lastHolderAlliance Alliance
 --- @param holderRawCharacterName string
 --- @param holderDisplayName string
 --- @param lastHolderRawCharacterName string
 --- @param lastHolderDisplayName string
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pinType MapDisplayPinType
 --- @return void
 function EVENT_MURDERBALL_STATE_CHANGED (eventId, objectiveKeepId, objectiveObjectiveId, battlegroundContext, objectiveName, objectiveControlEvent, objectiveControlState, holderAlliance, lastHolderAlliance, holderRawCharacterName, holderDisplayName, lastHolderRawCharacterName, lastHolderDisplayName, pinType) end
 
@@ -2266,7 +2266,7 @@ function EVENT_NEW_HIRELING_CORRESPONDENCE_RECEIVED(eventId) end
 --- @return void
 function EVENT_NEW_MOVEMENT_IN_UI_MODE(eventId) end
 
---- @param nonCombatBonus [NonCombatBonusType|#NonCombatBonusType]
+--- @param nonCombatBonus NonCombatBonusType
 --- @param oldValue integer
 --- @param newValue integer
 --- @return void
@@ -2300,27 +2300,27 @@ function EVENT_OBJECTIVE_COMPLETED (eventId, zoneIndex, poiIndex, level, previou
 --- @param objectiveObjectiveId integer
 --- @param battlegroundContext integer
 --- @param objectiveName string
---- @param objectiveType [ObjectiveType|#ObjectiveType]
---- @param objectiveControlEvent [ObjectiveControlEvent|#ObjectiveControlEvent]
---- @param objectiveControlState [ObjectiveControlState|#ObjectiveControlState]
+--- @param objectiveType ObjectiveType
+--- @param objectiveControlEvent ObjectiveControlEvent
+--- @param objectiveControlState ObjectiveControlState
 --- @param objectiveParam1 integer
 --- @param objectiveParam2 integer
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pinType MapDisplayPinType
 --- @return void
 function EVENT_OBJECTIVE_CONTROL_STATE (eventId, objectiveKeepId, objectiveObjectiveId, battlegroundContext, objectiveName, objectiveType, objectiveControlEvent, objectiveControlState, objectiveParam1, objectiveParam2, pinType) end
 
 --- @return void
 function EVENT_OPEN_ARMORY_MENU(eventId) end
 
---- @param bankBag [Bag|#Bag]
+--- @param bankBag Bag
 --- @return void
 function EVENT_OPEN_BANK (eventId, bankBag) end
 
 --- @return void
 function EVENT_OPEN_COMPANION_MENU(eventId) end
 
---- @param allowSell bool
---- @param allowLaunder bool
+--- @param allowSell boolean
+--- @param allowLaunder boolean
 --- @return void
 function EVENT_OPEN_FENCE (eventId, allowSell, allowLaunder) end
 
@@ -2339,7 +2339,7 @@ function EVENT_OPEN_TIMED_ACTIVITIES(eventId) end
 --- @return void
 function EVENT_OPEN_TRADING_HOUSE(eventId) end
 
---- @param system [UISystem|#UISystem]
+--- @param system UISystem
 --- @param param1 integer
 --- @return void
 function EVENT_OPEN_UI_SYSTEM (eventId, system, param1) end
@@ -2347,19 +2347,19 @@ function EVENT_OPEN_UI_SYSTEM (eventId, system, param1) end
 --- @return void
 function EVENT_OUTFITS_INITIALIZED(eventId) end
 
---- @param response [ApplyOutfitChangesResult|#ApplyOutfitChangesResult]
---- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @param response ApplyOutfitChangesResult
+--- @param actorCategory GameplayActorCategory
 --- @param outfitIndex luaindex
 --- @return void
 function EVENT_OUTFIT_CHANGE_RESPONSE (eventId, response, actorCategory, outfitIndex) end
 
---- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
---- @param response [EquipOutfitResult|#EquipOutfitResult]
+--- @param actorCategory GameplayActorCategory
+--- @param response EquipOutfitResult
 --- @return void
 function EVENT_OUTFIT_EQUIP_RESPONSE (eventId, actorCategory, response) end
 
---- @param response [SetOutfitNameResult|#SetOutfitNameResult]
---- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @param response SetOutfitNameResult
+--- @param actorCategory GameplayActorCategory
 --- @param outfitIndex luaindex
 --- @return void
 function EVENT_OUTFIT_RENAME_RESPONSE (eventId, response, actorCategory, outfitIndex) end
@@ -2376,14 +2376,14 @@ function EVENT_PERSONALITY_CHANGED(eventId) end
 --- @return void
 function EVENT_PICKPOCKET_STATE_UPDATED(eventId) end
 
---- @param isActivelyEngaged bool
+--- @param isActivelyEngaged boolean
 --- @return void
 function EVENT_PLAYER_ACTIVELY_ENGAGED_STATE (eventId, isActivelyEngaged) end
 
 --- @return void
 function EVENT_PLAYER_ALIVE(eventId) end
 
---- @param inCombat bool
+--- @param inCombat boolean
 --- @return void
 function EVENT_PLAYER_COMBAT_STATE (eventId, inCombat) end
 
@@ -2396,15 +2396,15 @@ function EVENT_PLAYER_DEATH_INFO_UPDATE(eventId) end
 --- @return void
 function EVENT_PLAYER_DEATH_REQUEST_FAILURE(eventId) end
 
---- @param failure [PlayerEmotePlayFailure|#PlayerEmotePlayFailure]
+--- @param failure PlayerEmotePlayFailure
 --- @return void
 function EVENT_PLAYER_EMOTE_FAILED_PLAY (eventId, failure) end
 
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pinType MapDisplayPinType
 --- @param param1 integer
 --- @param param2 integer
 --- @param param3 integer
---- @param playerIsInside bool
+--- @param playerIsInside boolean
 --- @return void
 function EVENT_PLAYER_IN_PIN_AREA_CHANGED (eventId, pinType, param1, param2, param3, playerIsInside) end
 
@@ -2417,7 +2417,7 @@ function EVENT_PLAYER_QUEUED_FOR_CYCLIC_RESPAWN(eventId) end
 --- @return void
 function EVENT_PLAYER_REINCARNATED(eventId) end
 
---- @param playerStunned bool
+--- @param playerStunned boolean
 --- @return void
 function EVENT_PLAYER_STUNNED_STATE_CHANGED (eventId, playerStunned) end
 
@@ -2428,7 +2428,7 @@ function EVENT_PLAYER_SWIMMING(eventId) end
 function EVENT_PLAYER_TITLES_UPDATE(eventId) end
 
 --- @param targetCharacterName string
---- @param isSender bool
+--- @param isSender boolean
 --- @param targetDisplayName string
 --- @return void
 function EVENT_PLEDGE_OF_MARA_OFFER (eventId, targetCharacterName, isSender, targetDisplayName) end
@@ -2436,7 +2436,7 @@ function EVENT_PLEDGE_OF_MARA_OFFER (eventId, targetCharacterName, isSender, tar
 --- @return void
 function EVENT_PLEDGE_OF_MARA_OFFER_REMOVED(eventId) end
 
---- @param reason [PledgeOfMaraResult|#PledgeOfMaraResult]
+--- @param reason PledgeOfMaraResult
 --- @param targetCharacterName string
 --- @param targetDisplayName string
 --- @return void
@@ -2457,7 +2457,7 @@ function EVENT_POI_UPDATED (eventId, zoneIndex, poiIndex) end
 
 --- @param unitTag string
 --- @param powerIndex luaindex
---- @param powerType [CombatMechanicFlags|#CombatMechanicFlags]
+--- @param powerType CombatMechanicFlags
 --- @param powerValue integer
 --- @param powerMax integer
 --- @param powerEffectiveMax integer
@@ -2467,13 +2467,13 @@ function EVENT_POWER_UPDATE (eventId, unitTag, powerIndex, powerType, powerValue
 --- @param killLocation string
 --- @param killerPlayerDisplayName string
 --- @param killerPlayerCharacterName string
---- @param killerPlayerAlliance [Alliance|#Alliance]
+--- @param killerPlayerAlliance Alliance
 --- @param killerPlayerRank integer
 --- @param victimPlayerDisplayName string
 --- @param victimPlayerCharacterName string
---- @param victimPlayerAlliance [Alliance|#Alliance]
+--- @param victimPlayerAlliance Alliance
 --- @param victimPlayerRank integer
---- @param isKillLocation bool
+--- @param isKillLocation boolean
 --- @return void
 function EVENT_PVP_KILL_FEED_DEATH (eventId, killLocation, killerPlayerDisplayName, killerPlayerCharacterName, killerPlayerAlliance, killerPlayerRank, victimPlayerDisplayName, victimPlayerCharacterName, victimPlayerAlliance, victimPlayerRank, isKillLocation) end
 
@@ -2485,10 +2485,10 @@ function EVENT_QUEST_ADDED (eventId, journalIndex, questName, objectiveName) end
 
 --- @param journalIndex luaindex
 --- @param questName string
---- @param isPushed bool
---- @param isComplete bool
---- @param mainStepChanged bool
---- @param hideAnnouncement bool
+--- @param isPushed boolean
+--- @param isComplete boolean
+--- @param mainStepChanged boolean
+--- @param hideAnnouncement boolean
 --- @return void
 function EVENT_QUEST_ADVANCED (eventId, journalIndex, questName, isPushed, isComplete, mainStepChanged, hideAnnouncement) end
 
@@ -2497,8 +2497,8 @@ function EVENT_QUEST_ADVANCED (eventId, journalIndex, questName, isPushed, isCom
 --- @param previousExperience integer
 --- @param currentExperience integer
 --- @param championPoints integer
---- @param questType [QuestType|#QuestType]
---- @param zoneDisplayType [ZoneDisplayType|#ZoneDisplayType]
+--- @param questType QuestType
+--- @param zoneDisplayType ZoneDisplayType
 --- @return void
 function EVENT_QUEST_COMPLETE (eventId, questName, level, previousExperience, currentExperience, championPoints, questType, zoneDisplayType) end
 
@@ -2512,18 +2512,18 @@ function EVENT_QUEST_COMPLETE_DIALOG (eventId, journalIndex) end
 --- @param journalIndex luaindex
 --- @param questName string
 --- @param conditionText string
---- @param conditionType [QuestConditionType|#QuestConditionType]
+--- @param conditionType QuestConditionType
 --- @param currConditionVal integer
 --- @param newConditionVal integer
 --- @param conditionMax integer
---- @param isFailCondition bool
+--- @param isFailCondition boolean
 --- @param stepOverrideText string
---- @param isPushed bool
---- @param isComplete bool
---- @param isConditionComplete bool
---- @param isStepHidden bool
---- @param isConditionCompleteStatusChanged bool
---- @param isConditionCompletableBySiblingStatusChanged bool
+--- @param isPushed boolean
+--- @param isComplete boolean
+--- @param isConditionComplete boolean
+--- @param isStepHidden boolean
+--- @param isConditionCompleteStatusChanged boolean
+--- @param isConditionCompletableBySiblingStatusChanged boolean
 --- @return void
 function EVENT_QUEST_CONDITION_COUNTER_CHANGED (eventId, journalIndex, questName, conditionText, conditionType, currConditionVal, newConditionVal, conditionMax, isFailCondition, stepOverrideText, isPushed, isComplete, isConditionComplete, isStepHidden, isConditionCompleteStatusChanged, isConditionCompletableBySiblingStatusChanged) end
 
@@ -2545,18 +2545,18 @@ function EVENT_QUEST_OFFERED(eventId) end
 function EVENT_QUEST_OPTIONAL_STEP_ADVANCED (eventId, text) end
 
 --- @param taskId integer
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pinType MapDisplayPinType
 --- @param xLoc number
 --- @param yLoc number
 --- @param areaRadius number
---- @param insideCurrentMapWorld bool
---- @param isBreadcrumb bool
+--- @param insideCurrentMapWorld boolean
+--- @param isBreadcrumb boolean
 --- @param teleportNPCId integer
 --- @param waypointId integer
 --- @return void
 function EVENT_QUEST_POSITION_REQUEST_COMPLETE (eventId, taskId, pinType, xLoc, yLoc, areaRadius, insideCurrentMapWorld, isBreadcrumb, teleportNPCId, waypointId) end
 
---- @param isCompleted bool
+--- @param isCompleted boolean
 --- @param journalIndex luaindex
 --- @param questName string
 --- @param zoneIndex luaindex
@@ -2576,7 +2576,7 @@ function EVENT_QUEST_SHARE_REMOVED (eventId, questId) end
 --- @param shareTargetCharacterName string
 --- @param shareTargetDisplayName string
 --- @param questName string
---- @param result [QuestShareResult|#QuestShareResult]
+--- @param result QuestShareResult
 --- @return void
 function EVENT_QUEST_SHARE_RESULT (eventId, shareTargetCharacterName, shareTargetDisplayName, questName, result) end
 
@@ -2585,7 +2585,7 @@ function EVENT_QUEST_SHARE_RESULT (eventId, shareTargetCharacterName, shareTarge
 function EVENT_QUEST_SHOW_JOURNAL_ENTRY (eventId, journalIndex) end
 
 --- @param journalIndex luaindex
---- @param isPaused bool
+--- @param isPaused boolean
 --- @return void
 function EVENT_QUEST_TIMER_PAUSED (eventId, journalIndex, isPaused) end
 
@@ -2602,11 +2602,11 @@ function EVENT_QUEST_TIMER_UPDATED (eventId, journalIndex) end
 --- @return void
 function EVENT_QUEST_TOOL_UPDATED (eventId, journalIndex, questName, countDelta, iconFilename, questItemId, name) end
 
---- @param response [QueueForCampaignResponseType|#QueueForCampaignResponseType]
+--- @param response QueueForCampaignResponseType
 --- @return void
 function EVENT_QUEUE_FOR_CAMPAIGN_RESPONSE (eventId, response) end
 
---- @param raidCategory [RaidCategory|#RaidCategory]
+--- @param raidCategory RaidCategory
 --- @param raidId integer
 --- @param classId integer
 --- @return void
@@ -2645,23 +2645,23 @@ function EVENT_RAID_TRIAL_FAILED (eventId, trialName, score) end
 
 --- @param trialName string
 --- @param score integer
---- @param isWeekly bool
+--- @param isWeekly boolean
 --- @return void
 function EVENT_RAID_TRIAL_NEW_BEST_SCORE (eventId, trialName, score, isWeekly) end
 
 --- @param trialName string
---- @param isWeekly bool
+--- @param isWeekly boolean
 --- @return void
 function EVENT_RAID_TRIAL_RESET_BEST_SCORE (eventId, trialName, isWeekly) end
 
---- @param scoreUpdateReason [RaidPointReason|#RaidPointReason]
+--- @param scoreUpdateReason RaidPointReason
 --- @param scoreAmount integer
 --- @param totalScore integer
 --- @return void
 function EVENT_RAID_TRIAL_SCORE_UPDATE (eventId, scoreUpdateReason, scoreAmount, totalScore) end
 
 --- @param trialName string
---- @param weekly bool
+--- @param weekly boolean
 --- @return void
 function EVENT_RAID_TRIAL_STARTED (eventId, trialName, weekly) end
 
@@ -2678,8 +2678,8 @@ function EVENT_RAM_ESCORT_COUNT_UPDATE (eventId, numEscorts) end
 --- @return void
 function EVENT_RANDOM_DICE_ROLL (eventId, displayName, characterName, maxValue, numDice, modifier, rollResult) end
 
---- @param playerRandomMountType [RandomMountType|#RandomMountType]
---- @param companionRandomMountType [RandomMountType|#RandomMountType]
+--- @param playerRandomMountType RandomMountType
+--- @param companionRandomMountType RandomMountType
 --- @return void
 function EVENT_RANDOM_MOUNT_SETTING_CHANGED (eventId, playerRandomMountType, companionRandomMountType) end
 
@@ -2697,7 +2697,7 @@ function EVENT_RANDOM_RANGE_ROLL (eventId, displayName, characterName, minValue,
 --- @return void
 function EVENT_RANK_POINT_UPDATE (eventId, unitTag, rankPoints, difference) end
 
---- @param result [KeepRecallStoneUseResult|#KeepRecallStoneUseResult]
+--- @param result KeepRecallStoneUseResult
 --- @return void
 function EVENT_RECALL_KEEP_USE_RESULT (eventId, result) end
 
@@ -2709,7 +2709,7 @@ function EVENT_RECIPE_ALREADY_KNOWN(eventId) end
 --- @return void
 function EVENT_RECIPE_LEARNED (eventId, recipeListIndex, recipeIndex) end
 
---- @param responseCode [ReconstructResponse|#ReconstructResponse]
+--- @param responseCode ReconstructResponse
 --- @return void
 function EVENT_RECONSTRUCT_RESPONSE (eventId, responseCode) end
 
@@ -2717,7 +2717,7 @@ function EVENT_RECONSTRUCT_RESPONSE (eventId, responseCode) end
 function EVENT_RECONSTRUCT_STARTED(eventId) end
 
 --- @param activeCombatTipId integer
---- @param result [ActiveCombatTipConditionResult|#ActiveCombatTipConditionResult]
+--- @param result ActiveCombatTipConditionResult
 --- @return void
 function EVENT_REMOVE_ACTIVE_COMBAT_TIP (eventId, activeCombatTipId, result) end
 
@@ -2725,13 +2725,13 @@ function EVENT_REMOVE_ACTIVE_COMBAT_TIP (eventId, activeCombatTipId, result) end
 --- @return void
 function EVENT_REMOVE_TUTORIAL (eventId, tutorialIndex) end
 
---- @param alertCategory [UIAlertCategory|#UIAlertCategory]
+--- @param alertCategory UIAlertCategory
 --- @param soundId string
 --- @param message string
 --- @return void
 function EVENT_REQUEST_ALERT (eventId, alertCategory, soundId, message) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param slotIndex integer
 --- @return void
 function EVENT_REQUEST_CONFIRM_USE_ITEM (eventId, bagId, slotIndex) end
@@ -2753,12 +2753,12 @@ function EVENT_RESURRECT_REQUEST (eventId, requesterCharacterName, timeLeftToAcc
 function EVENT_RESURRECT_REQUEST_REMOVED(eventId) end
 
 --- @param targetCharacterName string
---- @param result [ResurrectResult|#ResurrectResult]
+--- @param result ResurrectResult
 --- @param targetDisplayName string
 --- @return void
 function EVENT_RESURRECT_RESULT (eventId, targetCharacterName, result, targetDisplayName) end
 
---- @param hidden bool
+--- @param hidden boolean
 --- @return void
 function EVENT_RETICLE_HIDDEN_UPDATE (eventId, hidden) end
 
@@ -2771,7 +2771,7 @@ function EVENT_RETICLE_TARGET_COMPANION_CHANGED(eventId) end
 --- @return void
 function EVENT_RETICLE_TARGET_PLAYER_CHANGED(eventId) end
 
---- @param responseCode [RetraitResponse|#RetraitResponse]
+--- @param responseCode RetraitResponse
 --- @return void
 function EVENT_RETRAIT_RESPONSE (eventId, responseCode) end
 
@@ -2790,10 +2790,10 @@ function EVENT_REVEAL_ANTIQUITY_DIG_SITES_ON_MAP (eventId, antiquityId) end
 --- @return void
 function EVENT_REVENGE_KILL (eventId, killedCharacterName, killedDisplayName) end
 
---- @param ridingSkillType [RidingTrainType|#RidingTrainType]
+--- @param ridingSkillType RidingTrainType
 --- @param previous integer
 --- @param current integer
---- @param source [RidingTrainSource|#RidingTrainSource]
+--- @param source RidingTrainSource
 --- @return void
 function EVENT_RIDING_SKILL_IMPROVEMENT (eventId, ridingSkillType, previous, current, source) end
 
@@ -2805,11 +2805,11 @@ function EVENT_SCREENSHOT_SAVED (eventId, directory, filename) end
 --- @return void
 function EVENT_SCRIBING_DISABLED(eventId) end
 
---- @param result [ScribingErrorResult|#ScribingErrorResult]
+--- @param result ScribingErrorResult
 --- @return void
 function EVENT_SCRIBING_ERROR_RESULT (eventId, result) end
 
---- @param result [ScribingItemUseResult|#ScribingItemUseResult]
+--- @param result ScribingItemUseResult
 --- @return void
 function EVENT_SCRIBING_ITEM_USE_RESULT (eventId, result) end
 
@@ -2824,7 +2824,7 @@ function EVENT_SCRIPTED_WORLD_EVENT_INVITE (eventId, eventId, scriptedEventName,
 --- @return void
 function EVENT_SCRIPTED_WORLD_EVENT_INVITE_REMOVED (eventId, eventId) end
 
---- @param accept bool
+--- @param accept boolean
 --- @return void
 function EVENT_SCRYING_EXIT_RESPONSE (eventId, accept) end
 
@@ -2836,8 +2836,8 @@ function EVENT_SELL_RECEIPT (eventId, itemName, itemQuantity, money) end
 
 --- @param bookTitle string
 --- @param body string
---- @param medium [BookMedium|#BookMedium]
---- @param showTitle bool
+--- @param medium BookMedium
+--- @param showTitle boolean
 --- @param bookId integer
 --- @return void
 function EVENT_SHOW_BOOK (eventId, bookTitle, body, medium, showTitle, bookId) end
@@ -2850,7 +2850,7 @@ function EVENT_SHOW_DAILY_LOGIN_REWARDS_SCENE(eventId) end
 --- @return void
 function EVENT_SHOW_SPECIFIC_HELP_PAGE (eventId, helpCategoryIndex, helpIndex) end
 
---- @param channelType [ChannelType|#ChannelType]
+--- @param channelType ChannelType
 --- @param speakerName string
 --- @param text string
 --- @return void
@@ -2899,9 +2899,9 @@ function EVENT_SKILLS_FULL_UPDATE(eventId) end
 --- @return void
 function EVENT_SKILL_BUILD_SELECTION_UPDATED(eventId) end
 
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
---- @param advised bool
+--- @param advised boolean
 --- @return void
 function EVENT_SKILL_LINE_ADDED (eventId, skillType, skillLineIndex, advised) end
 
@@ -2909,25 +2909,25 @@ function EVENT_SKILL_LINE_ADDED (eventId, skillType, skillLineIndex, advised) en
 --- @param pointsNow integer
 --- @param partialPointsBefore integer
 --- @param partialPointsNow integer
---- @param skillPointChangeReason [SkillPointReason|#SkillPointReason]
+--- @param skillPointChangeReason SkillPointReason
 --- @return void
 function EVENT_SKILL_POINTS_CHANGED (eventId, pointsBefore, pointsNow, partialPointsBefore, partialPointsNow, skillPointChangeReason) end
 
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param rank luaindex
 --- @return void
 function EVENT_SKILL_RANK_UPDATE (eventId, skillType, skillLineIndex, rank) end
 
---- @param result [RespecResult|#RespecResult]
+--- @param result RespecResult
 --- @return void
 function EVENT_SKILL_RESPEC_RESULT (eventId, result) end
 
---- @param isDisabled bool
+--- @param isDisabled boolean
 --- @return void
 function EVENT_SKILL_STYLE_DISABLED_BY_SERVER (eventId, isDisabled) end
 
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param reason integer
 --- @param rank luaindex
@@ -2939,24 +2939,24 @@ function EVENT_SKILL_XP_UPDATE (eventId, skillType, skillLineIndex, reason, rank
 --- @return void
 function EVENT_SKYSHARDS_UPDATED(eventId) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @param slotIndex integer
 --- @return void
 function EVENT_SLOT_IS_LOCKED_FAILURE (eventId, bagId, slotIndex) end
 
---- @param craftingSkillType [TradeskillType|#TradeskillType]
+--- @param craftingSkillType TradeskillType
 --- @param researchLineIndex luaindex
 --- @param traitIndex luaindex
 --- @return void
 function EVENT_SMITHING_TRAIT_RESEARCH_CANCELED (eventId, craftingSkillType, researchLineIndex, traitIndex) end
 
---- @param craftingSkillType [TradeskillType|#TradeskillType]
+--- @param craftingSkillType TradeskillType
 --- @param researchLineIndex luaindex
 --- @param traitIndex luaindex
 --- @return void
 function EVENT_SMITHING_TRAIT_RESEARCH_COMPLETED (eventId, craftingSkillType, researchLineIndex, traitIndex) end
 
---- @param craftingSkillType [TradeskillType|#TradeskillType]
+--- @param craftingSkillType TradeskillType
 --- @param researchLineIndex luaindex
 --- @param traitIndex luaindex
 --- @return void
@@ -2965,11 +2965,11 @@ function EVENT_SMITHING_TRAIT_RESEARCH_STARTED (eventId, craftingSkillType, rese
 --- @return void
 function EVENT_SMITHING_TRAIT_RESEARCH_TIMES_UPDATED(eventId) end
 
---- @param reason [SoulGemItemChargingReason|#SoulGemItemChargingReason]
+--- @param reason SoulGemItemChargingReason
 --- @return void
 function EVENT_SOUL_GEM_ITEM_CHARGE_FAILURE (eventId, reason) end
 
---- @param spamType [SpamWarningType|#SpamWarningType]
+--- @param spamType SpamWarningType
 --- @return void
 function EVENT_SPAM_WARNING (eventId, spamType) end
 
@@ -2979,12 +2979,12 @@ function EVENT_STABLE_INTERACT_END(eventId) end
 --- @return void
 function EVENT_STABLE_INTERACT_START(eventId) end
 
---- @param bagId [Bag|#Bag]
+--- @param bagId Bag
 --- @return void
 function EVENT_STACKED_ALL_ITEMS_IN_BAG (eventId, bagId) end
 
---- @param allocationMode [AttributePointAllocationMode|#AttributePointAllocationMode]
---- @param paymentType [RespecPaymentType|#RespecPaymentType]
+--- @param allocationMode AttributePointAllocationMode
+--- @param paymentType RespecPaymentType
 --- @return void
 function EVENT_START_ATTRIBUTE_RESPEC (eventId, allocationMode, paymentType) end
 
@@ -3002,8 +3002,8 @@ function EVENT_START_KEEP_GUILD_CLAIM_INTERACTION(eventId) end
 --- @return void
 function EVENT_START_KEEP_GUILD_RELEASE_INTERACTION(eventId) end
 
---- @param allocationMode [SkillPointAllocationMode|#SkillPointAllocationMode]
---- @param paymentType [RespecPaymentType|#RespecPaymentType]
+--- @param allocationMode SkillPointAllocationMode
+--- @param paymentType RespecPaymentType
 --- @return void
 function EVENT_START_SKILL_RESPEC (eventId, allocationMode, paymentType) end
 
@@ -3016,14 +3016,14 @@ function EVENT_START_SOUL_GEM_RESURRECTION (eventId, durationMs) end
 function EVENT_STATS_UPDATED (eventId, unitTag) end
 
 --- @param unitTag string
---- @param stealthState [StealthState|#StealthState]
+--- @param stealthState StealthState
 --- @return void
 function EVENT_STEALTH_STATE_CHANGED (eventId, unitTag, stealthState) end
 
 --- @return void
 function EVENT_STOP_ANTIQUITY_DIGGING(eventId) end
 
---- @param reason [StoreFailure|#StoreFailure]
+--- @param reason StoreFailure
 --- @param errorStringId integer
 --- @return void
 function EVENT_STORE_FAILURE (eventId, reason, errorStringId) end
@@ -3051,7 +3051,7 @@ function EVENT_STUCK_ERROR_ON_COOLDOWN(eventId) end
 
 --- @param itemStyleId integer
 --- @param chapterIndex integer
---- @param isDefaultRacialStyle bool
+--- @param isDefaultRacialStyle boolean
 --- @return void
 function EVENT_STYLE_LEARNED (eventId, itemStyleId, chapterIndex, isDefaultRacialStyle) end
 
@@ -3070,7 +3070,7 @@ function EVENT_TARGET_MARKER_UPDATE(eventId) end
 
 --- @param newTelvarStones integer
 --- @param oldTelvarStones integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @param reasonSupplementaryInfo integer
 --- @return void
 function EVENT_TELVAR_STONE_UPDATE (eventId, newTelvarStones, oldTelvarStones, reason, reasonSupplementaryInfo) end
@@ -3081,17 +3081,17 @@ function EVENT_TIMED_ACTIVITIES_UPDATED(eventId) end
 --- @param index luaindex
 --- @param previousProgress integer
 --- @param currentProgress integer
---- @param complete bool
+--- @param complete boolean
 --- @return void
 function EVENT_TIMED_ACTIVITY_PROGRESS_UPDATED (eventId, index, previousProgress, currentProgress, complete) end
 
 --- @return void
 function EVENT_TIMED_ACTIVITY_SYSTEM_STATUS_UPDATED(eventId) end
 
---- @param timedActivityType [TimedActivityType|#TimedActivityType]
+--- @param timedActivityType TimedActivityType
 --- @param previousNumCompleted integer
 --- @param currentNumCompleted integer
---- @param complete bool
+--- @param complete boolean
 --- @return void
 function EVENT_TIMED_ACTIVITY_TYPE_PROGRESS_UPDATED (eventId, timedActivityType, previousNumCompleted, currentNumCompleted, complete) end
 
@@ -3103,7 +3103,7 @@ function EVENT_TITLE_UPDATE (eventId, unitTag) end
 function EVENT_TOGGLE_HELP(eventId) end
 
 --- @param zoneId integer
---- @param zoneCompletionType [ZoneCompletionType|#ZoneCompletionType]
+--- @param zoneCompletionType ZoneCompletionType
 --- @param activityId integer
 --- @return void
 function EVENT_TRACKED_ZONE_STORY_ACTIVITY_COMPLETED (eventId, zoneId, zoneCompletionType, activityId) end
@@ -3118,17 +3118,17 @@ function EVENT_TRADE_ACCEPT_FAILED_NOT_ENOUGH_MONEY(eventId) end
 --- @return void
 function EVENT_TRADE_CANCELED (eventId, cancelerName) end
 
---- @param who [TradeParticipant|#TradeParticipant]
+--- @param who TradeParticipant
 --- @param level integer
 --- @return void
 function EVENT_TRADE_CONFIRMATION_CHANGED (eventId, who, level) end
 
---- @param reason [TradeActionResult|#TradeActionResult]
+--- @param reason TradeActionResult
 --- @param itemName string
 --- @return void
 function EVENT_TRADE_ELEVATION_FAILED (eventId, reason, itemName) end
 
---- @param reason [TradeActionResult|#TradeActionResult]
+--- @param reason TradeActionResult
 --- @return void
 function EVENT_TRADE_FAILED (eventId, reason) end
 
@@ -3146,7 +3146,7 @@ function EVENT_TRADE_INVITE_CONSIDERING (eventId, inviterCharacterName, inviterD
 --- @return void
 function EVENT_TRADE_INVITE_DECLINED(eventId) end
 
---- @param reason [TradeActionResult|#TradeActionResult]
+--- @param reason TradeActionResult
 --- @param inviteeCharacterName string
 --- @param inviteeDisplayName string
 --- @return void
@@ -3160,29 +3160,29 @@ function EVENT_TRADE_INVITE_REMOVED(eventId) end
 --- @return void
 function EVENT_TRADE_INVITE_WAITING (eventId, inviteeCharacterName, inviteeDisplayName) end
 
---- @param who [TradeParticipant|#TradeParticipant]
+--- @param who TradeParticipant
 --- @param tradeIndex luaindex
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_TRADE_ITEM_ADDED (eventId, who, tradeIndex, itemSoundCategory) end
 
---- @param reason [TradeActionResult|#TradeActionResult]
+--- @param reason TradeActionResult
 --- @param itemName string
 --- @return void
 function EVENT_TRADE_ITEM_ADD_FAILED (eventId, reason, itemName) end
 
---- @param who [TradeParticipant|#TradeParticipant]
+--- @param who TradeParticipant
 --- @param tradeIndex luaindex
---- @param itemSoundCategory [ItemUISoundCategory|#ItemUISoundCategory]
+--- @param itemSoundCategory ItemUISoundCategory
 --- @return void
 function EVENT_TRADE_ITEM_REMOVED (eventId, who, tradeIndex, itemSoundCategory) end
 
---- @param who [TradeParticipant|#TradeParticipant]
+--- @param who TradeParticipant
 --- @param tradeIndex luaindex
 --- @return void
 function EVENT_TRADE_ITEM_UPDATED (eventId, who, tradeIndex) end
 
---- @param who [TradeParticipant|#TradeParticipant]
+--- @param who TradeParticipant
 --- @param money integer
 --- @return void
 function EVENT_TRADE_MONEY_CHANGED (eventId, who, money) end
@@ -3190,33 +3190,33 @@ function EVENT_TRADE_MONEY_CHANGED (eventId, who, money) end
 --- @return void
 function EVENT_TRADE_SUCCEEDED(eventId) end
 
---- @param responseType [TradingHouseResult|#TradingHouseResult]
+--- @param responseType TradingHouseResult
 --- @return void
 function EVENT_TRADING_HOUSE_AWAITING_RESPONSE (eventId, responseType) end
 
---- @param pendingPurchaseIndex luaindex:nilable
+--- @param pendingPurchaseIndex luaindex?
 --- @return void
 function EVENT_TRADING_HOUSE_CONFIRM_ITEM_PURCHASE (eventId, pendingPurchaseIndex) end
 
---- @param errorCode [TradingHouseResult|#TradingHouseResult]
+--- @param errorCode TradingHouseResult
 --- @return void
 function EVENT_TRADING_HOUSE_ERROR (eventId, errorCode) end
 
---- @param responseType [TradingHouseResult|#TradingHouseResult]
+--- @param responseType TradingHouseResult
 --- @return void
 function EVENT_TRADING_HOUSE_OPERATION_TIME_OUT (eventId, responseType) end
 
 --- @param slotId integer
---- @param isPending bool
+--- @param isPending boolean
 --- @return void
 function EVENT_TRADING_HOUSE_PENDING_ITEM_UPDATE (eventId, slotId, isPending) end
 
---- @param responseType [TradingHouseResult|#TradingHouseResult]
---- @param result [TradingHouseResult|#TradingHouseResult]
+--- @param responseType TradingHouseResult
+--- @param result TradingHouseResult
 --- @return void
 function EVENT_TRADING_HOUSE_RESPONSE_RECEIVED (eventId, responseType, result) end
 
---- @param responseType [TradingHouseResult|#TradingHouseResult]
+--- @param responseType TradingHouseResult
 --- @return void
 function EVENT_TRADING_HOUSE_RESPONSE_TIMEOUT (eventId, responseType) end
 
@@ -3236,7 +3236,7 @@ function EVENT_TRADING_HOUSE_STATUS_RECEIVED(eventId) end
 --- @return void
 function EVENT_TRAIT_LEARNED (eventId, itemName, itemTrait) end
 
---- @param restrictionType [TrialAccountRestrictionType|#TrialAccountRestrictionType]
+--- @param restrictionType TrialAccountRestrictionType
 --- @return void
 function EVENT_TRIAL_FEATURE_RESTRICTED (eventId, restrictionType) end
 
@@ -3249,15 +3249,15 @@ function EVENT_TRIBUTE_CAMPAIGN_CHANGE (eventId, campaignId) end
 --- @return void
 function EVENT_TRIBUTE_CLUB_EXPERIENCE_GAINED (eventId, currentXP, deltaXP) end
 
---- @param success bool
+--- @param success boolean
 --- @return void
 function EVENT_TRIBUTE_CLUB_INIT (eventId, success) end
 
---- @param newClubRank [TributeClubRank|#TributeClubRank]
+--- @param newClubRank TributeClubRank
 --- @return void
 function EVENT_TRIBUTE_CLUB_RANK_CHANGED (eventId, newClubRank) end
 
---- @param accept bool
+--- @param accept boolean
 --- @return void
 function EVENT_TRIBUTE_EXIT_RESPONSE (eventId, accept) end
 
@@ -3270,7 +3270,7 @@ function EVENT_TRIBUTE_INVITE_CANCELED(eventId) end
 --- @return void
 function EVENT_TRIBUTE_INVITE_DECLINED(eventId) end
 
---- @param reason [TributeMatchEvent|#TributeMatchEvent]
+--- @param reason TributeMatchEvent
 --- @param targetCharacterName string
 --- @param targetDisplayName string
 --- @return void
@@ -3290,11 +3290,11 @@ function EVENT_TRIBUTE_INVITE_REMOVED(eventId) end
 --- @return void
 function EVENT_TRIBUTE_INVITE_SENT (eventId, inviteeCharacterName, inviteeDisplayName) end
 
---- @param leaderboardType [TributeLeaderboardType|#TributeLeaderboardType]
+--- @param leaderboardType TributeLeaderboardType
 --- @return void
 function EVENT_TRIBUTE_LEADERBOARD_DATA_RECEIVED (eventId, leaderboardType) end
 
---- @param leaderboardType [TributeLeaderboardType|#TributeLeaderboardType]
+--- @param leaderboardType TributeLeaderboardType
 --- @return void
 function EVENT_TRIBUTE_LEADERBOARD_RANK_RECEIVED (eventId, leaderboardType) end
 
@@ -3302,19 +3302,19 @@ function EVENT_TRIBUTE_LEADERBOARD_RANK_RECEIVED (eventId, leaderboardType) end
 function EVENT_TRIBUTE_PATRONS_SEARCH_RESULTS_READY(eventId) end
 
 --- @param campaignId integer
---- @param success bool
---- @param isActive bool
+--- @param success boolean
+--- @param isActive boolean
 --- @return void
 function EVENT_TRIBUTE_PLAYER_CAMPAIGN_INIT (eventId, campaignId, success, isActive) end
 
 --- @return void
 function EVENT_TUTORIALS_RESET(eventId) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EVENT_TUTORIAL_SYSTEM_ENABLED_STATE_CHANGED (eventId, enabled) end
 
---- @param tutorialTrigger [TutorialTrigger|#TutorialTrigger]
+--- @param tutorialTrigger TutorialTrigger
 --- @return void
 function EVENT_TUTORIAL_TRIGGER_COMPLETED (eventId, tutorialTrigger) end
 
@@ -3328,10 +3328,10 @@ function EVENT_UI_ERROR (eventId, stringId) end
 function EVENT_ULTIMATE_ABILITY_COST_CHANGED (eventId, cost, ultimateResource) end
 
 --- @param unitTag string
---- @param unitAttributeVisual [UnitAttributeVisual|#UnitAttributeVisual]
---- @param statType [DerivedStats|#DerivedStats]
---- @param attributeType [Attributes|#Attributes]
---- @param powerType [CombatMechanicFlags|#CombatMechanicFlags]
+--- @param unitAttributeVisual UnitAttributeVisual
+--- @param statType DerivedStats
+--- @param attributeType Attributes
+--- @param powerType CombatMechanicFlags
 --- @param value number
 --- @param maxValue number
 --- @param sequenceId integer
@@ -3339,10 +3339,10 @@ function EVENT_ULTIMATE_ABILITY_COST_CHANGED (eventId, cost, ultimateResource) e
 function EVENT_UNIT_ATTRIBUTE_VISUAL_ADDED (eventId, unitTag, unitAttributeVisual, statType, attributeType, powerType, value, maxValue, sequenceId) end
 
 --- @param unitTag string
---- @param unitAttributeVisual [UnitAttributeVisual|#UnitAttributeVisual]
---- @param statType [DerivedStats|#DerivedStats]
---- @param attributeType [Attributes|#Attributes]
---- @param powerType [CombatMechanicFlags|#CombatMechanicFlags]
+--- @param unitAttributeVisual UnitAttributeVisual
+--- @param statType DerivedStats
+--- @param attributeType Attributes
+--- @param powerType CombatMechanicFlags
 --- @param value number
 --- @param maxValue number
 --- @param sequenceId integer
@@ -3350,10 +3350,10 @@ function EVENT_UNIT_ATTRIBUTE_VISUAL_ADDED (eventId, unitTag, unitAttributeVisua
 function EVENT_UNIT_ATTRIBUTE_VISUAL_REMOVED (eventId, unitTag, unitAttributeVisual, statType, attributeType, powerType, value, maxValue, sequenceId) end
 
 --- @param unitTag string
---- @param unitAttributeVisual [UnitAttributeVisual|#UnitAttributeVisual]
---- @param statType [DerivedStats|#DerivedStats]
---- @param attributeType [Attributes|#Attributes]
---- @param powerType [CombatMechanicFlags|#CombatMechanicFlags]
+--- @param unitAttributeVisual UnitAttributeVisual
+--- @param statType DerivedStats
+--- @param attributeType Attributes
+--- @param powerType CombatMechanicFlags
 --- @param oldValue number
 --- @param newValue number
 --- @param oldMaxValue number
@@ -3371,7 +3371,7 @@ function EVENT_UNIT_CHARACTER_NAME_CHANGED (eventId, unitTag) end
 function EVENT_UNIT_CREATED (eventId, unitTag) end
 
 --- @param unitTag string
---- @param isDead bool
+--- @param isDead boolean
 --- @return void
 function EVENT_UNIT_DEATH_STATE_CHANGED (eventId, unitTag, isDead) end
 
@@ -3395,7 +3395,7 @@ function EVENT_UNSPENT_CHAMPION_POINTS_CHANGED(eventId) end
 function EVENT_UPDATE_BUYBACK(eventId) end
 
 --- @param unitTag string
---- @param isDifficult bool
+--- @param isDifficult boolean
 --- @return void
 function EVENT_VETERAN_DIFFICULTY_CHANGED (eventId, unitTag, isDifficult) end
 
@@ -3414,7 +3414,7 @@ function EVENT_VISUAL_LAYER_CHANGED(eventId) end
 --- @return void
 function EVENT_VOICE_CHAT_ACCESSIBILITY_SETTING_CHANGED(eventId) end
 
---- @param locked bool
+--- @param locked boolean
 --- @return void
 function EVENT_WEAPON_PAIR_LOCK_CHANGED (eventId, locked) end
 
@@ -3422,7 +3422,7 @@ function EVENT_WEAPON_PAIR_LOCK_CHANGED (eventId, locked) end
 --- @return void
 function EVENT_WEAPON_SWAP_LOCKED (eventId, swapLevel) end
 
---- @param werewolf bool
+--- @param werewolf boolean
 --- @return void
 function EVENT_WEREWOLF_STATE_CHANGED (eventId, werewolf) end
 
@@ -3445,8 +3445,8 @@ function EVENT_WORLD_EVENT_DEACTIVATED (eventId, worldEventInstanceId) end
 
 --- @param worldEventInstanceId integer
 --- @param unitTag string
---- @param oldPinType [MapDisplayPinType|#MapDisplayPinType]
---- @param newPinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param oldPinType MapDisplayPinType
+--- @param newPinType MapDisplayPinType
 --- @return void
 function EVENT_WORLD_EVENT_UNIT_CHANGED_PIN_TYPE (eventId, worldEventInstanceId, unitTag, oldPinType, newPinType) end
 
@@ -3462,14 +3462,14 @@ function EVENT_WORLD_EVENT_UNIT_DESTROYED (eventId, worldEventInstanceId, unitTa
 
 --- @param newWritVouchers integer
 --- @param oldWritVouchers integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @param reasonSupplementaryInfo integer
 --- @return void
 function EVENT_WRIT_VOUCHER_UPDATE (eventId, newWritVouchers, oldWritVouchers, reason, reasonSupplementaryInfo) end
 
 --- @param zoneName string
 --- @param subZoneName string
---- @param newSubzone bool
+--- @param newSubzone boolean
 --- @param zoneId integer
 --- @param subZoneId integer
 --- @return void
@@ -3513,7 +3513,7 @@ function EVENT_ANTIQUITY_DIGGING_BONUS_LOOT_UNEARTHED(eventId) end
 --- @return void
 function EVENT_ANTIQUITY_DIGGING_DIG_POWER_REFUND(eventId) end
 
---- @param gameOverFlags [DiggingGameOverFlags|#DiggingGameOverFlags]
+--- @param gameOverFlags DiggingGameOverFlags
 --- @return void
 function EVENT_ANTIQUITY_DIGGING_GAME_OVER (eventId, gameOverFlags) end
 
@@ -3532,27 +3532,27 @@ function EVENT_ANTIQUITY_DIG_SPOT_DURABILITY_CHANGED (eventId, durability) end
 --- @return void
 function EVENT_ANTIQUITY_DIG_SPOT_STABILITY_CHANGED (eventId, stability) end
 
---- @param result [AntiquityScryingResult|#AntiquityScryingResult]
+--- @param result AntiquityScryingResult
 --- @return void
 function EVENT_ANTIQUITY_SCRYING_RESULT (eventId, result) end
 
 --- @param crownGemAmount integer
 --- @param difference integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @return void
 function EVENT_CROWN_GEM_UPDATE (eventId, crownGemAmount, difference, reason) end
 
 --- @param crownAmount integer
 --- @param difference integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @return void
 function EVENT_CROWN_UPDATE (eventId, crownAmount, difference, reason) end
 
---- @param currencyType [CurrencyType|#CurrencyType]
---- @param currencyLocation [CurrencyLocation|#CurrencyLocation]
+--- @param currencyType CurrencyType
+--- @param currencyLocation CurrencyLocation
 --- @param newAmount integer
 --- @param oldAmount integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @param reasonSupplementaryInfo integer
 --- @return void
 function EVENT_CURRENCY_UPDATE (eventId, currencyType, currencyLocation, newAmount, oldAmount, reason, reasonSupplementaryInfo) end
@@ -3563,22 +3563,22 @@ function EVENT_DAILY_LOGIN_REWARDS_CLAIMED(eventId) end
 --- @return void
 function EVENT_DAILY_LOGIN_REWARDS_UPDATED(eventId) end
 
---- @param hasFreeTrial bool
+--- @param hasFreeTrial boolean
 --- @return void
 function EVENT_ESO_PLUS_FREE_TRIAL_STATUS_CHANGED (eventId, hasFreeTrial) end
 
 --- @param eventTicketAmount integer
 --- @param difference integer
---- @param reason [CurrencyChangeReason|#CurrencyChangeReason]
+--- @param reason CurrencyChangeReason
 --- @return void
 function EVENT_EVENT_TICKET_UPDATE (eventId, eventTicketAmount, difference, reason) end
 
---- @param expiringMarketCurrencyState [ExpiringMarketCurrencyState|#ExpiringMarketCurrencyState]
+--- @param expiringMarketCurrencyState ExpiringMarketCurrencyState
 --- @return void
 function EVENT_EXPIRING_MARKET_CURRENCY_STATE_UPDATED (eventId, expiringMarketCurrencyState) end
 
---- @param action [GiftBoxAction|#GiftBoxAction]
---- @param result [GiftBoxActionResult|#GiftBoxActionResult]
+--- @param action GiftBoxAction
+--- @param result GiftBoxActionResult
 --- @param giftId id64
 --- @return void
 function EVENT_GIFT_ACTION_RESULT (eventId, action, result, giftId) end
@@ -3586,30 +3586,30 @@ function EVENT_GIFT_ACTION_RESULT (eventId, action, result, giftId) end
 --- @return void
 function EVENT_ITEM_PREVIEW_READY(eventId) end
 
---- @param shouldShow bool
---- @param isLocked bool
+--- @param shouldShow boolean
+--- @param isLocked boolean
 --- @return void
 function EVENT_MARKET_ANNOUNCEMENT_UPDATED (eventId, shouldShow, isLocked) end
 
---- @param displayGroup [MarketDisplayGroup|#MarketDisplayGroup]
+--- @param displayGroup MarketDisplayGroup
 --- @return void
 function EVENT_MARKET_PRODUCT_AVAILABILITY_UPDATED (eventId, displayGroup) end
 
---- @param purchaseResult [MarketPurchasableResult|#MarketPurchasableResult]
---- @param tutorialTrigger [TutorialTrigger|#TutorialTrigger]
---- @param wasGift bool
+--- @param purchaseResult MarketPurchasableResult
+--- @param tutorialTrigger TutorialTrigger
+--- @param wasGift boolean
 --- @return void
 function EVENT_MARKET_PURCHASE_RESULT (eventId, purchaseResult, tutorialTrigger, wasGift) end
 
---- @param displayGroup [MarketDisplayGroup|#MarketDisplayGroup]
---- @param marketState [MarketState|#MarketState]
+--- @param displayGroup MarketDisplayGroup
+--- @param marketState MarketState
 --- @return void
 function EVENT_MARKET_STATE_UPDATED (eventId, displayGroup, marketState) end
 
 --- @return void
 function EVENT_NEW_DAILY_LOGIN_REWARD_AVAILABLE(eventId) end
 
---- @param initial bool
+--- @param initial boolean
 --- @return void
 function EVENT_PLAYER_ACTIVATED (eventId, initial) end
 
@@ -3623,26 +3623,26 @@ function EVENT_REQUEST_CROWN_GEM_TUTORIAL(eventId) end
 --- @return void
 function EVENT_REQUEST_SHOW_GAMEPAD_CHAPTER_UPGRADE (eventId, chapterUpgradeId) end
 
---- @param result [ScryingActiveSkillUseResult|#ScryingActiveSkillUseResult]
+--- @param result ScryingActiveSkillUseResult
 --- @return void
 function EVENT_SCRYING_ACTIVE_SKILL_USE_RESULT (eventId, result) end
 
---- @param flowState [TributeGameFlowState|#TributeGameFlowState]
+--- @param flowState TributeGameFlowState
 --- @return void
 function EVENT_TRIBUTE_GAME_FLOW_STATE_CHANGE (eventId, flowState) end
 
---- @param patronId integer:nilable
+--- @param patronId integer?
 --- @return void
 function EVENT_TRIBUTE_PATRON_PROGRESSION_DATA_CHANGED (eventId, patronId) end
 
---- @param isLocalPlayer bool
+--- @param isLocalPlayer boolean
 --- @return void
 function EVENT_TRIBUTE_PLAYER_TURN_STARTED (eventId, isLocalPlayer) end
 
 --- @return void
 function EVENT_ACTIVE_MONITOR_CHANGED(eventId) end
 
---- @param hidden bool
+--- @param hidden boolean
 --- @return void
 function EVENT_APP_GUI_HIDDEN_STATE_CHANGED (eventId, hidden) end
 
@@ -3660,14 +3660,14 @@ function EVENT_COLLECTIBLES_UNLOCK_STATE_CHANGED(eventId) end
 --- @return void
 function EVENT_COLLECTIBLE_UPDATED (eventId, id) end
 
---- @param settingSystemType [SettingSystemType|#SettingSystemType]
+--- @param settingSystemType SettingSystemType
 --- @param settingId integer
---- @param success bool
+--- @param success boolean
 --- @param result integer
 --- @return void
 function EVENT_DEFERRED_SETTING_REQUEST_COMPLETED (eventId, settingSystemType, settingId, success, result) end
 
---- @param messageOrigin [SceneManagerMessageOrigin|#SceneManagerMessageOrigin]
+--- @param messageOrigin SceneManagerMessageOrigin
 --- @param sceneName string
 --- @param sequenceNumber integer
 --- @return void
@@ -3714,8 +3714,8 @@ function EVENT_FRIEND_NOTE_UPDATED (eventId, displayName, note) end
 
 --- @param displayName string
 --- @param characterName string
---- @param oldStatus [PlayerStatus|#PlayerStatus]
---- @param newStatus [PlayerStatus|#PlayerStatus]
+--- @param oldStatus PlayerStatus
+--- @param newStatus PlayerStatus
 --- @return void
 function EVENT_FRIEND_PLAYER_STATUS_CHANGED (eventId, displayName, characterName, oldStatus, newStatus) end
 
@@ -3726,11 +3726,11 @@ function EVENT_FRIEND_REMOVED (eventId, displayName) end
 --- @return void
 function EVENT_FULLSCREEN_MODE_CHANGED(eventId) end
 
---- @param gamepadType [GamepadType|#GamepadType]
+--- @param gamepadType GamepadType
 --- @return void
 function EVENT_GAMEPAD_TYPE_CHANGED (eventId, gamepadType) end
 
---- @param useKeyboardChat bool
+--- @param useKeyboardChat boolean
 --- @return void
 function EVENT_GAMEPAD_USE_KEYBOARD_CHAT_CHANGED (eventId, useKeyboardChat) end
 
@@ -3744,7 +3744,7 @@ function EVENT_GAME_CREDITS_READY(eventId) end
 --- @return void
 function EVENT_GUILD_CLAIM_KEEP_CAMPAIGN_NOTIFICATION (eventId, campaignId, keepId, guildName, playerName) end
 
---- @param response [ClaimKeepResultType|#ClaimKeepResultType]
+--- @param response ClaimKeepResultType
 --- @param keepId integer
 --- @return void
 function EVENT_GUILD_CLAIM_KEEP_RESPONSE (eventId, response, keepId) end
@@ -3764,7 +3764,7 @@ function EVENT_GUILD_INVITES_INITIALIZED(eventId) end
 
 --- @param guildId integer
 --- @param guildName string
---- @param guildAlliance [Alliance|#Alliance]
+--- @param guildAlliance Alliance
 --- @param inviterDisplayName string
 --- @return void
 function EVENT_GUILD_INVITE_ADDED (eventId, guildId, guildName, guildAlliance, inviterDisplayName) end
@@ -3875,7 +3875,7 @@ function EVENT_GUILD_NAME_AVAILABLE(eventId) end
 
 --- @param guildId integer
 --- @param rankIndex luaindex
---- @param guildRankChangeAction [GuildRankChangeAction|#GuildRankChangeAction]
+--- @param guildRankChangeAction GuildRankChangeAction
 --- @return void
 function EVENT_GUILD_PLAYER_RANK_CHANGED (eventId, guildId, rankIndex, guildRankChangeAction) end
 
@@ -3895,7 +3895,7 @@ function EVENT_GUILD_RANK_CHANGED (eventId, guildId, rankIndex) end
 --- @return void
 function EVENT_GUILD_RELEASE_KEEP_CAMPAIGN_NOTIFICATION (eventId, campaignId, keepId, guildName, playerName) end
 
---- @param response [ReleaseKeepResultType|#ReleaseKeepResultType]
+--- @param response ReleaseKeepResultType
 --- @return void
 function EVENT_GUILD_RELEASE_KEEP_RESPONSE (eventId, response) end
 
@@ -3945,29 +3945,29 @@ function EVENT_INCOMING_FRIEND_INVITE_NOTE_UPDATED (eventId, displayName, messag
 --- @return void
 function EVENT_INCOMING_FRIEND_INVITE_REMOVED (eventId, displayName) end
 
---- @param settingSystemType [SettingSystemType|#SettingSystemType]
+--- @param settingSystemType SettingSystemType
 --- @param settingId integer
 --- @return void
 function EVENT_INTERFACE_SETTING_CHANGED (eventId, settingSystemType, settingId) end
 
---- @param reason [JumpResult|#JumpResult]
+--- @param reason JumpResult
 --- @return void
 function EVENT_JUMP_FAILED (eventId, reason) end
 
---- @param keybindDisplayMode [KeybindDisplayMode|#KeybindDisplayMode]
+--- @param keybindDisplayMode KeybindDisplayMode
 --- @return void
 function EVENT_KEYBIND_DISPLAY_MODE_CHANGED (eventId, keybindDisplayMode) end
 
---- @param messageOrigin [SceneManagerMessageOrigin|#SceneManagerMessageOrigin]
---- @param syncType [RemoteSceneSyncType|#RemoteSceneSyncType]
+--- @param messageOrigin SceneManagerMessageOrigin
+--- @param syncType RemoteSceneSyncType
 --- @param currentSceneName string
 --- @param nextSceneName string
 --- @param sequenceNumber integer
---- @param currentSceneFragmentsComplete bool
+--- @param currentSceneFragmentsComplete boolean
 --- @return void
 function EVENT_LEADER_TO_FOLLOWER_SYNC (eventId, messageOrigin, syncType, currentSceneName, nextSceneName, sequenceNumber, currentSceneFragmentsComplete) end
 
---- @param mostRecentGamepadType [GamepadType|#GamepadType]
+--- @param mostRecentGamepadType GamepadType
 --- @return void
 function EVENT_MOST_RECENT_GAMEPAD_TYPE_CHANGED (eventId, mostRecentGamepadType) end
 
@@ -3979,26 +3979,26 @@ function EVENT_OUTGOING_FRIEND_INVITE_ADDED (eventId, displayName) end
 --- @return void
 function EVENT_OUTGOING_FRIEND_INVITE_REMOVED (eventId, displayName) end
 
---- @param oldStatus [PlayerStatus|#PlayerStatus]
---- @param newStatus [PlayerStatus|#PlayerStatus]
+--- @param oldStatus PlayerStatus
+--- @param newStatus PlayerStatus
 --- @return void
 function EVENT_PLAYER_STATUS_CHANGED (eventId, oldStatus, newStatus) end
 
 --- @param zoneName string
 --- @param zoneDescription string
 --- @param loadingTexture string
---- @param zoneDisplayType [ZoneDisplayType|#ZoneDisplayType]
+--- @param zoneDisplayType ZoneDisplayType
 --- @return void
 function EVENT_PREPARE_FOR_JUMP (eventId, zoneName, zoneDescription, loadingTexture, zoneDisplayType) end
 
---- @param messageOrigin [SceneManagerMessageOrigin|#SceneManagerMessageOrigin]
---- @param requestType [RemoteSceneRequestType|#RemoteSceneRequestType]
+--- @param messageOrigin SceneManagerMessageOrigin
+--- @param requestType RemoteSceneRequestType
 --- @param sceneName string
 --- @return void
 function EVENT_REMOTE_SCENE_REQUEST (eventId, messageOrigin, requestType, sceneName) end
 
---- @param messageOrigin [SceneManagerMessageOrigin|#SceneManagerMessageOrigin]
---- @param requestType [RemoteSceneRequestType|#RemoteSceneRequestType]
+--- @param messageOrigin SceneManagerMessageOrigin
+--- @param requestType RemoteSceneRequestType
 --- @return void
 function EVENT_REMOTE_TOP_LEVEL_CHANGE (eventId, messageOrigin, requestType) end
 
@@ -4006,7 +4006,7 @@ function EVENT_REMOTE_TOP_LEVEL_CHANGE (eventId, messageOrigin, requestType) end
 function EVENT_SAVE_DATA_COMPLETE(eventId) end
 
 --- @param guildId integer
---- @param result [SocialActionResult|#SocialActionResult]
+--- @param result SocialActionResult
 --- @return void
 function EVENT_SAVE_GUILD_RANKS_RESPONSE (eventId, guildId, result) end
 
@@ -4017,7 +4017,7 @@ function EVENT_SET_SUBTITLE (eventId, subtitleText) end
 --- @return void
 function EVENT_SOCIAL_DATA_LOADED(eventId) end
 
---- @param error [SocialActionResult|#SocialActionResult]
+--- @param error SocialActionResult
 --- @return void
 function EVENT_SOCIAL_ERROR (eventId, error) end
 
@@ -4030,7 +4030,7 @@ function EVENT_VIDEO_PLAYBACK_COMPLETE(eventId) end
 --- @return void
 function EVENT_VIDEO_PLAYBACK_CONFIRM_CANCEL(eventId) end
 
---- @param errorReason [VideoPlaybackErrorReason|#VideoPlaybackErrorReason]
+--- @param errorReason VideoPlaybackErrorReason
 --- @return void
 function EVENT_VIDEO_PLAYBACK_ERROR (eventId, errorReason) end
 
@@ -4054,32 +4054,32 @@ function EVENT_ALL_GUI_SCREENS_RESIZED(eventId) end
 --- @return void
 function EVENT_ALL_GUI_SCREENS_RESIZE_STARTED(eventId) end
 
---- @param capsLockEnabled bool
+--- @param capsLockEnabled boolean
 --- @return void
 function EVENT_CAPS_LOCK_STATE_CHANGED (eventId, capsLockEnabled) end
 
---- @param gamepadPreferred bool
+--- @param gamepadPreferred boolean
 --- @return void
 function EVENT_GAMEPAD_PREFERRED_MODE_CHANGED (eventId, gamepadPreferred) end
 
---- @param button [MouseButtonIndex|#MouseButtonIndex]
---- @param ctrl bool
---- @param alt bool
---- @param shift bool
---- @param command bool
+--- @param button MouseButtonIndex
+--- @param ctrl boolean
+--- @param alt boolean
+--- @param shift boolean
+--- @param command boolean
 --- @return void
 function EVENT_GLOBAL_MOUSE_DOWN (eventId, button, ctrl, alt, shift, command) end
 
---- @param button [MouseButtonIndex|#MouseButtonIndex]
---- @param ctrl bool
---- @param alt bool
---- @param shift bool
---- @param command bool
+--- @param button MouseButtonIndex
+--- @param ctrl boolean
+--- @param alt boolean
+--- @param shift boolean
+--- @param command boolean
 --- @return void
 function EVENT_GLOBAL_MOUSE_UP (eventId, button, ctrl, alt, shift, command) end
 
 --- @param guiName string
---- @param hidden bool
+--- @param hidden boolean
 --- @return void
 function EVENT_GUI_HIDDEN (eventId, guiName, hidden) end
 
@@ -4090,7 +4090,7 @@ function EVENT_GUI_UNLOADING (eventId, guiName) end
 --- @return void
 function EVENT_INPUT_LANGUAGE_CHANGED(eventId) end
 
---- @param isGamepad bool
+--- @param isGamepad boolean
 --- @return void
 function EVENT_INPUT_TYPE_CHANGED (eventId, isGamepad) end
 
@@ -4108,11 +4108,11 @@ function EVENT_KEYBINDING_CLEARED (eventId, layerIndex, categoryIndex, actionInd
 --- @param categoryIndex luaindex
 --- @param actionIndex luaindex
 --- @param bindingIndex luaindex
---- @param keyCode [KeyCode|#KeyCode]
---- @param mod1 [KeyCode|#KeyCode]
---- @param mod2 [KeyCode|#KeyCode]
---- @param mod3 [KeyCode|#KeyCode]
---- @param mod4 [KeyCode|#KeyCode]
+--- @param keyCode KeyCode
+--- @param mod1 KeyCode
+--- @param mod2 KeyCode
+--- @param mod3 KeyCode
+--- @param mod4 KeyCode
 --- @return void
 function EVENT_KEYBINDING_SET (eventId, layerIndex, categoryIndex, actionIndex, bindingIndex, keyCode, mod1, mod2, mod3, mod4) end
 
@@ -4130,11 +4130,11 @@ function EVENT_SCREEN_RESIZED (eventId, width, height) end
 --- @return void
 function EVENT_SCRIPT_ACCESS_VIOLATION (eventId, protectedFunctionName) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EVENT_SECURE_3D_RENDER_MODE_CHANGED (eventId, enabled) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EVENT_SECURE_RENDER_MODE_CHANGED (eventId, enabled) end
 

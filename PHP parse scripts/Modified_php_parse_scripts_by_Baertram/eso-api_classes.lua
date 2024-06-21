@@ -1,9 +1,10 @@
-AddOnManager = nil
+---@class AddOnManager
+AddOnManager = {}
 --- @param relevantFilter string
 --- @return void
 function AddOnManager:AddRelevantFilter(relevantFilter) end
 
---- @return areAddOnsEnabled bool
+--- @return boolean areAddOnsEnabled
 function AddOnManager:AreAddOnsEnabled() end
 
 --- @param disabledAddonIndex luaindex
@@ -15,39 +16,39 @@ function AddOnManager:ClearWarnOutOfDateAddOns() end
 
 --- @param addOnIndex luaindex
 --- @param addOnDependencyIndex luaindex
---- @return name string, exists bool, active bool, minVersion integer, version integer, isLibrary bool
+--- @return string name, boolean exists, boolean active, integer minVersion, integer version, boolean isLibrary
 function AddOnManager:GetAddOnDependencyInfo(addOnIndex, addOnDependencyIndex) end
 
---- @return settingFilter string
+--- @return string settingFilter
 function AddOnManager:GetAddOnFilter() end
 
 --- @param addOnIndex luaindex
---- @return name string, title string, author string, description string, enabled bool, state [AddOnLoadState|#AddOnLoadState], isOutOfDate bool, isLibrary bool
+--- @return string name, string title, string author, string description, boolean enabled, AddOnLoadState state, boolean isOutOfDate, boolean isLibrary
 function AddOnManager:GetAddOnInfo(addOnIndex) end
 
 --- @param addOnIndex luaindex
---- @return numDependencies integer
+--- @return integer numDependencies
 function AddOnManager:GetAddOnNumDependencies(addOnIndex) end
 
 --- @param addOnIndex luaindex
---- @return directoryPath string
+--- @return string directoryPath
 function AddOnManager:GetAddOnRootDirectoryPath(addOnIndex) end
 
 --- @param addOnIndex luaindex
---- @return version integer
+--- @return integer version
 function AddOnManager:GetAddOnVersion(addOnIndex) end
 
 --- @param disabledAddonIndex luaindex
---- @return addonName string, shouldShowNotification bool
+--- @return string addonName, boolean shouldShowNotification
 function AddOnManager:GetForceDisabledAddOnInfo(disabledAddonIndex) end
 
---- @return loadOutOfDateAddons bool
+--- @return boolean loadOutOfDateAddons
 function AddOnManager:GetLoadOutOfDateAddOns() end
 
---- @return numAddOns integer
+--- @return integer numAddOns
 function AddOnManager:GetNumAddOns() end
 
---- @return numDisabledAddons integer
+--- @return integer numDisabledAddons
 function AddOnManager:GetNumForceDisabledAddOns() end
 
 --- @return void
@@ -61,7 +62,7 @@ function AddOnManager:RequestAddOnSavedVariablesPrioritySave(addOnName) end
 function AddOnManager:ResetRelevantFilters() end
 
 --- @param addOnIndex luaindex
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function AddOnManager:SetAddOnEnabled(addOnIndex, enabled) end
 
@@ -69,54 +70,56 @@ function AddOnManager:SetAddOnEnabled(addOnIndex, enabled) end
 --- @return void
 function AddOnManager:SetAddOnFilter(settingFilter) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function AddOnManager:SetAddOnsEnabled(enabled) end
 
---- @return warnOutOfDateAddons bool
+--- @return boolean warnOutOfDateAddons
 function AddOnManager:ShouldWarnOutOfDateAddOns() end
 
 --- @param addOnName string
---- @return wasDetected bool
+--- @return boolean wasDetected
 function AddOnManager:WasAddOnDetected(addOnName) end
 
-AnimationManager = nil
---- @return timeline object
+---@class AnimationManager
+AnimationManager = {}
+--- @return object timeline
 function AnimationManager:CreateTimeline() end
 
 --- @param timelineName string
 --- @param animatedControl object
---- @return timeline object
+--- @return object timeline
 function AnimationManager:CreateTimelineFromVirtual(timelineName, animatedControl) end
 
-AnimationObject = nil
---- @return animatedControl object
+---@class AnimationObject
+AnimationObject = {}
+--- @return object animatedControl
 function AnimationObject:GetAnimatedControl() end
 
---- @return applyToChildControlName string
+--- @return string applyToChildControlName
 function AnimationObject:GetApplyToChildControlName() end
 
---- @return durationMs integer
+--- @return integer durationMs
 function AnimationObject:GetDuration() end
 
---- @return functionRef function
+--- @return function functionRef
 function AnimationObject:GetEasingFunction() end
 
 --- @param eventName string
 --- @param name string
---- @return functionRef function
+--- @return function functionRef
 function AnimationObject:GetHandler(eventName, name) end
 
---- @return owningTimeline object
+--- @return object owningTimeline
 function AnimationObject:GetTimeline() end
 
---- @return animationObjectType [AnimationType|#AnimationType]
+--- @return AnimationType animationObjectType
 function AnimationObject:GetType() end
 
---- @return isEnabled bool
+--- @return boolean isEnabled
 function AnimationObject:IsEnabled() end
 
---- @return isPlaying bool
+--- @return boolean isPlaying
 function AnimationObject:IsPlaying() end
 
 --- @param animatedControl object
@@ -135,14 +138,14 @@ function AnimationObject:SetDuration(durationMs) end
 --- @return void
 function AnimationObject:SetEasingFunction(functionRef) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function AnimationObject:SetEnabled(enabled) end
 
 --- @param eventName string
 --- @param functionRef function
 --- @param name string
---- @param controlHandlerOrder [ControlHandlerOrder|#ControlHandlerOrder]
+--- @param controlHandlerOrder ControlHandlerOrder
 --- @param targetName string
 --- @return void
 function AnimationObject:SetHandler(eventName, functionRef, name, controlHandlerOrder, targetName) end
@@ -151,23 +154,24 @@ function AnimationObject:SetHandler(eventName, functionRef, name, controlHandler
 --- @return void
 function AnimationObject:SetOffsetInParent(offset) end
 
-AnimationObject3DRotate = nil
---- @return endPitchRadians number
+---@class AnimationObject3DRotate
+AnimationObject3DRotate = {}
+--- @return number endPitchRadians
 function AnimationObject3DRotate:GetEndPitch() end
 
---- @return endRollRadians number
+--- @return number endRollRadians
 function AnimationObject3DRotate:GetEndRoll() end
 
---- @return endYawRadians number
+--- @return number endYawRadians
 function AnimationObject3DRotate:GetEndYaw() end
 
---- @return startPitchRadians number
+--- @return number startPitchRadians
 function AnimationObject3DRotate:GetStartPitch() end
 
---- @return startRollRadians number
+--- @return number startRollRadians
 function AnimationObject3DRotate:GetStartRoll() end
 
---- @return startYawRadians number
+--- @return number startYawRadians
 function AnimationObject3DRotate:GetStartYaw() end
 
 --- @param endPitchRadians number
@@ -203,38 +207,39 @@ function AnimationObject3DRotate:SetStartRoll(startRollRadians) end
 --- @return void
 function AnimationObject3DRotate:SetStartYaw(startYawRadians) end
 
-AnimationObject3DTranslate = nil
+---@class AnimationObject3DTranslate
+AnimationObject3DTranslate = {}
 --- @return void
 function AnimationObject3DTranslate:ClearBezierControlPoints() end
 
---- @return deltaX number
+--- @return number deltaX
 function AnimationObject3DTranslate:GetDeltaOffsetX() end
 
---- @return deltaY number
+--- @return number deltaY
 function AnimationObject3DTranslate:GetDeltaOffsetY() end
 
---- @return deltaZ number
+--- @return number deltaZ
 function AnimationObject3DTranslate:GetDeltaOffsetZ() end
 
---- @return endX number
+--- @return number endX
 function AnimationObject3DTranslate:GetEndOffsetX() end
 
---- @return endY number
+--- @return number endY
 function AnimationObject3DTranslate:GetEndOffsetY() end
 
---- @return endZ number
+--- @return number endZ
 function AnimationObject3DTranslate:GetEndOffsetZ() end
 
---- @return startX number
+--- @return number startX
 function AnimationObject3DTranslate:GetStartOffsetX() end
 
---- @return startY number
+--- @return number startY
 function AnimationObject3DTranslate:GetStartOffsetY() end
 
---- @return startZ number
+--- @return number startZ
 function AnimationObject3DTranslate:GetStartOffsetZ() end
 
---- @return deltaX number, deltaY number, deltaZ number
+--- @return number deltaX, number deltaY, number deltaZ
 function AnimationObject3DTranslate:GetTranslateDeltas() end
 
 --- @param index luaindex
@@ -245,17 +250,17 @@ function AnimationObject3DTranslate:GetTranslateDeltas() end
 function AnimationObject3DTranslate:SetBezierControlPoint(index, x, y, z) end
 
 --- @param deltaX number
---- @param translateAnimationDeltaType [TranslateAnimationDeltaType|#TranslateAnimationDeltaType]
+--- @param translateAnimationDeltaType TranslateAnimationDeltaType
 --- @return void
 function AnimationObject3DTranslate:SetDeltaOffsetX(deltaX, translateAnimationDeltaType) end
 
 --- @param deltaY number
---- @param translateAnimationDeltaType [TranslateAnimationDeltaType|#TranslateAnimationDeltaType]
+--- @param translateAnimationDeltaType TranslateAnimationDeltaType
 --- @return void
 function AnimationObject3DTranslate:SetDeltaOffsetY(deltaY, translateAnimationDeltaType) end
 
 --- @param deltaZ number
---- @param translateAnimationDeltaType [TranslateAnimationDeltaType|#TranslateAnimationDeltaType]
+--- @param translateAnimationDeltaType TranslateAnimationDeltaType
 --- @return void
 function AnimationObject3DTranslate:SetDeltaOffsetZ(deltaZ, translateAnimationDeltaType) end
 
@@ -286,7 +291,7 @@ function AnimationObject3DTranslate:SetStartOffsetZ(startZ) end
 --- @param deltaX number
 --- @param deltaY number
 --- @param deltaZ number
---- @param translateAnimationDeltaType [TranslateAnimationDeltaType|#TranslateAnimationDeltaType]
+--- @param translateAnimationDeltaType TranslateAnimationDeltaType
 --- @return void
 function AnimationObject3DTranslate:SetTranslateDeltas(deltaX, deltaY, deltaZ, translateAnimationDeltaType) end
 
@@ -299,11 +304,12 @@ function AnimationObject3DTranslate:SetTranslateDeltas(deltaX, deltaY, deltaZ, t
 --- @return void
 function AnimationObject3DTranslate:SetTranslateOffsets(startX, startY, startZ, endX, endY, endZ) end
 
-AnimationObjectAlpha = nil
---- @return endAlpha number
+---@class AnimationObjectAlpha
+AnimationObjectAlpha = {}
+--- @return number endAlpha
 function AnimationObjectAlpha:GetEndAlpha() end
 
---- @return startAlpha number
+--- @return number startAlpha
 function AnimationObjectAlpha:GetStartAlpha() end
 
 --- @param startAlpha number
@@ -319,17 +325,18 @@ function AnimationObjectAlpha:SetEndAlpha(endAlpha) end
 --- @return void
 function AnimationObjectAlpha:SetStartAlpha(startAlpha) end
 
-AnimationObjectColor = nil
---- @return applyAlpha bool
+---@class AnimationObjectColor
+AnimationObjectColor = {}
+--- @return boolean applyAlpha
 function AnimationObjectColor:GetApplyAlpha() end
 
---- @return endR number, endG number, endB number, endA number
+--- @return number endR, number endG, number endB, number endA
 function AnimationObjectColor:GetEndColor() end
 
---- @return startR number, startG number, startB number, startA number
+--- @return number startR, number startG, number startB, number startA
 function AnimationObjectColor:GetStartColor() end
 
---- @param applyAlpha bool
+--- @param applyAlpha boolean
 --- @return void
 function AnimationObjectColor:SetApplyAlpha(applyAlpha) end
 
@@ -358,16 +365,18 @@ function AnimationObjectColor:SetEndColor(endR, endG, endB, endA) end
 --- @return void
 function AnimationObjectColor:SetStartColor(startR, startG, startB, startA) end
 
-AnimationObjectCustom = nil
+---@class AnimationObjectCustom
+AnimationObjectCustom = {}
 --- @param functionRef function
 --- @return void
 function AnimationObjectCustom:SetUpdateFunction(functionRef) end
 
-AnimationObjectDesaturation = nil
---- @return endDesaturation number
+---@class AnimationObjectDesaturation
+AnimationObjectDesaturation = {}
+--- @return number endDesaturation
 function AnimationObjectDesaturation:GetEndDesaturation() end
 
---- @return startDesaturation number
+--- @return number startDesaturation
 function AnimationObjectDesaturation:GetStartDesaturation() end
 
 --- @param startDesaturation number
@@ -383,11 +392,12 @@ function AnimationObjectDesaturation:SetEndDesaturation(endDesaturation) end
 --- @return void
 function AnimationObjectDesaturation:SetStartDesaturation(startDesaturation) end
 
-AnimationObjectScale = nil
---- @return endScale number
+---@class AnimationObjectScale
+AnimationObjectScale = {}
+--- @return number endScale
 function AnimationObjectScale:GetEndScale() end
 
---- @return startScale number
+--- @return number startScale
 function AnimationObjectScale:GetStartScale() end
 
 --- @param endScale number
@@ -403,7 +413,8 @@ function AnimationObjectScale:SetScaleValues(startScale, endScale) end
 --- @return void
 function AnimationObjectScale:SetStartScale(startScale) end
 
-AnimationObjectScroll = nil
+---@class AnimationObjectScroll
+AnimationObjectScroll = {}
 --- @param endX number
 --- @return void
 function AnimationObjectScroll:SetHorizontalEnd(endX) end
@@ -430,7 +441,8 @@ function AnimationObjectScroll:SetVerticalRelative(offsetY) end
 --- @return void
 function AnimationObjectScroll:SetVerticalStartAndEnd(startY, endY) end
 
-AnimationObjectSize = nil
+---@class AnimationObjectSize
+AnimationObjectSize = {}
 --- @param endHeight number
 --- @return void
 function AnimationObjectSize:SetEndHeight(endHeight) end
@@ -457,17 +469,18 @@ function AnimationObjectSize:SetStartHeight(startHeight) end
 --- @return void
 function AnimationObjectSize:SetStartWidth(startWidth) end
 
-AnimationObjectTexture = nil
---- @return aNumCellsHigh integer
+---@class AnimationObjectTexture
+AnimationObjectTexture = {}
+--- @return integer aNumCellsHigh
 function AnimationObjectTexture:GetCellsHigh() end
 
---- @return aNumCellsWide integer
+--- @return integer aNumCellsWide
 function AnimationObjectTexture:GetCellsWide() end
 
---- @return mirroring bool
+--- @return boolean mirroring
 function AnimationObjectTexture:IsMirroringAlongX() end
 
---- @return mirroring bool
+--- @return boolean mirroring
 function AnimationObjectTexture:IsMirroringAlongY() end
 
 --- @param aNumCellsHigh integer
@@ -487,19 +500,20 @@ function AnimationObjectTexture:SetFramerate(framesPerSecond) end
 --- @return void
 function AnimationObjectTexture:SetImageData(aNumCellsWide, aNumCellsHigh) end
 
---- @param mirroring bool
+--- @param mirroring boolean
 --- @return void
 function AnimationObjectTexture:SetMirrorAlongX(mirroring) end
 
---- @param mirroring bool
+--- @param mirroring boolean
 --- @return void
 function AnimationObjectTexture:SetMirrorAlongY(mirroring) end
 
-AnimationObjectTextureRotate = nil
---- @return endRadians number
+---@class AnimationObjectTextureRotate
+AnimationObjectTextureRotate = {}
+--- @return number endRadians
 function AnimationObjectTextureRotate:GetEndRotation() end
 
---- @return startRadians number
+--- @return number startRadians
 function AnimationObjectTextureRotate:GetStartRotation() end
 
 --- @param endRadians number
@@ -515,7 +529,8 @@ function AnimationObjectTextureRotate:SetRotationValues(startRadians, endRadians
 --- @return void
 function AnimationObjectTextureRotate:SetStartRotation(startRadians) end
 
-AnimationObjectTextureSlide = nil
+---@class AnimationObjectTextureSlide
+AnimationObjectTextureSlide = {}
 --- @param left number
 --- @param right number
 --- @param top number
@@ -536,11 +551,12 @@ function AnimationObjectTextureSlide:SetDeltaVFromStart(slideDistanceV) end
 --- @return void
 function AnimationObjectTextureSlide:SetSlideDistances(slideDistanceU, slideDistanceV) end
 
-AnimationObjectTransformOffset = nil
---- @return endX number:nilable, endY number:nilable, endZ number:nilable
+---@class AnimationObjectTransformOffset
+AnimationObjectTransformOffset = {}
+--- @return number? endX, number? endY, number? endZ
 function AnimationObjectTransformOffset:GetEndOffset() end
 
---- @return startX number:nilable, startY number:nilable, startZ number:nilable
+--- @return number? startX, number? startY, number? startZ
 function AnimationObjectTransformOffset:GetStartOffset() end
 
 --- @param endX layout_measurement
@@ -588,7 +604,8 @@ function AnimationObjectTransformOffset:SetStartOffsetY(startY) end
 --- @return void
 function AnimationObjectTransformOffset:SetStartOffsetZ(startZ) end
 
-AnimationObjectTransformRotation = nil
+---@class AnimationObjectTransformRotation
+AnimationObjectTransformRotation = {}
 --- @param endXRadians number
 --- @param endYRadians number
 --- @param endZRadians number
@@ -607,7 +624,7 @@ function AnimationObjectTransformRotation:SetEndY(endYRadians) end
 --- @return void
 function AnimationObjectTransformRotation:SetEndZ(endZRadians) end
 
---- @param mode [RotationAnimationMode|#RotationAnimationMode]
+--- @param mode RotationAnimationMode
 --- @return void
 function AnimationObjectTransformRotation:SetMode(mode) end
 
@@ -638,7 +655,8 @@ function AnimationObjectTransformRotation:SetStartY(startYRadians) end
 --- @return void
 function AnimationObjectTransformRotation:SetStartZ(startZRadians) end
 
-AnimationObjectTransformScale = nil
+---@class AnimationObjectTransformScale
+AnimationObjectTransformScale = {}
 --- @param endScale number
 --- @return void
 function AnimationObjectTransformScale:SetEndScale(endScale) end
@@ -663,7 +681,8 @@ function AnimationObjectTransformScale:SetStartScaleX(startScaleX) end
 --- @return void
 function AnimationObjectTransformScale:SetStartScaleY(startScaleY) end
 
-AnimationObjectTransformSkew = nil
+---@class AnimationObjectTransformSkew
+AnimationObjectTransformSkew = {}
 --- @param endSkewXRadians number
 --- @return void
 function AnimationObjectTransformSkew:SetEndSkewX(endSkewXRadians) end
@@ -680,29 +699,30 @@ function AnimationObjectTransformSkew:SetStartSkewX(startSkewXRadians) end
 --- @return void
 function AnimationObjectTransformSkew:SetStartSkewY(startSkewYRadians) end
 
-AnimationObjectTranslate = nil
---- @return anchorIndex integer
+---@class AnimationObjectTranslate
+AnimationObjectTranslate = {}
+--- @return integer anchorIndex
 function AnimationObjectTranslate:GetAnchorIndex() end
 
---- @return deltaX number
+--- @return number deltaX
 function AnimationObjectTranslate:GetDeltaOffsetX() end
 
---- @return deltaY number
+--- @return number deltaY
 function AnimationObjectTranslate:GetDeltaOffsetY() end
 
---- @return endX number
+--- @return number endX
 function AnimationObjectTranslate:GetEndOffsetX() end
 
---- @return endY number
+--- @return number endY
 function AnimationObjectTranslate:GetEndOffsetY() end
 
---- @return startX number
+--- @return number startX
 function AnimationObjectTranslate:GetStartOffsetX() end
 
---- @return startY number
+--- @return number startY
 function AnimationObjectTranslate:GetStartOffsetY() end
 
---- @return deltaX number, deltaY number
+--- @return number deltaX, number deltaY
 function AnimationObjectTranslate:GetTranslateDeltas() end
 
 --- @param anchorIndex integer
@@ -710,7 +730,7 @@ function AnimationObjectTranslate:GetTranslateDeltas() end
 function AnimationObjectTranslate:SetAnchorIndex(anchorIndex) end
 
 --- @param deltaX layout_measurement
---- @param translateAnimationDeltaType [TranslateAnimationDeltaType|#TranslateAnimationDeltaType]
+--- @param translateAnimationDeltaType TranslateAnimationDeltaType
 --- @return void
 function AnimationObjectTranslate:SetDeltaOffsetX(deltaX, translateAnimationDeltaType) end
 
@@ -723,7 +743,7 @@ function AnimationObjectTranslate:SetDeltaOffsetXFromEnd(deltaX) end
 function AnimationObjectTranslate:SetDeltaOffsetXFromStart(deltaX) end
 
 --- @param deltaY layout_measurement
---- @param translateAnimationDeltaType [TranslateAnimationDeltaType|#TranslateAnimationDeltaType]
+--- @param translateAnimationDeltaType TranslateAnimationDeltaType
 --- @return void
 function AnimationObjectTranslate:SetDeltaOffsetY(deltaY, translateAnimationDeltaType) end
 
@@ -753,7 +773,7 @@ function AnimationObjectTranslate:SetStartOffsetY(startY) end
 
 --- @param deltaX layout_measurement
 --- @param deltaY layout_measurement
---- @param translateAnimationDeltaType [TranslateAnimationDeltaType|#TranslateAnimationDeltaType]
+--- @param translateAnimationDeltaType TranslateAnimationDeltaType
 --- @return void
 function AnimationObjectTranslate:SetTranslateDeltas(deltaX, deltaY, translateAnimationDeltaType) end
 
@@ -764,7 +784,8 @@ function AnimationObjectTranslate:SetTranslateDeltas(deltaX, deltaY, translateAn
 --- @return void
 function AnimationObjectTranslate:SetTranslateOffsets(startX, startY, endX, endY) end
 
-AnimationTimeline = nil
+---@class AnimationTimeline
+AnimationTimeline = {}
 --- @param animatedControl object
 --- @return void
 function AnimationTimeline:ApplyAllAnimationsToControl(animatedControl) end
@@ -776,105 +797,105 @@ function AnimationTimeline:ClearAllCallbacks() end
 function AnimationTimeline:ClearAnimatedControlFromAllAnimations() end
 
 --- @param animationIndex luaindex
---- @return animation object
+--- @return object animation
 function AnimationTimeline:GetAnimation(animationIndex) end
 
 --- @param animation object
---- @return offset integer
+--- @return integer offset
 function AnimationTimeline:GetAnimationOffset(animation) end
 
 --- @param timelineIndex luaindex
---- @return timeline object
+--- @return object timeline
 function AnimationTimeline:GetAnimationTimeline(timelineIndex) end
 
 --- @param animation object
---- @return offset integer
+--- @return integer offset
 function AnimationTimeline:GetAnimationTimelineOffset(animation) end
 
---- @return duration integer
+--- @return integer duration
 function AnimationTimeline:GetDuration() end
 
---- @return animation object
+--- @return object animation
 function AnimationTimeline:GetFirstAnimation() end
 
---- @param animationType [AnimationType|#AnimationType]
---- @return animation object
+--- @param animationType AnimationType
+--- @return object animation
 function AnimationTimeline:GetFirstAnimationOfType(animationType) end
 
---- @return timeline object
+--- @return object timeline
 function AnimationTimeline:GetFirstAnimationTimeline() end
 
---- @return progress number
+--- @return number progress
 function AnimationTimeline:GetFullProgress() end
 
 --- @param eventName string
 --- @param name string
---- @return functionRef function
+--- @return function functionRef
 function AnimationTimeline:GetHandler(eventName, name) end
 
---- @return animation object
+--- @return object animation
 function AnimationTimeline:GetLastAnimation() end
 
---- @return timeline object
+--- @return object timeline
 function AnimationTimeline:GetLastAnimationTimeline() end
 
---- @return minDuration integer
+--- @return integer minDuration
 function AnimationTimeline:GetMinDuration() end
 
---- @return numTimelines integer
+--- @return integer numTimelines
 function AnimationTimeline:GetNumAnimationTimelines() end
 
---- @return numAnimations integer
+--- @return integer numAnimations
 function AnimationTimeline:GetNumAnimations() end
 
---- @return timeline object
+--- @return object timeline
 function AnimationTimeline:GetParent() end
 
---- @return loopsRemaining integer
+--- @return integer loopsRemaining
 function AnimationTimeline:GetPlaybackLoopsRemaining() end
 
---- @return progress number
+--- @return number progress
 function AnimationTimeline:GetProgress() end
 
---- @return skipAnimations bool
+--- @return boolean skipAnimations
 function AnimationTimeline:GetSkipAnimationsBehindPlayheadOnInitialPlay() end
 
---- @param animationType [AnimationType|#AnimationType]
+--- @param animationType AnimationType
 --- @param animatedControl object
 --- @param offset integer
---- @return animation object
+--- @return object animation
 function AnimationTimeline:InsertAnimation(animationType, animatedControl, offset) end
 
 --- @param animationVirtualName string
 --- @param animatedControl object
---- @return animation object
+--- @return object animation
 function AnimationTimeline:InsertAnimationFromVirtual(animationVirtualName, animatedControl) end
 
 --- @param offset integer
 --- @param animatedControl object
---- @return animation object
+--- @return object animation
 function AnimationTimeline:InsertAnimationTimeline(offset, animatedControl) end
 
 --- @param animationVirtualName string
 --- @param animatedControl object
---- @return animation object
+--- @return object animation
 function AnimationTimeline:InsertAnimationTimelineFromVirtual(animationVirtualName, animatedControl) end
 
 --- @param functionRef function
 --- @param offset integer
---- @return functionRefRet function
+--- @return function functionRefRet
 function AnimationTimeline:InsertCallback(functionRef, offset) end
 
---- @return isEnabled bool
+--- @return boolean isEnabled
 function AnimationTimeline:IsEnabled() end
 
---- @return isPaused bool
+--- @return boolean isPaused
 function AnimationTimeline:IsPaused() end
 
---- @return isPlaying bool
+--- @return boolean isPlaying
 function AnimationTimeline:IsPlaying() end
 
---- @return reversed bool
+--- @return boolean reversed
 function AnimationTimeline:IsPlayingBackward() end
 
 --- @return void
@@ -894,11 +915,11 @@ function AnimationTimeline:PlayFromEnd(offsetMs) end
 --- @return void
 function AnimationTimeline:PlayFromStart(offsetMs) end
 
---- @param ignoreCallbacks bool
+--- @param ignoreCallbacks boolean
 --- @return void
 function AnimationTimeline:PlayInstantlyToEnd(ignoreCallbacks) end
 
---- @param ignoreCallbacks bool
+--- @param ignoreCallbacks boolean
 --- @return void
 function AnimationTimeline:PlayInstantlyToStart(ignoreCallbacks) end
 
@@ -924,14 +945,14 @@ function AnimationTimeline:SetAnimationTimelineOffset(animation, offset) end
 --- @return void
 function AnimationTimeline:SetCallbackOffset(callback, offset) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function AnimationTimeline:SetEnabled(enabled) end
 
 --- @param eventName string
 --- @param functionRef function
 --- @param name string
---- @param controlHandlerOrder [ControlHandlerOrder|#ControlHandlerOrder]
+--- @param controlHandlerOrder ControlHandlerOrder
 --- @param targetName string
 --- @return void
 function AnimationTimeline:SetHandler(eventName, functionRef, name, controlHandlerOrder, targetName) end
@@ -952,7 +973,7 @@ function AnimationTimeline:SetPlaybackLoopCount(maxLoopCount) end
 --- @return void
 function AnimationTimeline:SetPlaybackLoopsRemaining(loopsRemaining) end
 
---- @param playbackType [AnimationPlayback|#AnimationPlayback]
+--- @param playbackType AnimationPlayback
 --- @param maxLoopCount integer
 --- @return void
 function AnimationTimeline:SetPlaybackType(playbackType, maxLoopCount) end
@@ -961,24 +982,25 @@ function AnimationTimeline:SetPlaybackType(playbackType, maxLoopCount) end
 --- @return void
 function AnimationTimeline:SetProgress(progress) end
 
---- @param skipAnimations bool
+--- @param skipAnimations boolean
 --- @return void
 function AnimationTimeline:SetSkipAnimationsBehindPlayheadOnInitialPlay(skipAnimations) end
 
 --- @return void
 function AnimationTimeline:Stop() end
 
-BackdropControl = nil
---- @return blendMode [TextureBlendMode|#TextureBlendMode]
+---@class BackdropControl
+BackdropControl = {}
+--- @return TextureBlendMode blendMode
 function BackdropControl:GetBlendMode() end
 
---- @return r number, g number, b number, a number
+--- @return number r, number g, number b, number a
 function BackdropControl:GetCenterColor() end
 
---- @return pixelRoundingEnabled bool
+--- @return boolean pixelRoundingEnabled
 function BackdropControl:IsPixelRoundingEnabled() end
 
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
+--- @param blendMode TextureBlendMode
 --- @return void
 function BackdropControl:SetBlendMode(blendMode) end
 
@@ -991,7 +1013,7 @@ function BackdropControl:SetCenterColor(r, g, b, a) end
 
 --- @param filename string
 --- @param tilingInterval layout_measurement
---- @param addressMode [TextureAddressMode|#TextureAddressMode]
+--- @param addressMode TextureAddressMode
 --- @return void
 function BackdropControl:SetCenterTexture(filename, tilingInterval, addressMode) end
 
@@ -1017,37 +1039,38 @@ function BackdropControl:SetEdgeTexture(filename, edgeFileWidth, edgeFileHeight,
 --- @return void
 function BackdropControl:SetInsets(left, top, right, bottom) end
 
---- @param integralWrappingEnabled bool
+--- @param integralWrappingEnabled boolean
 --- @return void
 function BackdropControl:SetIntegralWrapping(integralWrappingEnabled) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function BackdropControl:SetPixelRoundingEnabled(enabled) end
 
---- @param releaseOption [ReleaseReferenceOptions|#ReleaseReferenceOptions]
+--- @param releaseOption ReleaseReferenceOptions
 --- @return void
 function BackdropControl:SetTextureReleaseOption(releaseOption) end
 
-ButtonControl = nil
---- @param button [MouseButtonIndex|#MouseButtonIndex]
---- @param enabled bool
+---@class ButtonControl
+ButtonControl = {}
+--- @param button MouseButtonIndex
+--- @param enabled boolean
 --- @return void
 function ButtonControl:EnableMouseButton(button, enabled) end
 
---- @return horizontalAlign [TextAlignment|#TextAlignment]
+--- @return TextAlignment horizontalAlign
 function ButtonControl:GetHorizontalAlignment() end
 
---- @return labelControl object
+--- @return object labelControl
 function ButtonControl:GetLabelControl() end
 
---- @return state [ButtonState|#ButtonState]
+--- @return ButtonState state
 function ButtonControl:GetState() end
 
---- @return verticalAlign [TextAlignment|#TextAlignment]
+--- @return TextAlignment verticalAlign
 function ButtonControl:GetVerticalAlignment() end
 
---- @return pixelRoundingEnabled bool
+--- @return boolean pixelRoundingEnabled
 function ButtonControl:IsPixelRoundingEnabled() end
 
 --- @param clickSound string
@@ -1080,7 +1103,7 @@ function ButtonControl:SetDisabledPressedTexture(textureFilename) end
 --- @return void
 function ButtonControl:SetDisabledTexture(textureFilename) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function ButtonControl:SetEnabled(enabled) end
 
@@ -1092,15 +1115,15 @@ function ButtonControl:SetEndCapWidth(endCapWidth) end
 --- @return void
 function ButtonControl:SetFont(text) end
 
---- @param horizontalAlign [TextAlignment|#TextAlignment]
+--- @param horizontalAlign TextAlignment
 --- @return void
 function ButtonControl:SetHorizontalAlignment(horizontalAlign) end
 
---- @param modifyTextType [ModifyTextType|#ModifyTextType]
+--- @param modifyTextType ModifyTextType
 --- @return void
 function ButtonControl:SetModifyTextType(modifyTextType) end
 
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
+--- @param blendMode TextureBlendMode
 --- @return void
 function ButtonControl:SetMouseOverBlendMode(blendMode) end
 
@@ -1131,7 +1154,7 @@ function ButtonControl:SetNormalOffset(x, y) end
 --- @return void
 function ButtonControl:SetNormalTexture(textureFilename) end
 
---- @param pixelRoundingEnabled bool
+--- @param pixelRoundingEnabled boolean
 --- @return void
 function ButtonControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 
@@ -1155,12 +1178,12 @@ function ButtonControl:SetPressedOffset(x, y) end
 --- @return void
 function ButtonControl:SetPressedTexture(textureFilename) end
 
---- @param showingHighlight bool
+--- @param showingHighlight boolean
 --- @return void
 function ButtonControl:SetShowingHighlight(showingHighlight) end
 
---- @param newState [ButtonState|#ButtonState]
---- @param locked bool
+--- @param newState ButtonState
+--- @param locked boolean
 --- @return void
 function ButtonControl:SetState(newState, locked) end
 
@@ -1175,34 +1198,35 @@ function ButtonControl:SetText(text) end
 --- @return void
 function ButtonControl:SetTextureCoords(left, right, top, bottom) end
 
---- @param releaseOption [ReleaseReferenceOptions|#ReleaseReferenceOptions]
+--- @param releaseOption ReleaseReferenceOptions
 --- @return void
 function ButtonControl:SetTextureReleaseOption(releaseOption) end
 
---- @param verticalAlign [TextAlignment|#TextAlignment]
+--- @param verticalAlign TextAlignment
 --- @return void
 function ButtonControl:SetVerticalAlignment(verticalAlign) end
 
-ColorSelectControl = nil
---- @return hue number, saturation number, value number
+---@class ColorSelectControl
+ColorSelectControl = {}
+--- @return number hue, number saturation, number value
 function ColorSelectControl:GetColorAsHSV() end
 
---- @return red number, green number, blue number
+--- @return number red, number green, number blue
 function ColorSelectControl:GetColorAsRGB() end
 
---- @return textureControl object
+--- @return object textureControl
 function ColorSelectControl:GetColorWheelTextureControl() end
 
---- @return textureControl object
+--- @return object textureControl
 function ColorSelectControl:GetColorWheelThumbTextureControl() end
 
---- @return red number, green number, blue number
+--- @return number red, number green, number blue
 function ColorSelectControl:GetFullValuedColorAsRGB() end
 
---- @return normalizedX number, normalizedY number
+--- @return number normalizedX, number normalizedY
 function ColorSelectControl:GetThumbNormalizedPosition() end
 
---- @return value number
+--- @return number value
 function ColorSelectControl:GetValue() end
 
 --- @param hue number
@@ -1230,43 +1254,44 @@ function ColorSelectControl:SetThumbNormalizedPosition(normalizedX, normalizedY)
 --- @return void
 function ColorSelectControl:SetValue(value) end
 
-CompassDisplayControl = nil
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
---- @return closeAlpha number, farAlpha number, closeAlphaDistanceM number, farAlphaDistanceM number
+---@class CompassDisplayControl
+CompassDisplayControl = {}
+--- @param pinType MapDisplayPinType
+--- @return number closeAlpha, number farAlpha, number closeAlphaDistanceM, number farAlphaDistanceM
 function CompassDisplayControl:GetAlphaDropoffBehavior(pinType) end
 
 --- @param centerOveredPinIndex luaindex
---- @return description string
+--- @return string description
 function CompassDisplayControl:GetCenterOveredPinDescription(centerOveredPinIndex) end
 
 --- @param centerOveredPinIndex luaindex
---- @return distanceFromPlayerCM number
+--- @return number distanceFromPlayerCM
 function CompassDisplayControl:GetCenterOveredPinDistance(centerOveredPinIndex) end
 
 --- @param centerOveredPinIndex luaindex
---- @return description string, type [MapDisplayPinType|#MapDisplayPinType], distanceFromPlayerCM number, drawLayer [DrawLayer|#DrawLayer], drawLevel integer, suppressed bool
+--- @return string description, MapDisplayPinType type, number distanceFromPlayerCM, DrawLayer drawLayer, integer drawLevel, boolean suppressed
 function CompassDisplayControl:GetCenterOveredPinInfo(centerOveredPinIndex) end
 
 --- @param centerOveredPinIndex luaindex
---- @return drawLayer [DrawLayer|#DrawLayer], drawLevel integer
+--- @return DrawLayer drawLayer, integer drawLevel
 function CompassDisplayControl:GetCenterOveredPinLayerAndLevel(centerOveredPinIndex) end
 
 --- @param centerOveredPinIndex luaindex
---- @return type [MapDisplayPinType|#MapDisplayPinType]
+--- @return MapDisplayPinType type
 function CompassDisplayControl:GetCenterOveredPinType(centerOveredPinIndex) end
 
---- @return numCenterOveredPins integer
+--- @return integer numCenterOveredPins
 function CompassDisplayControl:GetNumCenterOveredPins() end
 
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
---- @return closeScale number, farScale number, closeScaleDistanceM number, farScaleDistanceM number
+--- @param pinType MapDisplayPinType
+--- @return number closeScale, number farScale, number closeScaleDistanceM, number farScaleDistanceM
 function CompassDisplayControl:GetScaleDropoffBehavior(pinType) end
 
 --- @param centerOveredPinIndex luaindex
---- @return suppressed bool
+--- @return boolean suppressed
 function CompassDisplayControl:IsCenterOveredPinSuppressed(centerOveredPinIndex) end
 
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pinType MapDisplayPinType
 --- @param closeAlpha number
 --- @param farAlpha number
 --- @param closeAlphaDistanceM number
@@ -1280,15 +1305,15 @@ function CompassDisplayControl:SetAlphaDropoffBehavior(pinType, closeAlpha, farA
 --- @return void
 function CompassDisplayControl:SetCardinalDirection(directionName, font, cardinalDirection) end
 
---- @param type [MapDisplayPinType|#MapDisplayPinType]
+--- @param type MapDisplayPinType
 --- @param pinSize number
 --- @param pinTexture string
 --- @param areaTexture string
 --- @param aboveTexture string
 --- @param belowTexture string
 --- @param linkTexture string
---- @param clamped bool
---- @param allowUpdatesWhenAnimating bool
+--- @param clamped boolean
+--- @param allowUpdatesWhenAnimating boolean
 --- @param maxDistanceM number
 --- @param closeScale number
 --- @param farScale number
@@ -1301,12 +1326,12 @@ function CompassDisplayControl:SetCardinalDirection(directionName, font, cardina
 --- @param animation string
 --- @param addedAnimation string
 --- @param removedAnimation string
---- @param layer [DrawLayer|#DrawLayer]
+--- @param layer DrawLayer
 --- @param drawLevelOffsetBase integer
 --- @return void
 function CompassDisplayControl:SetPinInfo(type, pinSize, pinTexture, areaTexture, aboveTexture, belowTexture, linkTexture, clamped, allowUpdatesWhenAnimating, maxDistanceM, closeScale, farScale, closeScaleDistanceM, farScaleDistanceM, closeAlpha, farAlpha, closeAlphaDistanceM, farAlphaDistanceM, animation, addedAnimation, removedAnimation, layer, drawLevelOffsetBase) end
 
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
+--- @param pinType MapDisplayPinType
 --- @param closeScale number
 --- @param farScale number
 --- @param closeScaleDistanceM number
@@ -1314,10 +1339,11 @@ function CompassDisplayControl:SetPinInfo(type, pinSize, pinTexture, areaTexture
 --- @return void
 function CompassDisplayControl:SetScaleDropoffBehavior(pinType, closeScale, farScale, closeScaleDistanceM, farScaleDistanceM) end
 
-Control = nil
+---@class Control
+Control = {}
 --- @param event integer
 --- @param filterParameter variant
---- @return success bool
+--- @return boolean success
 function Control:AddFilterForEvent(event, filterParameter) end
 
 --- @param deltaXRadians number
@@ -1387,326 +1413,326 @@ function Control:ClearTransformSkew() end
 --- @param localPitch number
 --- @param localYaw number
 --- @param localRoll number
---- @return worldPitch number, worldYaw number, worldRoll number
+--- @return number worldPitch, number worldYaw, number worldRoll
 function Control:Convert3DLocalOrientationToWorldOrientation(localPitch, localYaw, localRoll) end
 
 --- @param localX number
 --- @param localY number
 --- @param localZ number
---- @return worldX number, worldY number, worldZ number
+--- @return number worldX, number worldY, number worldZ
 function Control:Convert3DLocalPositionToWorldPosition(localX, localY, localZ) end
 
 --- @param worldPitch number
 --- @param worldYaw number
 --- @param worldRoll number
---- @return localPitch number, localYaw number, localRoll number
+--- @return number localPitch, number localYaw, number localRoll
 function Control:Convert3DWorldOrientationToLocalOrientation(worldPitch, worldYaw, worldRoll) end
 
 --- @param worldX number
 --- @param worldY number
 --- @param worldZ number
---- @return localX number, localY number, localZ number
+--- @return number localX, number localY, number localZ
 function Control:Convert3DWorldPositionToLocalPosition(worldX, worldY, worldZ) end
 
 --- @return void
 function Control:Create3DRenderSpace() end
 
 --- @param childControlName string
---- @param childControlType [ControlType|#ControlType]
---- @return childControl object
+--- @param childControlType ControlType
+--- @return object childControl
 function Control:CreateControl(childControlName, childControlType) end
 
 --- @return void
 function Control:Destroy3DRenderSpace() end
 
---- @return usesDepthBuffer bool
+--- @return boolean usesDepthBuffer
 function Control:Does3DRenderSpaceUseDepthBuffer() end
 
 --- @param root object
---- @return doesControlDescendFromRoot bool
+--- @return boolean doesControlDescendFromRoot
 function Control:DoesControlDescendFrom(root) end
 
---- @return axisRotationOrder [AxisRotationOrder|#AxisRotationOrder]
+--- @return AxisRotationOrder axisRotationOrder
 function Control:Get3DRenderSpaceAxisRotationOrder() end
 
---- @return x number, y number, z number
+--- @return number x, number y, number z
 function Control:Get3DRenderSpaceForward() end
 
---- @return pitchRadians number, yawRadians number, rollRadians number
+--- @return number pitchRadians, number yawRadians, number rollRadians
 function Control:Get3DRenderSpaceOrientation() end
 
---- @return x number, y number, z number
+--- @return number x, number y, number z
 function Control:Get3DRenderSpaceOrigin() end
 
---- @return x number, y number, z number
+--- @return number x, number y, number z
 function Control:Get3DRenderSpaceRight() end
 
---- @return system [GuiRender3DSpaceSystem|#GuiRender3DSpaceSystem]
+--- @return GuiRender3DSpaceSystem system
 function Control:Get3DRenderSpaceSystem() end
 
---- @return x number, y number, z number
+--- @return number x, number y, number z
 function Control:Get3DRenderSpaceUp() end
 
---- @return alpha number
+--- @return number alpha
 function Control:GetAlpha() end
 
 --- @param ancestorIndex luaindex
---- @return ancestorControl object
+--- @return object ancestorControl
 function Control:GetAncestor(ancestorIndex) end
 
 --- @param anchorIndex integer
---- @return isValidAnchor bool, point [AnchorPosition|#AnchorPosition], relativeTo object, relativePoint [AnchorPosition|#AnchorPosition], offsetX number, offsetY number, anchorConstrains [AnchorConstrains|#AnchorConstrains]
+--- @return boolean isValidAnchor, AnchorPosition point, object relativeTo, AnchorPosition relativePoint, number offsetX, number offsetY, AnchorConstrains anchorConstrains
 function Control:GetAnchor(anchorIndex) end
 
---- @return autoRectClipChildren bool
+--- @return boolean autoRectClipChildren
 function Control:GetAutoRectClipChildren() end
 
---- @return bottom number
+--- @return number bottom
 function Control:GetBottom() end
 
---- @return frequencyX number, frequencyY number, speed number, offset number
+--- @return number frequencyX, number frequencyY, number speed, number offset
 function Control:GetCaustic() end
 
---- @return offset number
+--- @return number offset
 function Control:GetCausticOffset() end
 
---- @return centerX number, centerY number
+--- @return number centerX, number centerY
 function Control:GetCenter() end
 
 --- @param childIndex luaindex
---- @return childControl object
+--- @return object childControl
 function Control:GetChild(childIndex) end
 
---- @return alignment [FlexAlignment|#FlexAlignment]
+--- @return FlexAlignment alignment
 function Control:GetChildFlexContentAlignment() end
 
---- @return direction [FlexDirection|#FlexDirection]
+--- @return FlexDirection direction
 function Control:GetChildFlexDirection() end
 
---- @return alignment [FlexAlignment|#FlexAlignment]
+--- @return FlexAlignment alignment
 function Control:GetChildFlexItemAlignment() end
 
---- @return justification [FlexJustification|#FlexJustification]
+--- @return FlexJustification justification
 function Control:GetChildFlexJustification() end
 
---- @return wrap [FlexWrap|#FlexWrap]
+--- @return FlexWrap wrap
 function Control:GetChildFlexWrap() end
 
---- @return childLayoutType [ChildLayoutType|#ChildLayoutType]
+--- @return ChildLayoutType childLayoutType
 function Control:GetChildLayout() end
 
---- @return clamped bool
+--- @return boolean clamped
 function Control:GetClampedToScreen() end
 
---- @return left number, top number, right number, bottom number
+--- @return number left, number top, number right, number bottom
 function Control:GetClampedToScreenInsets() end
 
---- @return alpha number
+--- @return number alpha
 function Control:GetControlAlpha() end
 
---- @return scale number
+--- @return number scale
 function Control:GetControlScale() end
 
---- @return space [Space|#Space]:nilable
+--- @return Space? space
 function Control:GetControlSpace() end
 
---- @return height number
+--- @return number height
 function Control:GetDesiredHeight() end
 
---- @return width number
+--- @return number width
 function Control:GetDesiredWidth() end
 
---- @return minWidth number, minHeight number, maxWidth number, maxHeight number
+--- @return number minWidth, number minHeight, number maxWidth, number maxHeight
 function Control:GetDimensionConstraints() end
 
---- @return width number, height number
+--- @return number width, number height
 function Control:GetDimensions() end
 
---- @return layer [DrawLayer|#DrawLayer]
+--- @return DrawLayer layer
 function Control:GetDrawLayer() end
 
---- @return level integer
+--- @return integer level
 function Control:GetDrawLevel() end
 
---- @return tier [DrawTier|#DrawTier]
+--- @return DrawTier tier
 function Control:GetDrawTier() end
 
---- @return exclude bool
+--- @return boolean exclude
 function Control:GetExcludeFromFlexbox() end
 
---- @return excludes bool
+--- @return boolean excludes
 function Control:GetExcludeFromResizeToFitExtents() end
 
 --- @param gradientIndex luaindex
---- @return normalX number, normalY number, gradientLength number
+--- @return number normalX, number normalY, number gradientLength
 function Control:GetFadeGradient(gradientIndex) end
 
---- @return growOrShrink number:nilable
+--- @return number? growOrShrink
 function Control:GetFlex() end
 
---- @return alignment [FlexAlignment|#FlexAlignment]
+--- @return FlexAlignment alignment
 function Control:GetFlexAlignSelf() end
 
---- @return basis number
+--- @return number basis
 function Control:GetFlexBasis() end
 
---- @return grow number
+--- @return number grow
 function Control:GetFlexGrow() end
 
---- @param edge [FlexEdge|#FlexEdge]
---- @return margin number
+--- @param edge FlexEdge
+--- @return number margin
 function Control:GetFlexMargin(edge) end
 
---- @param edge [FlexEdge|#FlexEdge]
---- @return padding number
+--- @param edge FlexEdge
+--- @return number padding
 function Control:GetFlexPadding(edge) end
 
---- @return shrink number
+--- @return number shrink
 function Control:GetFlexShrink() end
 
---- @return kernelSize integer, factor number
+--- @return integer kernelSize, number factor
 function Control:GetGaussianBlur() end
 
 --- @param handlerName string
 --- @param name string
---- @return functionRef function
+--- @return function functionRef
 function Control:GetHandler(handlerName, name) end
 
---- @return height number
+--- @return number height
 function Control:GetHeight() end
 
---- @return left number, top number, right number, bottom number
+--- @return number left, number top, number right, number bottom
 function Control:GetHitInsets() end
 
---- @return id integer
+--- @return integer id
 function Control:GetId() end
 
---- @return inheritAlpha bool
+--- @return boolean inheritAlpha
 function Control:GetInheritsAlpha() end
 
---- @return inheritScale bool
+--- @return boolean inheritScale
 function Control:GetInheritsScale() end
 
---- @return left number
+--- @return number left
 function Control:GetLeft() end
 
---- @return normalizedThickness number
+--- @return number normalizedThickness
 function Control:GetMaskThresholdThickness() end
 
---- @return normalizedEdge number
+--- @return number normalizedEdge
 function Control:GetMaskThresholdZeroAlphaEdge() end
 
---- @return blurVectorXAsAPercentageOfControlWidth number, blurVectorYAsAPercentageOfControlHeight number, numSamples integer
+--- @return number blurVectorXAsAPercentageOfControlWidth, number blurVectorYAsAPercentageOfControlHeight, integer numSamples
 function Control:GetMotionBlur() end
 
---- @return name string
+--- @return string name
 function Control:GetName() end
 
 --- @param childName string
---- @return returnedControl object
+--- @return object returnedControl
 function Control:GetNamedChild(childName) end
 
 --- @param siblingName string
---- @return returnedControl object
+--- @return object returnedControl
 function Control:GetNamedSibling(siblingName) end
 
---- @return normalX number, normalY number, normalZ number
+--- @return number normalX, number normalY, number normalZ
 function Control:GetNormal() end
 
---- @return normalizedCameraFacingValue number
+--- @return number normalizedCameraFacingValue
 function Control:GetNormalizedCameraFacing() end
 
---- @return numAnchors integer
+--- @return integer numAnchors
 function Control:GetNumAnchors() end
 
---- @return numChildren integer
+--- @return integer numChildren
 function Control:GetNumChildren() end
 
---- @return OwningTopLevelWindow object
+--- @return object OwningTopLevelWindow
 function Control:GetOwningWindow() end
 
---- @return parentControl object
+--- @return object parentControl
 function Control:GetParent() end
 
---- @return originX number, originY number, numSamples integer, blurRadius number, offsetRadius number
+--- @return number originX, number originY, integer numSamples, number blurRadius, number offsetRadius
 function Control:GetRadialBlur() end
 
---- @return constrains [AnchorConstrains|#AnchorConstrains]
+--- @return AnchorConstrains constrains
 function Control:GetResizeToFitConstrains() end
 
---- @return resizes bool
+--- @return boolean resizes
 function Control:GetResizeToFitDescendents() end
 
---- @return width number, height number
+--- @return number width, number height
 function Control:GetResizeToFitPadding() end
 
---- @return right number
+--- @return number right
 function Control:GetRight() end
 
---- @return scale number
+--- @return number scale
 function Control:GetScale() end
 
---- @return left number, top number, right number, bottom number
+--- @return number left, number top, number right, number bottom
 function Control:GetScreenRect() end
 
---- @return space [Space|#Space]
+--- @return Space space
 function Control:GetSpace() end
 
---- @return width number, height number
+--- @return number width, number height
 function Control:GetSuggestedDimensions() end
 
---- @return height number
+--- @return number height
 function Control:GetSuggestedHeight() end
 
---- @return width number
+--- @return number width
 function Control:GetSuggestedWidth() end
 
---- @return top number
+--- @return number top
 function Control:GetTop() end
 
---- @return normalizedX number, normalizedY number
+--- @return number normalizedX, number normalizedY
 function Control:GetTransformNormalizedOriginPoint() end
 
---- @return x number, y number, z number
+--- @return number x, number y, number z
 function Control:GetTransformOffset() end
 
---- @return xRadians number, yRadians number, zRadians number
+--- @return number xRadians, number yRadians, number zRadians
 function Control:GetTransformRotation() end
 
---- @return order [AxisRotationOrder|#AxisRotationOrder]
+--- @return AxisRotationOrder order
 function Control:GetTransformRotationAxisOrder() end
 
---- @return scaleX number, scaleY number, scaleZ number
+--- @return number scaleX, number scaleY, number scaleZ
 function Control:GetTransformScale() end
 
---- @return skewXRadians number, skewYRadians number
+--- @return number skewXRadians, number skewYRadians
 function Control:GetTransformSkew() end
 
---- @return type [ControlType|#ControlType]
+--- @return ControlType type
 function Control:GetType() end
 
---- @return angleRadians number, frequency number, speed number, offset number
+--- @return number angleRadians, number frequency, number speed, number offset
 function Control:GetWave() end
 
---- @return angleRadians number
+--- @return number angleRadians
 function Control:GetWaveAngle() end
 
---- @return minX number, maxX number, minY number, maxY number
+--- @return number minX, number maxX, number minY, number maxY
 function Control:GetWaveBounds() end
 
---- @return frequency number
+--- @return number frequency
 function Control:GetWaveFrequency() end
 
---- @return offset number
+--- @return number offset
 function Control:GetWaveOffset() end
 
---- @return speed number
+--- @return number speed
 function Control:GetWaveSpeed() end
 
---- @return width number
+--- @return number width
 function Control:GetWidth() end
 
---- @return has3DRenderSpace bool
+--- @return boolean has3DRenderSpace
 function Control:Has3DRenderSpace() end
 
 --- @param childControl object
@@ -1715,63 +1741,63 @@ function Control:Has3DRenderSpace() end
 function Control:InsertChildBefore(childControl, nextChild) end --*protected-attributes*
 
 --- @param desiredParent object
---- @return isChild bool
+--- @return boolean isChild
 function Control:IsChildOf(desiredParent) end
 
---- @return hidden bool
+--- @return boolean hidden
 function Control:IsControlHidden() end
 
 --- @param handlerName string
 --- @param name string
---- @return isSet bool
+--- @return boolean isSet
 function Control:IsHandlerSet(handlerName, name) end
 
---- @return hidden bool
+--- @return boolean hidden
 function Control:IsHidden() end
 
---- @return enabled bool
+--- @return boolean enabled
 function Control:IsKeyboardEnabled() end
 
---- @return enabled bool
+--- @return boolean enabled
 function Control:IsMouseEnabled() end
 
 --- @param x layout_measurement
 --- @param y layout_measurement
---- @param leftOffset layout_measurement:nilable
---- @param topOffset layout_measurement:nilable
---- @param rightOffset layout_measurement:nilable
---- @param bottomOffset layout_measurement:nilable
---- @return isInside bool
+--- @param leftOffset layout_measurement?
+--- @param topOffset layout_measurement?
+--- @param rightOffset layout_measurement?
+--- @param bottomOffset layout_measurement?
+--- @return boolean isInside
 function Control:IsPointInside(x, y, leftOffset, topOffset, rightOffset, bottomOffset) end
 
---- @return x1 number, y1 number, x2 number, y2 number, x3 number, y3 number, x4 number, y4 number
+--- @return number x1, number y1, number x2, number y2, number x3, number y3, number x4, number y4
 function Control:ProjectRectToScreen() end
 
---- @return left number, top number, right number, bottom number
+--- @return number left, number top, number right, number bottom
 function Control:ProjectRectToScreenAndBuildAABB() end
 
---- @param point [AnchorPosition|#AnchorPosition]
---- @return screenX number, screenY number
+--- @param point AnchorPosition
+--- @return number screenX, number screenY
 function Control:ProjectRectToScreenAndComputeAABBPoint(point) end
 
---- @param point [AnchorPosition|#AnchorPosition]
---- @return screenX number, screenY number
+--- @param point AnchorPosition
+--- @return number screenX, number screenY
 function Control:ProjectRectToScreenAndComputeClampedAABBPoint(point) end
 
 --- @param normalizedX number
 --- @param normalizedY number
---- @return screenX number, screenY number
+--- @return number screenX, number screenY
 function Control:ProjectToScreen(normalizedX, normalizedY) end
 
 --- @param event integer
 --- @param callback function
---- @return success bool
+--- @return boolean success
 function Control:RegisterForEvent(event, callback) end
 
 --- @return void
 function Control:ResetTransformNormalizedOriginPoint() end
 
---- @param axisRotationOrder [AxisRotationOrder|#AxisRotationOrder]
+--- @param axisRotationOrder AxisRotationOrder
 --- @return void
 function Control:Set3DRenderSpaceAxisRotationOrder(axisRotationOrder) end
 
@@ -1799,7 +1825,7 @@ function Control:Set3DRenderSpaceOrigin(xM, yM, zM) end
 --- @return void
 function Control:Set3DRenderSpaceRight(x, y, z) end
 
---- @param system [GuiRender3DSpaceSystem|#GuiRender3DSpaceSystem]
+--- @param system GuiRender3DSpaceSystem
 --- @return void
 function Control:Set3DRenderSpaceSystem(system) end
 
@@ -1809,7 +1835,7 @@ function Control:Set3DRenderSpaceSystem(system) end
 --- @return void
 function Control:Set3DRenderSpaceUp(x, y, z) end
 
---- @param usesDepthBuffer bool
+--- @param usesDepthBuffer boolean
 --- @return void
 function Control:Set3DRenderSpaceUsesDepthBuffer(usesDepthBuffer) end
 
@@ -1817,12 +1843,12 @@ function Control:Set3DRenderSpaceUsesDepthBuffer(usesDepthBuffer) end
 --- @return void
 function Control:SetAlpha(alpha) end --*protected-attributes*
 
---- @param point [AnchorPosition|#AnchorPosition]
+--- @param point AnchorPosition
 --- @param relativeTo object
---- @param relativePoint [AnchorPosition|#AnchorPosition]
+--- @param relativePoint AnchorPosition
 --- @param offsetX layout_measurement
 --- @param offsetY layout_measurement
---- @param anchorConstrains [AnchorConstrains|#AnchorConstrains]
+--- @param anchorConstrains AnchorConstrains
 --- @return void
 function Control:SetAnchor(point, relativeTo, relativePoint, offsetX, offsetY, anchorConstrains) end --*protected-attributes*
 
@@ -1836,7 +1862,7 @@ function Control:SetAnchorFill(anchorTargetControl) end --*protected-attributes*
 --- @return void
 function Control:SetAnchorOffsets(offsetX, offsetY, anchorIndex) end
 
---- @param autoRectClipChildren bool
+--- @param autoRectClipChildren boolean
 --- @return void
 function Control:SetAutoRectClipChildren(autoRectClipChildren) end
 
@@ -1851,27 +1877,27 @@ function Control:SetCaustic(frequencyX, frequencyY, speed, offset) end
 --- @return void
 function Control:SetCausticOffset(offset) end
 
---- @param alignment [FlexAlignment|#FlexAlignment]
+--- @param alignment FlexAlignment
 --- @return void
 function Control:SetChildFlexContentAlignment(alignment) end
 
---- @param direction [FlexDirection|#FlexDirection]
+--- @param direction FlexDirection
 --- @return void
 function Control:SetChildFlexDirection(direction) end
 
---- @param alignment [FlexAlignment|#FlexAlignment]
+--- @param alignment FlexAlignment
 --- @return void
 function Control:SetChildFlexItemAlignment(alignment) end
 
---- @param justification [FlexJustification|#FlexJustification]
+--- @param justification FlexJustification
 --- @return void
 function Control:SetChildFlexJustification(justification) end
 
---- @param wrap [FlexWrap|#FlexWrap]
+--- @param wrap FlexWrap
 --- @return void
 function Control:SetChildFlexWrap(wrap) end
 
---- @param childLayoutType [ChildLayoutType|#ChildLayoutType]
+--- @param childLayoutType ChildLayoutType
 --- @return void
 function Control:SetChildLayout(childLayoutType) end
 
@@ -1881,7 +1907,7 @@ function Control:SetChildLayout(childLayoutType) end
 --- @return void
 function Control:SetCircularClip(centerX, centerY, radius) end
 
---- @param clamped bool
+--- @param clamped boolean
 --- @return void
 function Control:SetClampedToScreen(clamped) end
 
@@ -1904,7 +1930,7 @@ function Control:SetDimensionConstraints(minWidth, minHeight, maxWidth, maxHeigh
 --- @return void
 function Control:SetDimensions(width, height) end --*protected-attributes*
 
---- @param layer [DrawLayer|#DrawLayer]
+--- @param layer DrawLayer
 --- @return void
 function Control:SetDrawLayer(layer) end --*protected-attributes*
 
@@ -1912,15 +1938,15 @@ function Control:SetDrawLayer(layer) end --*protected-attributes*
 --- @return void
 function Control:SetDrawLevel(level) end --*protected-attributes*
 
---- @param tier [DrawTier|#DrawTier]
+--- @param tier DrawTier
 --- @return void
 function Control:SetDrawTier(tier) end --*protected-attributes*
 
---- @param exclude bool
+--- @param exclude boolean
 --- @return void
 function Control:SetExcludeFromFlexbox(exclude) end
 
---- @param exclude bool
+--- @param exclude boolean
 --- @return void
 function Control:SetExcludeFromResizeToFitExtents(exclude) end --*protected-attributes*
 
@@ -1931,11 +1957,11 @@ function Control:SetExcludeFromResizeToFitExtents(exclude) end --*protected-attr
 --- @return void
 function Control:SetFadeGradient(gradientIndex, normalX, normalY, gradientLength) end
 
---- @param growOrShrink number:nilable
+--- @param growOrShrink number?
 --- @return void
 function Control:SetFlex(growOrShrink) end
 
---- @param alignment [FlexAlignment|#FlexAlignment]
+--- @param alignment FlexAlignment
 --- @return void
 function Control:SetFlexAlignSelf(alignment) end
 
@@ -1947,7 +1973,7 @@ function Control:SetFlexBasis(basis) end
 --- @return void
 function Control:SetFlexGrow(grow) end
 
---- @param edge [FlexEdge|#FlexEdge]
+--- @param edge FlexEdge
 --- @param margin number
 --- @return void
 function Control:SetFlexMargin(edge, margin) end
@@ -1978,7 +2004,7 @@ function Control:SetGaussianBlur(kernelSize, factor) end
 --- @param handlerName string
 --- @param functionRef function
 --- @param name string
---- @param controlHandlerOrder [ControlHandlerOrder|#ControlHandlerOrder]
+--- @param controlHandlerOrder ControlHandlerOrder
 --- @param targetName string
 --- @return void
 function Control:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
@@ -1987,7 +2013,7 @@ function Control:SetHandler(handlerName, functionRef, name, controlHandlerOrder,
 --- @return void
 function Control:SetHeight(height) end --*protected-attributes*
 
---- @param hidden bool
+--- @param hidden boolean
 --- @return void
 function Control:SetHidden(hidden) end --*protected-attributes*
 
@@ -2002,19 +2028,19 @@ function Control:SetHitInsets(left, top, right, bottom) end
 --- @return void
 function Control:SetId(id) end
 
---- @param inheritAlpha bool
+--- @param inheritAlpha boolean
 --- @return void
 function Control:SetInheritAlpha(inheritAlpha) end
 
---- @param inheritScale bool
+--- @param inheritScale boolean
 --- @return void
 function Control:SetInheritScale(inheritScale) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function Control:SetKeyboardEnabled(enabled) end --*protected-attributes*
 
---- @param maskMode [ControlMaskMode|#ControlMaskMode]
+--- @param maskMode ControlMaskMode
 --- @return void
 function Control:SetMaskMode(maskMode) end
 
@@ -2022,7 +2048,7 @@ function Control:SetMaskMode(maskMode) end
 --- @return void
 function Control:SetMaskTexture(fileName) end
 
---- @param releaseOption [ReleaseReferenceOptions|#ReleaseReferenceOptions]
+--- @param releaseOption ReleaseReferenceOptions
 --- @return void
 function Control:SetMaskTextureReleaseOption(releaseOption) end
 
@@ -2040,11 +2066,11 @@ function Control:SetMaskThresholdZeroAlphaEdge(normalizedEdge) end
 --- @return void
 function Control:SetMotionBlur(blurVectorXAsAPercentageOfControlWidth, blurVectorYAsAPercentageOfControlHeight, numSamples) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function Control:SetMouseEnabled(enabled) end --*protected-attributes*
 
---- @param isMovable bool
+--- @param isMovable boolean
 --- @return void
 function Control:SetMovable(isMovable) end
 
@@ -2071,11 +2097,11 @@ function Control:SetRectangularClip(left, top, right, bottom) end
 --- @return void
 function Control:SetResizeHandleSize(handleSize) end
 
---- @param constrains [AnchorConstrains|#AnchorConstrains]
+--- @param constrains AnchorConstrains
 --- @return void
 function Control:SetResizeToFitConstrains(constrains) end
 
---- @param resize bool
+--- @param resize boolean
 --- @return void
 function Control:SetResizeToFitDescendents(resize) end --*protected-attributes*
 
@@ -2103,7 +2129,7 @@ function Control:SetSimpleAnchor(anchorTargetControl, offsetX, offsetY) end --*p
 --- @return void
 function Control:SetSimpleAnchorParent(offsetX, offsetY) end --*protected-attributes*
 
---- @param space [Space|#Space]:nilable
+--- @param space Space?
 --- @return void
 function Control:SetSpace(space) end
 
@@ -2139,11 +2165,11 @@ function Control:SetTransformRotation(xRadians, yRadians, zRadians) end
 --- @param deltaXRadians number
 --- @param deltaYRadians number
 --- @param deltaZRadians number
---- @param order [AxisRotationOrder|#AxisRotationOrder]
+--- @param order AxisRotationOrder
 --- @return void
 function Control:SetTransformRotationAndOrder(deltaXRadians, deltaYRadians, deltaZRadians, order) end
 
---- @param order [AxisRotationOrder|#AxisRotationOrder]
+--- @param order AxisRotationOrder
 --- @return void
 function Control:SetTransformRotationAxisOrder(order) end
 
@@ -2222,7 +2248,7 @@ function Control:SetWaveSpeed(speed) end
 --- @return void
 function Control:SetWidth(width) end --*protected-attributes*
 
---- @return isMoving bool
+--- @return boolean isMoving
 function Control:StartMoving() end --*protected-attributes*
 
 --- @return void
@@ -2245,17 +2271,18 @@ function Control:SuggestWidth(width) end --*protected-attributes*
 function Control:ToggleHidden() end --*protected-attributes*
 
 --- @param event integer
---- @return success bool
+--- @return boolean success
 function Control:UnregisterForEvent(event) end
 
-CooldownControl = nil
---- @return duration integer
+---@class CooldownControl
+CooldownControl = {}
+--- @return integer duration
 function CooldownControl:GetDuration() end
 
---- @return percentComplete number
+--- @return number percentComplete
 function CooldownControl:GetPercentCompleteFixed() end
 
---- @return time integer
+--- @return integer time
 function CooldownControl:GetTimeLeft() end
 
 --- @return void
@@ -2288,7 +2315,7 @@ function CooldownControl:SetLeadingEdgeTexture(filename) end
 --- @return void
 function CooldownControl:SetPercentCompleteFixed(percentComplete) end
 
---- @param clockwise bool
+--- @param clockwise boolean
 --- @return void
 function CooldownControl:SetRadialCooldownClockwise(clockwise) end
 
@@ -2305,7 +2332,7 @@ function CooldownControl:SetRadialCooldownOriginAngle(originAngle) end
 --- @return void
 function CooldownControl:SetTexture(filename) end
 
---- @param releaseOption [ReleaseReferenceOptions|#ReleaseReferenceOptions]
+--- @param releaseOption ReleaseReferenceOptions
 --- @return void
 function CooldownControl:SetTextureReleaseOption(releaseOption) end
 
@@ -2317,18 +2344,19 @@ function CooldownControl:SetVerticalCooldownLeadingEdgeHeight(leadingEdgeHeight)
 --- @param duration integer
 --- @param cooldownType integer
 --- @param cooldownTimeType integer
---- @param drawLeadingEdge bool
+--- @param drawLeadingEdge boolean
 --- @return void
 function CooldownControl:StartCooldown(remain, duration, cooldownType, cooldownTimeType, drawLeadingEdge) end
 
 --- @param percentComplete number
 --- @param cooldownType integer
 --- @param cooldownTimeType integer
---- @param drawLeadingEdge bool
+--- @param drawLeadingEdge boolean
 --- @return void
 function CooldownControl:StartFixedCooldown(percentComplete, cooldownType, cooldownTimeType, drawLeadingEdge) end
 
-DebugTextControl = nil
+---@class DebugTextControl
+DebugTextControl = {}
 --- @return void
 function DebugTextControl:Clear() end
 
@@ -2336,7 +2364,8 @@ function DebugTextControl:Clear() end
 --- @return void
 function DebugTextControl:SetFont(fontStr) end
 
-EditControl = nil
+---@class EditControl
+EditControl = {}
 --- @param validCharacter string
 --- @return void
 function EditControl:AddValidCharacter(validCharacter) end
@@ -2350,68 +2379,68 @@ function EditControl:ClearSelection() end
 --- @return void
 function EditControl:CopyAllTextToClipboard() end --*private*
 
---- @return allowMarkupType [AllowMarkupType|#AllowMarkupType]
+--- @return AllowMarkupType allowMarkupType
 function EditControl:GetAllowMarkupType() end
 
---- @return enabled bool
+--- @return boolean enabled
 function EditControl:GetCopyEnabled() end
 
---- @return cursorPosition integer
+--- @return integer cursorPosition
 function EditControl:GetCursorPosition() end
 
---- @return defaultText string
+--- @return string defaultText
 function EditControl:GetDefaultText() end
 
---- @return enabled bool
+--- @return boolean enabled
 function EditControl:GetEditEnabled() end
 
---- @return fontHeightUIUnits number
+--- @return number fontHeightUIUnits
 function EditControl:GetFontHeight() end
 
---- @return leftControlSpace number, topControlSpace number, rightControlSpace number, bottomControlSpace number
+--- @return number leftControlSpace, number topControlSpace, number rightControlSpace, number bottomControlSpace
 function EditControl:GetIMECompositionExclusionArea() end
 
---- @return maxChars integer
+--- @return integer maxChars
 function EditControl:GetMaxInputChars() end
 
---- @return enabled bool
+--- @return boolean enabled
 function EditControl:GetNewLineEnabled() end
 
---- @return enabled bool
+--- @return boolean enabled
 function EditControl:GetPasteEnabled() end
 
---- @return numLines integer
+--- @return integer numLines
 function EditControl:GetScrollExtents() end
 
---- @return enabled bool
+--- @return boolean enabled
 function EditControl:GetSelectAllOnFocus() end
 
---- @return text string
+--- @return string text
 function EditControl:GetText() end
 
---- @return textType [TextType|#TextType]
+--- @return TextType textType
 function EditControl:GetTextType() end
 
---- @return index luaindex
+--- @return luaindex index
 function EditControl:GetTopLineIndex() end
 
---- @return focused bool
+--- @return boolean focused
 function EditControl:HasFocus() end
 
---- @return hasSelection bool
+--- @return boolean hasSelection
 function EditControl:HasSelection() end
 
 --- @param text string
 --- @return void
 function EditControl:InsertText(text) end
 
---- @return isComposing bool
+--- @return boolean isComposing
 function EditControl:IsComposingIMEText() end
 
---- @return isMultiLine bool
+--- @return boolean isMultiLine
 function EditControl:IsMultiLine() end
 
---- @return isPassword bool
+--- @return boolean isPassword
 function EditControl:IsPassword() end
 
 --- @return void
@@ -2423,11 +2452,11 @@ function EditControl:RemoveAllValidCharacters() end
 --- @return void
 function EditControl:SelectAll() end
 
---- @param allowMarkupType [AllowMarkupType|#AllowMarkupType]
+--- @param allowMarkupType AllowMarkupType
 --- @return void
 function EditControl:SetAllowMarkupType(allowMarkupType) end
 
---- @param isPassword bool
+--- @param isPassword boolean
 --- @return void
 function EditControl:SetAsPassword(isPassword) end
 
@@ -2438,7 +2467,7 @@ function EditControl:SetAsPassword(isPassword) end
 --- @return void
 function EditControl:SetColor(r, g, b, a) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EditControl:SetCopyEnabled(enabled) end
 
@@ -2457,7 +2486,7 @@ function EditControl:SetDefaultText(defaultText) end
 --- @return void
 function EditControl:SetDefaultTextColor(r, g, b, a) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EditControl:SetEditEnabled(enabled) end
 
@@ -2469,19 +2498,19 @@ function EditControl:SetFont(font) end
 --- @return void
 function EditControl:SetMaxInputChars(maxChars) end
 
---- @param isMultiLine bool
+--- @param isMultiLine boolean
 --- @return void
 function EditControl:SetMultiLine(isMultiLine) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EditControl:SetNewLineEnabled(enabled) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EditControl:SetPasteEnabled(enabled) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function EditControl:SetSelectAllOnFocus(enabled) end
 
@@ -2498,11 +2527,11 @@ function EditControl:SetSelection(selectionStartIndex, selectionEndIndex) end
 function EditControl:SetSelectionColor(r, g, b, a) end
 
 --- @param text string
---- @param suppressCallbackHandler bool
+--- @param suppressCallbackHandler boolean
 --- @return void
 function EditControl:SetText(text, suppressCallbackHandler) end
 
---- @param textType [TextType|#TextType]
+--- @param textType TextType
 --- @return void
 function EditControl:SetTextType(textType) end
 
@@ -2510,28 +2539,30 @@ function EditControl:SetTextType(textType) end
 --- @return void
 function EditControl:SetTopLineIndex(index) end
 
---- @param keyboardType [VirtualKeyboardType|#VirtualKeyboardType]
+--- @param keyboardType VirtualKeyboardType
 --- @return void
 function EditControl:SetVirtualKeyboardType(keyboardType) end
 
 --- @return void
 function EditControl:TakeFocus() end
 
---- @return fromVirtual bool
+--- @return boolean fromVirtual
 function EditControl:WasLastChangeVirtualKeyboard() end
 
-FontObject = nil
---- @return face string, size integer, option string
+---@class FontObject
+FontObject = {}
+--- @return string face, integer size, string option
 function FontObject:GetFontInfo() end
 
 --- @param fontDescriptor string
 --- @return void
 function FontObject:SetFont(fontDescriptor) end
 
-LabelControl = nil
+---@class LabelControl
+LabelControl = {}
 --- @param toLabel object
 --- @param offsetX layout_measurement
---- @param anchorSide [AnchorPosition|#AnchorPosition]
+--- @param anchorSide AnchorPosition
 --- @return void
 function LabelControl:AnchorToBaseline(toLabel, offsetX, anchorSide) end
 
@@ -2542,58 +2573,58 @@ function LabelControl:Clean() end
 --- @return void
 function LabelControl:ClearAnchorToBaseline(toLabel) end
 
---- @return didLineWrap bool
+--- @return boolean didLineWrap
 function LabelControl:DidLineWrap() end
 
---- @return r number, g number, b number, a number
+--- @return number r, number g, number b, number a
 function LabelControl:GetColor() end
 
---- @return text string
+--- @return string text
 function LabelControl:GetFontFaceName() end
 
---- @return fontHeightUIUnits number
+--- @return number fontHeightUIUnits
 function LabelControl:GetFontHeight() end
 
---- @return align [TextAlignment|#TextAlignment]
+--- @return TextAlignment align
 function LabelControl:GetHorizontalAlignment() end
 
---- @return linkEnabed bool
+--- @return boolean linkEnabed
 function LabelControl:GetLinkEnabled() end
 
---- @return modifyTextType [ModifyTextType|#ModifyTextType]
+--- @return ModifyTextType modifyTextType
 function LabelControl:GetModifyTextType() end
 
---- @return numLines integer
+--- @return integer numLines
 function LabelControl:GetNumLines() end
 
---- @return shaderEffectType [ShaderEffectType|#ShaderEffectType]
+--- @return ShaderEffectType shaderEffectType
 function LabelControl:GetShaderEffectType() end
 
 --- @param text string
---- @return scaledWidthTextLayoutNative number
+--- @return number scaledWidthTextLayoutNative
 function LabelControl:GetStringWidth(text) end
 
---- @return r number, g number, b number, a number
+--- @return number r, number g, number b, number a
 function LabelControl:GetStyleColor() end
 
---- @return text string
+--- @return string text
 function LabelControl:GetText() end
 
---- @return stringWidthUIUnits number, stringHeightUIUnits number
+--- @return number stringWidthUIUnits, number stringHeightUIUnits
 function LabelControl:GetTextDimensions() end
 
 --- @param startLine luaindex
 --- @param endLine luaindex
---- @return text string
+--- @return string text
 function LabelControl:GetTextForLines(startLine, endLine) end
 
---- @return stringHeightUIUnits number
+--- @return number stringHeightUIUnits
 function LabelControl:GetTextHeight() end
 
---- @return stringWidthUIUnits number
+--- @return number stringWidthUIUnits
 function LabelControl:GetTextWidth() end
 
---- @return align [TextAlignment|#TextAlignment]
+--- @return TextAlignment align
 function LabelControl:GetVerticalAlignment() end
 
 --- @param r number
@@ -2611,7 +2642,7 @@ function LabelControl:SetDesaturation(desaturation) end
 --- @return void
 function LabelControl:SetFont(fontString) end
 
---- @param align [TextAlignment|#TextAlignment]
+--- @param align TextAlignment
 --- @return void
 function LabelControl:SetHorizontalAlignment(align) end
 
@@ -2619,7 +2650,7 @@ function LabelControl:SetHorizontalAlignment(align) end
 --- @return void
 function LabelControl:SetLineSpacing(lineSpacing) end
 
---- @param linkEnabed bool
+--- @param linkEnabed boolean
 --- @return void
 function LabelControl:SetLinkEnabled(linkEnabed) end
 
@@ -2631,7 +2662,7 @@ function LabelControl:SetMaxLineCount(maxLineCount) end
 --- @return void
 function LabelControl:SetMinLineCount(minLineCount) end
 
---- @param modifyTextType [ModifyTextType|#ModifyTextType]
+--- @param modifyTextType ModifyTextType
 --- @return void
 function LabelControl:SetModifyTextType(modifyTextType) end
 
@@ -2639,23 +2670,23 @@ function LabelControl:SetModifyTextType(modifyTextType) end
 --- @return void
 function LabelControl:SetNewLineX(newLineX) end
 
---- @param pixelRoundingEnabled bool
+--- @param pixelRoundingEnabled boolean
 --- @return void
 function LabelControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 
---- @param shaderEffectType [ShaderEffectType|#ShaderEffectType]
+--- @param shaderEffectType ShaderEffectType
 --- @return void
 function LabelControl:SetShaderEffectType(shaderEffectType) end
 
---- @param smallCaps bool
+--- @param smallCaps boolean
 --- @return void
 function LabelControl:SetSmallCaps(smallCaps) end
 
---- @param storeLineEndingCharacterIndices bool
+--- @param storeLineEndingCharacterIndices boolean
 --- @return void
 function LabelControl:SetStoreLineEndingCharacterIndices(storeLineEndingCharacterIndices) end
 
---- @param strikethrough bool
+--- @param strikethrough boolean
 --- @return void
 function LabelControl:SetStrikethrough(strikethrough) end
 
@@ -2670,11 +2701,11 @@ function LabelControl:SetStyleColor(r, g, b, a) end
 --- @return void
 function LabelControl:SetText(text) end
 
---- @param underline bool
+--- @param underline boolean
 --- @return void
 function LabelControl:SetUnderline(underline) end
 
---- @param align [TextAlignment|#TextAlignment]
+--- @param align TextAlignment
 --- @return void
 function LabelControl:SetVerticalAlignment(align) end
 
@@ -2682,41 +2713,42 @@ function LabelControl:SetVerticalAlignment(align) end
 --- @return void
 function LabelControl:SetWrapMode(wrapMode) end
 
---- @return wasTruncated bool
+--- @return boolean wasTruncated
 function LabelControl:WasTruncated() end
 
-LineControl = nil
+---@class LineControl
+LineControl = {}
 --- @return void
 function LineControl:ClearGradientColors() end
 
---- @return blendMode [TextureBlendMode|#TextureBlendMode]
+--- @return TextureBlendMode blendMode
 function LineControl:GetBlendMode() end
 
---- @return r number, g number, b number, a number
+--- @return number r, number g, number b, number a
 function LineControl:GetColor() end
 
---- @return desaturation number
+--- @return number desaturation
 function LineControl:GetDesaturation() end
 
---- @return left number, right number, top number, bottom number
+--- @return number left, number right, number top, number bottom
 function LineControl:GetTextureCoords() end
 
---- @return pixelWidth integer, pixelHeight integer
+--- @return integer pixelWidth, integer pixelHeight
 function LineControl:GetTextureFileDimensions() end
 
---- @return filename string
+--- @return string filename
 function LineControl:GetTextureFileName() end
 
---- @return thickness number
+--- @return number thickness
 function LineControl:GetThickness() end
 
---- @return pixelRoundingEnabled bool
+--- @return boolean pixelRoundingEnabled
 function LineControl:IsPixelRoundingEnabled() end
 
---- @return loaded bool
+--- @return boolean loaded
 function LineControl:IsTextureLoaded() end
 
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
+--- @param blendMode TextureBlendMode
 --- @return void
 function LineControl:SetBlendMode(blendMode) end
 
@@ -2731,7 +2763,7 @@ function LineControl:SetColor(r, g, b, a) end
 --- @return void
 function LineControl:SetDesaturation(desaturation) end
 
---- @param orientation [ControlOrientation|#ControlOrientation]
+--- @param orientation ControlOrientation
 --- @param startR number
 --- @param startG number
 --- @param startB number
@@ -2743,7 +2775,7 @@ function LineControl:SetDesaturation(desaturation) end
 --- @return void
 function LineControl:SetGradientColors(orientation, startR, startG, startB, startA, endR, endG, endB, endA) end
 
---- @param pixelRoundingEnabled bool
+--- @param pixelRoundingEnabled boolean
 --- @return void
 function LineControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 
@@ -2770,12 +2802,13 @@ function LineControl:SetThickness(thickness) end
 --- @return void
 function LineControl:SetVertexColors(vertexPoints, red, green, blue, alpha) end
 
-MapDisplayControl = nil
---- @return normalizedRadius number
+---@class MapDisplayControl
+MapDisplayControl = {}
+--- @return number normalizedRadius
 function MapDisplayControl:GetZoom() end
 
---- @param pinType [MapDisplayPinType|#MapDisplayPinType]
---- @param arrowType [MapArrowType|#MapArrowType]
+--- @param pinType MapDisplayPinType
+--- @param arrowType MapArrowType
 --- @param pinSize number
 --- @param pinXInset number
 --- @param pinYInset number
@@ -2789,7 +2822,7 @@ function MapDisplayControl:GetZoom() end
 --- @param animation string
 --- @param addedAnimation string
 --- @param removedAnimation string
---- @param animationTarget [MapPinAnimationTarget|#MapPinAnimationTarget]
+--- @param animationTarget MapPinAnimationTarget
 --- @return void
 function MapDisplayControl:SetBasePinData(pinType, arrowType, pinSize, pinXInset, pinYInset, arrowSize, textureFilename, arrowTextureFilename, areaTextureFilename, aboveTextureFilename, belowTextureFilename, linkTextureFilename, animation, addedAnimation, removedAnimation, animationTarget) end
 
@@ -2806,7 +2839,8 @@ function MapDisplayControl:SetPinFont(pinFont) end
 --- @return void
 function MapDisplayControl:SetZoom(normalizedRadius) end
 
-PolygonControl = nil
+---@class PolygonControl
+PolygonControl = {}
 --- @param normalizedX number
 --- @param normalizedY number
 --- @return void
@@ -2815,50 +2849,50 @@ function PolygonControl:AddPoint(normalizedX, normalizedY) end
 --- @return void
 function PolygonControl:ClearPoints() end
 
---- @return blendMode [TextureBlendMode|#TextureBlendMode]
+--- @return TextureBlendMode blendMode
 function PolygonControl:GetBorderBlendMode() end
 
---- @return desaturation number
+--- @return number desaturation
 function PolygonControl:GetBorderDesaturation() end
 
---- @return direction [PolygonBorderDirection|#PolygonBorderDirection]
+--- @return PolygonBorderDirection direction
 function PolygonControl:GetBorderDirection() end
 
---- @return textureFile string
+--- @return string textureFile
 function PolygonControl:GetBorderTexture() end
 
---- @return mins number, max number, percent number
+--- @return number mins, number max, number percent
 function PolygonControl:GetBorderThickness() end
 
---- @return blendMode [TextureBlendMode|#TextureBlendMode]
+--- @return TextureBlendMode blendMode
 function PolygonControl:GetCenterBlendMode() end
 
---- @return r number, g number, b number, a number
+--- @return number r, number g, number b, number a
 function PolygonControl:GetCenterColor() end
 
---- @return desaturation number
+--- @return number desaturation
 function PolygonControl:GetCenterDesaturation() end
 
---- @return textureFile string
+--- @return string textureFile
 function PolygonControl:GetCenterTexture() end
 
---- @return addressMode [TextureAddressMode|#TextureAddressMode]
+--- @return TextureAddressMode addressMode
 function PolygonControl:GetCenterTextureAddressMode() end
 
---- @return left number, right number, top number, bottom number
+--- @return number left, number right, number top, number bottom
 function PolygonControl:GetCenterTextureCoords() end
 
---- @return numPoints integer
+--- @return integer numPoints
 function PolygonControl:GetNumPoints() end
 
 --- @param index luaindex
---- @return normalizedX number, normalizedY number
+--- @return number normalizedX, number normalizedY
 function PolygonControl:GetPoint(index) end
 
---- @return pointLayout [PolygonPointLayout|#PolygonPointLayout]
+--- @return PolygonPointLayout pointLayout
 function PolygonControl:GetPointLayout() end
 
---- @return isSmoothingEnabled bool
+--- @return boolean isSmoothingEnabled
 function PolygonControl:IsSmoothingEnabled() end
 
 --- @param minThickness layout_measurement
@@ -2867,12 +2901,12 @@ function PolygonControl:IsSmoothingEnabled() end
 --- @param color string
 --- @param textureFile string
 --- @param desaturation number
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
---- @param direction [PolygonBorderDirection|#PolygonBorderDirection]
+--- @param blendMode TextureBlendMode
+--- @param direction PolygonBorderDirection
 --- @return void
 function PolygonControl:SetBorder(minThickness, maxThickness, thicknessPercent, color, textureFile, desaturation, blendMode, direction) end
 
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
+--- @param blendMode TextureBlendMode
 --- @return void
 function PolygonControl:SetBorderBlendMode(blendMode) end
 
@@ -2887,7 +2921,7 @@ function PolygonControl:SetBorderColor(r, g, b, a) end
 --- @return void
 function PolygonControl:SetBorderDesaturation(desaturation) end
 
---- @param direction [PolygonBorderDirection|#PolygonBorderDirection]
+--- @param direction PolygonBorderDirection
 --- @return void
 function PolygonControl:SetBorderDirection(direction) end
 
@@ -2901,7 +2935,7 @@ function PolygonControl:SetBorderTexture(textureFile) end
 --- @return void
 function PolygonControl:SetBorderThickness(min, max, percent) end
 
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
+--- @param blendMode TextureBlendMode
 --- @return void
 function PolygonControl:SetCenterBlendMode(blendMode) end
 
@@ -2920,7 +2954,7 @@ function PolygonControl:SetCenterDesaturation(desaturation) end
 --- @return void
 function PolygonControl:SetCenterTexture(textureFile) end
 
---- @param addressMode [TextureAddressMode|#TextureAddressMode]
+--- @param addressMode TextureAddressMode
 --- @return void
 function PolygonControl:SetCenterTextureAddressMode(addressMode) end
 
@@ -2937,35 +2971,37 @@ function PolygonControl:SetCenterTextureCoords(left, right, top, bottom) end
 --- @return void
 function PolygonControl:SetPoint(index, normalizedX, normalizedY) end
 
---- @param pointLayout [PolygonPointLayout|#PolygonPointLayout]
+--- @param pointLayout PolygonPointLayout
 --- @return void
 function PolygonControl:SetPointLayout(pointLayout) end
 
---- @param isSmoothingEnabled bool
+--- @param isSmoothingEnabled boolean
 --- @return void
 function PolygonControl:SetSmoothingEnabled(isSmoothingEnabled) end
 
-RootWindow = nil
-ScrollControl = nil
---- @return offset number
+---@class RootWindow
+RootWindow = {}
+---@class ScrollControl
+ScrollControl = {}
+--- @return number offset
 function ScrollControl:GetHorizontalScroll() end
 
---- @return horizontal number
+--- @return number horizontal
 function ScrollControl:GetHorizontalScrollExtent() end
 
---- @return bounding [ScrollBounding|#ScrollBounding]
+--- @return ScrollBounding bounding
 function ScrollControl:GetScrollBounding() end
 
---- @return horizontal number, vertical number
+--- @return number horizontal, number vertical
 function ScrollControl:GetScrollExtents() end
 
---- @return horizontal number, vertical number
+--- @return number horizontal, number vertical
 function ScrollControl:GetScrollOffsets() end
 
---- @return offset number
+--- @return number offset
 function ScrollControl:GetVerticalScroll() end
 
---- @return vertical number
+--- @return number vertical
 function ScrollControl:GetVerticalScrollExtent() end
 
 --- @param duration integer
@@ -2976,7 +3012,7 @@ function ScrollControl:RestoreToExtents(duration) end
 --- @return void
 function ScrollControl:SetHorizontalScroll(offset) end
 
---- @param bounding [ScrollBounding|#ScrollBounding]
+--- @param bounding ScrollBounding
 --- @return void
 function ScrollControl:SetScrollBounding(bounding) end
 
@@ -2984,32 +3020,33 @@ function ScrollControl:SetScrollBounding(bounding) end
 --- @return void
 function ScrollControl:SetVerticalScroll(offset) end
 
-SliderControl = nil
---- @return allow bool
+---@class SliderControl
+SliderControl = {}
+--- @return boolean allow
 function SliderControl:DoesAllowDraggingFromThumb() end
 
---- @return isEnabled bool
+--- @return boolean isEnabled
 function SliderControl:GetEnabled() end
 
---- @return min number, max number
+--- @return number min, number max
 function SliderControl:GetMinMax() end
 
---- @return orientation [ControlOrientation|#ControlOrientation]
+--- @return ControlOrientation orientation
 function SliderControl:GetOrientation() end
 
---- @return textureControl object
+--- @return object textureControl
 function SliderControl:GetThumbTextureControl() end
 
---- @return value number
+--- @return number value
 function SliderControl:GetValue() end
 
---- @return step number
+--- @return number step
 function SliderControl:GetValueStep() end
 
---- @return flush bool
+--- @return boolean flush
 function SliderControl:IsThumbFlushWithExtents() end
 
---- @param allow bool
+--- @param allow boolean
 --- @return void
 function SliderControl:SetAllowDraggingFromThumb(allow) end
 
@@ -3044,7 +3081,7 @@ function SliderControl:SetBackgroundTopTexture(fileName, texTop, texLeft, texBot
 --- @return void
 function SliderControl:SetColor(r, g, b, a) end
 
---- @param enable bool
+--- @param enable boolean
 --- @return void
 function SliderControl:SetEnabled(enable) end
 
@@ -3053,11 +3090,11 @@ function SliderControl:SetEnabled(enable) end
 --- @return void
 function SliderControl:SetMinMax(min, max) end
 
---- @param orientation [ControlOrientation|#ControlOrientation]
+--- @param orientation ControlOrientation
 --- @return void
 function SliderControl:SetOrientation(orientation) end
 
---- @param flush bool
+--- @param flush boolean
 --- @return void
 function SliderControl:SetThumbFlushWithExtents(flush) end
 
@@ -3082,7 +3119,7 @@ function SliderControl:SetThumbTexture(filename, disabledFilename, highlightedFi
 --- @param texLeft number
 --- @param texBottom number
 --- @param texRight number
---- @param flush bool
+--- @param flush boolean
 --- @return void
 function SliderControl:SetThumbTextureAndFlush(filename, disabledFilename, highlightedFilename, thumbWidth, thumbHeight, texTop, texLeft, texBottom, texRight, flush) end
 
@@ -3098,36 +3135,37 @@ function SliderControl:SetValue(value) end
 --- @return void
 function SliderControl:SetValueStep(step) end
 
-StatusBarControl = nil
+---@class StatusBarControl
+StatusBarControl = {}
 --- @param value number
---- @return mainBarSize number
+--- @return number mainBarSize
 function StatusBarControl:CalculateSizeWithoutLeadingEdgeForValue(value) end
 
 --- @return void
 function StatusBarControl:ClearFadeOutLossAdjustedTopValue() end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function StatusBarControl:EnableFadeOut(enabled) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function StatusBarControl:EnableLeadingEdge(enabled) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function StatusBarControl:EnableScrollingOverlay(enabled) end
 
---- @return min number, max number
+--- @return number min, number max
 function StatusBarControl:GetMinMax() end
 
---- @return value number
+--- @return number value
 function StatusBarControl:GetValue() end
 
---- @return pixelRoundingEnabled bool
+--- @return boolean pixelRoundingEnabled
 function StatusBarControl:IsPixelRoundingEnabled() end
 
---- @param barAlignment [BarAlignment|#BarAlignment]
+--- @param barAlignment BarAlignment
 --- @return void
 function StatusBarControl:SetBarAlignment(barAlignment) end
 
@@ -3198,11 +3236,11 @@ function StatusBarControl:SetLeadingEdgeTextureCoords(left, right, top, bottom) 
 --- @return void
 function StatusBarControl:SetMinMax(aMin, aMax) end
 
---- @param orientation [ControlOrientation|#ControlOrientation]
+--- @param orientation ControlOrientation
 --- @return void
 function StatusBarControl:SetOrientation(orientation) end
 
---- @param pixelRoundingEnabled bool
+--- @param pixelRoundingEnabled boolean
 --- @return void
 function StatusBarControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 
@@ -3228,23 +3266,24 @@ function StatusBarControl:SetValue(aValue) end
 --- @return void
 function StatusBarControl:SetupScrollingOverlay(textureFile, width, height, duration) end
 
-SynchronizingObject = nil
---- @return state string
+---@class SynchronizingObject
+SynchronizingObject = {}
+--- @return string state
 function SynchronizingObject:GetState() end
 
---- @return stateTable table
+--- @return table stateTable
 function SynchronizingObject:GetStateAsTable() end
 
 --- @return void
 function SynchronizingObject:Hide() end
 
---- @return isShown bool
+--- @return boolean isShown
 function SynchronizingObject:IsShown() end
 
 --- @param handlerName string
 --- @param functionRef function
 --- @param name string
---- @param controlHandlerOrder [ControlHandlerOrder|#ControlHandlerOrder]
+--- @param controlHandlerOrder ControlHandlerOrder
 --- @param targetName string
 --- @return void
 function SynchronizingObject:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
@@ -3260,7 +3299,8 @@ function SynchronizingObject:SetStateFromTable(stateTable) end
 --- @return void
 function SynchronizingObject:Show() end
 
-TextBufferControl = nil
+---@class TextBufferControl
+TextBufferControl = {}
 --- @param text string
 --- @param r number
 --- @param g number
@@ -3272,38 +3312,38 @@ function TextBufferControl:AddMessage(text, r, g, b, colorId) end
 --- @return void
 function TextBufferControl:Clear() end
 
---- @return drawLastIfOutOfRoom bool
+--- @return boolean drawLastIfOutOfRoom
 function TextBufferControl:GetDrawLastEntryIfOutOfRoom() end
 
---- @return horizontalAlign [TextAlignment|#TextAlignment]
+--- @return TextAlignment horizontalAlign
 function TextBufferControl:GetHorizontalAlignment() end
 
---- @return timeBeforeLineBeginsToFade number, timeItTakesLineToFade number
+--- @return number timeBeforeLineBeginsToFade, number timeItTakesLineToFade
 function TextBufferControl:GetLineFade() end
 
---- @return linkEnabed bool
+--- @return boolean linkEnabed
 function TextBufferControl:GetLinkEnabled() end
 
---- @return numLines integer
+--- @return integer numLines
 function TextBufferControl:GetMaxHistoryLines() end
 
---- @return numLines integer
+--- @return integer numLines
 function TextBufferControl:GetNumHistoryLines() end
 
---- @return numLines integer
+--- @return integer numLines
 function TextBufferControl:GetNumVisibleLines() end
 
---- @return scrollPosition integer
+--- @return integer scrollPosition
 function TextBufferControl:GetScrollPosition() end
 
---- @return isSplitting bool
+--- @return boolean isSplitting
 function TextBufferControl:IsSplittingLongMessages() end
 
 --- @param numLines integer
 --- @return void
 function TextBufferControl:MoveScrollPosition(numLines) end
 
---- @param clearAfterFade bool
+--- @param clearAfterFade boolean
 --- @return void
 function TextBufferControl:SetClearBufferAfterFadeout(clearAfterFade) end
 
@@ -3314,7 +3354,7 @@ function TextBufferControl:SetClearBufferAfterFadeout(clearAfterFade) end
 --- @return void
 function TextBufferControl:SetColorById(colorId, r, g, b) end
 
---- @param drawLastIfOutOfRoom bool
+--- @param drawLastIfOutOfRoom boolean
 --- @return void
 function TextBufferControl:SetDrawLastEntryIfOutOfRoom(drawLastIfOutOfRoom) end
 
@@ -3322,7 +3362,7 @@ function TextBufferControl:SetDrawLastEntryIfOutOfRoom(drawLastIfOutOfRoom) end
 --- @return void
 function TextBufferControl:SetFont(fontString) end
 
---- @param horizontalAlign [TextAlignment|#TextAlignment]
+--- @param horizontalAlign TextAlignment
 --- @return void
 function TextBufferControl:SetHorizontalAlignment(horizontalAlign) end
 
@@ -3331,11 +3371,11 @@ function TextBufferControl:SetHorizontalAlignment(horizontalAlign) end
 --- @return void
 function TextBufferControl:SetLineFade(timeBeforeLineFadeBegins, timeForLineToFade) end
 
---- @param linesInheritAlpha bool
+--- @param linesInheritAlpha boolean
 --- @return void
 function TextBufferControl:SetLinesInheritAlpha(linesInheritAlpha) end
 
---- @param linkEnabed bool
+--- @param linkEnabed boolean
 --- @return void
 function TextBufferControl:SetLinkEnabled(linkEnabed) end
 
@@ -3347,70 +3387,71 @@ function TextBufferControl:SetMaxHistoryLines(numLines) end
 --- @return void
 function TextBufferControl:SetScrollPosition(line) end
 
---- @param splitLongMessages bool
+--- @param splitLongMessages boolean
 --- @return void
 function TextBufferControl:SetSplitLongMessages(splitLongMessages) end
 
 --- @return void
 function TextBufferControl:ShowFadedLines() end
 
-TextureCompositeControl = nil
+---@class TextureCompositeControl
+TextureCompositeControl = {}
 --- @param left number
 --- @param right number
 --- @param top number
 --- @param bottom number
---- @return surfaceIndex luaindex
+--- @return luaindex surfaceIndex
 function TextureCompositeControl:AddSurface(left, right, top, bottom) end
 
 --- @return void
 function TextureCompositeControl:ClearAllSurfaces() end
 
---- @return blendMode [TextureBlendMode|#TextureBlendMode]
+--- @return TextureBlendMode blendMode
 function TextureCompositeControl:GetBlendMode() end
 
 --- @param surfaceIndex luaindex
---- @return r number, g number, b number, a number
+--- @return number r, number g, number b, number a
 function TextureCompositeControl:GetColor(surfaceIndex) end
 
---- @return desaturation number
+--- @return number desaturation
 function TextureCompositeControl:GetDesaturation() end
 
 --- @param surfaceIndex luaindex
---- @return left number, right number, top number, bottom number
+--- @return number left, number right, number top, number bottom
 function TextureCompositeControl:GetInsets(surfaceIndex) end
 
---- @return surfaces integer
+--- @return integer surfaces
 function TextureCompositeControl:GetNumSurfaces() end
 
 --- @param surfaceIndex luaindex
---- @return a number
+--- @return number a
 function TextureCompositeControl:GetSurfaceAlpha(surfaceIndex) end
 
 --- @param surfaceIndex luaindex
---- @return left number, right number, top number, bottom number
+--- @return number left, number right, number top, number bottom
 function TextureCompositeControl:GetTextureCoords(surfaceIndex) end
 
---- @return pixelWidth integer, pixelHeight integer
+--- @return integer pixelWidth, integer pixelHeight
 function TextureCompositeControl:GetTextureFileDimensions() end
 
---- @return filename string
+--- @return string filename
 function TextureCompositeControl:GetTextureFileName() end
 
---- @return pixelRoundingEnabled bool
+--- @return boolean pixelRoundingEnabled
 function TextureCompositeControl:IsPixelRoundingEnabled() end
 
 --- @param surfaceIndex luaindex
---- @return hidden bool
+--- @return boolean hidden
 function TextureCompositeControl:IsSurfaceHidden(surfaceIndex) end
 
---- @return loaded bool
+--- @return boolean loaded
 function TextureCompositeControl:IsTextureLoaded() end
 
 --- @param surfaceIndex luaindex
 --- @return void
 function TextureCompositeControl:RemoveSurface(surfaceIndex) end
 
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
+--- @param blendMode TextureBlendMode
 --- @return void
 function TextureCompositeControl:SetBlendMode(blendMode) end
 
@@ -3434,7 +3475,7 @@ function TextureCompositeControl:SetDesaturation(desaturation) end
 --- @return void
 function TextureCompositeControl:SetInsets(surfaceIndex, left, right, top, bottom) end
 
---- @param pixelRoundingEnabled bool
+--- @param pixelRoundingEnabled boolean
 --- @return void
 function TextureCompositeControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 
@@ -3444,7 +3485,7 @@ function TextureCompositeControl:SetPixelRoundingEnabled(pixelRoundingEnabled) e
 function TextureCompositeControl:SetSurfaceAlpha(surfaceIndex, a) end
 
 --- @param surfaceIndex luaindex
---- @param hidden bool
+--- @param hidden boolean
 --- @return void
 function TextureCompositeControl:SetSurfaceHidden(surfaceIndex, hidden) end
 
@@ -3472,55 +3513,56 @@ function TextureCompositeControl:SetTexture(filename) end
 --- @return void
 function TextureCompositeControl:SetTextureCoords(surfaceIndex, left, right, top, bottom) end
 
---- @param releaseOption [ReleaseReferenceOptions|#ReleaseReferenceOptions]
+--- @param releaseOption ReleaseReferenceOptions
 --- @return void
 function TextureCompositeControl:SetTextureReleaseOption(releaseOption) end
 
-TextureControl = nil
+---@class TextureControl
+TextureControl = {}
 --- @return void
 function TextureControl:ClearGradientColors() end
 
---- @return width number, height number
+--- @return number width, number height
 function TextureControl:Get3DLocalDimensions() end
 
---- @return addressMode [TextureAddressMode|#TextureAddressMode]
+--- @return TextureAddressMode addressMode
 function TextureControl:GetAddressMode() end
 
---- @return blendMode [TextureBlendMode|#TextureBlendMode]
+--- @return TextureBlendMode blendMode
 function TextureControl:GetBlendMode() end
 
---- @return r number, g number, b number, a number
+--- @return number r, number g, number b, number a
 function TextureControl:GetColor() end
 
---- @return desaturation number
+--- @return number desaturation
 function TextureControl:GetDesaturation() end
 
---- @return resizesToFitFile bool
+--- @return boolean resizesToFitFile
 function TextureControl:GetResizeToFitFile() end
 
---- @return shaderEffectType [ShaderEffectType|#ShaderEffectType]
+--- @return ShaderEffectType shaderEffectType
 function TextureControl:GetShaderEffectType() end
 
---- @return left number, right number, top number, bottom number
+--- @return number left, number right, number top, number bottom
 function TextureControl:GetTextureCoords() end
 
---- @return pixelWidth integer, pixelHeight integer
+--- @return integer pixelWidth, integer pixelHeight
 function TextureControl:GetTextureFileDimensions() end
 
---- @return filename string
+--- @return string filename
 function TextureControl:GetTextureFileName() end
 
---- @param vertex [VERTEX_POINTS|#VERTEX_POINTS]
---- @return u number, v number
+--- @param vertex VERTEX_POINTS
+--- @return number u, number v
 function TextureControl:GetVertexUV(vertex) end
 
---- @return isFacing bool
+--- @return boolean isFacing
 function TextureControl:Is3DQuadFacingCamera() end
 
---- @return pixelRoundingEnabled bool
+--- @return boolean pixelRoundingEnabled
 function TextureControl:IsPixelRoundingEnabled() end
 
---- @return loaded bool
+--- @return boolean loaded
 function TextureControl:IsTextureLoaded() end
 
 --- @param width number
@@ -3528,15 +3570,15 @@ function TextureControl:IsTextureLoaded() end
 --- @return void
 function TextureControl:Set3DLocalDimensions(width, height) end
 
---- @param addressMode [TextureAddressMode|#TextureAddressMode]
+--- @param addressMode TextureAddressMode
 --- @return void
 function TextureControl:SetAddressMode(addressMode) end
 
---- @param enabled bool
+--- @param enabled boolean
 --- @return void
 function TextureControl:SetAutoAdjustWrappedCoords(enabled) end
 
---- @param blendMode [TextureBlendMode|#TextureBlendMode]
+--- @param blendMode TextureBlendMode
 --- @return void
 function TextureControl:SetBlendMode(blendMode) end
 
@@ -3551,7 +3593,7 @@ function TextureControl:SetColor(r, g, b, a) end
 --- @return void
 function TextureControl:SetDesaturation(desaturation) end
 
---- @param orientation [ControlOrientation|#ControlOrientation]
+--- @param orientation ControlOrientation
 --- @param startR number
 --- @param startG number
 --- @param startB number
@@ -3563,15 +3605,15 @@ function TextureControl:SetDesaturation(desaturation) end
 --- @return void
 function TextureControl:SetGradientColors(orientation, startR, startG, startB, startA, endR, endG, endB, endA) end
 
---- @param pixelRoundingEnabled bool
+--- @param pixelRoundingEnabled boolean
 --- @return void
 function TextureControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 
---- @param resizesToFitFile bool
+--- @param resizesToFitFile boolean
 --- @return void
 function TextureControl:SetResizeToFitFile(resizesToFitFile) end
 
---- @param shaderEffectType [ShaderEffectType|#ShaderEffectType]
+--- @param shaderEffectType ShaderEffectType
 --- @return void
 function TextureControl:SetShaderEffectType(shaderEffectType) end
 
@@ -3590,7 +3632,7 @@ function TextureControl:SetTextureCoords(left, right, top, bottom) end
 --- @return void
 function TextureControl:SetTextureCoordsRotation(angleInRadians) end
 
---- @param releaseOption [ReleaseReferenceOptions|#ReleaseReferenceOptions]
+--- @param releaseOption ReleaseReferenceOptions
 --- @return void
 function TextureControl:SetTextureReleaseOption(releaseOption) end
 
@@ -3600,7 +3642,7 @@ function TextureControl:SetTextureReleaseOption(releaseOption) end
 --- @return void
 function TextureControl:SetTextureRotation(angleInRadians, normalizedRotationPointX, normalizedRotationPointY) end
 
---- @param sampleProcessingType [TextureSampleProcessing|#TextureSampleProcessing]
+--- @param sampleProcessingType TextureSampleProcessing
 --- @param weight number
 --- @return void
 function TextureControl:SetTextureSampleProcessingWeight(sampleProcessingType, weight) end
@@ -3613,29 +3655,30 @@ function TextureControl:SetTextureSampleProcessingWeight(sampleProcessingType, w
 --- @return void
 function TextureControl:SetVertexColors(vertexPoints, red, green, blue, alpha) end
 
---- @param vertex [VERTEX_POINTS|#VERTEX_POINTS]
+--- @param vertex VERTEX_POINTS
 --- @param u number
 --- @param v number
 --- @return void
 function TextureControl:SetVertexUV(vertex, u, v) end
 
-TooltipControl = nil
+---@class TooltipControl
+TooltipControl = {}
 --- @param control object
 --- @param cell integer
---- @param useLastRow bool
+--- @param useLastRow boolean
 --- @return void
 function TooltipControl:AddControl(control, cell, useLastRow) end
 
 --- @param control object
 --- @param headerRow integer
---- @param headerSide [TooltipHeaderSide|#TooltipHeaderSide]
+--- @param headerSide TooltipHeaderSide
 --- @return void
 function TooltipControl:AddHeaderControl(control, headerRow, headerSide) end
 
 --- @param text string
 --- @param font string
 --- @param headerRow integer
---- @param headerSide [TooltipHeaderSide|#TooltipHeaderSide]
+--- @param headerSide TooltipHeaderSide
 --- @param r number
 --- @param g number
 --- @param b number
@@ -3647,10 +3690,10 @@ function TooltipControl:AddHeaderLine(text, font, headerRow, headerSide, r, g, b
 --- @param r number
 --- @param g number
 --- @param b number
---- @param lineAnchor [AnchorPosition|#AnchorPosition]
---- @param modifyTextType [ModifyTextType|#ModifyTextType]
---- @param textAlignment [TextAlignment|#TextAlignment]
---- @param setToFullSize bool
+--- @param lineAnchor AnchorPosition
+--- @param modifyTextType ModifyTextType
+--- @param textAlignment TextAlignment
+--- @param setToFullSize boolean
 --- @param minWidth number
 --- @return void
 function TooltipControl:AddLine(text, font, r, g, b, lineAnchor, modifyTextType, textAlignment, setToFullSize, minWidth) end
@@ -3662,7 +3705,7 @@ function TooltipControl:AddVerticalPadding(paddingY) end
 --- @param queryType integer
 --- @param keepId integer
 --- @param objectiveId integer
---- @param objectivePinTier [ObjectivePinTier|#ObjectivePinTier]
+--- @param objectivePinTier ObjectivePinTier
 --- @return void
 function TooltipControl:AppendAvAObjective(queryType, keepId, objectiveId, objectivePinTier) end
 
@@ -3696,14 +3739,14 @@ function TooltipControl:AppendUnitName(unitTag) end
 --- @return void
 function TooltipControl:ClearLines() end
 
---- @return owner object
+--- @return object owner
 function TooltipControl:GetOwner() end
 
 --- @return void
 function TooltipControl:HideComparativeTooltips() end
 
 --- @param abilityIndex luaindex
---- @param showBase bool
+--- @param showBase boolean
 --- @return void
 function TooltipControl:SetAbility(abilityIndex, showBase) end
 
@@ -3720,24 +3763,24 @@ function TooltipControl:SetAchievement(achievementId) end
 function TooltipControl:SetAchievementRewardItem(achievementId) end
 
 --- @param slotId luaindex
---- @param hotbarCategory [HotBarCategory|#HotBarCategory]:nilable
+--- @param hotbarCategory HotBarCategory?
 --- @return void
 function TooltipControl:SetAction(slotId, hotbarCategory) end
 
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @param morphSlot [MorphSlot|#MorphSlot]
---- @param isPurchased bool
---- @param isAdvised bool
---- @param isBadMorph bool
+--- @param morphSlot MorphSlot
+--- @param isPurchased boolean
+--- @param isAdvised boolean
+--- @param isBadMorph boolean
 --- @param numAvailableSkillPoints integer
---- @param showSkillPointCost bool
---- @param showUpgradeText bool
---- @param showAdvised bool
---- @param showBadMorph bool
---- @param overrideRank integer:nilable
---- @param overrideAbilityId integer:nilable
+--- @param showSkillPointCost boolean
+--- @param showUpgradeText boolean
+--- @param showAdvised boolean
+--- @param showBadMorph boolean
+--- @param overrideRank integer?
+--- @param overrideAbilityId integer?
 --- @return void
 function TooltipControl:SetActiveSkill(skillType, skillLineIndex, skillIndex, morphSlot, isPurchased, isAdvised, isBadMorph, numAvailableSkillPoints, showSkillPointCost, showUpgradeText, showAdvised, showBadMorph, overrideRank, overrideAbilityId) end
 
@@ -3760,7 +3803,7 @@ function TooltipControl:SetAsComparativeTooltip2() end
 --- @return void
 function TooltipControl:SetAttachedMailItem(mailId, attachSlot) end
 
---- @param bagIndex [Bag|#Bag]
+--- @param bagIndex Bag
 --- @param slotIndex integer
 --- @return void
 function TooltipControl:SetBagItem(bagIndex, slotIndex) end
@@ -3783,15 +3826,15 @@ function TooltipControl:SetBuybackItem(entryIndex) end
 --- @param championSkillId integer
 --- @param numPendingPoints integer
 --- @param nextJumpPoint integer
---- @param isPendingSlotted bool
+--- @param isPendingSlotted boolean
 --- @return void
 function TooltipControl:SetChampionSkill(championSkillId, numPendingPoints, nextJumpPoint, isPendingSlotted) end
 
 --- @param collectibleId integer
---- @param addNickname bool
---- @param showPurchasableHint bool
---- @param showBlockReason bool
---- @param actorCategory [GameplayActorCategory|#GameplayActorCategory]
+--- @param addNickname boolean
+--- @param showPurchasableHint boolean
+--- @param showBlockReason boolean
+--- @param actorCategory GameplayActorCategory
 --- @return void
 function TooltipControl:SetCollectible(collectibleId, addNickname, showPurchasableHint, showBlockReason, actorCategory) end
 
@@ -3803,7 +3846,7 @@ function TooltipControl:SetCompanionSkill(abilityId) end
 --- @param primaryScriptId integer
 --- @param secondaryScriptId integer
 --- @param tertiaryScriptId integer
---- @param displayFlags [ScribingTooltipDisplayFlags|#ScribingTooltipDisplayFlags]
+--- @param displayFlags ScribingTooltipDisplayFlags
 --- @return void
 function TooltipControl:SetCraftedAbility(craftedAbilityId, primaryScriptId, secondaryScriptId, tertiaryScriptId, displayFlags) end
 
@@ -3812,7 +3855,7 @@ function TooltipControl:SetCraftedAbility(craftedAbilityId, primaryScriptId, sec
 --- @param primaryScriptId integer
 --- @param secondaryScriptId integer
 --- @param tertiaryScriptId integer
---- @param displayFlags [ScribingTooltipDisplayFlags|#ScribingTooltipDisplayFlags]
+--- @param displayFlags ScribingTooltipDisplayFlags
 --- @return void
 function TooltipControl:SetCraftedAbilityScript(craftedAbilityId, craftedAbilityScriptId, primaryScriptId, secondaryScriptId, tertiaryScriptId, displayFlags) end
 
@@ -3820,7 +3863,7 @@ function TooltipControl:SetCraftedAbilityScript(craftedAbilityId, craftedAbility
 --- @return void
 function TooltipControl:SetCrownCrateReward(rewardIndex) end
 
---- @param currencyType [CurrencyType|#CurrencyType]
+--- @param currencyType CurrencyType
 --- @param quantity integer
 --- @return void
 function TooltipControl:SetCurrency(currencyType, quantity) end
@@ -3838,7 +3881,7 @@ function TooltipControl:SetEdgeKeepBonusAbility(bonusIndex) end
 function TooltipControl:SetEmperorBonusAbility(rankIndex) end
 
 --- @param buffAbilityId integer
---- @param includeLifetimeStacks bool
+--- @param includeLifetimeStacks boolean
 --- @return void
 function TooltipControl:SetEndlessDungeonBuff(buffAbilityId, includeLifetimeStacks) end
 
@@ -3867,13 +3910,13 @@ function TooltipControl:SetHeaderRowSpacing(spacing) end
 function TooltipControl:SetHeaderVerticalOffset(verticalOffset) end
 
 --- @param link string
---- @param hideTrait bool
+--- @param hideTrait boolean
 --- @return void
 function TooltipControl:SetItemSetCollectionPieceLink(link, hideTrait) end
 
---- @param itemBagIndex [Bag|#Bag]
+--- @param itemBagIndex Bag
 --- @param itemSlotIndex integer
---- @param enchantmentBagIndex [Bag|#Bag]
+--- @param enchantmentBagIndex Bag
 --- @param enchantmentSlotIndex integer
 --- @return void
 function TooltipControl:SetItemUsingEnchantment(itemBagIndex, itemSlotIndex, enchantmentBagIndex, enchantmentSlotIndex) end
@@ -3883,7 +3926,7 @@ function TooltipControl:SetItemUsingEnchantment(itemBagIndex, itemSlotIndex, enc
 function TooltipControl:SetKeepBonusAbility(bonusIndex) end
 
 --- @param keepId integer
---- @param battlegroundContext [BattlegroundQueryContextType|#BattlegroundQueryContextType]
+--- @param battlegroundContext BattlegroundQueryContextType
 --- @param upgradeLine integer
 --- @param level integer
 --- @param index luaindex
@@ -3903,12 +3946,12 @@ function TooltipControl:SetLink(link) end
 function TooltipControl:SetLootItem(lootId) end
 
 --- @param marketProductId integer
---- @param showCollectiblePurchasableHint bool
+--- @param showCollectiblePurchasableHint boolean
 --- @return void
 function TooltipControl:SetMarketProduct(marketProductId, showCollectiblePurchasableHint) end
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex:nilable
+--- @param presentationIndex luaindex?
 --- @return void
 function TooltipControl:SetMarketProductListing(marketProductId, presentationIndex) end
 
@@ -3921,46 +3964,46 @@ function TooltipControl:SetMinHeaderRowHeight(minRowHeight) end
 function TooltipControl:SetMinHeaderRows(minRows) end
 
 --- @param owner object
---- @param position [AnchorPosition|#AnchorPosition]
+--- @param position AnchorPosition
 --- @param offsetX number
 --- @param offsetY number
---- @param relativePoint [AnchorPosition|#AnchorPosition]
+--- @param relativePoint AnchorPosition
 --- @return void
 function TooltipControl:SetOwner(owner, position, offsetX, offsetY, relativePoint) end
 
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
 --- @param rank integer
 --- @param purchasedToRank integer
 --- @param numAvailableSkillPoints integer
---- @param showSkillPointCost bool
+--- @param showSkillPointCost boolean
 --- @return void
 function TooltipControl:SetPassiveSkill(skillType, skillLineIndex, skillIndex, rank, purchasedToRank, numAvailableSkillPoints, showSkillPointCost) end
 
---- @param solventBagId [Bag|#Bag]
+--- @param solventBagId Bag
 --- @param solventSlotIndex integer
---- @param reagent1BagId [Bag|#Bag]
+--- @param reagent1BagId Bag
 --- @param reagent1SlotIndex integer
---- @param reagent2BagId [Bag|#Bag]
+--- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId [Bag|#Bag]:nilable
---- @param reagent3SlotIndex integer:nilable
+--- @param reagent3BagId Bag?
+--- @param reagent3SlotIndex integer?
 --- @return void
 function TooltipControl:SetPendingAlchemyItem(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex) end
 
---- @param potencyRuneBagId [Bag|#Bag]
+--- @param potencyRuneBagId Bag
 --- @param potencyRuneSlotIndex integer
---- @param essenceRuneBagId [Bag|#Bag]
+--- @param essenceRuneBagId Bag
 --- @param essenceRuneSlotIndex integer
---- @param aspectRuneBagId [Bag|#Bag]
+--- @param aspectRuneBagId Bag
 --- @param aspectRuneSlotIndex integer
 --- @return void
 function TooltipControl:SetPendingEnchantingItem(potencyRuneBagId, potencyRuneSlotIndex, essenceRuneBagId, essenceRuneSlotIndex, aspectRuneBagId, aspectRuneSlotIndex) end
 
---- @param bagIndex [Bag|#Bag]
+--- @param bagIndex Bag
 --- @param slotIndex integer
---- @param pendingTrait [ItemTraitType|#ItemTraitType]
+--- @param pendingTrait ItemTraitType
 --- @return void
 function TooltipControl:SetPendingRetraitItem(bagIndex, slotIndex, pendingTrait) end
 
@@ -3979,8 +4022,8 @@ function TooltipControl:SetPlacedFurniture(placedFurnitureId) end
 --- @param progressionIndex luaindex
 --- @param morph integer
 --- @param rank integer
---- @param showAdvice bool
---- @param advised bool
+--- @param showAdvice boolean
+--- @param advised boolean
 --- @return void
 function TooltipControl:SetProgressionAbility(progressionIndex, morph, rank, showAdvice, advised) end
 
@@ -4012,12 +4055,12 @@ function TooltipControl:SetQuestTool(questIndex, toolIndex) end
 
 --- @param rewardId integer
 --- @param quantity integer
---- @param displayFlags [RewardDisplayFlags|#RewardDisplayFlags]
+--- @param displayFlags RewardDisplayFlags
 --- @return void
 function TooltipControl:SetReward(rewardId, quantity, displayFlags) end
 
---- @param alliance [Alliance|#Alliance]
---- @param artifactType [ObjectiveType|#ObjectiveType]
+--- @param alliance Alliance
+--- @param artifactType ObjectiveType
 --- @param bonusIndex luaindex
 --- @return void
 function TooltipControl:SetScrollBonusAbility(alliance, artifactType, bonusIndex) end
@@ -4025,17 +4068,17 @@ function TooltipControl:SetScrollBonusAbility(alliance, artifactType, bonusIndex
 --- @param skillType integer
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @param badMorph bool
+--- @param badMorph boolean
 --- @return void
 function TooltipControl:SetSkillAbility(skillType, skillLineIndex, skillIndex, badMorph) end
 
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @return void
 function TooltipControl:SetSkillLine(skillType, skillLineIndex) end
 
 --- @param abilityId integer
---- @param skillType [SkillType|#SkillType]
+--- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillLineAbilityIndex luaindex
 --- @param morphChoice integer
@@ -4057,7 +4100,7 @@ function TooltipControl:SetSkillUpgradeAbility(skillType, skillLineIndex, skillI
 --- @return void
 function TooltipControl:SetSmithingImprovementItem(craftingSkillType, improvementItemIndex) end
 
---- @param itemToImproveBagId [Bag|#Bag]
+--- @param itemToImproveBagId Bag
 --- @param itemToImproveSlotIndex integer
 --- @param craftingSkillType integer
 --- @return void
@@ -4093,7 +4136,7 @@ function TooltipControl:SetTradingHouseItem(tradingHouseIndex) end
 --- @return void
 function TooltipControl:SetTradingHouseListing(tradingHouseIndex) end
 
---- @param boardLocation [TributeBoardLocation|#TributeBoardLocation]
+--- @param boardLocation TributeBoardLocation
 --- @return void
 function TooltipControl:SetTributeBoardLocationPatrons(boardLocation) end
 
@@ -4107,16 +4150,16 @@ function TooltipControl:SetTributeCard(patronId, cardId) end
 function TooltipControl:SetTributeLeaderboardRewardList(rewardListId) end
 
 --- @param patronId integer
---- @param highlightActiveFavorState bool
---- @param suppressNotCollectibleWarning bool
---- @param showAcquireHint bool
---- @param showLore bool
+--- @param highlightActiveFavorState boolean
+--- @param suppressNotCollectibleWarning boolean
+--- @param showAcquireHint boolean
+--- @param showLore boolean
 --- @return void
 function TooltipControl:SetTributePatron(patronId, highlightActiveFavorState, suppressNotCollectibleWarning, showAcquireHint, showLore) end
 
 --- @param patronId integer
 --- @param cardIndex luaindex
---- @param showUpgrade bool
+--- @param showUpgrade boolean
 --- @return void
 function TooltipControl:SetTributePatronDockCard(patronId, cardIndex, showUpgrade) end
 
@@ -4126,11 +4169,11 @@ function TooltipControl:SetTributePatronDockCard(patronId, cardIndex, showUpgrad
 function TooltipControl:SetTributePatronStarterCard(patronId, cardIndex) end
 
 --- @param patronId integer
---- @param highlightFavorState [TributePatronPerspectiveFavorState|#TributePatronPerspectiveFavorState]
+--- @param highlightFavorState TributePatronPerspectiveFavorState
 --- @return void
 function TooltipControl:SetTributePatronWithFavorState(patronId, highlightFavorState) end
 
---- @param tributeTier [TributeTier|#TributeTier]
+--- @param tributeTier TributeTier
 --- @param rewardListId integer
 --- @return void
 function TooltipControl:SetTributeSeasonRewardList(tributeTier, rewardListId) end
@@ -4139,35 +4182,37 @@ function TooltipControl:SetTributeSeasonRewardList(tributeTier, rewardListId) en
 --- @return void
 function TooltipControl:SetVerticalPadding(paddingY) end
 
---- @param equipSlot [EquipSlot|#EquipSlot]
---- @param bagId [Bag|#Bag]
+--- @param equipSlot EquipSlot
+--- @param bagId Bag
 --- @return void
 function TooltipControl:SetWornItem(equipSlot, bagId) end
 
 --- @return void
 function TooltipControl:ShowComparativeTooltips() end
 
-TopLevelWindow = nil
---- @return allow bool
+---@class TopLevelWindow
+TopLevelWindow = {}
+--- @return boolean allow
 function TopLevelWindow:AllowBringToTop() end
 
 --- @return void
 function TopLevelWindow:BringWindowToTop() end --*protected-attributes*
 
---- @param allow bool
+--- @param allow boolean
 --- @return void
 function TopLevelWindow:SetAllowBringToTop(allow) end --*protected-attributes*
 
---- @param drawWhenHidden bool
+--- @param drawWhenHidden boolean
 --- @return void
 function TopLevelWindow:SetDrawWhenGuiHidden(drawWhenHidden) end --*private*
 
---- @param isTopmost bool
+--- @param isTopmost boolean
 --- @return void
 function TopLevelWindow:SetTopmost(isTopmost) end
 
-VectorControl = nil
---- @param objectFit [ObjectFit|#ObjectFit]
+---@class VectorControl
+VectorControl = {}
+--- @param objectFit ObjectFit
 --- @return void
 function VectorControl:SetObjectFit(objectFit) end
 
@@ -4179,7 +4224,8 @@ function VectorControl:SetPictureIndex(index) end
 --- @return void
 function VectorControl:SetSlugAsset(filename) end
 
-WindowManager = nil
+---@class WindowManager
+WindowManager = {}
 --- @param control object
 --- @param virtualName string
 --- @return void
@@ -4187,29 +4233,29 @@ function WindowManager:ApplyTemplateToControl(control, virtualName) end
 
 --- @param controlA object
 --- @param controlB object
---- @return order integer
+--- @return integer order
 function WindowManager:CompareControlVisualOrder(controlA, controlB) end
 
 --- @param name string
 --- @param parent object
---- @param type [ControlType|#ControlType]
---- @return control object
+--- @param type ControlType
+--- @return object control
 function WindowManager:CreateControl(name, parent, type) end
 
 --- @param controlName string
 --- @param parent object
 --- @param virtualName string
 --- @param optionalSuffix string
---- @return control object
+--- @return object control
 function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName, optionalSuffix) end
 
 --- @param x layout_measurement
 --- @param y layout_measurement
---- @return cursorId integer
+--- @return integer cursorId
 function WindowManager:CreateCursor(x, y) end
 
 --- @param name string
---- @return control object
+--- @return object control
 function WindowManager:CreateTopLevelWindow(name) end
 
 --- @param cursorId integer
@@ -4217,62 +4263,62 @@ function WindowManager:CreateTopLevelWindow(name) end
 function WindowManager:DestroyCursor(cursorId) end
 
 --- @param cursorId integer
---- @param desiredHandlers [HitTestingDesiredHandlers|#HitTestingDesiredHandlers]
---- @return controlAtCursor object
+--- @param desiredHandlers HitTestingDesiredHandlers
+--- @return object controlAtCursor
 function WindowManager:GetControlAtCursor(cursorId, desiredHandlers) end
 
 --- @param name string
 --- @param suffix string
---- @return ret object
+--- @return object ret
 function WindowManager:GetControlByName(name, suffix) end
 
 --- @param cursorId integer
---- @return x number, y number
+--- @return number x, number y
 function WindowManager:GetCursorPosition(cursorId) end
 
---- @return focusControl object
+--- @return object focusControl
 function WindowManager:GetFocusControl() end
 
 --- @param handlerName string
 --- @param name string
---- @return functionRef function
+--- @return function functionRef
 function WindowManager:GetHandler(handlerName, name) end
 
 --- @param index luaindex
---- @return candidate string
+--- @return string candidate
 function WindowManager:GetIMECandidate(index) end
 
---- @return selectedIndex luaindex, pageStartIndex luaindex, pageSize integer
+--- @return luaindex selectedIndex, luaindex pageStartIndex, integer pageSize
 function WindowManager:GetIMECandidatePageInfo() end
 
---- @return mouseFocusControl object
+--- @return object mouseFocusControl
 function WindowManager:GetMouseFocusControl() end
 
---- @return mouseOverControl object
+--- @return object mouseOverControl
 function WindowManager:GetMouseOverControl() end
 
---- @return numCandidates integer
+--- @return integer numCandidates
 function WindowManager:GetNumIMECandidates() end
 
---- @return x number, y number
+--- @return number x, number y
 function WindowManager:GetUIMousePosition() end
 
---- @return hasFocusControl bool
+--- @return boolean hasFocusControl
 function WindowManager:HasFocusControl() end
 
---- @return isChoosingCandidate bool
+--- @return boolean isChoosingCandidate
 function WindowManager:IsChoosingIMECandidate() end
 
---- @return isHandlingHardwareEvent bool
+--- @return boolean isHandlingHardwareEvent
 function WindowManager:IsHandlingHardwareEvent() end
 
---- @return isMouseOverWorld bool
+--- @return boolean isMouseOverWorld
 function WindowManager:IsMouseOverWorld() end
 
---- @return secureRenderModeEnabled bool
+--- @return boolean secureRenderModeEnabled
 function WindowManager:IsSecureRenderModeEnabled() end
 
---- @return isUsingCustomCandidateList bool
+--- @return boolean isUsingCustomCandidateList
 function WindowManager:IsUsingCustomCandidateList() end
 
 --- @param name string
@@ -4282,12 +4328,12 @@ function WindowManager:SetFocusByName(name) end
 --- @param handlerName string
 --- @param functionRef function
 --- @param name string
---- @param controlHandlerOrder [ControlHandlerOrder|#ControlHandlerOrder]
+--- @param controlHandlerOrder ControlHandlerOrder
 --- @param targetName string
 --- @return void
 function WindowManager:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
 
---- @param cursorType [MouseCursorType|#MouseCursorType]
+--- @param cursorType MouseCursorType
 --- @return void
 function WindowManager:SetMouseCursor(cursorType) end
 
@@ -4301,7 +4347,7 @@ function WindowManager:SetMouseFocusByName(name) end
 --- @return void
 function WindowManager:UpdateCursorPosition(cursorId, x, y) end
 
---- @return windowManager object
+--- @return object windowManager
 function WindowManager:GetWindowManager() end
 
 --- @param control object
@@ -4309,7 +4355,7 @@ function WindowManager:GetWindowManager() end
 --- @param topOffset number
 --- @param rightOffset number
 --- @param bottomOffset number
---- @return isOver bool
+--- @return boolean isOver
 function WindowManager:MouseIsOver(control, leftOffset, topOffset, rightOffset, bottomOffset) end
 
 --- @param control object
@@ -4317,16 +4363,16 @@ function WindowManager:MouseIsOver(control, leftOffset, topOffset, rightOffset, 
 --- @param topOffset number
 --- @param rightOffset number
 --- @param bottomOffset number
---- @return isInside bool
+--- @return boolean isInside
 function WindowManager:MouseIsInside(control, leftOffset, topOffset, rightOffset, bottomOffset) end
 
---- @return deltaX number, deltaY number
+--- @return number deltaX, number deltaY
 function WindowManager:GetUIMouseDeltas() end
 
---- @return scale number
+--- @return number scale
 function WindowManager:GetUIGlobalScale() end
 
---- @return scale number
+--- @return number scale
 function WindowManager:GetUICustomScale() end
 
 --- @param formatString string
@@ -4337,13 +4383,13 @@ function WindowManager:GetUICustomScale() end
 --- @param arg5 string
 --- @param arg6 string
 --- @param arg7 string
---- @return localizedString string
+--- @return string localizedString
 function WindowManager:LocalizeString(formatString, arg1, arg2, arg3, arg4, arg5, arg6, arg7) end
 
---- @return animationManager object
+--- @return object animationManager
 function WindowManager:GetAnimationManager() end
 
---- @return addOnManager object
+--- @return object addOnManager
 function WindowManager:GetAddOnManager() end
 
 --- @param originalTexture string
@@ -4352,29 +4398,29 @@ function WindowManager:GetAddOnManager() end
 function WindowManager:RedirectTexture(originalTexture, newTexture) end
 
 --- @param text string
---- @param allowMarkupType [AllowMarkupType|#AllowMarkupType]
---- @return escapedText string
+--- @param allowMarkupType AllowMarkupType
+--- @return string escapedText
 function WindowManager:EscapeMarkup(text, allowMarkupType) end
 
 --- @param fontSymbolName string
 --- @param fontDescriptor string
---- @return fontObject object
+--- @return object fontObject
 function WindowManager:CreateFont(fontSymbolName, fontDescriptor) end
 
---- @return numFiles integer
+--- @return integer numFiles
 function WindowManager:GetNumControlCreatingSources() end
 
 --- @param index luaindex
---- @return sourceName string
+--- @return string sourceName
 function WindowManager:GetControlCreatingSourceName(index) end
 
 --- @param sourceName string
---- @return numCallSites integer
+--- @return integer numCallSites
 function WindowManager:GetNumControlCreatingSourceCallSites(sourceName) end
 
 --- @param sourceName string
 --- @param index luaindex
---- @return creationStack string, count integer
+--- @return string creationStack, integer count
 function WindowManager:GetControlCreatingSourceCallSiteInfo(sourceName, index) end
 
 --- @return void
@@ -4383,64 +4429,64 @@ function WindowManager:StartScriptProfiler() end
 --- @return void
 function WindowManager:StopScriptProfiler() end
 
---- @return enabled bool
+--- @return boolean enabled
 function WindowManager:IsScriptProfilerEnabled() end
 
---- @return numFrames integer
+--- @return integer numFrames
 function WindowManager:GetScriptProfilerNumFrames() end
 
 --- @param frameIndex luaindex
---- @return numRecords integer
+--- @return integer numRecords
 function WindowManager:GetScriptProfilerFrameNumRecords(frameIndex) end
 
 --- @param frameIndex luaindex
 --- @param recordIndex luaindex
---- @return recordDataIndex luaindex, startTimeNS number, endTimeNS number, callerRecordIndex luaindex:nilable, recordDataType [ScriptProfilerRecordDataType|#ScriptProfilerRecordDataType]
+--- @return luaindex recordDataIndex, number startTimeNS, number endTimeNS, luaindex? callerRecordIndex, ScriptProfilerRecordDataType recordDataType
 function WindowManager:GetScriptProfilerRecordInfo(frameIndex, recordIndex) end
 
---- @return numClosures integer
+--- @return integer numClosures
 function WindowManager:GetScriptProfilerNumClosures() end
 
 --- @param recordDataIndex luaindex
---- @return displayName string, fileName string, fileLineNumber integer
+--- @return string displayName, string fileName, integer fileLineNumber
 function WindowManager:GetScriptProfilerClosureInfo(recordDataIndex) end
 
---- @return numCFunctions integer
+--- @return integer numCFunctions
 function WindowManager:GetScriptProfilerNumCFunctions() end
 
 --- @param recordDataIndex luaindex
---- @return functionName string
+--- @return string functionName
 function WindowManager:GetScriptProfilerCFunctionInfo(recordDataIndex) end
 
---- @return numGarbageCollectionTypes integer
+--- @return integer numGarbageCollectionTypes
 function WindowManager:GetScriptProfilerNumGarbageCollectionTypes() end
 
 --- @param recordDataIndex luaindex
---- @return GarbageCollectionType [ScriptProfilerGarbageCollectionType|#ScriptProfilerGarbageCollectionType]
+--- @return ScriptProfilerGarbageCollectionType GarbageCollectionType
 function WindowManager:GetScriptProfilerGarbageCollectionInfo(recordDataIndex) end
 
 --- @param userEventData string
 --- @return void
 function WindowManager:RecordScriptProfilerUserEvent(userEventData) end
 
---- @return numUserEvents integer
+--- @return integer numUserEvents
 function WindowManager:GetScriptProfilerNumUserEvents() end
 
 --- @param recordDataIndex luaindex
---- @return userEventData string
+--- @return string userEventData
 function WindowManager:GetScriptProfilerUserEventInfo(recordDataIndex) end
 
---- @param space [Space|#Space]
---- @return forwardX number, forwardY number, forwardZ number
+--- @param space Space
+--- @return number forwardX, number forwardY, number forwardZ
 function WindowManager:GetCameraForward(space) end
 
---- @return minWidth number
+--- @return number minWidth
 function WindowManager:GetMinUICanvasWidth() end
 
---- @return minHeight number
+--- @return number minHeight
 function WindowManager:GetMinUICanvasHeight() end
 
---- @return FoVYRadians number
+--- @return number FoVYRadians
 function WindowManager:GetInterfaceVerticalFieldOfView() end
 
 --- @param FoVYRadians number
@@ -4454,12 +4500,12 @@ function WindowManager:CopyToClipboard(text) end --*private*
 --- @param red number
 --- @param green number
 --- @param blue number
---- @return hue number, saturation number, value number
+--- @return number hue, number saturation, number value
 function WindowManager:ConvertRGBToHSV(red, green, blue) end
 
 --- @param red number
 --- @param green number
 --- @param blue number
---- @return hue number, saturation number, lightness number
+--- @return number hue, number saturation, number lightness
 function WindowManager:ConvertRGBToHSL(red, green, blue) end
 

@@ -18,7 +18,8 @@ class object_api
             $classStr = strval($class);
             if ( !array_key_exists($classStr, $classesAdded) ) {
                 $classesAdded[$classStr] = true;
-                $out .= "$classStr = nil\n";
+                $out .= "---@class $classStr\n";
+                $out .= "$classStr = {}\n";
             }
 
             foreach ($method as $function => $value) {
@@ -45,7 +46,7 @@ class object_api
                 if (isset($value['return'])) {
                     $add = [];
                     foreach ($value['return'] as $param => $type) {
-                        $add [] = $param." ".$type;
+                        $add [] = $type." ".$param;
                     }
                     $docblock .= "--- @return ".implode(", ", $add)."\n";
                 } else {
@@ -111,9 +112,13 @@ class object_api
                         foreach ($parts as $part) {
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                                $objects[$tag][$methodClean]['params'][$matches2['param']] = $matches2['type'];
+                                $objects[$tag][$methodClean]['params'][$matches2['param']] = $this->processType($matches2['type']);
                             }
                         }
+                    }
+					
+                    if (strpos($line, '_Uses variable returns..._') !== false) {
+                        throw new Exception('Classes have variable returns now?!');
                     }
 
                     $matches = null;
@@ -122,7 +127,7 @@ class object_api
                         foreach ($parts as $part) {
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                                $objects[$tag][$methodClean]['return'][$matches2['param']] = $matches2['type'];
+                                $objects[$tag][$methodClean]['return'][$matches2['param']] = $this->processType($matches2['type']);
                             }
                         }
                     }
@@ -133,6 +138,21 @@ class object_api
         return $objects;
     }
 
+    function processType($type)
+    {
+        $matches = null;
+        if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
+            $type = $matches['class'] . $matches['remainder'];
+        }
+        if ($type == 'bool') {
+            $type = 'boolean';
+        }
+        if ($type == 'types') {
+            throw new Exception('Add proper `types` handling!');
+        }
+        $type = str_replace(':nilable', '?', $type);
+        return $type;
+    }
 }
 
 new object_api();

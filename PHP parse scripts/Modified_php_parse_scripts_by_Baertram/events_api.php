@@ -4,7 +4,7 @@
 	Generates helper functions with luaDoc.
 */
 
-class game_api
+class events_api
 {
     public function __construct()
     {
@@ -37,7 +37,7 @@ class game_api
             if (isset($value['return'])) {
                 $add = [];
                 foreach ($value['return'] as $param => $type) {
-                    $add [] = $param." ".$type;
+                    $add [] = $type." ".$param;
                 }
                 $docblock .= "--- @return ".implode(", ", $add)."\n";
             } else {
@@ -94,12 +94,11 @@ class game_api
                     $parts = explode(",", $matches['params']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-                        $partClean = str_replace('function', 'functionName', $part);
 
                         //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
                         //* IsTrustedFunction(*function* _function_)
-                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $partClean, $matches2)) {
-                            $objects[$methodClean]['params'][$matches2['param']] = $matches2['type'];
+                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
+                            $objects[$methodClean]['params'][$matches2['param']] = $this->processType($matches2['type']);
                         }
                     }
                 }
@@ -113,16 +112,18 @@ class game_api
                     }
                 }
 
+                if (strpos($line, '_Uses variable returns..._') !== false) {
+                    throw new Exception('Events have variable returns now?!');
+                }
 
                 $matches = null;
                 if (preg_match('/\*\* _Returns\:_ (?P<parts>.*)/', $line, $matches)) {
                     $parts = explode(",", $matches['parts']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-                        $partClean = str_replace('function', 'functionName', $part);
 
-                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $partClean, $matches2)) {
-                            $objects[$methodClean]['return'][$matches2['param']] = $matches2['type'];
+                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
+                            $objects[$methodClean]['return'][$matches2['param']] = $this->processType($matches2['type']);
                         }
                     }
                 }
@@ -132,6 +133,22 @@ class game_api
         return $objects;
     }
 
+    function processType($type)
+    {
+        $matches = null;
+        if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
+            $type = $matches['class'] . $matches['remainder'];
+        }
+        if ($type == 'bool') {
+            $type = 'boolean';
+        }
+        if ($type == 'types') {
+            throw new Exception('Add proper `types` handling!');
+        }
+        $type = str_replace(':nilable', '?', $type);
+        return $type;
+    }
+
 }
 
-new game_api();
+new events_api();
