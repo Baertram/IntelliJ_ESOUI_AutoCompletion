@@ -11,7 +11,12 @@ class events_api
         $array = file("ESOUIDocumentation.txt", FILE_IGNORE_NEW_LINES);
         $methods = $this->parseClasses($array);
 
-        $out = "";
+        $out = "--- @alias Event ";
+        foreach ($methods as $function => $value) {
+            $out .= "`$function`|";
+        }
+        $out = substr($out, 0,-1) . "\n\n";
+        
         foreach ($methods as $function => $value) {
             $docblock = "";
             $luablock = "function $function(eventId";

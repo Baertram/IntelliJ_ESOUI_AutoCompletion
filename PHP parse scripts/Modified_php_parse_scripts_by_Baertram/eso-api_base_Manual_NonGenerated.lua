@@ -128,8 +128,8 @@ function GetEventManager() end
 
 ---@param self EventManager
 ---@param namespace string
----@param event function
----@param callback function Actually an integer code, but to work with eso-api_events...
+---@param event Event Actually an integer code, but to work with eso-api_events...
+---@param callback function
 ---@return boolean success
 function EVENT_MANAGER:RegisterForEvent(namespace, event, callback) end
 
@@ -140,13 +140,13 @@ function EVENT_MANAGER:RegisterForAllEvents(namespace, callback) end
 
 ---@param self EventManager
 ---@param namespace string
----@param event function Actually an integer code, but to work with eso-api_events...
+---@param event Event Actually an integer code, but to work with eso-api_events...
 ---@return boolean success
 function EVENT_MANAGER:UnregisterForEvent(namespace, event) end
 
 ---@param self EventManager
 ---@param namespace string
----@param event function Actually an integer code, but to work with eso-api_events...
+---@param event Event Actually an integer code, but to work with eso-api_events...
 ---@param filterType RegisterForEventFilterType
 ---@param filterValue any
 ---@return boolean success
