@@ -47,7 +47,7 @@ class events_api
             $out .= $docblock.$luablock."\n\n";
         }
 
-        file_put_contents("eso-api_events.lua", $out);
+        file_put_contents("out/eso-api_events.lua", $out);
 
     }
 

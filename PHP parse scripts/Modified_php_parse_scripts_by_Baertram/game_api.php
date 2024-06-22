@@ -50,7 +50,7 @@ class game_api
             $out .= $docblock.$luablock."\n\n";
         }
 
-        file_put_contents("eso-api_game.lua", $out);
+        file_put_contents("out/eso-api_game.lua", $out);
 
     }
 

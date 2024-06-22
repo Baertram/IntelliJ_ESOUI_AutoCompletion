@@ -10,7 +10,7 @@ class global_vars
     {
         $array = file("ESOUIDocumentation.txt", FILE_IGNORE_NEW_LINES);
         $classes = $this->parseClasses($array);
-        $array2 = file("DumpVars.lua", FILE_IGNORE_NEW_LINES);
+        $array2 = file("out/DumpVars.lua", FILE_IGNORE_NEW_LINES);
         $data = $this->parseData($array2);
 
         $out = "";
@@ -31,7 +31,7 @@ class global_vars
             }
             $out .= "\n";
         }
-        file_put_contents("eso-api_globals.lua", $out);
+        file_put_contents("out/eso-api_globals.lua", $out);
         
         $out = "";
         foreach ($data['sounds'] as $var => $val) {
@@ -41,7 +41,7 @@ class global_vars
         foreach ($sounds as $line) {
             $out .= $line;
         }
-        file_put_contents("eso-api_new_sounds.lua", $out);
+        file_put_contents("out/eso-api_new_sounds.lua", $out);
     }
 
 

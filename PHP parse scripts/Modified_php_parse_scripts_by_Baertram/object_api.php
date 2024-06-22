@@ -57,7 +57,7 @@ class object_api
             }
         }
 
-        file_put_contents("eso-api_classes.lua", $out);
+        file_put_contents("out/eso-api_classes.lua", $out);
     }
 
 

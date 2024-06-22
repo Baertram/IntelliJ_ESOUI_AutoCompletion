@@ -21,9 +21,8 @@ class global_vars
         }
         $out = substr($out, 0,-2)."\n}";
 
-        file_put_contents("DumpVars/DumpVars_constants.lua", $out);
+        file_put_contents("out/DumpVars_constants.lua", $out);
     }
-
 
     public function parseClasses($array)
     {
