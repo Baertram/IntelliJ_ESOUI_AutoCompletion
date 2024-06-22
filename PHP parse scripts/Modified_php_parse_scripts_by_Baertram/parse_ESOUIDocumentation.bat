@@ -1,5 +1,6 @@
 @ECHO OFF
 copy eso-api_base_Manual_NonGenerated.lua out\eso-api_base_Manual_NonGenerated.lua /Y
+copy eso-api_sounds.lua out\eso-api_sounds.lua /Y
 echo Parsing EVENTs
 php.exe "./events_api.php"
 echo ---------------------------------------------------------------------------
