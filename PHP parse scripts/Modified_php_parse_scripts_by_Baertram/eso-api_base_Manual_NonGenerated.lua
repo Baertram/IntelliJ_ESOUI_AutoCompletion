@@ -120,7 +120,7 @@ ZO_DataSourceObject = {}
 function ZO_InitializingObject:New(...) end
 
 -------------------------------------------------------------------------------
----@class Event Manager
+---@class EventManager
 EVENT_MANAGER = {}
 
 ---@return EventManager eventManager
@@ -128,8 +128,8 @@ function GetEventManager() end
 
 ---@param self EventManager
 ---@param namespace string
----@param event integer
----@param callback function
+---@param event function
+---@param callback function Actually an integer code, but to work with eso-api_events...
 ---@return boolean success
 function EVENT_MANAGER:RegisterForEvent(namespace, event, callback) end
 
@@ -140,13 +140,13 @@ function EVENT_MANAGER:RegisterForAllEvents(namespace, callback) end
 
 ---@param self EventManager
 ---@param namespace string
----@param event integer
+---@param event function Actually an integer code, but to work with eso-api_events...
 ---@return boolean success
 function EVENT_MANAGER:UnregisterForEvent(namespace, event) end
 
 ---@param self EventManager
 ---@param namespace string
----@param event integer
+---@param event function Actually an integer code, but to work with eso-api_events...
 ---@param filterType RegisterForEventFilterType
 ---@param filterValue any
 ---@return boolean success
@@ -1048,6 +1048,7 @@ function CreateSimpleAnimation(animationType, controlToAnimate, delay) end
 
 -------------------------------------------------------------------------------
 --[Localization]
+---@return string
 function zo_strformat(formatString, ...) end
 function ZO_SetCachedStrFormatterOnlyStoreOne(formatter) end
 ---@return string
@@ -4159,3 +4160,18 @@ function NumberFromBoolean(boolean) end
 
 --Accessibility - Narration
 function ClearActiveNarration() end --Skip to next narration
+
+SI_UNIT_NAME = 165 --= "<<1>>"
+SI_PLAYER_NAME = 184 --= "<<1>>"
+SLASH_COMMANDS = {}
+ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+ZO_VALID_LINK_TYPES_CHAT = {
+	ability = true
+	achievement = true
+	collectible = true
+	crafted_ability = true
+	guild = true
+	help = true
+	housing = true
+	item = true
+}
