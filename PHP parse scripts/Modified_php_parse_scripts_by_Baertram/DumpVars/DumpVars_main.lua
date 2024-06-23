@@ -43,11 +43,7 @@ local function DumpVarsNow()
             cnt = cnt + 1
 	    end
         d(">dumped " .. tostring(cnt) .. " SOUNDS!")
-		d("DumpVars - Logout will take place in 3 seconds")
-	    zo_callLater(function()
-            d("DumpVars - Logging out now!")
-        	Logout()
-        end, 3000)
+        Logout()
     end
 end
 
