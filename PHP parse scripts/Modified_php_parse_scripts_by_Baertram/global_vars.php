@@ -11,8 +11,7 @@ class global_vars
         $array = file("ESOUIDocumentation.txt", FILE_IGNORE_NEW_LINES);
         $classes = $this->parseClasses($array);
         $x = 0;
-        $out = "if DumpVars == nil then DumpVars = {} end\n\n" .
-        "DumpVars.constantsToDump = {\n";
+        $out = "if DumpVars == nil then DumpVars = {} end\n\nDumpVars.constantsToDump = {\n";
 
         foreach ($classes as $class => $method) {
             foreach ($method as $var) {
@@ -43,7 +42,8 @@ class global_vars
             if ($process) {
                 $matches = null;
                 if (preg_match('/h5\. (?P<section>.*)/', $line, $matches)) {
-                    // First wrap up the previous section
+                    // First wrap up the previous tag/section by sorting them alphabetically,
+                    // then adding some game-generated constant names like *_MIN_VALUE
                     if ($tag) {
                         sort($objects[$tag]);
                         $count = count($objects[$tag]);
@@ -62,8 +62,10 @@ class global_vars
                             // end of startoverflow
 
                             if ($prefix != '') {
+                                // We only want the greatest common prefix that ends in _
                                 $lastUnderscore = strrpos($prefix, '_');
                                 $prefix = substr($prefix, 0, $lastUnderscore+1);
+                                // Add the game-generated constants to the list to dump
                                 $objects[$tag][] = $prefix . 'MIN_VALUE';
                                 $objects[$tag][] = $prefix . 'MAX_VALUE';
                                 $objects[$tag][] = $prefix . 'ITERATION_BEGIN';

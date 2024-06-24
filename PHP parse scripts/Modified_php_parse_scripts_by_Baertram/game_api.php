@@ -96,15 +96,14 @@ class game_api
                     foreach ($parts as $part) {
                         $matches2 = null;
 
-                        //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
-                        //* IsTrustedFunction(*function* _function_)
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                             $type = $this->processType($matches2['type']);
+							$param = $this->processParamName($matches2['param']);
                             if ($type == '...') {
-                                $matches2['param'] = '...';
+                                $param = '...';
                                 $type = 'any';
                             }
-                            $objects[$methodClean]['params'][$matches2['param']] = $type;
+                            $objects[$methodClean]['params'][$param] = $type;
                         }
                     }
                 }
@@ -121,17 +120,18 @@ class game_api
 
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                             $type = $this->processType($matches2['type']);
+							$param = $this->processParamName($matches2['param']);
                             if ($type == '...') {
                                 if ($methodClean == 'CallSecureProtected') {
-                                    $matches2['param'] = 'reason';
+                                    $param = 'reason';
                                     $type = 'string';
                                 } else {
                                     print('Please verify additional types for ' . $methodClean);
-                                    $matches2['param'] = '...';
+                                    $param = '...';
                                     $type = 'any';
                                 }
                             }
-                            $objects[$methodClean]['return'][$matches2['param']] = $type;
+                            $objects[$methodClean]['return'][$param] = $type;
                         }
                     }
 
@@ -144,6 +144,19 @@ class game_api
 
         return $objects;
     }
+	
+	function processParamName($param)
+	{
+		if ($param == 'function') {
+			//* CallSecureProtected(*string* _functionName_, *types* _arguments_)
+			//* IsTrustedFunction(*function* _function_)
+			$param = 'func';
+		} else if ($param == 'table') {
+			//* InsecureNext(*table* _table_, *type* _lastKey_)
+			$param = 'tbl';
+		}
+		return $param;
+	}
 
     function processType($type)
     {
@@ -157,7 +170,7 @@ class game_api
         if ($type == 'types') {
             $type = '...';
         }
-        $type = str_replace(':nilable', '?', $type);
+        $type = str_replace(':nilable', '|nil', $type);
         return $type;
     }
 

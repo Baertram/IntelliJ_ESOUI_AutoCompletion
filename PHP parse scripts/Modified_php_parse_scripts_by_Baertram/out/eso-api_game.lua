@@ -11,19 +11,19 @@ function LoadUntrustedString(script) end
 --- @return void
 function SecurePostHook(targetTable, functionName, hookingFunction) end
 
---- @param table table
+--- @param tbl table
 --- @param lastKey type
 --- @return type nextKey, type nextValue
-function InsecureNext(table, lastKey) end
+function InsecureNext(tbl, lastKey) end
 
 --- @param functionName string
 --- @param ... any
 --- @return boolean success, string reason
 function CallSecureProtected(functionName, ...) end
 
---- @param function function
+--- @param func function
 --- @return boolean isTrusted
-function IsTrustedFunction(function) end
+function IsTrustedFunction(func) end
 
 --- @param guiName string
 --- @return void

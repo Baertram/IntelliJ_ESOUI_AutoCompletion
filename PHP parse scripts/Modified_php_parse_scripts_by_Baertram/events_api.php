@@ -150,7 +150,7 @@ class events_api
         if ($type == 'types') {
             throw new Exception('Add proper `types` handling!');
         }
-        $type = str_replace(':nilable', '?', $type);
+        $type = str_replace(':nilable', '|nil', $type);
         return $type;
     }
 

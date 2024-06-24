@@ -194,6 +194,7 @@ function WindowObjectPool:GetActiveObjects() end
 
 ---@class Chat
 ---@field windowPool WindowObjectPool
+---@field primaryContainer ChatContainer
 CHAT_SYSTEM = KEYBOARD_CHAT_SYSTEM
 CHAT_ROUTER = ZO_ChatRouter:New()
 
@@ -449,7 +450,7 @@ function ZO_CircularBuffer:SetMaxSize(maxSize) end
 function ZO_CircularBuffer:GetEnumerator() end
 
 -------------------------------------------------------------------------------
----@class ZO_ColorDef
+---@class ZO_ColorDef: ZO_Object
 ZO_ColorDef = {}
 ---@return ZO_ColorDef
 ---@return ZO_ColorDef
@@ -1022,6 +1023,9 @@ function ZO_CompareMaskFlags(flagsBefore, flagsAfter) end
 
 -------------------------------------------------------------------------------
 --[Globals]
+--- @param internalStringKey SafeStringKey
+--- @return string stringValue
+function GetString(safeStringKey) end
 function NormalizePointToControl(x, y, control) end
 function NormalizeMousePositionToControl(control) end
 function NormalizeUICanvasPoint(x, y) end
@@ -1048,6 +1052,7 @@ function CreateSimpleAnimation(animationType, controlToAnimate, delay) end
 
 -------------------------------------------------------------------------------
 --[Localization]
+---@param formatString string|SafeStringKey
 ---@return string
 function zo_strformat(formatString, ...) end
 function ZO_SetCachedStrFormatterOnlyStoreOne(formatter) end
@@ -4161,8 +4166,15 @@ function NumberFromBoolean(boolean) end
 --Accessibility - Narration
 function ClearActiveNarration() end --Skip to next narration
 
+--- @alias SafeStringKey
+--- | `SI_UNIT_NAME` = 165 "<<1>>"
+--- | `SI_PLAYER_NAME` = 184 "<<1>>"
 SI_UNIT_NAME = 165 --= "<<1>>"
 SI_PLAYER_NAME = 184 --= "<<1>>"
+
+---@type WindowManager
+WINDOW_MANAGER = {}
+MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
 SLASH_COMMANDS = {}
 ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
 ZO_VALID_LINK_TYPES_CHAT = {
@@ -4175,3 +4187,8 @@ ZO_VALID_LINK_TYPES_CHAT = {
 	housing = true
 	item = true
 }
+
+---@type ZO_ColorDef
+ZO_DEFAULT_DISABLED_COLOR = {a = 1,	b = 0.3, g = 0.3, r = 0.3}
+---@type ZO_ColorDef
+ZO_DEFAULT_ENABLED_COLOR = {a = 1, b = 1, g = 1, r = 1}
