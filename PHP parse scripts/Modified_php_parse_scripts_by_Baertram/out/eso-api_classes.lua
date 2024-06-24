@@ -553,10 +553,10 @@ function AnimationObjectTextureSlide:SetSlideDistances(slideDistanceU, slideDist
 
 --- @class AnimationObjectTransformOffset: AnimationObject
 AnimationObjectTransformOffset = {}
---- @return number? endX, number? endY, number? endZ
+--- @return number|nil endX, number|nil endY, number|nil endZ
 function AnimationObjectTransformOffset:GetEndOffset() end
 
---- @return number? startX, number? startY, number? startZ
+--- @return number|nil startX, number|nil startY, number|nil startZ
 function AnimationObjectTransformOffset:GetStartOffset() end
 
 --- @param endX layout_measurement
@@ -1533,7 +1533,7 @@ function Control:GetControlAlpha() end
 --- @return number scale
 function Control:GetControlScale() end
 
---- @return Space? space
+--- @return Space|nil space
 function Control:GetControlSpace() end
 
 --- @return number height
@@ -1567,7 +1567,7 @@ function Control:GetExcludeFromResizeToFitExtents() end
 --- @return number normalX, number normalY, number gradientLength
 function Control:GetFadeGradient(gradientIndex) end
 
---- @return number? growOrShrink
+--- @return number|nil growOrShrink
 function Control:GetFlex() end
 
 --- @return FlexAlignment alignment
@@ -1763,10 +1763,10 @@ function Control:IsMouseEnabled() end
 
 --- @param x layout_measurement
 --- @param y layout_measurement
---- @param leftOffset layout_measurement?
---- @param topOffset layout_measurement?
---- @param rightOffset layout_measurement?
---- @param bottomOffset layout_measurement?
+--- @param leftOffset layout_measurement|nil
+--- @param topOffset layout_measurement|nil
+--- @param rightOffset layout_measurement|nil
+--- @param bottomOffset layout_measurement|nil
 --- @return boolean isInside
 function Control:IsPointInside(x, y, leftOffset, topOffset, rightOffset, bottomOffset) end
 
@@ -1957,7 +1957,7 @@ function Control:SetExcludeFromResizeToFitExtents(exclude) end --*protected-attr
 --- @return void
 function Control:SetFadeGradient(gradientIndex, normalX, normalY, gradientLength) end
 
---- @param growOrShrink number?
+--- @param growOrShrink number|nil
 --- @return void
 function Control:SetFlex(growOrShrink) end
 
@@ -2129,7 +2129,7 @@ function Control:SetSimpleAnchor(anchorTargetControl, offsetX, offsetY) end --*p
 --- @return void
 function Control:SetSimpleAnchorParent(offsetX, offsetY) end --*protected-attributes*
 
---- @param space Space?
+--- @param space Space|nil
 --- @return void
 function Control:SetSpace(space) end
 
@@ -3763,7 +3763,7 @@ function TooltipControl:SetAchievement(achievementId) end
 function TooltipControl:SetAchievementRewardItem(achievementId) end
 
 --- @param slotId luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function TooltipControl:SetAction(slotId, hotbarCategory) end
 
@@ -3779,8 +3779,8 @@ function TooltipControl:SetAction(slotId, hotbarCategory) end
 --- @param showUpgradeText boolean
 --- @param showAdvised boolean
 --- @param showBadMorph boolean
---- @param overrideRank integer?
---- @param overrideAbilityId integer?
+--- @param overrideRank integer|nil
+--- @param overrideAbilityId integer|nil
 --- @return void
 function TooltipControl:SetActiveSkill(skillType, skillLineIndex, skillIndex, morphSlot, isPurchased, isAdvised, isBadMorph, numAvailableSkillPoints, showSkillPointCost, showUpgradeText, showAdvised, showBadMorph, overrideRank, overrideAbilityId) end
 
@@ -3951,7 +3951,7 @@ function TooltipControl:SetLootItem(lootId) end
 function TooltipControl:SetMarketProduct(marketProductId, showCollectiblePurchasableHint) end
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex?
+--- @param presentationIndex luaindex|nil
 --- @return void
 function TooltipControl:SetMarketProductListing(marketProductId, presentationIndex) end
 
@@ -3987,8 +3987,8 @@ function TooltipControl:SetPassiveSkill(skillType, skillLineIndex, skillIndex, r
 --- @param reagent1SlotIndex integer
 --- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId Bag?
---- @param reagent3SlotIndex integer?
+--- @param reagent3BagId Bag|nil
+--- @param reagent3SlotIndex integer|nil
 --- @return void
 function TooltipControl:SetPendingAlchemyItem(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex) end
 
@@ -4441,7 +4441,7 @@ function WindowManager:GetScriptProfilerFrameNumRecords(frameIndex) end
 
 --- @param frameIndex luaindex
 --- @param recordIndex luaindex
---- @return luaindex recordDataIndex, number startTimeNS, number endTimeNS, luaindex? callerRecordIndex, ScriptProfilerRecordDataType recordDataType
+--- @return luaindex recordDataIndex, number startTimeNS, number endTimeNS, luaindex|nil callerRecordIndex, ScriptProfilerRecordDataType recordDataType
 function WindowManager:GetScriptProfilerRecordInfo(frameIndex, recordIndex) end
 
 --- @return integer numClosures

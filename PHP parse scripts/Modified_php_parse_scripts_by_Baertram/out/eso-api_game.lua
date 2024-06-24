@@ -111,7 +111,7 @@ function GetBattlegroundTeamName(battlegroundTeam) end
 function GetNumClasses() end
 
 --- @param classId integer
---- @return luaindex? index
+--- @return luaindex|nil index
 function GetClassIndexById(classId) end
 
 --- @param index luaindex
@@ -332,11 +332,11 @@ function CalculateCubicBezierEase(progress, x1, y1, x2, y2) end
 
 --- @param key KeyCode
 --- @param disabled boolean
---- @return string? gamepadIcon, integer? width, integer? height
+--- @return string|nil gamepadIcon, integer|nil width, integer|nil height
 function GetGamepadIconPathForKeyCode(key, disabled) end
 
 --- @param key KeyCode
---- @return string? mouseIcon, integer? width, integer? height
+--- @return string|nil mouseIcon, integer|nil width, integer|nil height
 function GetMouseIconPathForKeyCode(key) end
 
 --- @param number integer
@@ -744,7 +744,7 @@ function GetGuildInviteeInfo(guildId, inviteeIndex) end
 
 --- @param guildId integer
 --- @param displayName string
---- @return luaindex? memberIndex
+--- @return luaindex|nil memberIndex
 function GetGuildMemberIndexFromDisplayName(guildId, displayName) end
 
 --- @param guildId integer
@@ -873,7 +873,7 @@ function GetGuildRankId(guildId, rankIndex) end
 
 --- @param guildId integer
 --- @param rankId integer
---- @return luaindex? rankIndex
+--- @return luaindex|nil rankIndex
 function GetGuildRankIndex(guildId, rankId) end
 
 --- @param guildId integer
@@ -965,7 +965,7 @@ function ReleaseKeepForGuild(guildId) end
 function ClaimInteractionKeepForGuild(guildId) end
 
 --- @param guildId integer
---- @return string? ownedKioskName
+--- @return string|nil ownedKioskName
 function GetGuildOwnedKioskInfo(guildId) end
 
 --- @return integer despawnTimestampS, integer bidEndTimestampS, integer respawnTimestampS
@@ -1249,7 +1249,7 @@ function GetGamepadBothDpadDownAndRightStickScrollIcon() end
 
 --- @param key KeyCode
 --- @param disabled boolean
---- @return string? keyboardIcon, integer? width, integer? height
+--- @return string|nil keyboardIcon, integer|nil width, integer|nil height
 function GetKeyboardIconPathForKeyCode(key, disabled) end
 
 --- @return boolean insideClient
@@ -1849,7 +1849,7 @@ function GetSecondsPlayed() end
 --- @return integer latencyMS
 function GetLatency() end
 
---- @param tradeIndex luaindex?
+--- @param tradeIndex luaindex|nil
 --- @return void
 function PlaceInTradeWindow(tradeIndex) end --*protected*
 
@@ -2189,7 +2189,7 @@ function GetUnitSilhouetteTexture(unitTag) end
 
 --- @param unitTag string
 --- @param poolIndex luaindex
---- @return integer? type, integer current, integer max, integer effectiveMax
+--- @return integer|nil type, integer current, integer max, integer effectiveMax
 function GetUnitPowerInfo(unitTag, poolIndex) end
 
 --- @param unitTag string
@@ -2198,7 +2198,7 @@ function GetUnitPowerInfo(unitTag, poolIndex) end
 function GetUnitPower(unitTag, powerType) end
 
 --- @param unitTag string
---- @return Bag? bankBag
+--- @return Bag|nil bankBag
 function GetUnitBankAccessBag(unitTag) end
 
 --- @param unitTag string
@@ -2222,7 +2222,7 @@ function GetAllUnitAttributeVisualizerEffectInfo(unitTag) end
 --- @param statType DerivedStats
 --- @param attributeType Attributes
 --- @param powerType CombatMechanicFlags
---- @return number? value, number? maxValue, integer? sequenceId
+--- @return number|nil value, number|nil maxValue, integer|nil sequenceId
 function GetUnitAttributeVisualizerEffectInfo(unitTag, unitAttributeVisual, statType, attributeType, powerType) end
 
 --- @param unitTag string
@@ -2249,7 +2249,7 @@ function IsPlayerGroundTargeting() end
 --- @return boolean isOverridden
 function IsPlayerEmoteOverridden(emoteId) end
 
---- @return integer? error
+--- @return integer|nil error
 function GetGroundTargetingError() end
 
 --- @return number heading
@@ -2288,52 +2288,52 @@ function GetWeaponSwapUnlockedLevel() end
 
 --- @param actionSlotIndex luaindex
 --- @param mechanicType CombatMechanicFlags
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return integer abilityCost
 function GetSlotAbilityCost(actionSlotIndex, mechanicType, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return string texture, string weapontexture, string activationAnimation
 function GetSlotTexture(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return string name
 function GetSlotName(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
 --- @param hotbarCategory HotBarCategory
---- @return ItemDisplayQuality? displayQuality
+--- @return ItemDisplayQuality|nil displayQuality
 function GetSlotItemDisplayQuality(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return integer remain, integer duration, boolean global, ActionBarSlotType globalSlotType
 function GetSlotCooldownInfo(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean used
 function IsSlotUsed(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean useable
 function IsSlotUsable(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function OnSlotDownAndUp(actionSlotIndex, hotbarCategory) end --*private*
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function OnSlotDown(actionSlotIndex, hotbarCategory) end --*private*
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function OnSlotUp(actionSlotIndex, hotbarCategory) end --*private*
 
@@ -2351,7 +2351,7 @@ function OnSpecialMoveKeyUp(moveIndex) end --*private*
 
 --- @param actionSlotIndex luaindex
 --- @param hotbarCategory HotBarCategory
---- @return integer? count
+--- @return integer|nil count
 function GetSlotItemCount(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
@@ -2439,7 +2439,7 @@ function ShareQuest(journalQuestIndex) end
 
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
---- @return string journalText, QuestStepVisibility? visibility, QuestStepComparisonType comparisonType, string trackerOverrideText, integer numConditions
+--- @return string journalText, QuestStepVisibility|nil visibility, QuestStepComparisonType comparisonType, string trackerOverrideText, integer numConditions
 function GetJournalQuestStepInfo(journalQuestIndex, stepIndex) end
 
 --- @param journalQuestIndex luaindex
@@ -2458,7 +2458,7 @@ function GetJournalQuestNumConditions(journalQuestIndex, stepIndex) end
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
 --- @param conditionIndex luaindex
---- @return integer? taskId
+--- @return integer|nil taskId
 function RequestJournalQuestConditionAssistance(journalQuestIndex, stepIndex, conditionIndex) end
 
 --- @param considerType integer
@@ -2610,7 +2610,7 @@ function GetMaxBags() end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @return integer? id
+--- @return integer|nil id
 function GetItemInstanceId(bagId, slotIndex) end
 
 --- @param bagId Bag
@@ -2677,32 +2677,32 @@ function IsBankUpgradeAvailable() end
 --- @param bagId Bag
 --- @param slotIndex integer
 --- @param hotbarCategory HotBarCategory
---- @return luaindex? freeSlot
+--- @return luaindex|nil freeSlot
 function GetFirstFreeValidSlotForItem(bagId, slotIndex, hotbarCategory) end
 
 --- @param actionType ActionBarSlotType
 --- @param actionId integer
---- @param hotbarCategory HotBarCategory?
---- @return luaindex? emptyActionSlotIndex
+--- @param hotbarCategory HotBarCategory|nil
+--- @return luaindex|nil emptyActionSlotIndex
 function GetFirstFreeValidSlotForSimpleAction(actionType, actionId, hotbarCategory) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
 --- @param hotbarCategory HotBarCategory
---- @return luaindex? currentSlot
+--- @return luaindex|nil currentSlot
 function FindActionSlotMatchingItem(bagId, slotIndex, hotbarCategory) end
 
 --- @param actionType ActionBarSlotType
 --- @param actionId integer
---- @param hotbarCategory HotBarCategory?
---- @return luaindex? currentActionSlotIndex
+--- @param hotbarCategory HotBarCategory|nil
+--- @return luaindex|nil currentActionSlotIndex
 function FindActionSlotMatchingSimpleAction(actionType, actionId, hotbarCategory) end
 
 --- @param link string
 --- @return integer itemSoundCategory
 function GetItemSoundCategoryFromLink(link) end
 
---- @return integer? guildId
+--- @return integer|nil guildId
 function GetSelectedGuildBankId() end
 
 --- @param unitTag string
@@ -2762,7 +2762,7 @@ function GetKeepAccessible(keepId, bgContext) end
 --- @return boolean hasResources
 function GetKeepHasResourcesForTravel(keepId, bgContext) end
 
---- @return integer? startKeepId
+--- @return integer|nil startKeepId
 function GetKeepFastTravelInteraction() end
 
 --- @return integer count
@@ -2947,7 +2947,7 @@ function GetAbilityProgressionXPInfo(progressionIndex) end
 function GetAbilityProgressionAbilityInfo(progressionIndex, morph, rank) end
 
 --- @param abilityId integer
---- @return integer? rank
+--- @return integer|nil rank
 function GetAbilityProgressionRankFromAbilityId(abilityId) end
 
 --- @param abilityId integer
@@ -2990,7 +2990,7 @@ function IsGameCameraPreferredTargetValid() end
 --- @return void
 function ClearGameCameraPreferredTarget() end --*private*
 
---- @return string? action, string? name, boolean interactBlocked, boolean isOwned, integer additionalInfo, integer? contextualInfo, string? contextualLink, boolean isCriminalInteract
+--- @return string|nil action, string|nil name, boolean interactBlocked, boolean isOwned, integer additionalInfo, integer|nil contextualInfo, string|nil contextualLink, boolean isCriminalInteract
 function GetGameCameraInteractableActionInfo() end
 
 --- @return string name
@@ -3006,7 +3006,7 @@ function ReleaseGameCameraSiegeControlled() end --*private*
 function GetNumPendingFeedback() end
 
 --- @param feedbackIndex luaindex
---- @return integer? feedbackId
+--- @return integer|nil feedbackId
 function GetFeedbackIdByIndex(feedbackIndex) end
 
 --- @param feedbackId integer
@@ -3063,38 +3063,38 @@ function SelectPlayerStatus(status) end
 --- @return boolean canChangeBattleLevelPreference
 function CanChangeBattleLevelPreference() end
 
---- @return Bag? originatingBagId
+--- @return Bag|nil originatingBagId
 function GetCursorBagId() end
 
---- @return integer? slotIndex
+--- @return integer|nil slotIndex
 function GetCursorSlotIndex() end
 
---- @return integer? collectibleId
+--- @return integer|nil collectibleId
 function GetCursorCollectibleId() end
 
---- @return integer? abilityId
+--- @return integer|nil abilityId
 function GetCursorAbilityId() end
 
---- @return integer? craftedAbilityId
+--- @return integer|nil craftedAbilityId
 function GetCursorCraftedAbilityId() end
 
---- @return integer? championSkillId
+--- @return integer|nil championSkillId
 function GetCursorChampionSkillId() end
 
---- @return integer? emoteId
+--- @return integer|nil emoteId
 function GetCursorEmoteId() end
 
---- @return integer? quickChatId
+--- @return integer|nil quickChatId
 function GetCursorQuickChatId() end
 
---- @return integer? questItemId
+--- @return integer|nil questItemId
 function GetCursorQuestItemId() end
 
---- @return integer? scriptId
+--- @return integer|nil scriptId
 function GetCursorCraftedAbilityScriptId() end
 
 --- @param actionSlot luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function PlaceInActionBar(actionSlot, hotbarCategory) end --*protected*
 
@@ -3129,7 +3129,7 @@ function PlaceInWorldLeftClick() end --*protected*
 function PlaceInAttachmentSlot(attachmentSlot) end --*protected*
 
 --- @param actionSlot luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function PickupAction(actionSlot, hotbarCategory) end --*protected*
 
@@ -3301,7 +3301,7 @@ function UnbindKeyFromAction(layerIndex, categoryIndex, actionIndex, bindingInde
 function UnbindAllKeysFromAction(layerIndex, categoryIndex, actionIndex) end --*protected*
 
 --- @param actionName string
---- @return luaindex? layerIndex, luaindex? categoryIndex, luaindex? actionIndex
+--- @return luaindex|nil layerIndex, luaindex|nil categoryIndex, luaindex|nil actionIndex
 function GetActionIndicesFromName(actionName) end
 
 --- @param layerIndex luaindex
@@ -3310,7 +3310,7 @@ function GetActionIndicesFromName(actionName) end
 --- @param mod2 KeyCode
 --- @param mod3 KeyCode
 --- @param mod4 KeyCode
---- @return luaindex? categoryIndex, luaindex? actionIndex, luaindex? bindingIndex
+--- @return luaindex|nil categoryIndex, luaindex|nil actionIndex, luaindex|nil bindingIndex
 function GetBindingIndicesFromKeys(layerIndex, keyCode, mod1, mod2, mod3, mod4) end
 
 --- @param layerName string
@@ -3349,7 +3349,7 @@ function IsActionLayerActiveByName(layerName) end
 function GetNumActiveActionLayers() end
 
 --- @param activeActionLayerIndex luaindex
---- @return luaindex? layerIndex
+--- @return luaindex|nil layerIndex
 function GetActiveActionLayerIndex(activeActionLayerIndex) end
 
 --- @param layerIndex luaindex
@@ -3391,14 +3391,14 @@ function GetAdvancedStatCategoryInfo(categoryId) end
 function GetAdvancedStatInfo(categoryId, statIndex) end
 
 --- @param statType AdvancedStatDisplayType
---- @return AdvancedStatDisplayFormat displayFormat, integer? flatValue, number? percentValue
+--- @return AdvancedStatDisplayFormat displayFormat, integer|nil flatValue, number|nil percentValue
 function GetAdvancedStatValue(statType) end
 
 --- @return boolean tryingToMove
 function IsPlayerTryingToMove() end
 
 --- @param otherLevel integer
---- @param playerLevel integer?
+--- @param playerLevel integer|nil
 --- @return DifficultyCon con
 function GetCon(otherLevel, playerLevel) end
 
@@ -3461,11 +3461,11 @@ function CanJumpToGroupMember(unitTag) end
 --- @return void
 function SetVeteranDifficulty(isVeteranDifficulty) end
 
---- @return string? unitTag
+--- @return string|nil unitTag
 function GetLocalPlayerGroupUnitTag() end
 
 --- @param sortIndex luaindex
---- @return string? unitTag
+--- @return string|nil unitTag
 function GetGroupUnitTagByIndex(sortIndex) end
 
 --- @param unitTag string
@@ -3477,14 +3477,14 @@ function GetGroupIndexByUnitTag(unitTag) end
 function IsGroupCompanionUnitTag(unitTag) end
 
 --- @param groupUnitTag string
---- @return string? companionUnitTag
+--- @return string|nil companionUnitTag
 function GetCompanionUnitTagByGroupUnitTag(groupUnitTag) end
 
 --- @param companionUnitTag string
---- @return string? groupUnitTag
+--- @return string|nil groupUnitTag
 function GetGroupUnitTagByCompanionUnitTag(companionUnitTag) end
 
---- @return integer? remainingTimeMs, integer? totalTimeMs
+--- @return integer|nil remainingTimeMs, integer|nil totalTimeMs
 function GetInstanceKickTime() end
 
 --- @return ForcedZoneExitCause reason
@@ -3522,7 +3522,7 @@ function DoesGroupModificationRequireVote() end
 --- @return boolean canChange, GroupDifficultyChangeReason reason
 function CanPlayerChangeGroupDifficulty() end
 
---- @return GroupElectionType electionType, integer timeRemainingSeconds, string electionDescriptor, string? targetUnitTag
+--- @return GroupElectionType electionType, integer timeRemainingSeconds, string electionDescriptor, string|nil targetUnitTag
 function GetGroupElectionInfo() end
 
 --- @param unitTag string
@@ -3548,19 +3548,19 @@ function GetExpectedGroupElectionResult(electionType, targetUnitTag) end
 --- @return void
 function AssignTargetMarkerToReticleTarget(targetMarkerType) end
 
---- @return integer? currentCounter
+--- @return integer|nil currentCounter
 function GetRaidReviveCountersRemaining() end
 
 --- @return integer score
 function GetCurrentRaidScore() end
 
---- @return integer? deaths
+--- @return integer|nil deaths
 function GetCurrentRaidDeaths() end
 
---- @return integer? startingReviveCounters
+--- @return integer|nil startingReviveCounters
 function GetCurrentRaidStartingReviveCounters() end
 
---- @return integer? currentLifeScoreBonus
+--- @return integer|nil currentLifeScoreBonus
 function GetCurrentRaidLifeScoreBonus() end
 
 --- @return integer currentLifeScoreBonus
@@ -3572,7 +3572,7 @@ function IsRaidInProgress() end
 --- @return boolean ended
 function HasRaidEnded() end
 
---- @return bool? successful
+--- @return bool|nil successful
 function WasRaidSuccessful() end
 
 --- @return boolean inRaid
@@ -3684,12 +3684,12 @@ function GetPlayerRaidOfTheWeekProgressInfo(raidCategory) end
 function GetPlayerRaidProgressInfo(raidId) end
 
 --- @param raidCategory RaidCategory
---- @param lastRaidId integer?
---- @return integer? nextRaidId
+--- @param lastRaidId integer|nil
+--- @return integer|nil nextRaidId
 function GetNextRaidLeaderboardId(raidCategory, lastRaidId) end
 
---- @param lastTributeLeaderboardType TributeLeaderboardType?
---- @return TributeLeaderboardType? nextTributeLeaderboardType
+--- @param lastTributeLeaderboardType TributeLeaderboardType|nil
+--- @return TributeLeaderboardType|nil nextTributeLeaderboardType
 function GetNextTributeLeaderboardType(lastTributeLeaderboardType) end
 
 --- @param tributeLeaderboardType TributeLeaderboardType
@@ -3732,12 +3732,12 @@ function GetNumEndlessDungeonActiveVerses() end
 --- @return integer abilityId
 function GetEndlessDungeonActiveVerseAbility(index) end
 
---- @param lastAbilityId integer?
---- @return integer? nextAbilityId, integer? nextStackCount
+--- @param lastAbilityId integer|nil
+--- @return integer|nil nextAbilityId, integer|nil nextStackCount
 function GetNextEndlessDungeonLifetimeVerseAbilityAndStackCount(lastAbilityId) end
 
---- @param lastAbilityId integer?
---- @return integer? nextAbilityId, integer? nextStackCount
+--- @param lastAbilityId integer|nil
+--- @return integer|nil nextAbilityId, integer|nil nextStackCount
 function GetNextEndlessDungeonVisionAbilityAndStackCount(lastAbilityId) end
 
 --- @param buffAbilityId integer
@@ -3859,8 +3859,8 @@ function JumpToHouse(displayName) end
 --- @return void
 function JumpToSpecificHouse(displayName, houseId) end
 
---- @param lastId integer?
---- @return integer? nextId
+--- @param lastId integer|nil
+--- @return integer|nil nextId
 function GetNextLeaderboardScoreNotificationId(lastId) end
 
 --- @param notificationId integer
@@ -3885,7 +3885,7 @@ function InviteToTributeByDisplayName(displayName) end
 function IsActiveAbilityHotBarCategory(hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean locked
 function IsActionSlotRestricted(actionSlotIndex, hotbarCategory) end
 
@@ -3896,13 +3896,13 @@ function IsActionBarRespeccable() end
 function GetActionBarLockedReason() end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function ClearSlot(actionSlotIndex, hotbarCategory) end --*protected*
 
 --- @param abilityIndex luaindex
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function SelectSlotAbility(abilityIndex, actionSlotIndex, hotbarCategory) end --*protected*
 
@@ -3916,7 +3916,7 @@ function SelectSlotItem(bagId, bagSlotIndex, actionSlotIndex, hotbarCategory) en
 --- @param actionType ActionBarSlotType
 --- @param actionId integer
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return void
 function SelectSlotSimpleAction(actionType, actionId, actionSlotIndex, hotbarCategory) end --*protected*
 
@@ -3934,12 +3934,12 @@ function GetLastSlottedItemLink() end
 function GetSlotItemLink(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return integer actionId
 function GetSlotBoundId(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return ActionBarSlotType actionType
 function GetSlotType(actionSlotIndex, hotbarCategory) end
 
@@ -3954,17 +3954,17 @@ function SetCurrentQuickslot(actionSlotIndex) end
 function GetActiveHotbarCategory() end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return integer durationMilliseconds
 function GetActionSlotEffectDuration(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return integer timeRemainingMilliseconds
 function GetActionSlotEffectTimeRemaining(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return integer stackCount
 function GetActionSlotEffectStackCount(actionSlotIndex, hotbarCategory) end
 
@@ -3988,77 +3988,77 @@ function GetSkillProgressionIdForHotbarSlotOverrideRule(actionSlotIndex, hotbarC
 function GetWeaponPairFromHotbarCategory(hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean toggledOn
 function IsSlotToggled(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasCostFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasRequirementFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasWeaponSlotFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasTargetFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasRangeFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasLeapKeepTargetFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasSubzoneFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasStatusEffectFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasFallingFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasSwimmingFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasMountedFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasReincarnatingFailure(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasActivationHighlight(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean status
 function ActionSlotHasNonCostStateFailure(actionSlotIndex, hotbarCategory) end
 
@@ -4074,17 +4074,17 @@ function GetAssignableChampionBarStartAndEndSlots() end
 function GetRequiredChampionDisciplineIdForSlot(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean isLocked
 function IsActionSlotLocked(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean isMutable
 function IsActionSlotMutable(actionSlotIndex, hotbarCategory) end
 
 --- @param actionSlotIndex luaindex
---- @param hotbarCategory HotBarCategory?
+--- @param hotbarCategory HotBarCategory|nil
 --- @return boolean hasEffectiveSlotAbilityData
 function ActionSlotHasEffectiveSlotAbilityData(actionSlotIndex, hotbarCategory) end
 
@@ -4281,7 +4281,7 @@ function DoesItemFulfillJournalQuestCondition(bagId, slotIndex, journalQuestInde
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
 --- @param conditionIndex luaindex
---- @param isSelfCrafted bool?
+--- @param isSelfCrafted bool|nil
 --- @return boolean fulfillsCondition
 function DoesItemLinkFulfillJournalQuestCondition(link, journalQuestIndex, stepIndex, conditionIndex, isSelfCrafted) end
 
@@ -4361,8 +4361,8 @@ function GetJournalQuestNumRewards(journalQuestIndex) end
 --- @return string link
 function GetQuestRewardItemLink(rewardIndex, linkStyle) end
 
---- @param lastQuestId integer?
---- @return integer? nextQuestId
+--- @param lastQuestId integer|nil
+--- @return integer|nil nextQuestId
 function GetNextCompletedQuestId(lastQuestId) end
 
 --- @param questId integer
@@ -4375,7 +4375,7 @@ function GetCompletedQuestLocationInfo(questId) end
 
 --- @param journalQuestIndex luaindex
 --- @param rewardIndex luaindex
---- @return RewardType type, string name, integer amount, textureName iconFile, boolean meetsUsageRequirement, ItemDisplayQuality itemDisplayQuality, RewardItemType? itemType
+--- @return RewardType type, string name, integer amount, textureName iconFile, boolean meetsUsageRequirement, ItemDisplayQuality itemDisplayQuality, RewardItemType|nil itemType
 function GetJournalQuestRewardInfo(journalQuestIndex, rewardIndex) end
 
 --- @param journalQuestIndex luaindex
@@ -4469,7 +4469,7 @@ function GetQuestConditionItemInfo(journalQuestIndex, stepIndex, conditionIndex)
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
 --- @param conditionIndex luaindex
---- @return integer? itemId, integer? materialItemId, TradeskillType? craftingType, ItemQuality? itemQuality, integer? itemTemplateId, integer? itemSetId, ItemTraitType? itemTraitType, integer? itemStyleId, integer? encodedAlchemyTraits
+--- @return integer|nil itemId, integer|nil materialItemId, TradeskillType|nil craftingType, ItemQuality|nil itemQuality, integer|nil itemTemplateId, integer|nil itemSetId, ItemTraitType|nil itemTraitType, integer|nil itemStyleId, integer|nil encodedAlchemyTraits
 function GetQuestConditionMasterWritInfo(journalQuestIndex, stepIndex, conditionIndex) end
 
 --- @param channelId integer
@@ -4750,7 +4750,7 @@ function RequestUnequipItem(wornBagId, equipSlot) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @return integer? minLevel, integer? minChampionPoints
+--- @return integer|nil minLevel, integer|nil minChampionPoints
 function GetItemGlyphMinLevels(bagId, slotIndex) end
 
 --- @param itemSetId integer
@@ -4808,7 +4808,7 @@ function DoesCollectibleHaveVisibleAppearance(collectibleId) end
 function GetKioskBidWindowSecondsRemaining() end
 
 --- @param guildId integer
---- @return integer? bankedMoney, integer? existingBidAmount, integer? numTotalBids, GuildKioskGuildInfoResult queryResult
+--- @return integer|nil bankedMoney, integer|nil existingBidAmount, integer|nil numTotalBids, GuildKioskGuildInfoResult queryResult
 function GetKioskGuildInfo(guildId) end
 
 --- @return integer maxBidsPerGuild
@@ -4857,7 +4857,7 @@ function CanBuyFromTradingHouse(guildId) end
 --- @return boolean canSell
 function CanSellOnTradingHouse(guildId) end
 
---- @return integer? guildId
+--- @return integer|nil guildId
 function GetSelectedTradingHouseGuildId() end
 
 --- @param guildId integer
@@ -4903,13 +4903,13 @@ function SetPendingItemPurchase(index) end
 function SetPendingItemPurchaseByItemUniqueId(itemUniqueId, purchasePrice) end
 
 --- @param filterType TradingHouseFilterType
---- @param values integer?
+--- @param values integer|nil
 --- @return boolean success
 function SetTradingHouseFilter(filterType, values) end
 
 --- @param filterType TradingHouseFilterType
---- @param minValue integer?
---- @param maxValue integer?
+--- @param minValue integer|nil
+--- @param maxValue integer|nil
 --- @return boolean success
 function SetTradingHouseFilterRange(filterType, minValue, maxValue) end
 
@@ -4970,7 +4970,7 @@ function GetEnchantmentSearchCategories(itemType) end
 function GetTradingHouseCooldownRemaining() end
 
 --- @param searchText string
---- @return integer? taskId
+--- @return integer|nil taskId
 function MatchTradingHouseItemNames(searchText) end
 
 --- @param taskId integer
@@ -4983,7 +4983,7 @@ function CancelMatchTradingHouseItemNames(taskId) end
 function GetMatchTradingHouseItemNamesResult(taskId, resultIndex) end
 
 --- @param taskId integer
---- @return integer? numResults
+--- @return integer|nil numResults
 function GetNumMatchTradingHouseItemNamesResults(taskId) end
 
 --- @return integer minLetters
@@ -5012,14 +5012,14 @@ function SetMapToMapId(mapId) end
 --- @return SetMapResultCode setMapResult
 function SetMapToAutoMapNavigationTargetPosition() end
 
---- @return luaindex? index
+--- @return luaindex|nil index
 function GetCurrentMapIndex() end
 
 --- @return integer mapId
 function GetCurrentMapId() end
 
 --- @param zoneId integer
---- @return luaindex? index
+--- @return luaindex|nil index
 function GetMapIndexByZoneId(zoneId) end
 
 --- @param zoneId integer
@@ -5031,13 +5031,13 @@ function GetMapIdByZoneId(zoneId) end
 function GetMapIdByIndex(mapIndex) end
 
 --- @param mapId integer
---- @return luaindex? index
+--- @return luaindex|nil index
 function GetMapIndexById(mapId) end
 
---- @return luaindex? index
+--- @return luaindex|nil index
 function GetCyrodiilMapIndex() end
 
---- @return luaindex? index
+--- @return luaindex|nil index
 function GetImperialCityMapIndex() end
 
 --- @return luaindex zoneIndex
@@ -5063,7 +5063,7 @@ function MapZoomOut() end
 
 --- @param normalizedClickX number
 --- @param normalizedClickY number
---- @return boolean wouldProcess, luaindex? resultingMapIndex
+--- @return boolean wouldProcess, luaindex|nil resultingMapIndex
 function WouldProcessMapClick(normalizedClickX, normalizedClickY) end
 
 --- @param normalizedClickX number
@@ -5120,7 +5120,7 @@ function GetMapType() end
 --- @return MapContentType mapContentType
 function GetMapContentType() end
 
---- @return number? customMaxZoom
+--- @return number|nil customMaxZoom
 function GetMapCustomMaxZoom() end
 
 --- @return MapFilterType mapFilterType
@@ -5189,7 +5189,7 @@ function HasAutoMapNavigationTarget() end
 --- @return number normalizedX, number normalizedY
 function GetAutoMapNavigationNormalizedPositionForCurrentMap() end
 
---- @return luaindex? commonMapIndex
+--- @return luaindex|nil commonMapIndex
 function GetAutoMapNavigationCommonZoomOutMapIndex() end
 
 --- @param zoneId integer
@@ -5288,7 +5288,7 @@ function GetPOIPinIcon(poiId, checkNearby) end
 --- @return luaindex zoneIndex, luaindex poiIndex
 function GetPOIIndices(poiId) end
 
---- @return luaindex? zoneIndex, luaindex? poiIndex
+--- @return luaindex|nil zoneIndex, luaindex|nil poiIndex
 function GetCurrentSubZonePOIIndices() end
 
 --- @return boolean isInCyrodiil
@@ -5417,7 +5417,7 @@ function TravelToKeep(destinationKeepId) end
 function GetNumFastTravelNodes() end
 
 --- @param nodeIndex luaindex
---- @return boolean known, string name, number normalizedX, number normalizedY, textureName icon, textureName? glowIcon, PointOfInterestType poiType, boolean isShownInCurrentMap, boolean linkedCollectibleIsLocked
+--- @return boolean known, string name, number normalizedX, number normalizedY, textureName icon, textureName|nil glowIcon, PointOfInterestType poiType, boolean isShownInCurrentMap, boolean linkedCollectibleIsLocked
 function GetFastTravelNodeInfo(nodeIndex) end
 
 --- @param nodeIndex luaindex
@@ -5708,15 +5708,15 @@ function GetMedalName(medalId) end
 --- @return integer scoreReward
 function GetMedalScoreReward(medalId) end
 
---- @return integer? timeLeftMS
+--- @return integer|nil timeLeftMS
 function GetCurrentBattlegroundShutdownTimer() end
 
 --- @param battlegroundType BattlegroundLeaderboardType
 --- @return LeaderboardDataReadyState readyState
 function QueryBattlegroundLeaderboardData(battlegroundType) end
 
---- @param lastBattlegroundLeaderboardType BattlegroundLeaderboardType?
---- @return BattlegroundLeaderboardType? nextBattlegroundLeaderboardType
+--- @param lastBattlegroundLeaderboardType BattlegroundLeaderboardType|nil
+--- @return BattlegroundLeaderboardType|nil nextBattlegroundLeaderboardType
 function GetNextBattlegroundLeaderboardType(lastBattlegroundLeaderboardType) end
 
 --- @param battlegroundLeaderboardType BattlegroundLeaderboardType
@@ -5756,8 +5756,8 @@ function GetScoreboardEntryClassId(slotIndex) end
 function GetScoreboardEntryScoreByType(slotIndex, scoreType) end
 
 --- @param slotIndex luaindex
---- @param lastMedalId integer?
---- @return integer? nextMedalId
+--- @param lastMedalId integer|nil
+--- @return integer|nil nextMedalId
 function GetNextScoreboardEntryMedalId(slotIndex, lastMedalId) end
 
 --- @param slotIndex luaindex
@@ -5969,7 +5969,7 @@ function GetSelectionCampaignCurrentAllianceLock(campaignIndex) end
 function GetSelectionCampaignAllianceLockReason(campaignIndex) end
 
 --- @param campaignIndex luaindex
---- @return string? conflictingCharacterName
+--- @return string|nil conflictingCharacterName
 function GetSelectionCampaignAllianceLockConflictingCharacterName(campaignIndex) end
 
 --- @param campaignId integer
@@ -6106,7 +6106,7 @@ function GetMinLevelForCampaignTutorial() end
 --- @return boolean hasNotification
 function HasAllianceLockPendingNotification() end
 
---- @return integer? campaignId, Alliance? alliance, integer? timeLeftS
+--- @return integer|nil campaignId, Alliance|nil alliance, integer|nil timeLeftS
 function GetAllianceLockPendingNotificationInfo() end
 
 --- @return QueueForCampaignResponseType queueForCampaignResult
@@ -6537,10 +6537,10 @@ function GetNumTitles() end
 --- @return string titleString
 function GetTitle(titleIndex) end
 
---- @return luaindex? titleIndex
+--- @return luaindex|nil titleIndex
 function GetCurrentTitleIndex() end
 
---- @param titleIndex luaindex?
+--- @param titleIndex luaindex|nil
 --- @return void
 function SelectTitle(titleIndex) end
 
@@ -6609,7 +6609,7 @@ function TradeSetMoney(amount) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @param tradeIndex luaindex?
+--- @param tradeIndex luaindex|nil
 --- @return void
 function TradeAddItem(bagId, slotIndex, tradeIndex) end
 
@@ -6639,7 +6639,7 @@ function GetTradeItemBoPTradeableDisplayNamesString(who, tradeIndex) end
 
 --- @param who TradeParticipant
 --- @param tradeIndex luaindex
---- @return Bag? bagId, integer? slotIndex
+--- @return Bag|nil bagId, integer|nil slotIndex
 function GetTradeItemBagAndSlot(who, tradeIndex) end
 
 --- @param who TradeParticipant
@@ -6681,7 +6681,7 @@ function RemoveMapQuestPins(journalQuestIndex) end
 
 --- @param animationTimeline object
 --- @param animationTarget MapPinAnimationTarget
---- @param limitToMapType ControlType?
+--- @param limitToMapType ControlType|nil
 --- @param pinType MapDisplayPinType
 --- @param param1 integer
 --- @param param2 integer
@@ -6711,9 +6711,9 @@ function RemoveMapPinsByType(pinType) end
 
 --- @param startType MapDisplayPinType
 --- @param endType MapDisplayPinType
---- @param param1 integer?
---- @param param2 integer?
---- @param param3 integer?
+--- @param param1 integer|nil
+--- @param param2 integer|nil
+--- @param param3 integer|nil
 --- @return void
 function RemoveMapPinsInRange(startType, endType, param1, param2, param3) end
 
@@ -6783,7 +6783,7 @@ function GetSkillLineXPInfo(skillType, skillLineIndex) end
 --- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param rank luaindex
---- @return integer? startXP, integer? nextRankStartXP
+--- @return integer|nil startXP, integer|nil nextRankStartXP
 function GetSkillLineRankXPExtents(skillType, skillLineIndex, rank) end
 
 --- @param skillType SkillType
@@ -6799,7 +6799,7 @@ function GetNumSkillAbilities(skillType, skillLineIndex) end
 --- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @return string name, textureName texture, luaindex earnedRank, boolean passive, boolean ultimate, boolean purchased, luaindex? progressionIndex, integer rank
+--- @return string name, textureName texture, luaindex earnedRank, boolean passive, boolean ultimate, boolean purchased, luaindex|nil progressionIndex, integer rank
 function GetSkillAbilityInfo(skillType, skillLineIndex, skillIndex) end
 
 --- @param skillType SkillType
@@ -6813,7 +6813,7 @@ function GetSkillLineProgressionAbilityRank(skillType, skillLineIndex, skillInde
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
 --- @param skillLineRank luaindex
---- @return integer? availableSkillRank
+--- @return integer|nil availableSkillRank
 function GetUpgradeSkillHighestRankAvailableAtSkillLineRank(skillType, skillLineIndex, skillIndex, skillLineRank) end
 
 --- @param skillType SkillType
@@ -6832,7 +6832,7 @@ function GetNumPassiveSkillRanks(skillType, skillLineIndex, skillIndex) end
 --- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @return luaindex? progressionIndex
+--- @return luaindex|nil progressionIndex
 function GetProgressionSkillProgressionIndex(skillType, skillLineIndex, skillIndex) end
 
 --- @param skillType SkillType
@@ -6884,13 +6884,13 @@ function GetSpecificSkillAbilityKeysByAbilityId(abilityId) end
 --- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @return integer? currentUpgradeLevel, integer? maxUpgradeLevel
+--- @return integer|nil currentUpgradeLevel, integer|nil maxUpgradeLevel
 function GetSkillAbilityUpgradeInfo(skillType, skillLineIndex, skillIndex) end
 
 --- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @return string name, textureName texture, luaindex? earnedRank
+--- @return string name, textureName texture, luaindex|nil earnedRank
 function GetSkillAbilityNextUpgradeInfo(skillType, skillLineIndex, skillIndex) end
 
 --- @param skillType SkillType
@@ -6973,13 +6973,13 @@ function GetSkillsAdvisorSuggestionLimit() end
 --- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @return luaindex? freeSlotIndex
+--- @return luaindex|nil freeSlotIndex
 function GetFirstFreeValidSlotForSkillAbility(skillType, skillLineIndex, skillIndex) end
 
 --- @param skillType SkillType
 --- @param skillLineIndex luaindex
 --- @param skillIndex luaindex
---- @return luaindex? actionSlotIndex
+--- @return luaindex|nil actionSlotIndex
 function GetAssignedSlotFromSkillAbility(skillType, skillLineIndex, skillIndex) end
 
 --- @param skillType SkillType
@@ -7128,12 +7128,12 @@ function GetMailIdByIndex(category, index) end
 --- @return integer numMail
 function GetNumMailItems() end
 
---- @param lastMailId id64?
---- @return id64? nextMailId
+--- @param lastMailId id64|nil
+--- @return id64|nil nextMailId
 function GetNextMailId(lastMailId) end
 
 --- @param mailId id64
---- @return string senderDisplayName, string senderCharacterName, string subject, textureName icon, boolean unread, boolean fromSystem, boolean fromCustomerService, boolean returned, integer numAttachments, integer attachedMoney, integer codAmount, integer? expiresInDays, integer secsSinceReceived, MailCategory category
+--- @return string senderDisplayName, string senderCharacterName, string subject, textureName icon, boolean unread, boolean fromSystem, boolean fromCustomerService, boolean returned, integer numAttachments, integer attachedMoney, integer codAmount, integer|nil expiresInDays, integer secsSinceReceived, MailCategory category
 function GetMailItemInfo(mailId) end
 
 --- @param mailId id64
@@ -7286,7 +7286,7 @@ function GetEarnedAchievementPoints() end
 function GetTotalAchievementPoints() end
 
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @param achievementIndex luaindex
 --- @return integer achievementId
 function GetAchievementId(topLevelIndex, categoryIndex, achievementIndex) end
@@ -7330,7 +7330,7 @@ function GetAchievementCriterion(achievementId, criterionIndex) end
 function GetRecentlyCompletedAchievements(numAchievementsToGet) end
 
 --- @param achievementId integer
---- @return luaindex? topLevelIndex, luaindex? categoryIndex, luaindex? achievementIndex
+--- @return luaindex|nil topLevelIndex, luaindex|nil categoryIndex, luaindex|nil achievementIndex
 function GetCategoryInfoFromAchievementId(achievementId) end
 
 --- @param achievementId integer
@@ -7396,7 +7396,7 @@ function StartAchievementSearch(searchString, forceRefresh) end
 function GetNumAchievementsSearchResults() end
 
 --- @param searchResultIndex luaindex
---- @return luaindex categoryIndex, luaindex? subcategoryIndex, luaindex achievementIndex
+--- @return luaindex categoryIndex, luaindex|nil subcategoryIndex, luaindex achievementIndex
 function GetAchievementsSearchResult(searchResultIndex) end
 
 --- @param achievementId integer
@@ -7416,15 +7416,15 @@ function GetSkyshardAchievementZoneId(achievementId) end
 function GetAchievementLinkedBookCollectionId(achievementId) end
 
 --- @param level integer
---- @return integer? numXP
+--- @return integer|nil numXP
 function GetNumExperiencePointsInLevel(level) end
 
 --- @param level integer
---- @return integer? numXP
+--- @return integer|nil numXP
 function GetNumExperiencePointsInCompanionLevel(level) end
 
 --- @param numXP integer
---- @param startingLevel integer?
+--- @param startingLevel integer|nil
 --- @return integer level
 function GetActiveCompanionLevelForExperiencePoints(numXP, startingLevel) end
 
@@ -7441,7 +7441,7 @@ function IsEnlightenedAvailableForAccount() end
 function IsEnlightenedAvailableForCharacter() end
 
 --- @param championPointsEarned integer
---- @return integer? maxExp
+--- @return integer|nil maxExp
 function GetNumChampionXPInChampionPoint(championPointsEarned) end
 
 --- @return integer maxSpendableChampionPointsInAttribute
@@ -7579,15 +7579,15 @@ function GetLoreBookLink(categoryIndex, collectionIndex, bookIndex, linkStyle) e
 function GetLoreBookTitleFromLink(link) end
 
 --- @param categoryId integer
---- @return luaindex? categoryIndex
+--- @return luaindex|nil categoryIndex
 function GetLoreBookCategoryIndexFromCategoryId(categoryId) end
 
 --- @param collectionId integer
---- @return luaindex? categoryIndex, luaindex? collectionIndex
+--- @return luaindex|nil categoryIndex, luaindex|nil collectionIndex
 function GetLoreBookCollectionIndicesFromCollectionId(collectionId) end
 
 --- @param bookId integer
---- @return luaindex? categoryIndex, luaindex? collectionIndex, luaindex? bookIndex
+--- @return luaindex|nil categoryIndex, luaindex|nil collectionIndex, luaindex|nil bookIndex
 function GetLoreBookIndicesFromBookId(bookId) end
 
 --- @param categoryIndex luaindex
@@ -7596,7 +7596,7 @@ function GetLoreBookIndicesFromBookId(bookId) end
 function GetLoreBookCollectionLinkedAchievement(categoryIndex, collectionIndex) end
 
 --- @param bookId integer
---- @return textureName? overrideImage, AnchorPosition? overrideImageTitlePosition
+--- @return textureName|nil overrideImage, AnchorPosition|nil overrideImageTitlePosition
 function GetLoreBookOverrideImageFromBookId(bookId) end
 
 --- @param hirelingType HirelingType
@@ -7608,7 +7608,7 @@ function GetNumUnlockedHirelingCorrespondence(hirelingType) end
 --- @return string sender, string subject, string message, textureName icon
 function GetHirelingCorrespondenceInfoByIndex(hirelingType, index) end
 
---- @return string? name
+--- @return string|nil name
 function GetGameCameraNonInteractableName() end
 
 --- @return TutorialTrigger tutorialType
@@ -7646,7 +7646,7 @@ function GetNumHelpEntriesWithinCategory(helpCategoryIndex) end
 
 --- @param helpCategoryIndex luaindex
 --- @param helpIndex luaindex
---- @return string name, string description, string description2, textureName? image, string descriptionGamepad, string descriptionGamepad2, HelpShowOptions showOptions
+--- @return string name, string description, string description2, textureName|nil image, string descriptionGamepad, string descriptionGamepad2, HelpShowOptions showOptions
 function GetHelpInfo(helpCategoryIndex, helpIndex) end
 
 --- @param helpCategoryIndex luaindex
@@ -7658,7 +7658,7 @@ function GetUISystemAssociatedWithHelpEntry(helpCategoryIndex, helpIndex) end
 function GetHelpSearchResults() end
 
 --- @param helpLink string
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetHelpIndicesFromHelpLink(helpLink) end
 
 --- @return boolean success
@@ -7711,7 +7711,7 @@ function GetNumHelpOverviewQuestionAnswers() end
 --- @return string question, string answer
 function GetHelpOverviewQuestionAnswerPair(index) end
 
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetZoneStoriesHelpIndices() end
 
 --- @param showOption HelpShowOptions
@@ -7864,8 +7864,8 @@ function GetCostToCraftAlchemyItem(solventBagId, solventSlotIndex, numIterations
 --- @param reagent1SlotIndex integer
 --- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId Bag?
---- @param reagent3SlotIndex integer?
+--- @param reagent3BagId Bag|nil
+--- @param reagent3SlotIndex integer|nil
 --- @return integer numIterations, TradeskillResult limitReason
 function GetMaxIterationsPossibleForAlchemyItem(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex) end
 
@@ -7875,8 +7875,8 @@ function GetMaxIterationsPossibleForAlchemyItem(solventBagId, solventSlotIndex, 
 --- @param reagent1SlotIndex integer
 --- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId Bag?
---- @param reagent3SlotIndex integer?
+--- @param reagent3BagId Bag|nil
+--- @param reagent3SlotIndex integer|nil
 --- @param numIterations integer
 --- @return void
 function CraftAlchemyItem(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex, numIterations) end
@@ -7887,8 +7887,8 @@ function CraftAlchemyItem(solventBagId, solventSlotIndex, reagent1BagId, reagent
 --- @param reagent1SlotIndex integer
 --- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId Bag?
---- @param reagent3SlotIndex integer?
+--- @param reagent3BagId Bag|nil
+--- @param reagent3SlotIndex integer|nil
 --- @return string name, textureName icon, integer stack, integer sellPrice, boolean meetsUsageRequirement, EquipType equipType, integer itemStyleId, ItemDisplayQuality displayQuality, ProspectiveAlchemyResult prospectiveAlchemyResult
 function GetAlchemyResultingItemInfo(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex) end
 
@@ -7898,8 +7898,8 @@ function GetAlchemyResultingItemInfo(solventBagId, solventSlotIndex, reagent1Bag
 --- @param reagent1SlotIndex integer
 --- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId Bag?
---- @param reagent3SlotIndex integer?
+--- @param reagent3BagId Bag|nil
+--- @param reagent3SlotIndex integer|nil
 --- @param linkStyle LinkStyle
 --- @return string link, ProspectiveAlchemyResult prospectiveAlchemyResult
 function GetAlchemyResultingItemLink(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex, linkStyle) end
@@ -7910,8 +7910,8 @@ function GetAlchemyResultingItemLink(solventBagId, solventSlotIndex, reagent1Bag
 --- @param reagent1SlotIndex integer
 --- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId Bag?
---- @param reagent3SlotIndex integer?
+--- @param reagent3BagId Bag|nil
+--- @param reagent3SlotIndex integer|nil
 --- @return integer inspiration
 function GetAlchemyResultInspiration(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex) end
 
@@ -7923,7 +7923,7 @@ function GetAlchemyResultQuantity(solventBagId, solventSlotIndex, numIterations)
 
 --- @param reagentBagId Bag
 --- @param reagentSlotIndex integer
---- @return string? trait, textureName? icon, textureName? matchIcon, string? cancellingTrait, textureName? conflictIcon, ...
+--- @return string|nil trait, textureName|nil icon, textureName|nil matchIcon, string|nil cancellingTrait, textureName|nil conflictIcon, ...
 function GetAlchemyItemTraits(reagentBagId, reagentSlotIndex) end
 
 --- @param reagentBagId Bag
@@ -7965,10 +7965,10 @@ function IsAlchemySolventForItemAndMaterialId(solventBagId, solventSlotIndex, ta
 --- @param reagent1SlotIndex integer
 --- @param reagent2BagId Bag
 --- @param reagent2SlotIndex integer
---- @param reagent3BagId Bag?
---- @param reagent3SlotIndex integer?
---- @param desiredEncodedTraits integer?
---- @return integer? resultingItemId
+--- @param reagent3BagId Bag|nil
+--- @param reagent3SlotIndex integer|nil
+--- @param desiredEncodedTraits integer|nil
+--- @return integer|nil resultingItemId
 function GetAlchemyResultingItemIdIfKnown(solventBagId, solventSlotIndex, reagent1BagId, reagent1SlotIndex, reagent2BagId, reagent2SlotIndex, reagent3BagId, reagent3SlotIndex, desiredEncodedTraits) end
 
 --- @return integer numRecipeLists
@@ -7988,8 +7988,8 @@ function GetRecipeInfo(recipeListIndex, recipeIndex) end
 
 --- @param recipeListIndex luaindex
 --- @param requiredCraftingStationType TradeskillType
---- @param lastRecipeIndex luaindex?
---- @return luaindex? nextRecipeIndex
+--- @param lastRecipeIndex luaindex|nil
+--- @return luaindex|nil nextRecipeIndex
 function GetNextKnownRecipeForCraftingStation(recipeListIndex, requiredCraftingStationType, lastRecipeIndex) end
 
 --- @param recipeListIndex luaindex
@@ -8070,7 +8070,7 @@ function GetNumUpdatedRecipes() end
 function GetUpdatedRecipeIndices(index) end
 
 --- @param itemId integer
---- @return TradeskillType? craftingStationType, luaindex? recipeListIndex, luaindex? recipeIndex
+--- @return TradeskillType|nil craftingStationType, luaindex|nil recipeListIndex, luaindex|nil recipeIndex
 function GetRecipeInfoFromItemId(itemId) end
 
 --- @param potencyRuneBagId Bag
@@ -8136,7 +8136,7 @@ function IsRuneKnown(itemId) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @return string? name
+--- @return string|nil name
 function GetRunestoneTranslatedName(bagId, slotIndex) end
 
 --- @param bagId Bag
@@ -8163,7 +8163,7 @@ function GetEnchantProcAbilityId(enchantId) end
 --- @param itemId integer
 --- @param materialItemId integer
 --- @param itemQuality ItemQuality
---- @return integer? potencyRuneId, integer? essenceRuneId, integer? aspectRuneId
+--- @return integer|nil potencyRuneId, integer|nil essenceRuneId, integer|nil aspectRuneId
 function GetRunesForItemIdIfKnown(itemId, materialItemId, itemQuality) end
 
 --- @param aspectItemId integer
@@ -8397,24 +8397,24 @@ function CanSpecificSmithingItemSetPatternBeCraftedHere(itemSetId) end
 function GetNumSmithingPatterns() end
 
 --- @param patternIndex luaindex
---- @param materialIndexOverride luaindex?
---- @param materialQuanityOverride integer?
---- @param styleOverride integer?
---- @param traitTypeOverride ItemTraitType?
+--- @param materialIndexOverride luaindex|nil
+--- @param materialQuanityOverride integer|nil
+--- @param styleOverride integer|nil
+--- @param traitTypeOverride ItemTraitType|nil
 --- @return string patternName, string baseName, textureName icon, integer numMaterials, integer numTraitsRequired, integer numTraitsKnown, ItemFilterType resultItemFilterType
 function GetSmithingPatternInfo(patternIndex, materialIndexOverride, materialQuanityOverride, styleOverride, traitTypeOverride) end
 
 --- @param itemId integer
 --- @param materialItemId integer
 --- @param craftingSkillType TradeskillType
---- @return luaindex? patternIndex, luaindex? materialIndex
+--- @return luaindex|nil patternIndex, luaindex|nil materialIndex
 function GetSmithingPatternInfoForItemId(itemId, materialItemId, craftingSkillType) end
 
 --- @param itemTemplateId integer
 --- @param itemSetId integer
 --- @param materialItemId integer
 --- @param traitType ItemTraitType
---- @return luaindex? patternIndex, luaindex? materialIndex, integer? resultingItemId
+--- @return luaindex|nil patternIndex, luaindex|nil materialIndex, integer|nil resultingItemId
 function GetSmithingPatternInfoForItemSet(itemTemplateId, itemSetId, materialItemId, traitType) end
 
 --- @param patternIndex luaindex
@@ -8459,7 +8459,7 @@ function GetCurrentSmithingStyleItemCount(itemStyleId) end
 function IsSmithingStyleKnown(itemStyleId, patternIndex) end
 
 --- @param patternIndex luaindex
---- @return integer? itemStyleId
+--- @return integer|nil itemStyleId
 function GetFirstKnownItemStyleId(patternIndex) end
 
 --- @param itemStyleId integer
@@ -8473,7 +8473,7 @@ function CanSmithingStyleBeUsedOnPattern(itemStyleId, patternIndex, materialInde
 function GetNumSmithingTraitItems() end
 
 --- @param traitItemIndex luaindex
---- @return ItemTraitType? traitType, string itemName, textureName icon, integer sellPrice, boolean meetsUsageRequirement, integer itemStyleId, ItemDisplayQuality displayQuality
+--- @return ItemTraitType|nil traitType, string itemName, textureName icon, integer sellPrice, boolean meetsUsageRequirement, integer itemStyleId, ItemDisplayQuality displayQuality
 function GetSmithingTraitItemInfo(traitItemIndex) end
 
 --- @param traitItemIndex luaindex
@@ -8528,7 +8528,7 @@ function GetSmithingResearchLineTraitDescriptions(craftingSkillType, researchLin
 --- @param craftingSkillType TradeskillType
 --- @param researchLineIndex luaindex
 --- @param traitIndex luaindex
---- @return integer? duration, integer? timeRemainingSecs
+--- @return integer|nil duration, integer|nil timeRemainingSecs
 function GetSmithingResearchLineTraitTimes(craftingSkillType, researchLineIndex, traitIndex) end
 
 --- @param bagId Bag
@@ -8562,7 +8562,7 @@ function CanItemBeRefined(bagId, slotIndex, craftingSkillType) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @param craftingSkillType TradeskillType?
+--- @param craftingSkillType TradeskillType|nil
 --- @return boolean canItemBeDeconstructed
 function CanItemBeDeconstructed(bagId, slotIndex, craftingSkillType) end
 
@@ -8641,7 +8641,7 @@ function GetValidItemStyleId(index) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @return integer? refinedItemId
+--- @return integer|nil refinedItemId
 function GetSmithingRefinedItemId(bagId, slotIndex) end
 
 --- @param bagId Bag
@@ -8670,7 +8670,7 @@ function IsConsolidatedSmithingItemSetIdUnlocked(itemSetId) end
 --- @return integer itemSetId
 function GetConsolidatedSmithingItemSetIdByIndex(setIndex) end
 
---- @param setIndex luaindex?
+--- @param setIndex luaindex|nil
 --- @return void
 function SetActiveConsolidatedSmithingSetByIndex(setIndex) end
 
@@ -8687,8 +8687,8 @@ function CanItemBeConsumedByConsolidatedStation(bagId, slotIndex) end
 --- @return integer itemSetId
 function GetSmithingStationItemSetIdFromItem(bagId, slotIndex) end
 
---- @param lastItemSetId integer?
---- @return integer? nextItemSetId
+--- @param lastItemSetId integer|nil
+--- @return integer|nil nextItemSetId
 function GetNextDirtyUnlockedConsolidatedSmithingItemSetId(lastItemSetId) end
 
 --- @param searchString string
@@ -8863,7 +8863,7 @@ function GetLFGSearchTimes() end
 --- @return boolean hasfindReplacementNotification
 function HasActivityFindReplacementNotification() end
 
---- @return integer? activityId
+--- @return integer|nil activityId
 function GetActivityFindReplacementNotificationInfo() end
 
 --- @param groupType LFGGroupType
@@ -8921,7 +8921,7 @@ function GetFishingLureInfo(lureIndex) end
 --- @return void
 function SetFishingLure(lureIndex) end
 
---- @return luaindex? lureIndex
+--- @return luaindex|nil lureIndex
 function GetFishingLure() end
 
 --- @return integer numViewableMaps
@@ -8954,7 +8954,7 @@ function IsAgentChatActive() end
 function GetNumKillingAttacks() end
 
 --- @param index luaindex
---- @return string attackName, integer attackDamage, textureName attackIcon, boolean wasKillingBlow, integer castTimeAgoMS, integer durationMS, integer numAttackHits, integer abilityId, textureName? abilityFxIcon
+--- @return string attackName, integer attackDamage, textureName attackIcon, boolean wasKillingBlow, integer castTimeAgoMS, integer durationMS, integer numAttackHits, integer abilityId, textureName|nil abilityFxIcon
 function GetKillingAttackInfo(index) end
 
 --- @param index luaindex
@@ -8992,7 +8992,7 @@ function GetOutfitName(actorCategory, outfitIndex) end
 --- @param actorCategory GameplayActorCategory
 --- @param outfitIndex luaindex
 --- @param outfitSlot OutfitSlot
---- @return integer collectibleId, luaindex? itemMaterialIndex, integer primaryDyeId, integer secondaryDyeId, integer accentDyeId
+--- @return integer collectibleId, luaindex|nil itemMaterialIndex, integer primaryDyeId, integer secondaryDyeId, integer accentDyeId
 function GetOutfitSlotInfo(actorCategory, outfitIndex, outfitSlot) end
 
 --- @param actorCategory GameplayActorCategory
@@ -9005,11 +9005,11 @@ function EquipOutfit(actorCategory, outfitIndex) end
 function UnequipOutfit(actorCategory) end
 
 --- @param actorCategory GameplayActorCategory
---- @return luaindex? outfitIndex
+--- @return luaindex|nil outfitIndex
 function GetEquippedOutfitIndex(actorCategory) end
 
 --- @param outfitStyleId integer
---- @return integer? freeConversionCollectibleId
+--- @return integer|nil freeConversionCollectibleId
 function GetOutfitStyleFreeConversionCollectibleId(outfitStyleId) end
 
 --- @param outfitStyleId integer
@@ -9092,11 +9092,11 @@ function GetApplyCostForIndividualOutfitSlot(actorCategory, outfitIndex, outfitS
 function GetTotalApplyCostForOutfitSlots(actorCategory, outfitIndex, outfitSlot, collectibleId, changedDyeCount) end
 
 --- @param actorCategory GameplayActorCategory
---- @return OutfitSlot? mainHandOutfitSlot, OutfitSlot? offHandOutfitSlot
+--- @return OutfitSlot|nil mainHandOutfitSlot, OutfitSlot|nil offHandOutfitSlot
 function GetOutfitSlotsForCurrentlyHeldWeapons(actorCategory) end
 
 --- @param actorCategory GameplayActorCategory
---- @return OutfitSlot? mainHandOutfitSlot, OutfitSlot? offHandOutfitSlot, OutfitSlot? backupMainHandOutfitSlot, OutfitSlot? backupOffHandOutfitSlot
+--- @return OutfitSlot|nil mainHandOutfitSlot, OutfitSlot|nil offHandOutfitSlot, OutfitSlot|nil backupMainHandOutfitSlot, OutfitSlot|nil backupOffHandOutfitSlot
 function GetOutfitSlotsForEquippedWeapons(actorCategory) end
 
 --- @param actorCategory GameplayActorCategory
@@ -9276,7 +9276,7 @@ function GetHeraldryGuildFinderCrestStyleIcon(categoryIndex, styleIndex) end
 --- @return void
 function StartHeraldryCustomization(guildIndex) end
 
---- @return integer? money
+--- @return integer|nil money
 function GetHeraldryGuildBankedMoney() end
 
 --- @return GamepadTemplate gamepadTemplate
@@ -9946,7 +9946,7 @@ function GetNumFurnitureSubcategories(categoryIndex) end
 function GetFurnitureSubcategoryId(categoryIndex, subcategoryIndex) end
 
 --- @param furnitureCategoryId integer
---- @return string displayName, integer? parentCategoryId, boolean availableInTradingHouse, integer categoryOrder
+--- @return string displayName, integer|nil parentCategoryId, boolean availableInTradingHouse, integer categoryOrder
 function GetFurnitureCategoryInfo(furnitureCategoryId) end
 
 --- @param furnitureCategoryId integer
@@ -10067,7 +10067,7 @@ function HousingEditorRequestChangePosition(furnitureId, worldX, worldY, worldZ)
 function HousingEditorRequestChangeOrientation(furnitureId, pitchRadians, yawRadians, rollRadians) end
 
 --- @param furnitureId id64
---- @param objectStateIndex integer?
+--- @param objectStateIndex integer|nil
 --- @return HousingRequestResult result
 function HousingEditorRequestChangeState(furnitureId, objectStateIndex) end
 
@@ -10114,7 +10114,7 @@ function HousingEditorRequestRemoveSelectedFurniture() end
 --- @return HousingRequestResult result
 function HousingEditorRequestRemoveFurniture(furnitureId) end
 
---- @return id64? furnitureId
+--- @return id64|nil furnitureId
 function HousingEditorGetSelectedFurnitureId() end
 
 --- @return boolean isSelectingAnyObject
@@ -10215,7 +10215,7 @@ function HousingEditorCreateFurnitureForPlacementFromMarketProduct(marketProduct
 --- @return number yAxisRotationOffsetRadians
 function HousingEditorGetSelectedFurnitureYAxisRotationOffset() end
 
---- @return id64 furnitureId, luaindex? pathIndex
+--- @return id64 furnitureId, luaindex|nil pathIndex
 function HousingEditorGetTargetInfo() end
 
 --- @return HousingRequestResult result
@@ -10237,8 +10237,8 @@ function IsInHousingEditorPlacementMode() end
 --- @return HousingVisitorRole role
 function GetHousingVisitorRole() end
 
---- @param lastFurnitureId id64?
---- @return id64? nextFurnitureId
+--- @param lastFurnitureId id64|nil
+--- @return id64|nil nextFurnitureId
 function GetNextPlacedHousingFurnitureId(lastFurnitureId) end
 
 --- @param furnitureId id64
@@ -10258,7 +10258,7 @@ function GetPlacedHousingFurnitureCurrentObjectStateIndex(furnitureId) end
 function GetPlacedHousingFurnitureDisplayQuality(furnitureId) end
 
 --- @param furnitureId id64
---- @return id64? parentFurnitureId
+--- @return id64|nil parentFurnitureId
 function GetPlacedFurnitureParent(furnitureId) end
 
 --- @param furnitureId id64
@@ -10433,8 +10433,8 @@ function HousingEditorRequestReplacePathCollectible(furnitureId, collectiblieId)
 --- @return HousingRequestResult result
 function HousingEditorRequestSetStartingNodeIndex(furnitureId, startingIndex) end
 
---- @param lastFurnitureId id64?
---- @return id64? nextFurnitureId
+--- @param lastFurnitureId id64|nil
+--- @return id64|nil nextFurnitureId
 function GetNextPathedHousingFurnitureId(lastFurnitureId) end
 
 --- @param furnitureId id64
@@ -10613,8 +10613,8 @@ function GetNameplateGamepadFont() end
 --- @return void
 function RequestOpenUnsafeURL(URL) end
 
---- @param lastActiveEffectId integer?
---- @return integer? nextActiveEffectId
+--- @param lastActiveEffectId integer|nil
+--- @return integer|nil nextActiveEffectId
 function GetNextActiveArtificialEffectId(lastActiveEffectId) end
 
 --- @param artificialEffectId integer
@@ -10697,7 +10697,7 @@ function IsLevelUpRewardChoiceSelected(sourceRewardId, choiceRewardId) end
 --- @return boolean allSelectionsMade
 function DoAllValidLevelUpRewardChoicesHaveSelections() end
 
---- @return integer? level
+--- @return integer|nil level
 function GetPendingLevelUpRewardLevel() end
 
 --- @return boolean hasPendingReward
@@ -10706,13 +10706,13 @@ function HasPendingLevelUpReward() end
 --- @return integer highestClaimedLevel
 function GetHighestClaimedLevelUpReward() end
 
---- @return integer? level
+--- @return integer|nil level
 function GetUpcomingLevelUpRewardLevel() end
 
 --- @return boolean hasNextReward
 function HasUpcomingLevelUpReward() end
 
---- @return integer? milestoneLevel
+--- @return integer|nil milestoneLevel
 function GetNextLevelUpRewardMilestoneLevel() end
 
 --- @param level integer
@@ -10757,7 +10757,7 @@ function GetLevelUpTextureLayerRevealAnimation(level, index) end
 function GetLevelUpTextureLayerRevealAnimationsMinDuration(level) end
 
 --- @param level integer
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetLevelUpHelpIndicesForLevel(level) end
 
 --- @param level integer
@@ -10843,8 +10843,8 @@ function GetTextureLayerRevealAnimationWindowMovementOffset(animationId) end
 --- @return number x, number y, number normalizedDistance
 function GetTextureLayerRevealAnimationWindowFadeGradientInfo(animationId, index) end
 
---- @param lastGiftId id64?
---- @return id64? nextGiftId
+--- @param lastGiftId id64|nil
+--- @return id64|nil nextGiftId
 function GetNextGiftId(lastGiftId) end
 
 --- @param giftId id64
@@ -10897,8 +10897,8 @@ function IsEncounterLogAbilityInfoInline() end
 --- @return integer version
 function GetEncounterLogVersion() end
 
---- @param lastZoneId integer?
---- @return integer? nextZoneId
+--- @param lastZoneId integer|nil
+--- @return integer|nil nextZoneId
 function GetNextZoneStoryZoneId(lastZoneId) end
 
 --- @param zoneId integer
@@ -10982,7 +10982,7 @@ function CanZoneStoryContinueTrackingActivities(zoneId) end
 function CanZoneStoryContinueTrackingActivitiesForCompletionType(zoneId, zoneCompletionType) end
 
 --- @param zoneId integer
---- @param zoneCompletionType ZoneCompletionType?
+--- @param zoneCompletionType ZoneCompletionType|nil
 --- @param setAutoMapNavigationTarget boolean
 --- @return boolean foundActivityToTrack
 function TrackNextActivityForZoneStory(zoneId, zoneCompletionType, setAutoMapNavigationTarget) end
@@ -11054,7 +11054,7 @@ function GetGuildSizeAttributeRangeValues(size) end
 function GetGuildMinimumCPAttribute(guildId) end
 
 --- @param guildId integer
---- @return string? ownedKioskName
+--- @return string|nil ownedKioskName
 function GetGuildKioskAttribute(guildId) end
 
 --- @param guildId integer
@@ -11086,8 +11086,8 @@ function DoesGuildDataHaveInitializedAttributes(guildId, attribute) end
 --- @return boolean requested
 function RequestGuildFinderAttributesForGuild(guildId) end
 
---- @param lastWorldEventInstanceId integer?
---- @return integer? nextWorldEventInstanceId
+--- @param lastWorldEventInstanceId integer|nil
+--- @return integer|nil nextWorldEventInstanceId
 function GetNextWorldEventInstanceId(lastWorldEventInstanceId) end
 
 --- @param worldEventInstanceId integer
@@ -11136,7 +11136,7 @@ function GetWorldEventPOIInfo(worldEventInstanceId) end
 --- @return integer worldEventInstanceId
 function GetPOIWorldEventInstanceId(zoneIndex, poiIndex) end
 
---- @return integer? searchId
+--- @return integer|nil searchId
 function GuildFinderRequestSearch() end
 
 --- @return boolean isOnCooldown
@@ -11261,7 +11261,7 @@ function ClearPlayerApplicationNotification(index) end
 --- @return GuildLanguageAttributeValue language, ...
 function GetDefaultsForGuildLanguageAttributeFilter() end
 
---- @return integer? daedricArtifactId
+--- @return integer|nil daedricArtifactId
 function GetLocalPlayerDaedricArtifactId() end
 
 --- @param daedricArtifactId integer
@@ -11273,7 +11273,7 @@ function GetDaedricArtifactDisplayName(daedricArtifactId) end
 function GetDaedricArtifactVisualType(daedricArtifactId) end
 
 --- @param guildId integer
---- @param category GuildHistoryEventCategory?
+--- @param category GuildHistoryEventCategory|nil
 --- @param keepResultsFromLastNumSeconds integer
 --- @return boolean success
 function ClearGuildHistoryCache(guildId, category, keepResultsFromLastNumSeconds) end
@@ -11287,12 +11287,12 @@ function GetNumGuildHistoryEvents(guildId, category) end
 --- @param category GuildHistoryEventCategory
 --- @param newestTimeS integer53
 --- @param oldestTimeS integer53
---- @return luaindex? newestEventIndex, luaindex? oldestEventIndex
+--- @return luaindex|nil newestEventIndex, luaindex|nil oldestEventIndex
 function GetGuildHistoryEventIndicesForTimeRange(guildId, category, newestTimeS, oldestTimeS) end
 
 --- @param guildId integer
 --- @param category GuildHistoryEventCategory
---- @return luaindex? oldestEventIndex
+--- @return luaindex|nil oldestEventIndex
 function GetOldestGuildHistoryEventIndexForUpToDateEventsWithoutGaps(guildId, category) end
 
 --- @param guildId integer
@@ -11314,18 +11314,18 @@ function GetGuildHistoryEventRangeInfo(guildId, category, rangeIndex) end
 --- @param guildId integer
 --- @param category GuildHistoryEventCategory
 --- @param eventId integer53
---- @return luaindex? rangeIndex
+--- @return luaindex|nil rangeIndex
 function GetGuildHistoryEventRangeIndexForEventId(guildId, category, eventId) end
 
 --- @param guildId integer
 --- @param eventId integer53
---- @return GuildHistoryEventCategory? category, luaindex? eventIndex
+--- @return GuildHistoryEventCategory|nil category, luaindex|nil eventIndex
 function GetGuildHistoryEventCategoryAndIndex(guildId, eventId) end
 
 --- @param guildId integer
 --- @param category GuildHistoryEventCategory
 --- @param eventId integer53
---- @return luaindex? eventIndex
+--- @return luaindex|nil eventIndex
 function GetGuildHistoryEventIndex(guildId, category, eventId) end
 
 --- @param guildId integer
@@ -11354,7 +11354,7 @@ function GetGuildHistoryEventBasicInfo(guildId, category, eventIndex) end
 
 --- @param guildId integer
 --- @param eventIndex luaindex
---- @return integer53 eventId, integer53 timestampS, boolean isRedacted, GuildHistoryRosterEvent eventType, string actingDisplayName, string targetDisplayName, integer? rankId
+--- @return integer53 eventId, integer53 timestampS, boolean isRedacted, GuildHistoryRosterEvent eventType, string actingDisplayName, string targetDisplayName, integer|nil rankId
 function GetGuildHistoryRosterEventInfo(guildId, eventIndex) end
 
 --- @param guildId integer
@@ -11421,8 +11421,8 @@ function DoesGuildHistoryHaveOutstandingRequest() end
 
 --- @param requestId integer
 --- @param queueRequestIfOnCooldown boolean
---- @param targetNewestEventId integer53?
---- @param targetOldestEventId integer53?
+--- @param targetNewestEventId integer53|nil
+--- @param targetOldestEventId integer53|nil
 --- @return GuildHistoryDataReadyState readyState
 function RequestMoreGuildHistoryEvents(requestId, queueRequestIfOnCooldown, targetNewestEventId, targetOldestEventId) end
 
@@ -11490,7 +11490,7 @@ function RequestAbandonAntiquity(antiquityId) end
 function MeetsAntiquitySkillRequirementsForScrying(antiquityId) end
 
 --- @param antiquityId integer
---- @param zoneId integer?
+--- @param zoneId integer|nil
 --- @return AntiquityScryingResult scryingResult
 function MeetsAntiquityRequirementsForScrying(antiquityId, zoneId) end
 
@@ -11526,8 +11526,8 @@ function GetAntiquityCategoryId(antiquityId) end
 --- @return AntiquityDifficulty difficulty
 function GetAntiquityDifficulty(antiquityId) end
 
---- @param lastAntiquityId integer?
---- @return integer? nextAntiquityId
+--- @param lastAntiquityId integer|nil
+--- @return integer|nil nextAntiquityId
 function GetNextAntiquityId(lastAntiquityId) end
 
 --- @param antiquityId integer
@@ -11598,8 +11598,8 @@ function IsScryingInProgress() end
 --- @return void
 function RequestItemReconstruction(itemDefId, itemTrait, itemQuality, currencyType) end
 
---- @param lastItemSetId integer?
---- @return integer? nextItemSetId
+--- @param lastItemSetId integer|nil
+--- @return integer|nil nextItemSetId
 function GetNextItemSetCollectionId(lastItemSetId) end
 
 --- @param slotMask ItemSetCollectionSlot_id64
@@ -11667,7 +11667,7 @@ function GetItemReconstructionCurrencyOptionType(currencyOptionIndex) end
 
 --- @param itemSetId integer
 --- @param currencyType CurrencyType
---- @return integer? cost
+--- @return integer|nil cost
 function GetItemReconstructionCurrencyOptionCost(itemSetId, currencyType) end
 
 --- @param categoryId integer
@@ -11693,7 +11693,7 @@ function GetItemSetCollectionCategoryParentId(categoryId) end
 --- @param pieceId integer
 --- @param linkStyle LinkStyle
 --- @param traitType ItemTraitType
---- @param upgradeItemFunctionalQuality ItemQuality?
+--- @param upgradeItemFunctionalQuality ItemQuality|nil
 --- @return string itemLink
 function GetItemSetCollectionPieceItemLink(pieceId, linkStyle, traitType, upgradeItemFunctionalQuality) end
 
@@ -11706,7 +11706,7 @@ function GetEquipmentFilterTypeForItemSetCollectionSlot(slot) end
 function GetCollectibleCategoryNameByCategoryId(categoryId) end
 
 --- @param categoryId integer
---- @return HotBarCategory? hotbarCategory
+--- @return HotBarCategory|nil hotbarCategory
 function GetHotbarForCollectibleCategoryId(categoryId) end
 
 --- @param topLevelIndex luaindex
@@ -11714,7 +11714,7 @@ function GetHotbarForCollectibleCategoryId(categoryId) end
 function GetNumSubcategoriesInCollectibleCategory(topLevelIndex) end
 
 --- @param topLevelIndex luaindex
---- @param subCategoryIndex luaindex?
+--- @param subCategoryIndex luaindex|nil
 --- @return integer numCollectibles
 function GetNumCollectiblesInCollectibleCategory(topLevelIndex, subCategoryIndex) end
 
@@ -11790,7 +11790,7 @@ function IsTimedActivitySystemAvailable() end
 --- @return integer numTimedActivities
 function GetNumTimedActivities() end
 
---- @param activityType TimedActivityType?
+--- @param activityType TimedActivityType|nil
 --- @return integer numTimedActivities
 function GetNumTimedActivitiesCompleted(activityType) end
 
@@ -11898,7 +11898,7 @@ function GetArmoryBuildSkillsTotalSpentPoints(buildIndex) end
 function GetArmoryBuildSlotBoundId(buildIndex, actionSlotIndex, hotbarCategory) end
 
 --- @param buildIndex luaindex
---- @return luaindex? outfitIndex
+--- @return luaindex|nil outfitIndex
 function GetArmoryBuildEquippedOutfitIndex(buildIndex) end
 
 --- @param buildIndex luaindex
@@ -11977,17 +11977,17 @@ function RequestTributeExit(isInterceptingCloseAction) end
 --- @return void
 function RequestSetGroupFinderExpectingUpdates(isExpectingUpdates) end
 
---- @return integer? searchId
+--- @return integer|nil searchId
 function RequestGroupFinderSearch() end
 
 --- @param listingIndex luaindex
 --- @param optionalMessage string
---- @param inviteCode integer?
+--- @param inviteCode integer|nil
 --- @return GroupFinderActionResult result
 function RequestApplyToGroupListing(listingIndex, optionalMessage, inviteCode) end
 
 --- @param requestType ResolveGroupListingApplicationRequest
---- @param applicantCharId id64?
+--- @param applicantCharId id64|nil
 --- @return void
 function RequestResolveGroupListingApplication(requestType, applicantCharId) end
 
@@ -12392,8 +12392,8 @@ function HasGroupListingForUserType(userType) end
 --- @return boolean hasChanged
 function HasUserTypeGroupListingChanged(userType) end
 
---- @param lastApplicantCharId id64?
---- @return id64? nextApplicantCharId
+--- @param lastApplicantCharId id64|nil
+--- @return id64|nil nextApplicantCharId
 function GetNextGroupListingApplicationCharacterId(lastApplicantCharId) end
 
 --- @param applicantCharId id64
@@ -12440,7 +12440,7 @@ function GetUnitLevel(unitTag) end
 function GetUnitName(unitTag) end
 
 --- @param unitTag string
---- @return luaindex? zoneIndex
+--- @return luaindex|nil zoneIndex
 function GetUnitZoneIndex(unitTag) end
 
 --- @param equipSlot EquipSlot
@@ -12628,7 +12628,7 @@ function GetNumBagUsedSlots(bagId) end
 function GetNumBagFreeSlots(bagId) end
 
 --- @param bagId Bag
---- @return integer? slotIndex
+--- @return integer|nil slotIndex
 function FindFirstEmptySlotInBag(bagId) end
 
 --- @param bagId Bag
@@ -12848,7 +12848,7 @@ function GetItemSellValueWithBonuses(bagId, slotIndex) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @return TradeskillType usedInCraftingType, ItemType itemType, integer? extraInfo1, integer? extraInfo2, integer? extraInfo3
+--- @return TradeskillType usedInCraftingType, ItemType itemType, integer|nil extraInfo1, integer|nil extraInfo2, integer|nil extraInfo3
 function GetItemCraftingInfo(bagId, slotIndex) end
 
 --- @param bagId Bag
@@ -12878,7 +12878,7 @@ function GetItemEquipmentFilterType(bagId, slotIndex) end
 
 --- @param bagId Bag
 --- @param slotIndex integer
---- @return id64? id
+--- @return id64|nil id
 function GetItemUniqueId(bagId, slotIndex) end
 
 --- @param bagId Bag
@@ -12907,8 +12907,8 @@ function GetSoulGemItemInfo(bagId, slotIndex) end
 --- @return string name, textureName icon, integer stackCount, ItemQuality quality
 function GetSoulGemInfo(soulGemType, targetLevel, onlyInInventory) end
 
---- @param lastSlotId integer?
---- @return integer? nextSlotId
+--- @param lastSlotId integer|nil
+--- @return integer|nil nextSlotId
 function GetNextGuildBankSlotId(lastSlotId) end
 
 --- @param bagId Bag
@@ -12916,8 +12916,8 @@ function GetNextGuildBankSlotId(lastSlotId) end
 --- @return boolean canBeSold
 function IsItemSellableOnTradingHouse(bagId, slotIndex) end
 
---- @param lastSlotId integer?
---- @return integer? nextSlotId
+--- @param lastSlotId integer|nil
+--- @return integer|nil nextSlotId
 function GetNextVirtualBagSlotId(lastSlotId) end
 
 --- @param bagId Bag
@@ -13267,7 +13267,7 @@ function GetItemLinkCraftingSkillType(itemLink) end
 function IsItemLinkEnchantingRune(itemLink) end
 
 --- @param itemLink string
---- @return bool? known, string? name
+--- @return bool|nil known, string|nil name
 function GetItemLinkEnchantingRuneName(itemLink) end
 
 --- @param itemLink string
@@ -13287,12 +13287,12 @@ function IsItemLinkBound(itemLink) end
 function GetItemLinkBindType(itemLink) end
 
 --- @param itemLink string
---- @return integer? minLevel, integer? minChampionPoints
+--- @return integer|nil minLevel, integer|nil minChampionPoints
 function GetItemLinkGlyphMinLevels(itemLink) end
 
 --- @param isChampionRank boolean
---- @param minTierLevel integer?
---- @param maxTierLevel integer?
+--- @param minTierLevel integer|nil
+--- @param maxTierLevel integer|nil
 --- @return integer minRequiredLevel, integer maxRequiredLevel
 function ConvertItemGlyphTierRangeToRequiredLevelRange(isChampionRank, minTierLevel, maxTierLevel) end
 
@@ -13317,7 +13317,7 @@ function GetItemLinkNumConsolidatedSmithingStationUnlockedSets(itemLink) end
 function IsItemLinkBook(itemLink) end
 
 --- @param itemLink string
---- @return string? bookTitle
+--- @return string|nil bookTitle
 function GetItemLinkBookTitle(itemLink) end
 
 --- @param itemLink string
@@ -13379,7 +13379,7 @@ function GetItemLinkRecipeCraftingSkillType(itemLink) end
 
 --- @param itemLink string
 --- @param index luaindex
---- @return bool? known, string? name
+--- @return bool|nil known, string|nil name
 function GetItemLinkReagentTraitInfo(itemLink, index) end
 
 --- @param itemLink string
@@ -13449,7 +13449,7 @@ function GetItemLinkDyeStampId(itemLink) end
 function GetItemLinkFurnitureDataId(itemLink) end
 
 --- @param itemLink string
---- @return luaindex? recipeListIndex, luaindex? recipeIndex
+--- @return luaindex|nil recipeListIndex, luaindex|nil recipeIndex
 function GetItemLinkGrantedRecipeIndices(itemLink) end
 
 --- @param itemLink string
@@ -13513,18 +13513,18 @@ function HasPoisonInBag(bagId) end
 --- @return boolean hasFish
 function HasFishInBag(bagId) end
 
---- @return luaindex? thresholdIndex
+--- @return luaindex|nil thresholdIndex
 function GetTelvarStoneMultiplierThresholdIndex() end
 
---- @param thresholdIndex luaindex?
+--- @param thresholdIndex luaindex|nil
 --- @return integer minimumAmount
 function GetTelvarStoneThresholdAmount(thresholdIndex) end
 
---- @param thresholdIndex luaindex?
+--- @param thresholdIndex luaindex|nil
 --- @return number telvarStoneMultiplier
 function GetTelvarStoneMultiplier(thresholdIndex) end
 
---- @param thresholdIndex luaindex?
+--- @param thresholdIndex luaindex|nil
 --- @return boolean isAtMaxThreshold
 function IsMaxTelvarStoneMultiplierThreshold(thresholdIndex) end
 
@@ -13698,11 +13698,11 @@ function GetCombinationDescription(combinationId) end
 function GetNumTutorials() end
 
 --- @param tutorialIndex luaindex
---- @return TutorialType? tutorialType
+--- @return TutorialType|nil tutorialType
 function GetTutorialType(tutorialIndex) end
 
 --- @param tutorialIndex luaindex
---- @return TutorialTrigger? tutorialTrigger
+--- @return TutorialTrigger|nil tutorialTrigger
 function GetTutorialTrigger(tutorialIndex) end
 
 --- @param tutorialIndex luaindex
@@ -13714,7 +13714,7 @@ function GetTutorialInfo(tutorialIndex) end
 function GetTutorialDisplayPriority(tutorialIndex) end
 
 --- @param tutorialIndex luaindex
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetTutorialLinkedHelpInfo(tutorialIndex) end
 
 --- @param tutorialTrigger TutorialTrigger
@@ -13768,7 +13768,7 @@ function GetNumCollectibleCategories() end
 function GetCollectibleCategoryInfo(topLevelIndex) end
 
 --- @param topLevelIndex luaindex
---- @param subCategoryIndex luaindex?
+--- @param subCategoryIndex luaindex|nil
 --- @return integer categoryId
 function GetCollectibleCategoryId(topLevelIndex, subCategoryIndex) end
 
@@ -13777,12 +13777,12 @@ function GetCollectibleCategoryId(topLevelIndex, subCategoryIndex) end
 function GetCollectibleCategorySpecialization(topLevelIndex) end
 
 --- @param topLevelIndex luaindex
---- @param subCategoryIndex luaindex?
+--- @param subCategoryIndex luaindex|nil
 --- @return textureName normalIcon, textureName pressedIcon, textureName mouseoverIcon, textureName disabledIcon
 function GetCollectibleCategoryKeyboardIcons(topLevelIndex, subCategoryIndex) end
 
 --- @param topLevelIndex luaindex
---- @param subCategoryIndex luaindex?
+--- @param subCategoryIndex luaindex|nil
 --- @return textureName gamepadIcon
 function GetCollectibleCategoryGamepadIcon(topLevelIndex, subCategoryIndex) end
 
@@ -13792,7 +13792,7 @@ function GetCollectibleCategoryGamepadIcon(topLevelIndex, subCategoryIndex) end
 function GetCollectibleSubCategoryInfo(topLevelIndex, subCategoryIndex) end
 
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @param collectibleIndex luaindex
 --- @return integer collectibleId
 function GetCollectibleId(topLevelIndex, categoryIndex, collectibleIndex) end
@@ -13830,11 +13830,11 @@ function GetCollectibleKeyboardBackgroundImage(collectibleId) end
 function GetCollectibleGamepadBackgroundImage(collectibleId) end
 
 --- @param collectibleId integer
---- @return luaindex? topLevelIndex, luaindex? categoryIndex, luaindex? collectibleIndex
+--- @return luaindex|nil topLevelIndex, luaindex|nil categoryIndex, luaindex|nil collectibleIndex
 function GetCategoryInfoFromCollectibleId(collectibleId) end
 
 --- @param collectibleCategoryId integer
---- @return luaindex? topLevelIndex, luaindex? categoryIndex
+--- @return luaindex|nil topLevelIndex, luaindex|nil categoryIndex
 function GetCategoryInfoFromCollectibleCategoryId(collectibleCategoryId) end
 
 --- @param collectibleCategoryType CollectibleCategoryType
@@ -13941,7 +13941,7 @@ function GetCollectibleLink(collectibleId, linkStyle) end
 function GetCollectibleCategoryTypeFromLink(link) end
 
 --- @param link string
---- @return integer? collectibleId
+--- @return integer|nil collectibleId
 function GetCollectibleIdFromLink(link) end
 
 --- @param collectibleId integer
@@ -13956,7 +13956,7 @@ function StartCollectibleSearch(searchString) end
 function GetNumCollectiblesSearchResults() end
 
 --- @param searchResultIndex luaindex
---- @return luaindex categoryIndex, luaindex? subcategoryIndex, luaindex collectibleIndex
+--- @return luaindex categoryIndex, luaindex|nil subcategoryIndex, luaindex collectibleIndex
 function GetCollectiblesSearchResult(searchResultIndex) end
 
 --- @param collectibleName string
@@ -13977,7 +13977,7 @@ function GetCollectibleNickname(collectibleId) end
 function GetCollectibleDefaultNickname(collectibleId) end
 
 --- @param collectibleId integer
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetCollectibleHelpIndices(collectibleId) end
 
 --- @param collectibleId integer
@@ -13989,7 +13989,7 @@ function IsCollectibleNew(collectibleId) end
 function ClearCollectibleNewStatus(collectibleId) end
 
 --- @param categoryIndex luaindex
---- @param subcategoryIndex luaindex?
+--- @param subcategoryIndex luaindex|nil
 --- @return void
 function ClearCollectibleCategoryNewStatuses(categoryIndex, subcategoryIndex) end
 
@@ -14099,12 +14099,12 @@ function GetCollectibleHideMode(collectibleId) end
 function IsCollectibleDynamicallyHidden(collectibleId) end
 
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @return integer sortOrder
 function GetCollectibleCategorySortOrder(topLevelIndex, categoryIndex) end
 
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @return boolean containsSlottableCollectibles
 function DoesCollectibleCategoryContainSlottableCollectibles(topLevelIndex, categoryIndex) end
 
@@ -14113,15 +14113,15 @@ function DoesCollectibleCategoryContainSlottableCollectibles(topLevelIndex, cate
 function GetCollectibleForHouseBankBag(houseBankBagId) end
 
 --- @param collectibleId integer
---- @return Bag? houseBankBagId
+--- @return Bag|nil houseBankBagId
 function GetCollectibleBankAccessBag(collectibleId) end
 
---- @param lastCollectibleId integer?
---- @return integer? nextCollectibleId
+--- @param lastCollectibleId integer|nil
+--- @return integer|nil nextCollectibleId
 function GetNextDirtyUnlockStateCollectibleId(lastCollectibleId) end
 
---- @param lastCollectibleId integer?
---- @return integer? nextCollectibleId
+--- @param lastCollectibleId integer|nil
+--- @return integer|nil nextCollectibleId
 function GetNextDirtyBlacklistCollectibleId(lastCollectibleId) end
 
 --- @param collectibleId integer
@@ -14148,15 +14148,15 @@ function IsCollectibleAvailableToActorCategory(collectibleId, actorCategory) end
 function IsCollectibleTributePatronBookCardUpgraded(patronId, cardIndex) end
 
 --- @param collectibleId integer
---- @return PlayerFxOverrideType? playerFxOverrideType
+--- @return PlayerFxOverrideType|nil playerFxOverrideType
 function GetCollectiblePlayerFxOverrideType(collectibleId) end
 
 --- @param collectibleId integer
---- @return PlayerFxWhileHarvestingType? playerFxWhileHarvestingType
+--- @return PlayerFxWhileHarvestingType|nil playerFxWhileHarvestingType
 function GetCollectiblePlayerFxWhileHarvestingType(collectibleId) end
 
 --- @param collectibleId integer
---- @return PlayerFxOverrideAbilityType? playerFxOverrideAbilityType
+--- @return PlayerFxOverrideAbilityType|nil playerFxOverrideAbilityType
 function GetCollectiblePlayerFxOverrideAbilityType(collectibleId) end
 
 --- @param collectibleId integer
@@ -14184,26 +14184,26 @@ function GetMarketProductSubCategoryInfo(displayGroup, topLevelIndex, subCategor
 
 --- @param displayGroup MarketDisplayGroup
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @return boolean isDisabled
 function IsLTODisabledForMarketProductCategory(displayGroup, topLevelIndex, categoryIndex) end
 
 --- @param displayGroup MarketDisplayGroup
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @param filterTypes integer
 --- @return boolean containsProducts
 function DoesMarketProductCategoryContainFilteredProducts(displayGroup, topLevelIndex, categoryIndex, filterTypes) end
 
 --- @param displayGroup MarketDisplayGroup
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @param filterTypes integer
 --- @return boolean containsProducts
 function DoesMarketProductCategoryOrSubcategoriesContainFilteredProducts(displayGroup, topLevelIndex, categoryIndex, filterTypes) end
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex?
+--- @param presentationIndex luaindex|nil
 --- @param filterTypes integer
 --- @return boolean matchesFilter
 function DoesMarketProductMatchFilter(marketProductId, presentationIndex, filterTypes) end
@@ -14218,13 +14218,13 @@ function DoesAnyMarketProductPresentationMatchFilter(marketProductId, filterType
 function GetMarketProductInfo(marketProductId) end --*private*
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex?
---- @return MarketCurrencyType currencyType, integer? cost, integer? costAfterDiscount, integer discountPercent, integer? esoPlusCost
+--- @param presentationIndex luaindex|nil
+--- @return MarketCurrencyType currencyType, integer|nil cost, integer|nil costAfterDiscount, integer discountPercent, integer|nil esoPlusCost
 function GetMarketProductPricingByPresentation(marketProductId, presentationIndex) end --*private*
 
 --- @param displayGroup MarketDisplayGroup
 --- @param topLevelIndex luaindex
---- @param categoryIndex luaindex?
+--- @param categoryIndex luaindex|nil
 --- @param marketProductIndex luaindex
 --- @return integer marketProductId, luaindex presentationIndex
 function GetMarketProductPresentationIds(displayGroup, topLevelIndex, categoryIndex, marketProductIndex) end
@@ -14242,18 +14242,18 @@ function GetMarketProductInstantUnlockId(marketProductId) end --*private*
 function GetMarketProductInstantUnlockType(marketProductId) end --*private*
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex?
---- @return luaindex? topLevelIndex, luaindex? categoryIndex
+--- @param presentationIndex luaindex|nil
+--- @return luaindex|nil topLevelIndex, luaindex|nil categoryIndex
 function GetCategoryIndicesFromMarketProductPresentation(marketProductId, presentationIndex) end
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex?
+--- @param presentationIndex luaindex|nil
 --- @param quantity integer
 --- @return MarketPurchasableResult expectedPurchaseResult
 function CouldPurchaseMarketProduct(marketProductId, presentationIndex, quantity) end --*private*
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex?
+--- @param presentationIndex luaindex|nil
 --- @param quantity integer
 --- @return MarketPurchasableResult expectedGiftResult
 function CouldGiftMarketProduct(marketProductId, presentationIndex, quantity) end --*private*
@@ -14341,11 +14341,11 @@ function GetMarketProductOpenMarketBehaviorReferenceData(marketProductId) end --
 function ShouldMarketProductShowClaimGiftNotice(marketProductId) end --*private*
 
 --- @param marketProductId integer
---- @return string noticeText, luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return string noticeText, luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetMarketProductClaimGiftNoticeInfo(marketProductId) end --*private*
 
 --- @param marketProductId integer
---- @return integer achievementId, boolean hasCompletedAchievement, luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return integer achievementId, boolean hasCompletedAchievement, luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetMarketProductUnlockedByAchievementInfo(marketProductId) end
 
 --- @param marketProductId integer
@@ -14357,7 +14357,7 @@ function IsMarketProductNew(marketProductId) end --*private*
 function IsMarketProductFeatured(marketProductId) end --*private*
 
 --- @param marketProductId integer
---- @param presentationIndex luaindex?
+--- @param presentationIndex luaindex|nil
 --- @return boolean isGiftable
 function IsMarketProductGiftable(marketProductId, presentationIndex) end --*private*
 
@@ -14473,23 +14473,23 @@ function GetNumExpiringMarketCurrencyInfos() end
 --- @return integer marketCurrencyAmount, number timeLeftSeconds
 function GetExpiringMarketCurrencyInfo(index) end
 
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetEsoPlusSubscriptionBenefitsInfoHelpIndices() end
 
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetEsoPlusSubscriptionLapsedBenefitsInfoHelpIndices() end
 
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetGiftingAccountLockedHelpIndices() end
 
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetGiftingGraceStartedHelpIndices() end
 
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetGiftingUnlockedHelpIndices() end
 
 --- @param marketProductId integer
---- @return luaindex? helpCategoryIndex, luaindex? helpIndex
+--- @return luaindex|nil helpCategoryIndex, luaindex|nil helpIndex
 function GetMarketAnnouncementHelpLinkIndices(marketProductId) end
 
 --- @param crateId integer
@@ -14499,11 +14499,11 @@ function SendCrownCrateOpenRequest(crateId) end
 --- @return integer numCrownCrateTypes
 function GetNumOwnedCrownCrateTypes() end
 
---- @param lastCrateId integer?
---- @return integer? nextCrateId
+--- @param lastCrateId integer|nil
+--- @return integer|nil nextCrateId
 function GetNextOwnedCrownCrateId(lastCrateId) end
 
---- @return integer? crateId
+--- @return integer|nil crateId
 function GetOnSaleCrownCrateId() end
 
 --- @param crateId integer
@@ -14580,7 +14580,7 @@ function GetCrownCrateNPCBoneWorldPosition(boneName) end
 --- @param worldX number
 --- @param worldY number
 --- @param worldZ number
---- @return integer? particleEffectId
+--- @return integer|nil particleEffectId
 function CreateCrownCrateSpecificParticleEffect(crownCrateId, crownCrateParticleEffects, worldX, worldY, worldZ) end --*private*
 
 --- @param crownCrateTierId integer
@@ -14588,7 +14588,7 @@ function CreateCrownCrateSpecificParticleEffect(crownCrateId, crownCrateParticle
 --- @param worldX number
 --- @param worldY number
 --- @param worldZ number
---- @return integer? particleEffectId
+--- @return integer|nil particleEffectId
 function CreateCrownCrateTierSpecificParticleEffect(crownCrateTierId, crownCrateTierParticleEffects, worldX, worldY, worldZ) end --*private*
 
 --- @return string boneName
@@ -14599,7 +14599,7 @@ function GetCrownCrateNPCCardThrowingBoneName() end
 function SetCrownCrateNPCVisible(show) end
 
 --- @param event CrownCrateEvent
---- @param rewardIndex luaindex?
+--- @param rewardIndex luaindex|nil
 --- @return void
 function TriggerCrownCrateNPCAnimation(event, rewardIndex) end
 
@@ -14868,7 +14868,7 @@ function SetPreviewingUnequippedOutfitInPreviewCollection(actorCategory) end
 
 --- @param outfitSlot OutfitSlot
 --- @param collectibleDefId integer
---- @param itemMaterialIndex luaindex?
+--- @param itemMaterialIndex luaindex|nil
 --- @param primaryDyeDefId integer
 --- @param secondaryDyeDefId integer
 --- @param accentDyeDefId integer
@@ -14880,7 +14880,7 @@ function AddOutfitSlotPreviewElementToPreviewCollection(outfitSlot, collectibleD
 function ClearOutfitSlotPreviewElementFromPreviewCollection(outfitSlot) end
 
 --- @param outfitSlot OutfitSlot
---- @return integer collectibleDefId, luaindex? itemMaterialIndex, integer primaryDyeDefId, integer secondaryDyeDefId, integer accentDyeDefId
+--- @return integer collectibleDefId, luaindex|nil itemMaterialIndex, integer primaryDyeDefId, integer secondaryDyeDefId, integer accentDyeDefId
 function GetOutfitSlotInfoForOutfitSlotInPreviewCollection(outfitSlot) end
 
 --- @param dyeStampId integer
@@ -15095,11 +15095,11 @@ function GetCraftingSkillName(craftingSkillType) end
 function GetFurnitureCategoryName(furnitureCategoryId) end
 
 --- @param furnitureDataId integer
---- @return integer? categoryId, integer? subcategoryId, FurnitureThemeType furnitureTheme, HousingFurnishingLimitType placementLimitType
+--- @return integer|nil categoryId, integer|nil subcategoryId, FurnitureThemeType furnitureTheme, HousingFurnishingLimitType placementLimitType
 function GetFurnitureDataInfo(furnitureDataId) end
 
 --- @param furnitureDataId integer
---- @return integer? categoryId, integer? subcategoryId
+--- @return integer|nil categoryId, integer|nil subcategoryId
 function GetFurnitureDataCategoryInfo(furnitureDataId) end
 
 --- @param houseId integer
@@ -15162,7 +15162,7 @@ function GetJewelrycraftingCollectibleId() end
 function GetNumEmotes() end
 
 --- @param emoteId integer
---- @return luaindex? emoteIndex
+--- @return luaindex|nil emoteIndex
 function GetEmoteIndex(emoteId) end
 
 --- @param emoteIndex luaindex
@@ -15170,7 +15170,7 @@ function GetEmoteIndex(emoteId) end
 function GetEmoteInfo(emoteIndex) end
 
 --- @param emoteIndex luaindex
---- @return integer? collectibleId
+--- @return integer|nil collectibleId
 function GetEmoteCollectibleId(emoteIndex) end
 
 --- @param emoteIndex luaindex
@@ -15200,7 +15200,7 @@ function GetSharedPersonalityEmoteIconForCategory(category) end
 function GetSharedQuickChatIcon() end
 
 --- @param rewardId integer
---- @return RewardEntryType? rewardType
+--- @return RewardEntryType|nil rewardType
 function GetRewardType(rewardId) end
 
 --- @param rewardId integer
@@ -15213,7 +15213,7 @@ function GetNumRewardListEntries(rewardListId) end
 
 --- @param rewardListId integer
 --- @param listIndex luaindex
---- @return integer rewardDefId, RewardEntryType? rewardType, integer quantity
+--- @return integer rewardDefId, RewardEntryType|nil rewardType, integer quantity
 function GetRewardListEntryInfo(rewardListId, listIndex) end
 
 --- @param rewardListId integer
@@ -15329,7 +15329,7 @@ function SetFrameLocalPlayerInGameCamera(enabled) end
 --- @return void
 function SetFrameLocalPlayerTarget(normalizedScreenX, normalizedScreenY) end
 
---- @param lookAtDistanceFactor number?
+--- @param lookAtDistanceFactor number|nil
 --- @return void
 function SetFrameLocalPlayerLookAtDistanceFactor(lookAtDistanceFactor) end
 
@@ -15414,7 +15414,7 @@ function IsGiftRecipientNameValid(recipientName) end
 --- @return integer gracePeriodTime
 function GetGiftingGracePeriodTime() end
 
---- @return luaindex? rewardIndex
+--- @return luaindex|nil rewardIndex
 function GetDailyLoginClaimableRewardIndex() end
 
 --- @return integer numRewardsClaimed
@@ -15572,7 +15572,7 @@ function GetAntiquityLeadIcon() end
 --- @return integer antiquityId
 function GetScryingCurrentAntiquityId() end
 
---- @return DiggingActiveSkills? diggingActiveSkill
+--- @return DiggingActiveSkills|nil diggingActiveSkill
 function GetSelectedDiggingActiveSkill() end
 
 --- @param diggingActiveSkill DiggingActiveSkills
@@ -15626,7 +15626,7 @@ function IsDiggingGameOver() end
 --- @return boolean isUnlocked
 function IsDiggingActiveSkillUnlocked(diggingActiveSkill) end
 
---- @return DiggingActiveSkills? diggingActiveSkill
+--- @return DiggingActiveSkills|nil diggingActiveSkill
 function GetMouseOverDiggingActiveSkill() end
 
 --- @param shouldRenderWorld boolean
@@ -15639,47 +15639,47 @@ function SetShouldRenderWorld(shouldRenderWorld) end
 function GetAbilityName(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return bool? channeled, integer? durationValue
+--- @return bool|nil channeled, integer|nil durationValue
 function GetAbilityCastInfo(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return string? targetDescription
+--- @return string|nil targetDescription
 function GetAbilityTargetDescription(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return integer? minRangeCM, integer? maxRangeCM
+--- @return integer|nil minRangeCM, integer|nil maxRangeCM
 function GetAbilityRange(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return integer? radius
+--- @return integer|nil radius
 function GetAbilityRadius(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
---- @return integer? angleDistance
+--- @return integer|nil angleDistance
 function GetAbilityAngleDistance(abilityId) end
 
 --- @param abilityId integer
 --- @param casterUnitTag string
---- @return bool? isAbilityDurationToggled
+--- @return bool|nil isAbilityDurationToggled
 function IsAbilityDurationToggled(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return integer? durationMs
+--- @return integer|nil durationMs
 function GetAbilityDuration(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
 --- @param casterUnitTag string
---- @return integer? durationMs
+--- @return integer|nil durationMs
 function GetAbilityCooldown(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
@@ -15687,19 +15687,19 @@ function GetAbilityCooldown(abilityId, casterUnitTag) end
 function GetAbilityIcon(abilityId) end
 
 --- @param abilityId integer
---- @param lastMechanicFlag CombatMechanicFlags?
---- @return CombatMechanicFlags? nextMechanicFlag
+--- @param lastMechanicFlag CombatMechanicFlags|nil
+--- @return CombatMechanicFlags|nil nextMechanicFlag
 function GetNextAbilityMechanicFlag(abilityId, lastMechanicFlag) end
 
 --- @param abilityId integer
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return integer? baseCost, CombatMechanicFlags? mechanicFlags, bool? isCostChargedPerTick
+--- @return integer|nil baseCost, CombatMechanicFlags|nil mechanicFlags, bool|nil isCostChargedPerTick
 function GetAbilityBaseCostInfo(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
 --- @param mechanicFlag CombatMechanicFlags
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
 --- @return integer cost
 function GetAbilityCost(abilityId, mechanicFlag, overrideRank, casterUnitTag) end
@@ -15711,13 +15711,13 @@ function GetCurrentChainedAbility(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
 --- @param mechanic CombatMechanicFlags
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @return integer costPerTick
 function GetAbilityCostPerTick(abilityId, mechanic, overrideRank) end
 
 --- @param abilityId integer
 --- @param casterUnitTag string
---- @return integer? frequencyMS
+--- @return integer|nil frequencyMS
 function GetAbilityFrequencyMS(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
@@ -15730,7 +15730,7 @@ function GetAbilityRoles(abilityId) end
 function GetAbilityDescriptionHeader(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
---- @param overrideRank integer?
+--- @param overrideRank integer|nil
 --- @param casterUnitTag string
 --- @return string description
 function GetAbilityDescription(abilityId, overrideRank, casterUnitTag) end
@@ -15850,7 +15850,7 @@ function DoesTributeSkipPatronDrafting() end
 --- @return integer value
 function GetTributePlayerPerspectiveResource(playerPerspective, resource) end
 
---- @return integer? timeRemainingMs
+--- @return integer|nil timeRemainingMs
 function GetTributeRemainingTimeForTurn() end
 
 --- @return TributePlayerPerspective winningPlayerPerspective, TributeVictoryType victoryType
@@ -16184,45 +16184,45 @@ function GetTotalClubMatchesPlayed() end
 --- @return integer currentStreak
 function GetCurrentClubMatchStreak() end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return TributeTier tributeCampaignRank
 function GetTributePlayerCampaignRank(campaignId) end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return integer totalTributeCampaignExperience
 function GetTributePlayerCampaignTotalExperience(campaignId) end
 
 --- @param tributeCampaignRank TributeTier
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return integer experienceRequirement
 function GetTributeCampaignRankExperienceRequirement(tributeCampaignRank, campaignId) end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return integer experience, integer rankExperienceRequirement
 function GetTributePlayerExperienceInCurrentCampaignRank(campaignId) end
 
 --- @param matchIndex luaindex
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return boolean hasRecord, boolean wasAWin
 function GetCampaignMatchResultFromHistoryByMatchIndex(matchIndex, campaignId) end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return integer totalMatchesPlayed
 function GetTotalCampaignMatchesPlayed(campaignId) end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return integer currentStreak
 function GetCurrentCampaignMatchStreak(campaignId) end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return boolean isPlaced
 function IsPlacedInCampaign(campaignId) end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return TributeTier tributeCampaignRank
 function GetCampaignPlacementRank(campaignId) end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return integer requiredMatches
 function GetNumRequiredPlacementMatches(campaignId) end
 
@@ -16243,7 +16243,7 @@ function RequestTributeClubData() end
 --- @return TributePlayerInitializationState state
 function RequestActiveTributeCampaignData() end
 
---- @param campaignId integer?
+--- @param campaignId integer|nil
 --- @return TributePlayerInitializationState state
 function RequestTributeCampaignData(campaignId) end
 

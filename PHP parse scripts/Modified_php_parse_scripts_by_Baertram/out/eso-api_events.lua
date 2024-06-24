@@ -99,7 +99,7 @@ function EVENT_ACTION_UPDATE_COOLDOWNS(eventId) end
 --- @return void
 function EVENT_ACTIVE_COMPANION_STATE_CHANGED (eventId, newState, oldState) end
 
---- @param artifactId integer?
+--- @param artifactId integer|nil
 --- @return void
 function EVENT_ACTIVE_DAEDRIC_ARTIFACT_CHANGED (eventId, artifactId) end
 
@@ -175,7 +175,7 @@ function EVENT_ANTIQUITY_DIGGING_ACTIVE_SKILL_USE_RESULT (eventId, result) end
 --- @return void
 function EVENT_ANTIQUITY_DIGGING_EXIT_RESPONSE (eventId, accept) end
 
---- @param mousedOverSkill DiggingActiveSkills?
+--- @param mousedOverSkill DiggingActiveSkills|nil
 --- @return void
 function EVENT_ANTIQUITY_DIGGING_MOUSE_OVER_ACTIVE_SKILL_CHANGED (eventId, mousedOverSkill) end
 
@@ -1833,8 +1833,8 @@ function EVENT_INVENTORY_ITEM_USED (eventId, itemSoundCategory) end
 --- @param itemSoundCategory ItemUISoundCategory
 --- @param inventoryUpdateReason integer
 --- @param stackCountChange integer
---- @param triggeredByCharacterName string?
---- @param triggeredByDisplayName string?
+--- @param triggeredByCharacterName string|nil
+--- @param triggeredByDisplayName string|nil
 --- @param isLastUpdateForMessage boolean
 --- @param bonusDropSource BonusDropSource
 --- @return void
@@ -3196,7 +3196,7 @@ function EVENT_TRADE_SUCCEEDED(eventId) end
 --- @return void
 function EVENT_TRADING_HOUSE_AWAITING_RESPONSE (eventId, responseType) end
 
---- @param pendingPurchaseIndex luaindex?
+--- @param pendingPurchaseIndex luaindex|nil
 --- @return void
 function EVENT_TRADING_HOUSE_CONFIRM_ITEM_PURCHASE (eventId, pendingPurchaseIndex) end
 
@@ -3633,7 +3633,7 @@ function EVENT_SCRYING_ACTIVE_SKILL_USE_RESULT (eventId, result) end
 --- @return void
 function EVENT_TRIBUTE_GAME_FLOW_STATE_CHANGE (eventId, flowState) end
 
---- @param patronId integer?
+--- @param patronId integer|nil
 --- @return void
 function EVENT_TRIBUTE_PATRON_PROGRESSION_DATA_CHANGED (eventId, patronId) end
 
