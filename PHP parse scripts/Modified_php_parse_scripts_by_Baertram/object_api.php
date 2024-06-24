@@ -10,7 +10,7 @@ class object_api
     public function __construct()
     {
         $array = file("ESOUIDocumentation.txt", FILE_IGNORE_NEW_LINES);
-        $classes = $this->parseClasses($array);
+        [$classes, $subclasses] = $this->parseClasses($array);
         $out = "";
         $classesAdded = array();
 
@@ -18,7 +18,8 @@ class object_api
             $classStr = strval($class);
             if ( !array_key_exists($classStr, $classesAdded) ) {
                 $classesAdded[$classStr] = true;
-                $out .= "--- @class $classStr\n";
+                $subclass = $subclasses[$classStr] ?? 'ZO_Object';
+                $out .= "--- @class $classStr: $subclass\n";
                 $out .= "$classStr = {}\n";
             }
 
@@ -66,6 +67,7 @@ class object_api
         $process = false;
         $tag = null;
         $objects = [];
+        $subclasses = [];
 
         foreach ($array as $line) {
             $matches = [];
@@ -82,11 +84,23 @@ class object_api
                 if (preg_match('/h3\. (?P<class>.*)/', $line, $matches)) {
                     $tag = $matches['class'];
                     $objects[$tag] = [];
+                    $parseSubclasses = false;
                 }
 
                 if ($tag) {
                     $matches = null;
-                    if (preg_match('/\* (?P<method>.*)?\((?P<params>(.*?))\)/', $line, $matches)) {
+                    if (preg_match("/Objects that inherit behavior from \*$tag\*/", $line)) {
+                        $parseSubclasses = true;
+                    } else if ($parseSubclasses) {
+                        $parseSubclasses = false;
+                        $attrs = explode(",", $line);
+                        foreach ($attrs as $attr) {
+                            $matches2 = null;
+                            if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\]/', $attr, $matches2)) {
+                                $subclasses[$matches2['class']] = $tag;
+                            }
+                        }
+                    } else if (preg_match('/\* (?P<method>.*)?\((?P<params>(.*?))\)/', $line, $matches)) {
                         $methodClean = null;
                         $matchesPriv = null;
                         $method = $matches['method'];
@@ -115,14 +129,9 @@ class object_api
                                 $objects[$tag][$methodClean]['params'][$matches2['param']] = $this->processType($matches2['type']);
                             }
                         }
-                    }
-					
-                    if (strpos($line, '_Uses variable returns..._') !== false) {
+                    } else if (strpos($line, '_Uses variable returns..._') !== false) {
                         throw new Exception('Classes have variable returns now?!');
-                    }
-
-                    $matches = null;
-                    if (preg_match('/\*\* _Returns\:_ (?P<parts>.*)/', $line, $matches)) {
+                    } else if (preg_match('/\*\* _Returns\:_ (?P<parts>.*)/', $line, $matches)) {
                         $parts = explode(",", $matches['parts']);
                         foreach ($parts as $part) {
                             $matches2 = null;
@@ -134,8 +143,7 @@ class object_api
                 }
             }
         }
-
-        return $objects;
+        return [$objects, $subclasses];
     }
 
     function processType($type)
