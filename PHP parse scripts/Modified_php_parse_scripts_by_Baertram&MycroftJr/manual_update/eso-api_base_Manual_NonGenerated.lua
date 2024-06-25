@@ -1,9 +1,3 @@
---- @alias luaindex integer
---- @alias layout_measurement integer
---- @alias integer number
---- @alias ChatCategory ChatChannelCategories
-
-
 --Compatibility aliases and constants
 ITEMSTYLE_NONE                      = 0
 ITEMSTYLE_RACIAL_BRETON             = 1

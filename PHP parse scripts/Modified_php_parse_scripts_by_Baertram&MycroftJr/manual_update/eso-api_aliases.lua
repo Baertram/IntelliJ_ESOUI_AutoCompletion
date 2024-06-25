@@ -1,0 +1,6 @@
+--- @alias luaindex integer
+--- @alias layout_measurement integer
+--- @alias integer number
+--- @alias id64 integer
+--- @alias ChatCategory ChatChannelCategories
+--- @alias variant RegisterForEventFilterType ...
