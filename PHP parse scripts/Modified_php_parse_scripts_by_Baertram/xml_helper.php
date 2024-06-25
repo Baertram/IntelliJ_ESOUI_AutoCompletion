@@ -8,7 +8,6 @@
 	You can use this with interactive browser at xml-folder. or write something 
 	Copy the file contents to guixml.js. There's a variable defined and a help text, where to 
 	paste the contents.
-	
 */
 
 class parser
@@ -42,12 +41,9 @@ class parser
         //    print_r($out);
 
 
-        file_put_contents("GuiXml.json", json_encode($out, JSON_PRETTY_PRINT));
-
+        file_put_contents("out/GuiXml.json", json_encode($out, JSON_PRETTY_PRINT));
 
         echo "t1: ".count($tree, 1)." t2:".count($out, 1)."\n";
-
-
     }
 
     function mergeSubClasses($data)
@@ -135,6 +131,7 @@ class parser
                 }
 
                 if ($tag) {
+                    @$xmlTags[$tag]->{"attributes"} = new stdClass();
                     $matches = null;
                     if (preg_match('/\* _attribute\:_ \*(?P<type>.*?)\* _(?P<name>.*?)_/', $line, $matches)) {
                         $matches2 = null;

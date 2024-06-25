@@ -1,7 +1,7 @@
 <?php
 /*
-	Parse esoui Documentation and generates lua table 
-	for exporting ingame global values for IDE helpers.
+	Parse esoui Documentation and DumpVars save data 
+	to generate lua files for IDE helpers.
 */
 
 class global_vars
@@ -10,18 +10,40 @@ class global_vars
     {
         $array = file("ESOUIDocumentation.txt", FILE_IGNORE_NEW_LINES);
         $classes = $this->parseClasses($array);
-        $x = 0;
-        $out = "if DumpVars == nil then DumpVars = {} end\n\nDumpVars.constantsToDump = {\n";
+        $array2 = file("out/DumpVars.lua", FILE_IGNORE_NEW_LINES);
+        $data = $this->parseData($array2);
 
+        $out = "";
+        $constants = $data['constants'];
         foreach ($classes as $class => $method) {
-            foreach ($method as $var) {
-            $out .= '["'.$var.'"] = ' . $var. ",\n";
+            if ($class != 'Global') {
+                $out .= "--- @alias $class\n";
+                foreach ($method as $var) {
+                    if (isset($constants[$var])) {
+                        $out .= "--- | `$var` = $constants[$var]\n";
+                    }
+                }
             }
+            foreach ($method as $var) {
+                if (isset($constants[$var])) {
+                    $out .= "$var = $constants[$var]\n";
+                }
+            }
+            $out .= "\n";
         }
-        $out = substr($out, 0,-2)."\n}";
-
-        file_put_contents("out/DumpVars_constants.lua", $out);
+        file_put_contents("out/eso-api_globals.lua", $out);
+        
+        $out = "";
+        foreach ($data['sounds'] as $var => $val) {
+            $sounds[] = "$var = $val\n";
+        }
+        sort($sounds);
+        foreach ($sounds as $line) {
+            $out .= $line;
+        }
+        file_put_contents("out/eso-api_new_sounds.lua", $out);
     }
+
 
     public function parseClasses($array)
     {
@@ -42,8 +64,7 @@ class global_vars
             if ($process) {
                 $matches = null;
                 if (preg_match('/h5\. (?P<section>.*)/', $line, $matches)) {
-                    // First wrap up the previous tag/section by sorting them alphabetically,
-                    // then adding some game-generated constant names like *_MIN_VALUE
+                    // First wrap up the previous section
                     if ($tag) {
                         sort($objects[$tag]);
                         $count = count($objects[$tag]);
@@ -62,10 +83,8 @@ class global_vars
                             // end of startoverflow
 
                             if ($prefix != '') {
-                                // We only want the greatest common prefix that ends in _
                                 $lastUnderscore = strrpos($prefix, '_');
                                 $prefix = substr($prefix, 0, $lastUnderscore+1);
-                                // Add the game-generated constants to the list to dump
                                 $objects[$tag][] = $prefix . 'MIN_VALUE';
                                 $objects[$tag][] = $prefix . 'MAX_VALUE';
                                 $objects[$tag][] = $prefix . 'ITERATION_BEGIN';
@@ -88,6 +107,31 @@ class global_vars
             }
         }
         return $objects;
+    }
+
+    public function parseData($array)
+    {
+        $process = false;
+        $tag = null;
+        $data = [];
+
+        foreach ($array as $line) {
+            $matches = [];
+            if (preg_match('/\["(?P<key>.*)?"] =\s*$/', $line, $matches)) {
+                $key = $matches['key'];
+                if ($key == 'sounds' or $key == 'constants') {
+                    $process = true;
+                } else {
+                    $process = false;
+                }
+            } else if ($process) {
+                $matches = null;
+                if (preg_match('/\["(?P<variable>.*)?"] = (?P<value>[^\s,]*)/', $line, $matches)) {
+                    $data[$key][$matches['variable']] = $matches['value'];
+                }
+            }
+        }
+        return $data;
     }
 
 }

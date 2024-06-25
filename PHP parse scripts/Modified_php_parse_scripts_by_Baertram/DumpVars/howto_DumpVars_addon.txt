@@ -1,8 +1,8 @@
-1. Run the php script file   "global_vars.php"
-A file named  "DumpVars_constants.lua" will be created
-2. Copy the folder /DumpVars with all contents (DumpVars.txt, DumpVars.lua) to your addons folder live/Addons
+1. Run the php script file   "global_vars.php" (or "parse_ESOUIDocumentation.bat")
+A file named  "DumpVars_constants.lua" will be created in "out"
+2. Run "deploy_DumpVars.bat" OR copy the folder /DumpVars with all contents (DumpVars.txt, DumpVars_main.lua) to your addons folder live/Addons
 -> Read here how to find the addons folder: https://www.esoui.com/forums/faq.php?faq=install#faq_howto_install
-2. Put the created file "DumpVars_constants.lua" into the folder live/AddOns/DumpVars
+2b. If you didn't run the deploy bat, put the created file "DumpVars_constants.lua" into the folder live/AddOns/DumpVars
 3. Login to ESO
 4. Activate the addon DumpVars (maybe enable the checkbox "Allout oudated addons" or modify the /Dumpvars/
 5. Login to your character

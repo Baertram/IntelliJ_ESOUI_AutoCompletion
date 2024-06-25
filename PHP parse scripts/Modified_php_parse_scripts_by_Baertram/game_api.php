@@ -36,7 +36,11 @@ class game_api
             if (isset($value['return'])) {
                 $add = [];
                 foreach ($value['return'] as $param => $type) {
-                    $add [] = $param." ".$type;
+                    if ($type) {
+                        $add [] = $type." ".$param;
+                    } else {
+                        $add [] = $param;
+                    }
                 }
                 $docblock .= "--- @return ".implode(", ", $add)."\n";
             } else {
@@ -46,7 +50,7 @@ class game_api
             $out .= $docblock.$luablock."\n\n";
         }
 
-        file_put_contents("eso-api_game.lua", $out);
+        file_put_contents("out/eso-api_game.lua", $out);
 
     }
 
@@ -74,6 +78,7 @@ class game_api
                     $matchesPriv = null;
                     $method = $matches['method'];
                     $methodClean = $matches['method'];
+                    $variableReturns = false;
 //print_r($method);
 
                         //Find *private* or *protected* or *private-attributes* or *protected-attributes* or *public* or *public-attributes *in front of the ( of a function
@@ -90,14 +95,16 @@ class game_api
                     $parts = explode(",", $matches['params']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-                        $partClean = str_replace('function', 'functionName', $part);
 
-                        //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
-                        //* IsTrustedFunction(*function* _function_)
-                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $partClean, $matches2)) {
-                            $objects[$methodClean]['params'][$matches2['param']] = $matches2['type'];
+                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
+                            [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
+                            $objects[$methodClean]['params'][$param] = $type;
                         }
                     }
+                }
+
+                if (strpos($line, '_Uses variable returns..._') !== false) {
+                    $variableReturns = true;
                 }
 
                 $matches = null;
@@ -105,11 +112,19 @@ class game_api
                     $parts = explode(",", $matches['parts']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-                        $partClean = str_replace('function', 'functionName', $part);
 
-                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $partClean, $matches2)) {
-                            $objects[$methodClean]['return'][$matches2['param']] = $matches2['type'];
+                        if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
+                            [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
+                            if ($param == '...' and $method == 'CallSecureProtected') {
+                                $param = 'reason';
+                                $type = 'string';
+                            }
+                            $objects[$methodClean]['return'][$param] = $type;
                         }
+                    }
+
+                    if ($variableReturns) {
+                        $objects[$methodClean]['return']['...'] = '';
                     }
                 }
             }
@@ -117,7 +132,44 @@ class game_api
 
         return $objects;
     }
-
+    
+    function processParam($method, $type, $param)
+    {
+        // Type-only changes
+        $matches = null;
+        if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
+            $type = $matches['class'] . $matches['remainder'];
+        }
+        if ($type == 'bool') {
+            $type = 'boolean';
+        }
+        if ($type == 'types') {
+            $type = '...';
+        }
+        $type = str_replace(':nilable', '|nil', $type);
+        
+        // Param-only changes
+        if ($param == 'function') {
+            //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
+            //* IsTrustedFunction(*function* _function_)
+            $param = 'func';
+        } else if ($param == 'table') {
+            //* InsecureNext(*table* _table_, *type* _lastKey_)
+            $param = 'tbl';
+        }
+        
+        // More complex changes
+        if ($type == '...') {
+            $param = '...';
+            $type = 'any';
+        }
+        if ($param == 'type' and str_ends_with($type, 'Type')) {
+            // CurrencyType -> currencyType
+            $param = $type;
+            $param[0] = strtolower($param[0]);
+        }
+        return [$type, $param];
+    }
 }
 
 new game_api();

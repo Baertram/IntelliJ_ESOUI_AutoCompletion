@@ -1,12 +1,12 @@
 ## Title: DumpVars
 ## Author: Baertram
 ## Version: 0.0.1
-## APIVersion: 101036 101037
+## APIVersion: 101042
 ## Description: Dumps constant variables to the SavedVariables
 ## SavedVariables: DumpVars_Dump
 
 DumpVars_constants.lua
-DumpVars.lua
+DumpVars_main.lua
 
 ; DISCLOSURE:
 ; This Add-on is not created by, affiliated with or sponsored by ZeniMax

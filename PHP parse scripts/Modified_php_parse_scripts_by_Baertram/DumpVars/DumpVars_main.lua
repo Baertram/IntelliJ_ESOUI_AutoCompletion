@@ -39,16 +39,11 @@ local function DumpVarsNow()
 	if SOUNDS ~= nil then
         settings.sounds = {}
     	for soundName, soundFile in pairs(SOUNDS) do
-        	--settings.sounds[soundName] = soundFile
-        	settings.sounds[soundName] = ""
+        	settings.sounds[soundName] = soundFile
             cnt = cnt + 1
 	    end
         d(">dumped " .. tostring(cnt) .. " SOUNDS!")
-		d("DumpVars - ReloadUI will take place in 3 seconds")
-	    zo_callLater(function()
-            d("DumpVars - Reloading UI now!")
-        	ReloadUI()
-        end, 3000)
+        Logout()
     end
 end
 
