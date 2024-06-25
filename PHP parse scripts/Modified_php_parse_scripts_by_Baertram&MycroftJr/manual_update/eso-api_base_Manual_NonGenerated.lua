@@ -60,6 +60,10 @@ ITEMSTYLE_ENEMY_MAZZATUN            = 57
 ITEMSTYLE_HOLIDAY_GRIM_HARLEQUIN    = 58
 ITEMSTYLE_HOLIDAY_HOLLOWJACK        = 59
 
+--- @alias integer number
+--- @alias luaindex number
+--- @alias layout_measurement number
+
 -------------------------------------------------------------------------------
 function ZO_VerifyClassImplementation(finalClass, classTraceback) end
 function RegisterConcreteClass(concreteClass, stackLevel) end
@@ -4238,8 +4242,6 @@ function NumberFromBoolean(boolean) end
 --Accessibility - Narration
 function ClearActiveNarration() end --Skip to next narration
 
---- @alias luaindex number
---- @alias layout_measurement number
 
 --- @param ctrl Control
 function ZO_Options_OnMouseEnter(ctrl) end
