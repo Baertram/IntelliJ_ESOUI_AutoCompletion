@@ -83,17 +83,17 @@ function AddOnManager:WasAddOnDetected(addOnName) end
 
 --- @class AnimationManager: ZO_Object
 AnimationManager = {}
---- @return object timeline
+--- @return AnimationTimeline timeline
 function AnimationManager:CreateTimeline() end
 
 --- @param timelineName string
---- @param animatedControl object
---- @return object timeline
+--- @param animatedControl Control
+--- @return AnimationTimeline timeline
 function AnimationManager:CreateTimelineFromVirtual(timelineName, animatedControl) end
 
 --- @class AnimationObject: ZO_Object
 AnimationObject = {}
---- @return object animatedControl
+--- @return Control animatedControl
 function AnimationObject:GetAnimatedControl() end
 
 --- @return string applyToChildControlName
@@ -110,7 +110,7 @@ function AnimationObject:GetEasingFunction() end
 --- @return function functionRef
 function AnimationObject:GetHandler(eventName, name) end
 
---- @return object owningTimeline
+--- @return AnimationTimeline owningTimeline
 function AnimationObject:GetTimeline() end
 
 --- @return AnimationType animationObjectType
@@ -122,7 +122,7 @@ function AnimationObject:IsEnabled() end
 --- @return boolean isPlaying
 function AnimationObject:IsPlaying() end
 
---- @param animatedControl object
+--- @param animatedControl Control
 --- @return void
 function AnimationObject:SetAnimatedControl(animatedControl) end
 
@@ -786,7 +786,7 @@ function AnimationObjectTranslate:SetTranslateOffsets(startX, startY, endX, endY
 
 --- @class AnimationTimeline: ZO_Object
 AnimationTimeline = {}
---- @param animatedControl object
+--- @param animatedControl Control
 --- @return void
 function AnimationTimeline:ApplyAllAnimationsToControl(animatedControl) end
 
@@ -797,32 +797,32 @@ function AnimationTimeline:ClearAllCallbacks() end
 function AnimationTimeline:ClearAnimatedControlFromAllAnimations() end
 
 --- @param animationIndex luaindex
---- @return object animation
+--- @return AnimationObject animation
 function AnimationTimeline:GetAnimation(animationIndex) end
 
---- @param animation object
+--- @param animation AnimationObject
 --- @return integer offset
 function AnimationTimeline:GetAnimationOffset(animation) end
 
 --- @param timelineIndex luaindex
---- @return object timeline
+--- @return AnimationTimeline timeline
 function AnimationTimeline:GetAnimationTimeline(timelineIndex) end
 
---- @param animation object
+--- @param animation AnimationObject
 --- @return integer offset
 function AnimationTimeline:GetAnimationTimelineOffset(animation) end
 
 --- @return integer duration
 function AnimationTimeline:GetDuration() end
 
---- @return object animation
+--- @return AnimationObject animation
 function AnimationTimeline:GetFirstAnimation() end
 
 --- @param animationType AnimationType
---- @return object animation
+--- @return AnimationObject animation
 function AnimationTimeline:GetFirstAnimationOfType(animationType) end
 
---- @return object timeline
+--- @return AnimationTimeline timeline
 function AnimationTimeline:GetFirstAnimationTimeline() end
 
 --- @return number progress
@@ -833,10 +833,10 @@ function AnimationTimeline:GetFullProgress() end
 --- @return function functionRef
 function AnimationTimeline:GetHandler(eventName, name) end
 
---- @return object animation
+--- @return AnimationObject animation
 function AnimationTimeline:GetLastAnimation() end
 
---- @return object timeline
+--- @return AnimationTimeline timeline
 function AnimationTimeline:GetLastAnimationTimeline() end
 
 --- @return integer minDuration
@@ -848,7 +848,7 @@ function AnimationTimeline:GetNumAnimationTimelines() end
 --- @return integer numAnimations
 function AnimationTimeline:GetNumAnimations() end
 
---- @return object timeline
+--- @return AnimationTimeline timeline
 function AnimationTimeline:GetParent() end
 
 --- @return integer loopsRemaining
@@ -861,24 +861,24 @@ function AnimationTimeline:GetProgress() end
 function AnimationTimeline:GetSkipAnimationsBehindPlayheadOnInitialPlay() end
 
 --- @param animationType AnimationType
---- @param animatedControl object
+--- @param animatedControl Control
 --- @param offset integer
---- @return object animation
+--- @return AnimationObject animation
 function AnimationTimeline:InsertAnimation(animationType, animatedControl, offset) end
 
 --- @param animationVirtualName string
---- @param animatedControl object
---- @return object animation
+--- @param animatedControl Control
+--- @return AnimationObject animation
 function AnimationTimeline:InsertAnimationFromVirtual(animationVirtualName, animatedControl) end
 
 --- @param offset integer
---- @param animatedControl object
---- @return object animation
+--- @param animatedControl Control
+--- @return AnimationObject animation
 function AnimationTimeline:InsertAnimationTimeline(offset, animatedControl) end
 
 --- @param animationVirtualName string
---- @param animatedControl object
---- @return object animation
+--- @param animatedControl Control
+--- @return AnimationObject animation
 function AnimationTimeline:InsertAnimationTimelineFromVirtual(animationVirtualName, animatedControl) end
 
 --- @param functionRef function
@@ -930,12 +930,12 @@ function AnimationTimeline:Resume() end
 --- @return void
 function AnimationTimeline:SetAllAnimationOffsets(offset) end
 
---- @param animation object
+--- @param animation AnimationObject
 --- @param offset integer
 --- @return void
 function AnimationTimeline:SetAnimationOffset(animation, offset) end
 
---- @param animation object
+--- @param animation AnimationObject
 --- @param offset integer
 --- @return void
 function AnimationTimeline:SetAnimationTimelineOffset(animation, offset) end
@@ -1061,7 +1061,7 @@ function ButtonControl:EnableMouseButton(button, enabled) end
 --- @return TextAlignment horizontalAlign
 function ButtonControl:GetHorizontalAlignment() end
 
---- @return object labelControl
+--- @return LabelControl labelControl
 function ButtonControl:GetLabelControl() end
 
 --- @return ButtonState state
@@ -1214,10 +1214,10 @@ function ColorSelectControl:GetColorAsHSV() end
 --- @return number red, number green, number blue
 function ColorSelectControl:GetColorAsRGB() end
 
---- @return object textureControl
+--- @return TextureControl textureControl
 function ColorSelectControl:GetColorWheelTextureControl() end
 
---- @return object textureControl
+--- @return TextureControl textureControl
 function ColorSelectControl:GetColorWheelThumbTextureControl() end
 
 --- @return number red, number green, number blue
@@ -1241,7 +1241,7 @@ function ColorSelectControl:SetColorAsHSV(hue, saturation, value) end
 --- @return void
 function ColorSelectControl:SetColorAsRGB(red, green, blue) end
 
---- @param textureControl object
+--- @param textureControl TextureControl
 --- @return void
 function ColorSelectControl:SetColorWheelThumbTextureControl(textureControl) end
 
@@ -1269,7 +1269,7 @@ function CompassDisplayControl:GetCenterOveredPinDescription(centerOveredPinInde
 function CompassDisplayControl:GetCenterOveredPinDistance(centerOveredPinIndex) end
 
 --- @param centerOveredPinIndex luaindex
---- @return string description, MapDisplayPinType type, number distanceFromPlayerCM, DrawLayer drawLayer, integer drawLevel, boolean suppressed
+--- @return string description, MapDisplayPinType pinType, number distanceFromPlayerCM, DrawLayer drawLayer, integer drawLevel, boolean suppressed
 function CompassDisplayControl:GetCenterOveredPinInfo(centerOveredPinIndex) end
 
 --- @param centerOveredPinIndex luaindex
@@ -1277,7 +1277,7 @@ function CompassDisplayControl:GetCenterOveredPinInfo(centerOveredPinIndex) end
 function CompassDisplayControl:GetCenterOveredPinLayerAndLevel(centerOveredPinIndex) end
 
 --- @param centerOveredPinIndex luaindex
---- @return MapDisplayPinType type
+--- @return MapDisplayPinType pinType
 function CompassDisplayControl:GetCenterOveredPinType(centerOveredPinIndex) end
 
 --- @return integer numCenterOveredPins
@@ -1364,7 +1364,7 @@ function Control:AddTransformRotationY(deltaYRadians) end
 --- @return void
 function Control:AddTransformRotationZ(deltaZRadians) end
 
---- @param childControl object
+--- @param childControl Control
 --- @return void
 function Control:AppendChild(childControl) end --*protected-attributes*
 
@@ -1439,7 +1439,7 @@ function Control:Create3DRenderSpace() end
 
 --- @param childControlName string
 --- @param childControlType ControlType
---- @return object childControl
+--- @return Control childControl
 function Control:CreateControl(childControlName, childControlType) end
 
 --- @return void
@@ -1448,7 +1448,7 @@ function Control:Destroy3DRenderSpace() end
 --- @return boolean usesDepthBuffer
 function Control:Does3DRenderSpaceUseDepthBuffer() end
 
---- @param root object
+--- @param root Control
 --- @return boolean doesControlDescendFromRoot
 function Control:DoesControlDescendFrom(root) end
 
@@ -1477,11 +1477,11 @@ function Control:Get3DRenderSpaceUp() end
 function Control:GetAlpha() end
 
 --- @param ancestorIndex luaindex
---- @return object ancestorControl
+--- @return Control ancestorControl
 function Control:GetAncestor(ancestorIndex) end
 
 --- @param anchorIndex integer
---- @return boolean isValidAnchor, AnchorPosition point, object relativeTo, AnchorPosition relativePoint, number offsetX, number offsetY, AnchorConstrains anchorConstrains
+--- @return boolean isValidAnchor, AnchorPosition point, Control relativeTo, AnchorPosition relativePoint, number offsetX, number offsetY, AnchorConstrains anchorConstrains
 function Control:GetAnchor(anchorIndex) end
 
 --- @return boolean autoRectClipChildren
@@ -1500,7 +1500,7 @@ function Control:GetCausticOffset() end
 function Control:GetCenter() end
 
 --- @param childIndex luaindex
---- @return object childControl
+--- @return Control childControl
 function Control:GetChild(childIndex) end
 
 --- @return FlexAlignment alignment
@@ -1629,11 +1629,11 @@ function Control:GetMotionBlur() end
 function Control:GetName() end
 
 --- @param childName string
---- @return object returnedControl
+--- @return Control returnedControl
 function Control:GetNamedChild(childName) end
 
 --- @param siblingName string
---- @return object returnedControl
+--- @return Control returnedControl
 function Control:GetNamedSibling(siblingName) end
 
 --- @return number normalX, number normalY, number normalZ
@@ -1648,10 +1648,10 @@ function Control:GetNumAnchors() end
 --- @return integer numChildren
 function Control:GetNumChildren() end
 
---- @return object OwningTopLevelWindow
+--- @return TopLevelWindow OwningTopLevelWindow
 function Control:GetOwningWindow() end
 
---- @return object parentControl
+--- @return Control parentControl
 function Control:GetParent() end
 
 --- @return number originX, number originY, integer numSamples, number blurRadius, number offsetRadius
@@ -1708,7 +1708,7 @@ function Control:GetTransformScale() end
 --- @return number skewXRadians, number skewYRadians
 function Control:GetTransformSkew() end
 
---- @return ControlType type
+--- @return ControlType controlType
 function Control:GetType() end
 
 --- @return number angleRadians, number frequency, number speed, number offset
@@ -1735,12 +1735,12 @@ function Control:GetWidth() end
 --- @return boolean has3DRenderSpace
 function Control:Has3DRenderSpace() end
 
---- @param childControl object
---- @param nextChild object
+--- @param childControl Control
+--- @param nextChild Control
 --- @return void
 function Control:InsertChildBefore(childControl, nextChild) end --*protected-attributes*
 
---- @param desiredParent object
+--- @param desiredParent Control
 --- @return boolean isChild
 function Control:IsChildOf(desiredParent) end
 
@@ -1844,7 +1844,7 @@ function Control:Set3DRenderSpaceUsesDepthBuffer(usesDepthBuffer) end
 function Control:SetAlpha(alpha) end --*protected-attributes*
 
 --- @param point AnchorPosition
---- @param relativeTo object
+--- @param relativeTo Control
 --- @param relativePoint AnchorPosition
 --- @param offsetX layout_measurement
 --- @param offsetY layout_measurement
@@ -1852,7 +1852,7 @@ function Control:SetAlpha(alpha) end --*protected-attributes*
 --- @return void
 function Control:SetAnchor(point, relativeTo, relativePoint, offsetX, offsetY, anchorConstrains) end --*protected-attributes*
 
---- @param anchorTargetControl object
+--- @param anchorTargetControl Control
 --- @return void
 function Control:SetAnchorFill(anchorTargetControl) end --*protected-attributes*
 
@@ -2074,7 +2074,7 @@ function Control:SetMouseEnabled(enabled) end --*protected-attributes*
 --- @return void
 function Control:SetMovable(isMovable) end
 
---- @param newParent object
+--- @param newParent Control
 --- @return void
 function Control:SetParent(newParent) end --*protected-attributes*
 
@@ -2118,7 +2118,7 @@ function Control:SetScale(scale) end --*protected-attributes*
 --- @return void
 function Control:SetShapeType(shapeType) end
 
---- @param anchorTargetControl object
+--- @param anchorTargetControl Control
 --- @param offsetX number
 --- @param offsetY number
 --- @return void
@@ -2560,7 +2560,7 @@ function FontObject:SetFont(fontDescriptor) end
 
 --- @class LabelControl: Control
 LabelControl = {}
---- @param toLabel object
+--- @param toLabel Control
 --- @param offsetX layout_measurement
 --- @param anchorSide AnchorPosition
 --- @return void
@@ -2569,7 +2569,7 @@ function LabelControl:AnchorToBaseline(toLabel, offsetX, anchorSide) end
 --- @return void
 function LabelControl:Clean() end
 
---- @param toLabel object
+--- @param toLabel Control
 --- @return void
 function LabelControl:ClearAnchorToBaseline(toLabel) end
 
@@ -3034,7 +3034,7 @@ function SliderControl:GetMinMax() end
 --- @return ControlOrientation orientation
 function SliderControl:GetOrientation() end
 
---- @return object textureControl
+--- @return TextureControl textureControl
 function SliderControl:GetThumbTextureControl() end
 
 --- @return number value
@@ -3739,7 +3739,7 @@ function TooltipControl:AppendUnitName(unitTag) end
 --- @return void
 function TooltipControl:ClearLines() end
 
---- @return object owner
+--- @return Control owner
 function TooltipControl:GetOwner() end
 
 --- @return void
@@ -3963,7 +3963,7 @@ function TooltipControl:SetMinHeaderRowHeight(minRowHeight) end
 --- @return void
 function TooltipControl:SetMinHeaderRows(minRows) end
 
---- @param owner object
+--- @param owner Control
 --- @param position AnchorPosition
 --- @param offsetX number
 --- @param offsetY number
@@ -4231,19 +4231,19 @@ WindowManager = {}
 --- @return void
 function WindowManager:ApplyTemplateToControl(control, virtualName) end
 
---- @param controlA object
---- @param controlB object
+--- @param controlA Control
+--- @param controlB Control
 --- @return integer order
 function WindowManager:CompareControlVisualOrder(controlA, controlB) end
 
 --- @param name string|nil
---- @param parent object
+--- @param parent Control
 --- @param controlType ControlType
 --- @return Control control
 function WindowManager:CreateControl(name, parent, controlType) end
 
 --- @param controlName string
---- @param parent object
+--- @param parent Control
 --- @param virtualName string
 --- @param optionalSuffix string
 --- @return Control control
@@ -4264,19 +4264,19 @@ function WindowManager:DestroyCursor(cursorId) end
 
 --- @param cursorId integer
 --- @param desiredHandlers HitTestingDesiredHandlers
---- @return object controlAtCursor
+--- @return Control controlAtCursor
 function WindowManager:GetControlAtCursor(cursorId, desiredHandlers) end
 
 --- @param name string
 --- @param suffix string
---- @return object ret
+--- @return Control ret
 function WindowManager:GetControlByName(name, suffix) end
 
 --- @param cursorId integer
 --- @return number x, number y
 function WindowManager:GetCursorPosition(cursorId) end
 
---- @return object focusControl
+--- @return Control focusControl
 function WindowManager:GetFocusControl() end
 
 --- @param handlerName string
@@ -4291,10 +4291,10 @@ function WindowManager:GetIMECandidate(index) end
 --- @return luaindex selectedIndex, luaindex pageStartIndex, integer pageSize
 function WindowManager:GetIMECandidatePageInfo() end
 
---- @return object mouseFocusControl
+--- @return Control mouseFocusControl
 function WindowManager:GetMouseFocusControl() end
 
---- @return object mouseOverControl
+--- @return Control mouseOverControl
 function WindowManager:GetMouseOverControl() end
 
 --- @return integer numCandidates
@@ -4347,7 +4347,7 @@ function WindowManager:SetMouseFocusByName(name) end
 --- @return void
 function WindowManager:UpdateCursorPosition(cursorId, x, y) end
 
---- @return object windowManager
+--- @return WindowManager windowManager
 function WindowManager:GetWindowManager() end
 
 --- @param control Control
@@ -4386,10 +4386,10 @@ function WindowManager:GetUICustomScale() end
 --- @return string localizedString
 function WindowManager:LocalizeString(formatString, arg1, arg2, arg3, arg4, arg5, arg6, arg7) end
 
---- @return object animationManager
+--- @return AnimationManager animationManager
 function WindowManager:GetAnimationManager() end
 
---- @return object addOnManager
+--- @return AddOnManager addOnManager
 function WindowManager:GetAddOnManager() end
 
 --- @param originalTexture string
@@ -4404,7 +4404,7 @@ function WindowManager:EscapeMarkup(text, allowMarkupType) end
 
 --- @param fontSymbolName string
 --- @param fontDescriptor string
---- @return object fontObject
+--- @return FontObject fontObject
 function WindowManager:CreateFont(fontSymbolName, fontDescriptor) end
 
 --- @return integer numFiles

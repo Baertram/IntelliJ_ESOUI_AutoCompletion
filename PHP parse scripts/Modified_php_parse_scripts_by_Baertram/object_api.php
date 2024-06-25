@@ -126,24 +126,7 @@ class object_api
                         foreach ($parts as $part) {
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                                $param = $matches2['param'];
-                                $type = $this->processType($matches2['type']);
-                                if ($param == 'type') {
-                                    if (str_ends_with($type, 'PinType')) {
-                                        // MapDisplayPinType -> pinType
-                                        $param = 'pinType';
-                                    } else {
-                                        // ControlType -> controlType
-                                        $param = $type;
-                                        $param[0] = strtolower($param[0]);
-                                    }
-                                }
-                                if ($param == 'control') {
-                                    $type = 'Control';
-                                }
-                                if (str_starts_with($methodClean, 'Create') and $param == 'name') {
-                                    $type .= '|nil';
-                                }
+                                [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
                                 $objects[$tag][$methodClean]['params'][$param] = $type;
                             }
                         }
@@ -154,11 +137,7 @@ class object_api
                         foreach ($parts as $part) {
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                                $type = $this->processType($matches2['type']);
-                                $param = $matches2['param'];
-                                if ($param == 'control') {
-                                    $type = 'Control';
-                                }
+                                [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
                                 $objects[$tag][$methodClean]['return'][$param] = $type;
                             }
                         }
@@ -166,11 +145,50 @@ class object_api
                 }
             }
         }
+        
+        // refine the types (this can't be done earlier because it needs to check if names match classes that actually exist)
+        foreach ($objects as $class => $method) {
+            $classStr = strval($class);
+            foreach ($method as $function => $value) {
+                if (isset($value['params'])) {
+                    foreach ($value['params'] as $param => $type) {
+                        $objects[$class][$function]['params'][$param] = $this->refineType($objects, $classStr, $function, $type, $param);
+                    }
+                }
+                if (isset($value['return'])) {
+                    foreach ($value['return'] as $param => $type) {
+                        $objects[$class][$function]['return'][$param] = $this->refineType($objects, $classStr, $function, $type, $param);
+                    }
+                }
+            }
+        }
+        
         return [$objects, $subclasses];
     }
-
-    function processType($type)
-    {
+    
+    function refineType($objects, $class, $method, $type, $param) {
+        if ($type == 'object') {
+            $paramAsType = $param;
+            $paramAsType[0] = strtoupper($paramAsType[0]);
+            if (array_key_exists($paramAsType, $objects)) {
+                $type = $paramAsType;
+            } else if (str_ends_with($param, 'TopLevelWindow')) {
+                $type = 'TopLevelWindow';
+            } else if ($param == 'animation') {
+                $type = 'AnimationObject';
+            } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {
+                $type = 'AnimationTimeline';
+            } else if (str_starts_with($param, 'control') or str_ends_with($param, 'Control') or str_ends_with($class, 'Control') or strpos($method, 'Control') != 0) {
+                $type = 'Control';
+            } else {
+                print("Unrefined type $type on $param of $class:$method");
+            }
+        }
+        return $type;
+    }
+    
+    function processParam($method, $type, $param) {
+        // Type-only changes
         $matches = null;
         if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
             $type = $matches['class'] . $matches['remainder'];
@@ -182,7 +200,22 @@ class object_api
             throw new Exception('Add proper `types` handling!');
         }
         $type = str_replace(':nilable', '|nil', $type);
-        return $type;
+        
+        // Changes that also depend on param
+        if ($param == 'type') {
+            if (str_ends_with($type, 'PinType')) {
+                // MapDisplayPinType -> pinType
+                $param = 'pinType';
+            } else {
+                // ControlType -> controlType
+                $param = $type;
+                $param[0] = strtolower($param[0]);
+            }
+        }
+        if (str_starts_with($method, 'Create') and $param == 'name') {
+            $type .= '|nil';
+        }
+        return [$type, $param];
     }
 }
 

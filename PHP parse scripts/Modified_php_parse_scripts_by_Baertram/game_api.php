@@ -97,17 +97,7 @@ class game_api
                         $matches2 = null;
 
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                            $type = $this->processType($matches2['type']);
-                            $param = $this->processParamName($matches2['param']);
-                            if ($type == '...') {
-                                $param = '...';
-                                $type = 'any';
-                            }
-                            if ($param == 'type') {
-                                // CurrencyType -> currencyType
-                                $param = $type;
-                                $param[0] = strtolower($param[0]);
-                            }
+                            [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
                             $objects[$methodClean]['params'][$param] = $type;
                         }
                     }
@@ -124,17 +114,10 @@ class game_api
                         $matches2 = null;
 
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                            $type = $this->processType($matches2['type']);
-                            $param = $this->processParamName($matches2['param']);
-                            if ($type == '...') {
-                                if ($methodClean == 'CallSecureProtected') {
-                                    $param = 'reason';
-                                    $type = 'string';
-                                } else {
-                                    print('Please verify additional types for ' . $methodClean);
-                                    $param = '...';
-                                    $type = 'any';
-                                }
+                            [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
+                            if ($param == '...' and $method == 'CallSecureProtected') {
+                                $param = 'reason';
+                                $type = 'string';
                             }
                             $objects[$methodClean]['return'][$param] = $type;
                         }
@@ -150,21 +133,9 @@ class game_api
         return $objects;
     }
     
-    function processParamName($param)
+    function processParam($method, $type, $param)
     {
-        if ($param == 'function') {
-            //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
-            //* IsTrustedFunction(*function* _function_)
-            $param = 'func';
-        } else if ($param == 'table') {
-            //* InsecureNext(*table* _table_, *type* _lastKey_)
-            $param = 'tbl';
-        }
-        return $param;
-    }
-
-    function processType($type)
-    {
+        // Type-only changes
         $matches = null;
         if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
             $type = $matches['class'] . $matches['remainder'];
@@ -176,9 +147,29 @@ class game_api
             $type = '...';
         }
         $type = str_replace(':nilable', '|nil', $type);
-        return $type;
+        
+        // Param-only changes
+        if ($param == 'function') {
+            //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
+            //* IsTrustedFunction(*function* _function_)
+            $param = 'func';
+        } else if ($param == 'table') {
+            //* InsecureNext(*table* _table_, *type* _lastKey_)
+            $param = 'tbl';
+        }
+        
+        // More complex changes
+        if ($type == '...') {
+            $param = '...';
+            $type = 'any';
+        }
+        if ($param == 'type' and str_ends_with($type, 'Type')) {
+            // CurrencyType -> currencyType
+            $param = $type;
+            $param[0] = strtolower($param[0]);
+        }
+        return [$type, $param];
     }
-
 }
 
 new game_api();

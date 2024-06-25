@@ -4222,7 +4222,7 @@ function GetNumJournalQuests() end
 function IsValidQuestIndex(journalQuestIndex) end
 
 --- @param journalQuestIndex luaindex
---- @return QuestType type
+--- @return QuestType questType
 function GetJournalQuestType(journalQuestIndex) end
 
 --- @param journalQuestIndex luaindex
@@ -4375,7 +4375,7 @@ function GetCompletedQuestLocationInfo(questId) end
 
 --- @param journalQuestIndex luaindex
 --- @param rewardIndex luaindex
---- @return RewardType type, string name, integer amount, textureName iconFile, boolean meetsUsageRequirement, ItemDisplayQuality itemDisplayQuality, RewardItemType|nil itemType
+--- @return RewardType rewardType, string name, integer amount, textureName iconFile, boolean meetsUsageRequirement, ItemDisplayQuality itemDisplayQuality, RewardItemType|nil itemType
 function GetJournalQuestRewardInfo(journalQuestIndex, rewardIndex) end
 
 --- @param journalQuestIndex luaindex
@@ -11618,7 +11618,7 @@ function GetItemSetCollectionCategoryId(itemSetId) end
 function GetItemSetName(itemSetId) end
 
 --- @param itemSetId integer
---- @return ItemSetType type
+--- @return ItemSetType itemSetType
 function GetItemSetType(itemSetId) end
 
 --- @param itemSetId integer
