@@ -109,8 +109,8 @@ function ZO_Object:MultiSubclass(subClassA, subClassB, ...) end
 
 --- @class ZO_DataSourceObject
 ZO_DataSourceObject = {}
---- @return ZO_DataSourceObject
 function ZO_GenerateDataSourceMetaTableIndexFunction(template) end
+--- @return ZO_DataSourceObject
 function ZO_DataSourceObject:New(template) end
 function ZO_DataSourceObject:GetDataSource() end
 function ZO_DataSourceObject:SetDataSource(dataSource) end
@@ -158,7 +158,7 @@ function EVENT_MANAGER:AddFilterForEvent(namespace, event, filterType, filterVal
 
 --- @param self EventManager
 --- @param namespace string
---- @param interval number
+--- @param interval integer
 --- @param callback function
 --- @return boolean success
 function EVENT_MANAGER:RegisterForUpdate(namespace, interval, callback) end
@@ -177,13 +177,13 @@ function GetAnimationManager() end
 
 --- @param self AnimationManager
 --- @param timelineName string
---- @param animatedControl userdata
---- @return userdata timeline
+--- @param animatedControl Control
+--- @return AnimationTimeline timeline
 function ANIMATION_MANAGER:CreateTimelineFromVirtual(timelineName, animatedControl) end
 
 -------------------------------------------------------------------------------
---- @class Addon Manager
---ADDON_MANAGER = {}
+--- @class AddonManager
+ADDON_MANAGER = {}
 
 --- @return AddOnManager addOnManager
 function GetAddOnManager() end
@@ -193,27 +193,8 @@ function GetAddOnManager() end
 
 --- @class WindowObjectPool: ZO_ObjectPool
 WindowObjectPool = {}
---- @return table<number, Window>
+--- @return table<integer, Window>
 function WindowObjectPool:GetActiveObjects() end
-
---- @class Chat
---- @field windowPool WindowObjectPool
---- @field primaryContainer ChatContainer
-CHAT_SYSTEM = KEYBOARD_CHAT_SYSTEM
-CHAT_ROUTER = ZO_ChatRouter:New()
-
-function ZO_GetChatSystem() end
-function ZO_ChatSystem_DoesPlatformUseGamepadChatSystem()  end
-function ZO_ChatSystem_DoesPlatformUseKeyboardChatSystem()  end
-function ZO_ChatSystem_ShouldUseKeyboardChatSystem() end
---- @return table
-function ZO_ChatSystem_GetChannelInfo() end
-function ZO_ChatSystem_GetChannelSwitchLookupTable() end
-function ZO_ChatSystem_GetCategoryColorFromChannel(channelId) end
---- @return table<EventCode, table<ChannelType, ChatChannelCategories>>, table<EventCode, ChatCategory>
-function ZO_ChatSystem_GetEventCategoryMappings() end
-function ZO_ChatSystem_GetTrialEventMappings() end
-function StartChatInput(chatText, CHAT_CHANNEL_CONSTANT, targetName) end
 
 --- @class ChatContainer
 ChatContainer = {}
@@ -236,6 +217,12 @@ function ChatContainer:UpdateOverflowArrow() end
 
 
 function SharedChatContainer:ShowContextMenu(tabIndex) end
+
+--- @class Chat
+--- @field windowPool WindowObjectPool
+--- @field primaryContainer ChatContainer
+CHAT_SYSTEM = KEYBOARD_CHAT_SYSTEM
+CHAT_ROUTER = ZO_ChatRouter:New()
 
 --- @class ZO_ChatSystem
 ZO_ChatSystem = {}
@@ -266,24 +253,35 @@ function ZO_ChatSystem:IsHidden() end
 function ZO_ChatSystem:OnAgentChatActiveChanged() end
 function ZO_ChatSystem:OnPlayerActivated() end
 
-function ZO_ChatSystem_ShowOptions(control) end
-
-function ZO_ChatWindow_OpenContextMenu(control)end
-
-function ZO_ChatSystem_OnFriendsEnter(control) end
-function ZO_ChatSystem_OnFriendsExit(control) end
-function ZO_ChatSystem_OnFriendsClicked(control) end
-function ZO_ChatSystem_OnMailEnter(control) end
-function ZO_ChatSystem_OnMailExit(control) end
-function ZO_ChatSystem_OnMailClicked(control) end
+function ZO_ChatSystem_DoesPlatformUseGamepadChatSystem()  end
+function ZO_ChatSystem_DoesPlatformUseKeyboardChatSystem()  end
+function ZO_ChatSystem_GetCategoryColorFromChannel(channelId) end
+--- @return table
+function ZO_ChatSystem_GetChannelInfo() end
+function ZO_ChatSystem_GetChannelSwitchLookupTable() end
+--- @return table<Event, table<ChannelType, ChatChannelCategories>>, table<Event, ChatCategory>
+function ZO_ChatSystem_GetEventCategoryMappings() end
+function ZO_ChatSystem_GetTrialEventMappings() end
+function ZO_ChatSystem_OnAgentChatClicked() end
 function ZO_ChatSystem_OnAgentChatEnter(control) end
 function ZO_ChatSystem_OnAgentChatExit(control) end
-function ZO_ChatSystem_OnAgentChatClicked() end
+function ZO_ChatSystem_OnFriendsClicked(control) end
+function ZO_ChatSystem_OnFriendsEnter(control) end
+function ZO_ChatSystem_OnFriendsExit(control) end
+function ZO_ChatSystem_OnInitialized(control) end
+function ZO_ChatSystem_OnMailClicked(control) end
+function ZO_ChatSystem_OnMailEnter(control) end
+function ZO_ChatSystem_OnMailExit(control) end
+function ZO_ChatSystem_OnMinMaxClicked() end
 function ZO_ChatSystem_OnNotificationsClicked(control) end
 function ZO_ChatSystem_OnNotificationsEnter(control) end
 function ZO_ChatSystem_OnNotificationsExit(control) end
-function ZO_ChatSystem_OnMinMaxClicked() end
-function ZO_ChatSystem_OnInitialized(control) end
+function ZO_ChatSystem_ShouldUseKeyboardChatSystem() end
+function ZO_ChatSystem_ShowOptions(control) end
+
+function StartChatInput(chatText, CHAT_CHANNEL_CONSTANT, targetName) end
+function ZO_ChatWindow_OpenContextMenu(control)end
+function ZO_GetChatSystem() end
 
 --- @class ZO_ChatRouter
 ZO_ChatRouter = {}
@@ -683,7 +681,7 @@ function ZO_ObjectPool:GetNextControlId() end
 function ZO_ObjectPool:GetTotalObjectCount() end
 function ZO_ObjectPool:GetActiveObjectCount() end
 function ZO_ObjectPool:HasActiveObjects() end
---- @return table<number, ZO_Object>
+--- @return table<integer, ZO_Object>
 function ZO_ObjectPool:GetActiveObjects() end
 function ZO_ObjectPool:GetActiveObject(objectKey) end
 function ZO_ObjectPool:ActiveObjectIterator(filterFunctions) end
@@ -909,6 +907,7 @@ function ZO_TranslateFromRightSceneAnimation_OnPlay(self, animatingControl) end
 function ZO_TranslateFromBottomSceneAnimation_OnPlay(self, animatingControl) end
 function ZO_TranslateFromTopSceneAnimation_OnPlay(self, animatingControl) end
 
+-------------------------------------------------------------------------------
 --- @class ZO_ReversibleAnimationProvider
 ZO_ReversibleAnimationProvider = {}
 --- @return ZO_ReversibleAnimationProvider
@@ -1082,7 +1081,7 @@ function ZO_SetCachedStrFormatterOnlyStoreOne(formatter) end
 --- @return string
 function ZO_CachedStrFormat(formatter, ...) end
 function ZO_ResetCachedStrFormat(formatter) end
---- @param str string
+--- @param string str
 --- @return string
 function zo_strtrim(str) end
 function ZO_CommaDelimitNumber(amount) end
@@ -2777,6 +2776,14 @@ function ZO_RecentMessages:Update(timeNowMilliseconds) end
 function ZO_RecentMessages:ShouldDisplayMessage(message) end
 
 -------------------------------------------------------------------------------
+--- @class ZO_ScrollingSavingEditBox
+ZO_ScrollingSavingEditBox = {}
+--- @return ZO_ScrollingSavingEditBox
+function ZO_ScrollingSavingEditBox:New(...) end
+function ZO_ScrollingSavingEditBox:Initialize(control) end
+function ZO_ScrollingSavingEditBox:SetEditing(editing, forceUpdate) end
+
+-------------------------------------------------------------------------------
 --- @class ZO_StackFragmentGroup
 ZO_StackFragmentGroup = {}
 --- @return ZO_StackFragmentGroup
@@ -4242,6 +4249,8 @@ function NumberFromBoolean(boolean) end
 --Accessibility - Narration
 function ClearActiveNarration() end --Skip to next narration
 
+--- @alias luaindex integer
+--- @alias layout_measurement integer
 
 --- @param ctrl Control
 function ZO_Options_OnMouseEnter(ctrl) end
@@ -4249,28 +4258,86 @@ function ZO_Options_OnMouseEnter(ctrl) end
 function ZO_Options_OnMouseExit(ctrl) end
 
 --- @alias SafeStringKey
---- | `SI_UNIT_NAME` = 165 "<<1>>"
+--- | `SI_ADDON_MANAGER_ADVANCED_UI_ERRORS` = 152 = "Advanced UI Errors"
+--- | `SI_ADDON_MANAGER_AUTHOR` = 149 = "Author"
+--- | `SI_ADDON_MANAGER_CHARACTER_SELECT_ALL` = 151 = "All Characters"
+--- | `SI_ADDON_MANAGER_CHARACTER_SELECT_LABEL` = 150 = "Configure for:"
+--- | `SI_ADDON_MANAGER_DEPENDENCIES` = 153 = "Required Add-Ons:"
+--- | `SI_ADDON_MANAGER_DEPENDENCY` = 154 = "Dependency"
+--- | `SI_ADDON_MANAGER_DEPENDENCY_DISABLED` = 162 = "<<1>> (Disabled)"
+--- | `SI_ADDON_MANAGER_DEPENDENCY_MISSING` = 161 = "<<1>> (Missing)"
+--- | `SI_ADDON_MANAGER_DEPENDENCY_TOO_LOW_VERSION` = 163 = "<<1>> (Newer Version Required)"
+--- | `SI_ADDON_MANAGER_ENABLED` = 147 = "Enabled"
+--- | `SI_ADDON_MANAGER_NAME` = 146 = "Name"
+--- | `SI_ADDON_MANAGER_NOTES` = 148 = "Notes"
+--- | `SI_ADDON_MANAGER_RELOAD` = 159 = "Reload UI"
+--- | `SI_ADDON_MANAGER_SECTION_LIBRARIES` = 145 = "Libraries"
+--- | `SI_ADDON_MANAGER_STATE_STRING` = 155 = "<<1>>, <<2>>"
+--- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_ALL` = 156 = "This add-on is enabled for all your characters."
+--- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_NONE` = 157 = "This add-on is not enabled for any of your characters."
+--- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_SOME` = 158 = "This add-on is enabled for some of your characters."
+--- | `SI_ADDON_MANAGER_VIEW_EULA` = 160 = "View EULA"
+--- | `SI_DIALOG_CANCEL` = 336 = "Cancel"
+--- | `SI_DIALOG_CLOSE` = 341 = "Close"
+--- | `SI_DIALOG_CONFIRM` = 340 = "Confirm"
+--- | `SI_INTERFACE_OPTIONS_RESET_TO_DEFAULT_TOOLTIP` = 6041 = "Reset to Default"
+--- | `SI_OPTIONS_RESET` = 359 = "Reset"
+--- | `SI_OPTIONS_RESET_ALL_PROMPT` = 358 = "Are you sure you want to reset all options panels to their default settings?"
+--- | `SI_OPTIONS_RESET_PROMPT = 357` = "Are you sure you want to reset this options panel to its default settings?"
+--- | `SI_OPTIONS_RESET_TITLE = 356` = "Reset to Defaults"
 --- | `SI_PLAYER_NAME` = 184 "<<1>>"
-SI_UNIT_NAME = 165 --= "<<1>>"
+--- | `SI_UNIT_NAME` = 165 "<<1>>"
+SI_ADDON_MANAGER_ADVANCED_UI_ERRORS = 152 = "Advanced UI Errors"
+SI_ADDON_MANAGER_AUTHOR = 149 = "Author"
+SI_ADDON_MANAGER_CHARACTER_SELECT_ALL = 151 = "All Characters"
+SI_ADDON_MANAGER_CHARACTER_SELECT_LABEL = 150 = "Configure for:"
+SI_ADDON_MANAGER_DEPENDENCIES = 153 = "Required Add-Ons:"
+SI_ADDON_MANAGER_DEPENDENCY = 154 = "Dependency"
+SI_ADDON_MANAGER_DEPENDENCY_DISABLED = 162 = "<<1>> (Disabled)"
+SI_ADDON_MANAGER_DEPENDENCY_MISSING = 161 = "<<1>> (Missing)"
+SI_ADDON_MANAGER_DEPENDENCY_TOO_LOW_VERSION = 163 = "<<1>> (Newer Version Required)"
+SI_ADDON_MANAGER_ENABLED = 147 = "Enabled"
+SI_ADDON_MANAGER_NAME = 146 = "Name"
+SI_ADDON_MANAGER_NOTES = 148 = "Notes"
+SI_ADDON_MANAGER_RELOAD = 159 = "Reload UI"
+SI_ADDON_MANAGER_SECTION_LIBRARIES = 145 = "Libraries"
+SI_ADDON_MANAGER_STATE_STRING = 155 = "<<1>>, <<2>>"
+SI_ADDON_MANAGER_TOOLTIP_ENABLED_ALL = 156 = "This add-on is enabled for all your characters."
+SI_ADDON_MANAGER_TOOLTIP_ENABLED_NONE = 157 = "This add-on is not enabled for any of your characters."
+SI_ADDON_MANAGER_TOOLTIP_ENABLED_SOME = 158 = "This add-on is enabled for some of your characters."
+SI_ADDON_MANAGER_VIEW_EULA = 160 = "View EULA"
+SI_DIALOG_CANCEL = 336 --= "Cancel"
+SI_DIALOG_CLOSE = 341 --= "Close"
+SI_DIALOG_CONFIRM = 340 --= "Confirm"
+SI_INTERFACE_OPTIONS_RESET_TO_DEFAULT_TOOLTIP = 6041 --= "Reset to Default"
+SI_OPTIONS_RESET = 359 --= "Reset"
+SI_OPTIONS_RESET_ALL_PROMPT = 358 --= "Are you sure you want to reset all options panels to their default settings?"
+SI_OPTIONS_RESET_PROMPT = 357 --= "Are you sure you want to reset this options panel to its default settings?"
+SI_OPTIONS_RESET_TITLE = 356 --= "Reset to Defaults"
 SI_PLAYER_NAME = 184 --= "<<1>>"
+SI_UNIT_NAME = 165 --= "<<1>>"
 
 --- @type WindowManager
 WINDOW_MANAGER = {}
-MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
-SLASH_COMMANDS = {}
-ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
-ZO_VALID_LINK_TYPES_CHAT = {
-	ability = true,
-	achievement = true,
-	collectible = true,
-	crafted_ability = true,
-	guild = true,
-	help = true,
-	housing = true,
-	item = true,
-}
-
 --- @type ZO_ColorDef
 ZO_DEFAULT_DISABLED_COLOR = {a = 1,	b = 0.3, g = 0.3, r = 0.3}
 --- @type ZO_ColorDef
 ZO_DEFAULT_ENABLED_COLOR = {a = 1, b = 1, g = 1, r = 1}
+
+ESO_Dialogs = {}
+SLASH_COMMANDS = {}
+ZO_Ingame_SavedVariables = {}
+
+MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
+
+ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
+ZO_VALID_LINK_TYPES_CHAT = {
+	ability = true
+	achievement = true
+	collectible = true
+	crafted_ability = true
+	guild = true
+	help = true
+	housing = true
+	item = true
+}

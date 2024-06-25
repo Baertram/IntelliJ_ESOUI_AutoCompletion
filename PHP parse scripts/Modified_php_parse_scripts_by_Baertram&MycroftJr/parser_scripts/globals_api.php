@@ -122,7 +122,6 @@ class globals_api
     public function parseData($array)
     {
         $process = false;
-        //$tag = null;
         $data = [];
 
         foreach ($array as $line) {

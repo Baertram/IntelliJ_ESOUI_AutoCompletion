@@ -101,6 +101,11 @@ class game_api
 
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                             [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
+                            if ($methodClean == 'ReloadUI') {
+                                if (!str_ends_with($type, '|nil')) {
+                                    $type .= '|nil';
+                                }
+                            }
                             $objects[$methodClean]['params'][$param] = $type;
                         }
                     }

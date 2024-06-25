@@ -74,6 +74,7 @@ local function RegisterSlashCommands()
     -- Register slash commands
 	SLASH_COMMANDS["/dumpvars"] = command_handler
 	SLASH_COMMANDS["/dv"] 		= command_handler
+	SLASH_COMMANDS["/dvl"]		= function() command_handler("logout") end
 end
 
 local function DumpVars_Loaded(eventCode, addOnName)

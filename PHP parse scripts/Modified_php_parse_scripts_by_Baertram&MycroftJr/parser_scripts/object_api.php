@@ -64,7 +64,6 @@ class object_api
         file_put_contents("_out/eso-api_classes.lua", $out);
     }
 
-
     public function parseClasses($array)
     {
         $process = false;
@@ -130,6 +129,15 @@ class object_api
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                                 [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
+                                // e.g. The last 3 arguments of Control:SetHandler are actually optional
+                                if (
+                                    ($tag == 'Control' and $methodClean == 'SetHandler' and isset($objects[$tag][$methodClean]['params']['functionRef']))
+                                    or ($tag == 'Control' and $methodClean == 'SetAnchor' and isset($objects[$tag][$methodClean]['params']['relativePoint']))
+                                ) {
+                                    if (!str_ends_with($type, '|nil')) {
+                                        $type .= '|nil';
+                                    }
+                                }
                                 $objects[$tag][$methodClean]['params'][$param] = $type;
                             }
                         }
