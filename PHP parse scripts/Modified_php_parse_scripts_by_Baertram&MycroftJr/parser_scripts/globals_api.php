@@ -39,19 +39,26 @@ class globals_api
         file_put_contents("_out/eso-api_globals.lua", $out);
 
         /* Could be deactivated as whole list of sounds can be found here:
-        https://github.com/esoui/esoui/blob/live/esoui/libraries/globals/soundids.lua */
-        $out = "SOUNDS = {";
-        foreach ($data['sounds'] as $var => $val) {
-            if ($var != 'version') {
-                $sounds[] = "$var = $val\n";
+        https://github.com/esoui/esoui/blob/live/esoui/libraries/globals/soundids.lua
+        So trying to download it there first, from: https://raw.githubusercontent.com/esoui/esoui/live/esoui/libraries/globals/soundids.lua
+        */
+        // First argument is to give name of downloaded file
+        // Second argument is url of file which you want to download from server and save.
+        if (file_put_contents("_out/eso-api_sounds.lua", fopen("http://raw.githubusercontent.com/esoui/esoui/live/esoui/libraries/globals/soundids.lua", 'r')) == false) {
+            //Downlaod from Github did not work, so parse the local file instead
+            $out = "SOUNDS = {\n";
+            foreach ($data['sounds'] as $var => $val) {
+                if ($var != 'version') {
+                    $sounds[] = "$var = $val\n";
+                }
             }
+            sort($sounds);
+            foreach ($sounds as $line) {
+                $out .= $line;
+            }
+            $out = $out . "\n}";
+            file_put_contents("_out/eso-api_new_sounds.lua", $out);
         }
-        sort($sounds);
-        foreach ($sounds as $line) {
-            $out .= $line;
-        }
-        $out = $out . "}";
-        file_put_contents("_out/eso-api_new_sounds.lua", $out);
     }
 
 
