@@ -1,3 +1,9 @@
+--- @alias luaindex integer
+--- @alias layout_measurement integer
+--- @alias integer number
+--- @alias ChatCategory ChatChannelCategories
+
+
 --Compatibility aliases and constants
 ITEMSTYLE_NONE                      = 0
 ITEMSTYLE_RACIAL_BRETON             = 1
@@ -60,10 +66,6 @@ ITEMSTYLE_ENEMY_MAZZATUN            = 57
 ITEMSTYLE_HOLIDAY_GRIM_HARLEQUIN    = 58
 ITEMSTYLE_HOLIDAY_HOLLOWJACK        = 59
 
---- @alias integer number
---- @alias luaindex number
---- @alias layout_measurement number
-
 -------------------------------------------------------------------------------
 function ZO_VerifyClassImplementation(finalClass, classTraceback) end
 function RegisterConcreteClass(concreteClass, stackLevel) end
@@ -109,8 +111,8 @@ function ZO_Object:MultiSubclass(subClassA, subClassB, ...) end
 
 --- @class ZO_DataSourceObject
 ZO_DataSourceObject = {}
---- @return ZO_DataSourceObject
 function ZO_GenerateDataSourceMetaTableIndexFunction(template) end
+--- @return ZO_DataSourceObject
 function ZO_DataSourceObject:New(template) end
 function ZO_DataSourceObject:GetDataSource() end
 function ZO_DataSourceObject:SetDataSource(dataSource) end
@@ -118,8 +120,8 @@ function ZO_DataSourceObject:Subclass() end
 
 -------------------------------------------------------------------------------
 
---- @class ZO_InitializingObject
-ZO_InitializingObject = {}
+--- @class ZO_InitializingObject 
+ZO_DataSourceObject = {}
 --- @return ZO_InitializingObject
 function ZO_InitializingObject:New(...) end
 
@@ -158,7 +160,7 @@ function EVENT_MANAGER:AddFilterForEvent(namespace, event, filterType, filterVal
 
 --- @param self EventManager
 --- @param namespace string
---- @param interval number
+--- @param interval integer
 --- @param callback function
 --- @return boolean success
 function EVENT_MANAGER:RegisterForUpdate(namespace, interval, callback) end
@@ -177,13 +179,13 @@ function GetAnimationManager() end
 
 --- @param self AnimationManager
 --- @param timelineName string
---- @param animatedControl userdata
---- @return userdata timeline
+--- @param animatedControl Control
+--- @return AnimationTimeline timeline
 function ANIMATION_MANAGER:CreateTimelineFromVirtual(timelineName, animatedControl) end
 
 -------------------------------------------------------------------------------
---- @class Addon Manager
---ADDON_MANAGER = {}
+--- @class AddonManager
+ADDON_MANAGER = {}
 
 --- @return AddOnManager addOnManager
 function GetAddOnManager() end
@@ -193,7 +195,7 @@ function GetAddOnManager() end
 
 --- @class WindowObjectPool: ZO_ObjectPool
 WindowObjectPool = {}
---- @return table<number, Window>
+--- @return table<integer, Window>
 function WindowObjectPool:GetActiveObjects() end
 
 --- @class Chat
@@ -210,7 +212,7 @@ function ZO_ChatSystem_ShouldUseKeyboardChatSystem() end
 function ZO_ChatSystem_GetChannelInfo() end
 function ZO_ChatSystem_GetChannelSwitchLookupTable() end
 function ZO_ChatSystem_GetCategoryColorFromChannel(channelId) end
---- @return table<EventCode, table<ChannelType, ChatChannelCategories>>, table<EventCode, ChatCategory>
+--- @return table<Event, table<ChannelType, ChatChannelCategories>>, table<Event, ChatCategory>
 function ZO_ChatSystem_GetEventCategoryMappings() end
 function ZO_ChatSystem_GetTrialEventMappings() end
 function StartChatInput(chatText, CHAT_CHANNEL_CONSTANT, targetName) end
@@ -236,6 +238,7 @@ function ChatContainer:UpdateOverflowArrow() end
 
 
 function SharedChatContainer:ShowContextMenu(tabIndex) end
+
 
 --- @class ZO_ChatSystem
 ZO_ChatSystem = {}
@@ -522,7 +525,7 @@ function ZO_EditControlGroup:Initialize() end
 function ZO_EditControlGroup:OnTabPressed(control) end
 --- @param control Control
 function ZO_EditControlGroup:AddEditControl(control, autoCompleteObject) end
-
+    
 -------------------------------------------------------------------------------
 --- @class ZO_FadingControlBuffer
 ZO_FadingControlBuffer = {}
@@ -683,7 +686,7 @@ function ZO_ObjectPool:GetNextControlId() end
 function ZO_ObjectPool:GetTotalObjectCount() end
 function ZO_ObjectPool:GetActiveObjectCount() end
 function ZO_ObjectPool:HasActiveObjects() end
---- @return table<number, ZO_Object>
+--- @return table<integer, ZO_Object>
 function ZO_ObjectPool:GetActiveObjects() end
 function ZO_ObjectPool:GetActiveObject(objectKey) end
 function ZO_ObjectPool:ActiveObjectIterator(filterFunctions) end
@@ -746,7 +749,7 @@ function ZO_PrioritizedVisibility:IsSuppressed() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_QueuedSoundPlayer
-ZO_QueuedSoundPlayer = {}
+ZO_QueuedSoundPlayer = {}    
 --- @return ZO_QueuedSoundPlayer
 function ZO_QueuedSoundPlayer:New(...) end
 function ZO_QueuedSoundPlayer:Initialize(soundPaddingMs) end
@@ -1102,7 +1105,7 @@ function ZO_FormatFraction(numerator, denominator) end
 -------------------------------------------------------------------------------
 --[Time]
 function ZO_FormatTime(seconds, formatStyle, precision, direction) end
-function ZO_FormatTimeMilliseconds(milliseconds, formatType, precisionType, direction) end
+function ZO_FormatTimeMilliseconds(milliseconds, formatType, precisionType, direction) end   
 function ZO_FormatCountdownTimer(seconds) end
 function ZO_FormatTimeLargestTwo(seconds, format) end
 function ZO_FormatDurationAgo(seconds) end
@@ -1550,7 +1553,7 @@ function ZO_GenericCooldownGamepadDialogTemplate_Setup(dialog) end
 function ZO_GenericCenteredGamepadDialogTemplate_OnInitialized(dialog) end
 function ZO_GenericCenteredGamepadDialogTemplate_Setup(dialog) end
 function ZO_CustomCenteredGamepadDialogTemplate_OnInitialized(dialog) end
-function ZO_GenericGamepadStaticListDialogTemplate_OnInitialized(dialog) end
+function ZO_GenericGamepadStaticListDialogTemplate_OnInitialized(dialog) end  
 function ZO_GenericStaticListGamepadDialogTemplate_Setup(dialog, data) end
 function ZO_GenericGamepadItemSliderDialogTemplate_OnInitialized(dialog) end
 function ZO_GenericGamepadItemSliderDialogTemplate_Setup(dialog, headerData) end
@@ -1745,7 +1748,7 @@ function ZO_HiddenReasons:IsHidden() end
 -------------------------------------------------------------------------------
 --- @class ZO_HorizontalMenu
 ZO_HorizontalMenu = {}
---- @return ZO_Horizontal_Menu
+--- @return ZO_HorizontalMenu
 function ZO_Horizontal_Menu:New(...) end
 --- @param control Control
 function ZO_Horizontal_Menu:Initialize(control, anchorStyle) end
@@ -1885,7 +1888,7 @@ function ZO_KeybindButton_ChromaBehavior_OnEffectivelyShown(self) end
 function ZO_KeybindButton_ChromaBehavior_OnEffectivelyHidden(self) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ClickableKeybindLabelMixin
+--- @class ZO_ClickableKeybindLabelMixin 
 ZO_ClickableKeybindLabelMixin = {}
 function ZO_ClickableKeybindLabelMixin:GetKeybind() end
 function ZO_ClickableKeybindLabelMixin:GetKeyboardKeybind() end
@@ -2041,7 +2044,7 @@ function ZO_SceneFragmentBar:Add(name, fragmentGroup, buttonData, keybindButton)
 function ZO_SceneFragmentBar:UpdateButtons(forceSelection) end
 
 -------------------------------------------------------------------------------
---- @class ZO_SceneGroupBar
+--- @class ZO_SceneGroupBar 
 ZO_SceneGroupBar = {}
 function ZO_SceneGroupBar:Initialize(menuBarControl) end
 function ZO_SceneGroupBar:Clear() end
@@ -2225,6 +2228,10 @@ ZO_AbstractSingleTemplateGridScrollList_Keyboard = {}
 --- @return ZO_AbstractSingleTemplateGridScrollList_Keyboard
 function ZO_AbstractSingleTemplateGridScrollList_Keyboard:New(...) end
 function ZO_AbstractSingleTemplateGridScrollList_Keyboard:Initialize(control) end
+
+-------------------------------------------------------------------------------
+--- @class ZO_SingleTemplateGridScrollList_Keyboard
+ZO_SingleTemplateGridScrollList_Keyboard = {}
 --- @return ZO_SingleTemplateGridScrollList_Keyboard
 function ZO_SingleTemplateGridScrollList_Keyboard:New(...) end
 --- @param control Control
@@ -2236,6 +2243,10 @@ ZO_AbstractGridScrollList_Keyboard = {}
 --- @return ZO_AbstractGridScrollList_Keyboard
 function ZO_AbstractGridScrollList_Keyboard:New(...) end
 function ZO_AbstractGridScrollList_Keyboard:Initialize(control) end
+
+-------------------------------------------------------------------------------
+--- @class ZO_GridScrollList_Keyboard
+ZO_GridScrollList_Keyboard = {}
 --- @return ZO_GridScrollList_Keyboard
 function ZO_GridScrollList_Keyboard:New(...) end
 function ZO_GridScrollList_Keyboard:Initialize(control) end
@@ -2248,6 +2259,10 @@ function ZO_AbstractSingleTemplateGridScrollList_Gamepad:New(...) end
 --- @param control Control
 function ZO_AbstractSingleTemplateGridScrollList_Gamepad:Initialize(control, selectionTemplate) end
 function ZO_AbstractSingleTemplateGridScrollList_Gamepad:CommitGridList() end
+
+-------------------------------------------------------------------------------
+--- @class ZO_SingleTemplateGridScrollList_Gamepad
+ZO_SingleTemplateGridScrollList_Gamepad = {}
 --- @return ZO_SingleTemplateGridScrollList_Gamepad
 function ZO_SingleTemplateGridScrollList_Gamepad:New(...) end
 --- @param control Control
@@ -2280,6 +2295,9 @@ function ZO_AbstractGridScrollList_Gamepad:AddTriggerKeybinds() end
 function ZO_AbstractGridScrollList_Gamepad:RemoveTriggerKeybinds() end
 function ZO_AbstractGridScrollList_Gamepad:ScrollDataToCenter(data, onScrollCompleteCallback, animateInstantly) end
 function ZO_AbstractGridScrollList_Gamepad:SelectNextCategory(direction) end
+
+--- @class ZO_GridScrollList_Gamepad
+ZO_GridScrollList_Gamepad = {}
 --- @return ZO_GridScrollList_Gamepad
 function ZO_GridScrollList_Gamepad:New(...) end
 --- @param control Control
@@ -2438,6 +2456,9 @@ function ZO_Particle:InitializeEasedLerpParameter(startName, endName, defaultVal
 function ZO_Particle:ComputedEasedLerpParameter(startName, endName, easingName, defaultValue, progress) end
 function ZO_Particle:OnUpdate(timeS) end
 function ZO_Particle:GetDimensionsFromParameters() end
+
+--- @class ZO_SceneGraphParticle
+ZO_SceneGraphParticle = {}
 --- @return ZO_SceneGraphParticle
 function ZO_SceneGraphParticle:New(...) end
 function ZO_SceneGraphParticle:Initialize() end
@@ -2446,6 +2467,9 @@ function ZO_SceneGraphParticle:Start(parentControl, startTimeS, nowS) end
 function ZO_SceneGraphParticle:OnUpdate(timeS) end
 function ZO_SceneGraphParticle:Stop() end
 function ZO_SceneGraphParticle:SetPosition(x, y, z) end
+
+--- @class ZO_ControlParticle
+ZO_ControlParticle = {}
 --- @return ZO_ControlParticle
 function ZO_ControlParticle:New(...) end
 function ZO_ControlParticle:Start(parentControl, startTimeS, nowS) end
@@ -2623,7 +2647,7 @@ function ZO_PixelUnitControl:ApplyToControl() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_PixelUnits
-ZO_PixelUnits = {}
+ZO_PixelUnits = {}    
 --- @return ZO_PixelUnits
 function ZO_PixelUnits:New(namespace, baseObject) end
 function ZO_PixelUnits:Initialize(namespace, baseObject) end
@@ -4242,23 +4266,85 @@ function NumberFromBoolean(boolean) end
 --Accessibility - Narration
 function ClearActiveNarration() end --Skip to next narration
 
-
 --- @param ctrl Control
 function ZO_Options_OnMouseEnter(ctrl) end
 --- @param ctrl Control
 function ZO_Options_OnMouseExit(ctrl) end
 
 --- @alias SafeStringKey
---- | `SI_UNIT_NAME` = 165 "<<1>>"
+--- | `SI_ADDON_MANAGER_ADVANCED_UI_ERRORS` = 152 = "Advanced UI Errors"
+--- | `SI_ADDON_MANAGER_AUTHOR` = 149 = "Author"
+--- | `SI_ADDON_MANAGER_CHARACTER_SELECT_ALL` = 151 = "All Characters"
+--- | `SI_ADDON_MANAGER_CHARACTER_SELECT_LABEL` = 150 = "Configure for:"
+--- | `SI_ADDON_MANAGER_DEPENDENCIES` = 153 = "Required Add-Ons:"
+--- | `SI_ADDON_MANAGER_DEPENDENCY` = 154 = "Dependency"
+--- | `SI_ADDON_MANAGER_DEPENDENCY_DISABLED` = 162 = "<<1>> (Disabled)"
+--- | `SI_ADDON_MANAGER_DEPENDENCY_MISSING` = 161 = "<<1>> (Missing)"
+--- | `SI_ADDON_MANAGER_DEPENDENCY_TOO_LOW_VERSION` = 163 = "<<1>> (Newer Version Required)"
+--- | `SI_ADDON_MANAGER_ENABLED` = 147 = "Enabled"
+--- | `SI_ADDON_MANAGER_NAME` = 146 = "Name"
+--- | `SI_ADDON_MANAGER_NOTES` = 148 = "Notes"
+--- | `SI_ADDON_MANAGER_RELOAD` = 159 = "Reload UI"
+--- | `SI_ADDON_MANAGER_SECTION_LIBRARIES` = 145 = "Libraries"
+--- | `SI_ADDON_MANAGER_STATE_STRING` = 155 = "<<1>>, <<2>>"
+--- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_ALL` = 156 = "This add-on is enabled for all your characters."
+--- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_NONE` = 157 = "This add-on is not enabled for any of your characters."
+--- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_SOME` = 158 = "This add-on is enabled for some of your characters."
+--- | `SI_ADDON_MANAGER_VIEW_EULA` = 160 = "View EULA"
+--- | `SI_DIALOG_CANCEL` = 336 = "Cancel"
+--- | `SI_DIALOG_CLOSE` = 341 = "Close"
+--- | `SI_DIALOG_CONFIRM` = 340 = "Confirm"
+--- | `SI_INTERFACE_OPTIONS_RESET_TO_DEFAULT_TOOLTIP` = 6041 = "Reset to Default"
+--- | `SI_OPTIONS_RESET` = 359 = "Reset"
+--- | `SI_OPTIONS_RESET_ALL_PROMPT` = 358 = "Are you sure you want to reset all options panels to their default settings?"
+--- | `SI_OPTIONS_RESET_PROMPT = 357` = "Are you sure you want to reset this options panel to its default settings?"
+--- | `SI_OPTIONS_RESET_TITLE = 356` = "Reset to Defaults"
 --- | `SI_PLAYER_NAME` = 184 "<<1>>"
-SI_UNIT_NAME = 165 --= "<<1>>"
+--- | `SI_UNIT_NAME` = 165 "<<1>>"
+SI_ADDON_MANAGER_ADVANCED_UI_ERRORS = 152 -- "Advanced UI Errors"
+SI_ADDON_MANAGER_AUTHOR = 149 -- "Author"
+SI_ADDON_MANAGER_CHARACTER_SELECT_ALL = 151 -- "All Characters"
+SI_ADDON_MANAGER_CHARACTER_SELECT_LABEL = 150 -- "Configure for:"
+SI_ADDON_MANAGER_DEPENDENCIES = 153 -- "Required Add-Ons:"
+SI_ADDON_MANAGER_DEPENDENCY = 154 -- "Dependency"
+SI_ADDON_MANAGER_DEPENDENCY_DISABLED = 162 -- "<<1>> (Disabled)"
+SI_ADDON_MANAGER_DEPENDENCY_MISSING = 161 -- "<<1>> (Missing)"
+SI_ADDON_MANAGER_DEPENDENCY_TOO_LOW_VERSION = 163 -- "<<1>> (Newer Version Required)"
+SI_ADDON_MANAGER_ENABLED = 147 -- "Enabled"
+SI_ADDON_MANAGER_NAME = 146 -- "Name"
+SI_ADDON_MANAGER_NOTES = 148 -- "Notes"
+SI_ADDON_MANAGER_RELOAD = 159 -- "Reload UI"
+SI_ADDON_MANAGER_SECTION_LIBRARIES = 145 --Libraries"
+SI_ADDON_MANAGER_STATE_STRING = 155 -- "<<1>>, <<2>>"
+SI_ADDON_MANAGER_TOOLTIP_ENABLED_ALL = 156 -- "This add-on is enabled for all your characters."
+SI_ADDON_MANAGER_TOOLTIP_ENABLED_NONE = 157 -- "This add-on is not enabled for any of your characters."
+SI_ADDON_MANAGER_TOOLTIP_ENABLED_SOME = 158 -- "This add-on is enabled for some of your characters."
+SI_ADDON_MANAGER_VIEW_EULA = 160 -- "View EULA"
+SI_DIALOG_CANCEL = 336 --= "Cancel"
+SI_DIALOG_CLOSE = 341 --= "Close"
+SI_DIALOG_CONFIRM = 340 --= "Confirm"
+SI_INTERFACE_OPTIONS_RESET_TO_DEFAULT_TOOLTIP = 6041 --= "Reset to Default"
+SI_OPTIONS_RESET = 359 --= "Reset"
+SI_OPTIONS_RESET_ALL_PROMPT = 358 --= "Are you sure you want to reset all options panels to their default settings?"
+SI_OPTIONS_RESET_PROMPT = 357 --= "Are you sure you want to reset this options panel to its default settings?"
+SI_OPTIONS_RESET_TITLE = 356 --= "Reset to Defaults"
 SI_PLAYER_NAME = 184 --= "<<1>>"
+SI_UNIT_NAME = 165 --= "<<1>>"
 
 --- @type WindowManager
 WINDOW_MANAGER = {}
-MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
+--- @type ZO_ColorDef
+ZO_DEFAULT_DISABLED_COLOR = {a = 1,	b = 0.3, g = 0.3, r = 0.3}
+--- @type ZO_ColorDef
+ZO_DEFAULT_ENABLED_COLOR = {a = 1, b = 1, g = 1, r = 1}
+
+ESO_Dialogs = {}
 SLASH_COMMANDS = {}
-ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}
+ZO_Ingame_SavedVariables = {}
+
+MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
+
+ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
 ZO_VALID_LINK_TYPES_CHAT = {
 	ability = true,
 	achievement = true,
@@ -4269,8 +4355,3 @@ ZO_VALID_LINK_TYPES_CHAT = {
 	housing = true,
 	item = true,
 }
-
---- @type ZO_ColorDef
-ZO_DEFAULT_DISABLED_COLOR = {a = 1,	b = 0.3, g = 0.3, r = 0.3}
---- @type ZO_ColorDef
-ZO_DEFAULT_ENABLED_COLOR = {a = 1, b = 1, g = 1, r = 1}
