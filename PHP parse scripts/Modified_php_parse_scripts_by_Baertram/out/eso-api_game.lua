@@ -1447,9 +1447,9 @@ function IsChapterOwned(chapterUpgradeId) end
 --- @return integer accountTypeId, string title, string description, integer version
 function GetTrialInfo() end
 
---- @param type MarketCurrencyType
+--- @param marketCurrencyType MarketCurrencyType
 --- @return integer currencyAmount
-function GetPlayerMarketCurrency(type) end
+function GetPlayerMarketCurrency(marketCurrencyType) end
 
 --- @return void
 function OnMarketPurchaseMoreCrowns() end --*private*
@@ -6278,9 +6278,9 @@ function GetLootItemType(lootId) end
 --- @return void
 function LootItemById(lootId) end
 
---- @param type CurrencyType
+--- @param currencyType CurrencyType
 --- @return void
-function LootCurrency(type) end
+function LootCurrency(currencyType) end
 
 --- @return boolean isLooting
 function IsLooting() end
@@ -6292,9 +6292,9 @@ function GetLootTargetInfo() end
 --- @return integer lootId, string name, textureName icon, integer count, integer quality, integer value, boolean isQuest, boolean stolen, LootItemType lootType
 function GetLootItemInfo(lootIndex) end
 
---- @param type CurrencyType
+--- @param currencyType CurrencyType
 --- @return integer unownedCurrency, integer ownedCurrency
-function GetLootCurrency(type) end
+function GetLootCurrency(currencyType) end
 
 --- @return integer unownedMoney, integer ownedMoney
 function GetLootMoney() end

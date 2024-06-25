@@ -99,11 +99,15 @@ class events_api
                     $parts = explode(",", $matches['params']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-
-                        //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
-                        //* IsTrustedFunction(*function* _function_)
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                            $objects[$methodClean]['params'][$matches2['param']] = $this->processType($matches2['type']);
+                            $type = $this->processType($matches2['type']);
+                            $param = $matches2['param'];
+                            if ($param == 'type') {
+                                // MouseContentType -> mouseContentType
+                                $param = $type;
+                                $param[0] = strtolower($param[0]);
+                            }
+                            $objects[$methodClean]['params'][$param] = $type;
                         }
                     }
                 }

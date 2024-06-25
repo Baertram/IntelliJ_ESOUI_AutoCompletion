@@ -98,10 +98,15 @@ class game_api
 
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                             $type = $this->processType($matches2['type']);
-							$param = $this->processParamName($matches2['param']);
+                            $param = $this->processParamName($matches2['param']);
                             if ($type == '...') {
                                 $param = '...';
                                 $type = 'any';
+                            }
+                            if ($param == 'type') {
+                                // CurrencyType -> currencyType
+                                $param = $type;
+                                $param[0] = strtolower($param[0]);
                             }
                             $objects[$methodClean]['params'][$param] = $type;
                         }
@@ -120,7 +125,7 @@ class game_api
 
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                             $type = $this->processType($matches2['type']);
-							$param = $this->processParamName($matches2['param']);
+                            $param = $this->processParamName($matches2['param']);
                             if ($type == '...') {
                                 if ($methodClean == 'CallSecureProtected') {
                                     $param = 'reason';
@@ -144,19 +149,19 @@ class game_api
 
         return $objects;
     }
-	
-	function processParamName($param)
-	{
-		if ($param == 'function') {
-			//* CallSecureProtected(*string* _functionName_, *types* _arguments_)
-			//* IsTrustedFunction(*function* _function_)
-			$param = 'func';
-		} else if ($param == 'table') {
-			//* InsecureNext(*table* _table_, *type* _lastKey_)
-			$param = 'tbl';
-		}
-		return $param;
-	}
+    
+    function processParamName($param)
+    {
+        if ($param == 'function') {
+            //* CallSecureProtected(*string* _functionName_, *types* _arguments_)
+            //* IsTrustedFunction(*function* _function_)
+            $param = 'func';
+        } else if ($param == 'table') {
+            //* InsecureNext(*table* _table_, *type* _lastKey_)
+            $param = 'tbl';
+        }
+        return $param;
+    }
 
     function processType($type)
     {

@@ -826,7 +826,7 @@ function EVENT_CURRENT_CAMPAIGN_CHANGED (eventId, newCurrentCampaignId) end
 --- @return void
 function EVENT_CURRENT_SUBZONE_LIST_CHANGED(eventId) end
 
---- @param type MouseContentType
+--- @param mouseContentType MouseContentType
 --- @param param1 integer
 --- @param param2 integer
 --- @param param3 integer
@@ -834,9 +834,9 @@ function EVENT_CURRENT_SUBZONE_LIST_CHANGED(eventId) end
 --- @param param5 integer
 --- @param param6 integer
 --- @return void
-function EVENT_CURSOR_DROPPED (eventId, type, param1, param2, param3, param4, param5, param6) end
+function EVENT_CURSOR_DROPPED (eventId, mouseContentType, param1, param2, param3, param4, param5, param6) end
 
---- @param type MouseContentType
+--- @param mouseContentType MouseContentType
 --- @param param1 integer
 --- @param param2 integer
 --- @param param3 integer
@@ -845,7 +845,7 @@ function EVENT_CURSOR_DROPPED (eventId, type, param1, param2, param3, param4, pa
 --- @param param6 integer
 --- @param itemSoundCategory ItemUISoundCategory
 --- @return void
-function EVENT_CURSOR_PICKUP (eventId, type, param1, param2, param3, param4, param5, param6, itemSoundCategory) end
+function EVENT_CURSOR_PICKUP (eventId, mouseContentType, param1, param2, param3, param4, param5, param6, itemSoundCategory) end
 
 --- @param responseMessage string
 --- @param success boolean

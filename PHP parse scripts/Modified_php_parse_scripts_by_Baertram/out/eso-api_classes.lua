@@ -1305,7 +1305,7 @@ function CompassDisplayControl:SetAlphaDropoffBehavior(pinType, closeAlpha, farA
 --- @return void
 function CompassDisplayControl:SetCardinalDirection(directionName, font, cardinalDirection) end
 
---- @param type MapDisplayPinType
+--- @param pinType MapDisplayPinType
 --- @param pinSize number
 --- @param pinTexture string
 --- @param areaTexture string
@@ -1329,7 +1329,7 @@ function CompassDisplayControl:SetCardinalDirection(directionName, font, cardina
 --- @param layer DrawLayer
 --- @param drawLevelOffsetBase integer
 --- @return void
-function CompassDisplayControl:SetPinInfo(type, pinSize, pinTexture, areaTexture, aboveTexture, belowTexture, linkTexture, clamped, allowUpdatesWhenAnimating, maxDistanceM, closeScale, farScale, closeScaleDistanceM, farScaleDistanceM, closeAlpha, farAlpha, closeAlphaDistanceM, farAlphaDistanceM, animation, addedAnimation, removedAnimation, layer, drawLevelOffsetBase) end
+function CompassDisplayControl:SetPinInfo(pinType, pinSize, pinTexture, areaTexture, aboveTexture, belowTexture, linkTexture, clamped, allowUpdatesWhenAnimating, maxDistanceM, closeScale, farScale, closeScaleDistanceM, farScaleDistanceM, closeAlpha, farAlpha, closeAlphaDistanceM, farAlphaDistanceM, animation, addedAnimation, removedAnimation, layer, drawLevelOffsetBase) end
 
 --- @param pinType MapDisplayPinType
 --- @param closeScale number
@@ -3663,13 +3663,13 @@ function TextureControl:SetVertexUV(vertex, u, v) end
 
 --- @class TooltipControl: Control
 TooltipControl = {}
---- @param control object
+--- @param control Control
 --- @param cell integer
 --- @param useLastRow boolean
 --- @return void
 function TooltipControl:AddControl(control, cell, useLastRow) end
 
---- @param control object
+--- @param control Control
 --- @param headerRow integer
 --- @param headerSide TooltipHeaderSide
 --- @return void
@@ -4226,7 +4226,7 @@ function VectorControl:SetSlugAsset(filename) end
 
 --- @class WindowManager: ZO_Object
 WindowManager = {}
---- @param control object
+--- @param control Control
 --- @param virtualName string
 --- @return void
 function WindowManager:ApplyTemplateToControl(control, virtualName) end
@@ -4236,17 +4236,17 @@ function WindowManager:ApplyTemplateToControl(control, virtualName) end
 --- @return integer order
 function WindowManager:CompareControlVisualOrder(controlA, controlB) end
 
---- @param name string
+--- @param name string|nil
 --- @param parent object
---- @param type ControlType
---- @return object control
-function WindowManager:CreateControl(name, parent, type) end
+--- @param controlType ControlType
+--- @return Control control
+function WindowManager:CreateControl(name, parent, controlType) end
 
 --- @param controlName string
 --- @param parent object
 --- @param virtualName string
 --- @param optionalSuffix string
---- @return object control
+--- @return Control control
 function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName, optionalSuffix) end
 
 --- @param x layout_measurement
@@ -4254,8 +4254,8 @@ function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName
 --- @return integer cursorId
 function WindowManager:CreateCursor(x, y) end
 
---- @param name string
---- @return object control
+--- @param name string|nil
+--- @return Control control
 function WindowManager:CreateTopLevelWindow(name) end
 
 --- @param cursorId integer
@@ -4350,7 +4350,7 @@ function WindowManager:UpdateCursorPosition(cursorId, x, y) end
 --- @return object windowManager
 function WindowManager:GetWindowManager() end
 
---- @param control object
+--- @param control Control
 --- @param leftOffset number
 --- @param topOffset number
 --- @param rightOffset number
@@ -4358,7 +4358,7 @@ function WindowManager:GetWindowManager() end
 --- @return boolean isOver
 function WindowManager:MouseIsOver(control, leftOffset, topOffset, rightOffset, bottomOffset) end
 
---- @param control object
+--- @param control Control
 --- @param leftOffset number
 --- @param topOffset number
 --- @param rightOffset number

@@ -126,7 +126,25 @@ class object_api
                         foreach ($parts as $part) {
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                                $objects[$tag][$methodClean]['params'][$matches2['param']] = $this->processType($matches2['type']);
+                                $param = $matches2['param'];
+                                $type = $this->processType($matches2['type']);
+                                if ($param == 'type') {
+                                    if (str_ends_with($type, 'PinType')) {
+                                        // MapDisplayPinType -> pinType
+                                        $param = 'pinType';
+                                    } else {
+                                        // ControlType -> controlType
+                                        $param = $type;
+                                        $param[0] = strtolower($param[0]);
+                                    }
+                                }
+                                if ($param == 'control') {
+                                    $type = 'Control';
+                                }
+                                if (str_starts_with($methodClean, 'Create') and $param == 'name') {
+                                    $type .= '|nil';
+                                }
+                                $objects[$tag][$methodClean]['params'][$param] = $type;
                             }
                         }
                     } else if (strpos($line, '_Uses variable returns..._') !== false) {
@@ -136,7 +154,12 @@ class object_api
                         foreach ($parts as $part) {
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
-                                $objects[$tag][$methodClean]['return'][$matches2['param']] = $this->processType($matches2['type']);
+                                $type = $this->processType($matches2['type']);
+                                $param = $matches2['param'];
+                                if ($param == 'control') {
+                                    $type = 'Control';
+                                }
+                                $objects[$tag][$methodClean]['return'][$param] = $type;
                             }
                         }
                     }
