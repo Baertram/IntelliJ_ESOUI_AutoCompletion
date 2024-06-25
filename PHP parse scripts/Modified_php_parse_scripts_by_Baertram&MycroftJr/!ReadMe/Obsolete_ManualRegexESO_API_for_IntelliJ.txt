@@ -1,0 +1,202 @@
+-> ATTENTION: This is only a colelction of information. The actual parsing scripts parsers/*.php are doing these regex searches automatically!
+-> So you do not have to do it manually anymore
+
+
+Regular expressions PHP to use for ESOUI api function for conversion into IntelliJ ESO API plugin:
+Use http://www.phpliveregex.com/ e.g. with preg_replace
+
+========================================================================================================
+[ESO API functions from ESOUIDocumentation_xx.txt]
+========================================================================================================
+1)
+--Replace * at beginning of function to "function "
+^\*
+
+2)
+--Remove the underscores _ ... _ around variable names
+_?
+
+3)
+--Replace ** _Returns:_ with ---:
+^\s*\*{2}\s*
+
+4)
+--Change in Return: row the first * around variables to --Returns: \- (to keep them in next replacepement and change back to * afterwards!)
+---\s*Returns: \*
+
+5)
+--Remove * around variable types
+(\*\S*)
+
+6)
+--Change back the \- variable surroundings to *
+\\-
+
+7)
+--Remove  spaces around ( in the first line with (
+\s*\(\s*
+
+8)
+--Remove double spaces after a , by exchanging it with , followed by one space
+,\s{2}
+
+9) Remove unwanted comments:
+Uses variable returns...
+
+
+
+
+========================================================================================================
+[ESO API Constants + values from ESOUI Wiki Website http://wiki.esoui.com/Constant_Values]
+========================================================================================================
+Copy all values from the website to a txt file.
+Use Notepad++ -> Replace:
+
+1) Bring the 2 lines of the constants from the website into 1 line, seperated by " = "
+Options = 'X': Match case, Wrap around, Regular expression search mode
+(.+)\r\n(.+)
+Replace with:
+\1 = \2
+
+2) Remove the EVENTS from the constants so the events will be found in the events file!
+Options = 'X': Match case, Wrap around, Regular expression search mode
+^EVENT_(.+)\r\n
+Replace with:
+
+
+========================================================================================================
+[ESO API Events + callback function parameters from ESOUI Wiki Website http://wiki.esoui.com/Events
+========================================================================================================
+Copy all values from the website to a txt file.
+Use Notepad++ -> Replace
+
+1) Remove all [edit] lines by commenting them
+Options = 'X': Match case, Wrap around, Normal search mode
+[edit]
+Replace with:
+---
+
+2) Remove empty lines
+Options = 'X': Match case, Wrap around, Extended search mode
+\n\r
+Replace with:
+
+3) Bring the event source code to the format that IntelliJ wants it to be EVENT_NAME = (parameter, ...)
+First put the callback function's parameters and the () around them at the end behind a " = "
+
+Options = 'X': Match case, Wrap around, Regular expression search mode
+^EVENT(.+)\s\(
+Replace with:
+EVENT\1 = \(\2
+
+4)
+Then remove the variable type decsritptions.
+
+Options = 'X': Match case, Wrap around, Normal search mode
+Replace every word from the list here, including a trailing space!!!, with empty string
+integer ,number ,boolean ,string ,:nilable,SocialActionResult
+
+
+========================================================================================================
+[ESO API Controls from ESOUI Wiki http://wiki.esoui.com/Controls
+========================================================================================================
+Copy all values from the website to a txt file.
+Use Notepad++ -> Replace
+
+1) Change all [edit] lines to represent the control's array.
+e.g. make [edit]Control -> Control = {}
+Options = 'X': Match case, Wrap around, Regular expression search mode
+^(\[edit\])(.+)
+Replace with:
+\2 = \{\}
+
+2) Search for "Objects that inherit" and comment the lines below for the inherited objects by using -- at the lines beginning
+
+3) Remove all occurances of "Objects that inherit ..." string
+
+4) Replace all occurances of "Returns:" with commented line "--- Returns:"
+
+5) Remove all occurances of "This function has protected attributes. " (including trailing space)
+This function has protected attributes.
+
+6) Remove all occurances of "This function is private and cannot be used in addons :( " (including trailing space)
+This function is private and cannot be used in addons :(
+
+7)
+Then remove the variable type decsritptions.
+
+Options = 'X': Match case, Wrap around, Normal search mode
+CASE SENSITIVE! Replace every word from the list here, including a trailing space!!!, with empty string
+integer ,number ,boolean ,string ,number:nilable , SocialActionResult, object, TranslateAnimationDeltaType, function,
+ReleaseReferenceOptions, AnchorConstrains, AnchorPosition, ModifyTextType, TextAlignment, ControlOrientation,
+VirtualKeyboardType, DrawLayer, TextureBlendMode, TextureAddressMode, VERTEX_POINTS, TooltipHeaderSide, id64,
+BattlegroundQueryContextType
+
+8) And now add the "function " info to the relevant function names
+Use replace with regEx again:
+Options = 'X': Match case, Wrap around, Regular expression search mode
+^((Get|Set|Remove|Create|Destroy|Is|Clear|Insert|Play|Stop|Enable|Add|Insert|Delete|Convert|Does|Has|Register|Unregister|Hide|Reset|Lose|Take|Was|Anchor|Did|Restore|Move|Append|Show|Allow|Compare)+.*\(+.*\)+)+
+Replace with:
+function \1
+
+9)
+Then remove some specials:
+
+Options = 'X': Match case, Wrap around, Normal search mode
+
+number MapDisplayPinType pinType
+Replace with:
+pinType
+
+number MapDisplayPinType type
+Replace with:
+pinType
+
+
+
+
+
+========================================================================================================
+[ESO API Controls from file
+========================================================================================================
+Copy all values taht belong to controls to a txt file.
+Use Notepad++ -> Replace
+
+1) Change * to function Control:, where Control: is the name of the active Control that gets changed
+Options = 'X': Match case, Wrap around, Regular expression search mode
+^\*\s
+Replace with:
+function Control:\1
+
+2) Remove all _ around function parameters
+Options = 'X': Match case, Wrap around, Normal search mode
+_
+Replace with:
+
+
+3) Change the ** Returns: string to --- Returns:
+Options = 'X': Match case, Wrap around, Regular expression search mode
+\*{2}(.)*Returns:(\s)*\*
+Replace with:
+--- Returns: -\/
+
+4) Remove the  *protected-attributes*  text (including leading and trailing space!!!)
+Options = 'X': Match case, Wrap around, Normal search mode
+ *protected-attributes*
+Replace with:
+
+5) Remove the  *public*  text (including leading and trailing space!!!)
+Options = 'X': Match case, Wrap around, Normal search mode
+ *public*
+Replace with:
+
+
+6) Then remove the variable type decsritptions.
+Options = 'X': Match case, Wrap around, Normal search mode
+Replace every word from the list here, including a trailing space!!!, with empty string
+*integer* ,*number* ,*boolean* ,*string* ,:nilable*,*SocialActionResult*
+
+
+
+
+
