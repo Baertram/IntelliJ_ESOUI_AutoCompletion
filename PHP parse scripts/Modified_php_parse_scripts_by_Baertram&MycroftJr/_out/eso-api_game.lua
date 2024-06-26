@@ -1,3 +1,5 @@
+--- @meta
+
 --- @return table buildInfo
 function ScriptBuildInfo() end
 
@@ -25,7 +27,7 @@ function CallSecureProtected(functionName, ...) end
 --- @return boolean isTrusted
 function IsTrustedFunction(func) end
 
---- @param guiName string
+--- @param guiName string|nil
 --- @return void
 function ReloadUI(guiName) end
 
@@ -402,7 +404,7 @@ function GetESOFullVersionString() end
 --- @return boolean isInUI
 function IsInUI(guiName) end --*private*
 
---- @param fontObject object
+--- @param fontObject FontObject
 --- @param text string
 --- @param scale number
 --- @param space Space
@@ -1395,7 +1397,7 @@ function ChangeRemoteTopLevel(messageOrigin, requestType) end
 function NotifyThatFollowerFinishedFragmentTransition(messageOrigin, sceneName, sequenceNumber) end
 
 --- @param name string
---- @return object synchronizingObject
+--- @return SynchronizingObject synchronizingObject
 function GetOrCreateSynchronizingObject(name) end
 
 --- @param name string
@@ -3572,7 +3574,7 @@ function IsRaidInProgress() end
 --- @return boolean ended
 function HasRaidEnded() end
 
---- @return bool|nil successful
+--- @return boolean|nil successful
 function WasRaidSuccessful() end
 
 --- @return boolean inRaid
@@ -4281,7 +4283,7 @@ function DoesItemFulfillJournalQuestCondition(bagId, slotIndex, journalQuestInde
 --- @param journalQuestIndex luaindex
 --- @param stepIndex luaindex
 --- @param conditionIndex luaindex
---- @param isSelfCrafted bool|nil
+--- @param isSelfCrafted boolean|nil
 --- @return boolean fulfillsCondition
 function DoesItemLinkFulfillJournalQuestCondition(link, journalQuestIndex, stepIndex, conditionIndex, isSelfCrafted) end
 
@@ -6679,7 +6681,7 @@ function AddMapQuestPins(journalQuestIndex, trackingLevel) end
 --- @return void
 function RemoveMapQuestPins(journalQuestIndex) end
 
---- @param animationTimeline object
+--- @param animationTimeline AnimationTimeline
 --- @param animationTarget MapPinAnimationTarget
 --- @param limitToMapType ControlType|nil
 --- @param pinType MapDisplayPinType
@@ -9473,12 +9475,12 @@ function PlayDefaultQuickChat(index) end --*private*
 --- @return integer length
 function ZoUTF8StringLength(string) end
 
---- @param timeline object
+--- @param timeline AnimationTimeline
 --- @param offsetX number
 --- @return void
 function SetSCTAnimationOffsetX(timeline, offsetX) end
 
---- @param timeline object
+--- @param timeline AnimationTimeline
 --- @param offsetY number
 --- @return void
 function SetSCTAnimationOffsetY(timeline, offsetY) end
@@ -13267,7 +13269,7 @@ function GetItemLinkCraftingSkillType(itemLink) end
 function IsItemLinkEnchantingRune(itemLink) end
 
 --- @param itemLink string
---- @return bool|nil known, string|nil name
+--- @return boolean|nil known, string|nil name
 function GetItemLinkEnchantingRuneName(itemLink) end
 
 --- @param itemLink string
@@ -13379,7 +13381,7 @@ function GetItemLinkRecipeCraftingSkillType(itemLink) end
 
 --- @param itemLink string
 --- @param index luaindex
---- @return bool|nil known, string|nil name
+--- @return boolean|nil known, string|nil name
 function GetItemLinkReagentTraitInfo(itemLink, index) end
 
 --- @param itemLink string
@@ -15641,7 +15643,7 @@ function GetAbilityName(abilityId, casterUnitTag) end
 --- @param abilityId integer
 --- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return bool|nil channeled, integer|nil durationValue
+--- @return boolean|nil channeled, integer|nil durationValue
 function GetAbilityCastInfo(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer
@@ -15668,7 +15670,7 @@ function GetAbilityAngleDistance(abilityId) end
 
 --- @param abilityId integer
 --- @param casterUnitTag string
---- @return bool|nil isAbilityDurationToggled
+--- @return boolean|nil isAbilityDurationToggled
 function IsAbilityDurationToggled(abilityId, casterUnitTag) end
 
 --- @param abilityId integer
@@ -15694,7 +15696,7 @@ function GetNextAbilityMechanicFlag(abilityId, lastMechanicFlag) end
 --- @param abilityId integer
 --- @param overrideRank integer|nil
 --- @param casterUnitTag string
---- @return integer|nil baseCost, CombatMechanicFlags|nil mechanicFlags, bool|nil isCostChargedPerTick
+--- @return integer|nil baseCost, CombatMechanicFlags|nil mechanicFlags, boolean|nil isCostChargedPerTick
 function GetAbilityBaseCostInfo(abilityId, overrideRank, casterUnitTag) end
 
 --- @param abilityId integer

@@ -1,0 +1,4 @@
+SafeStringKey
+(SI_\S+) = \d+ = "[^"]*"
+QuestConditionType
+(QUEST_CONDITION_TYPE_\S+)

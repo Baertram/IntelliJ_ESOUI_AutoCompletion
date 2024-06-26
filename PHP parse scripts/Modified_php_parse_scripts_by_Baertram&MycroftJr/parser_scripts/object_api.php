@@ -14,7 +14,15 @@ class object_api
         global $esoui_API_doc_filename;
         $array = file($esoui_API_doc_filename, FILE_IGNORE_NEW_LINES);
         [$classes, $subclasses] = $this->parseClasses($array);
+        
         $out = "";
+        foreach ($classes as $class => $method) {
+            $classStr = strval($class);
+            $out .= "$classStr\n";
+        }
+        file_put_contents("_out/_noRelease/eso-classes.txt", $out);
+
+        $out = "--- @meta\n\n";
         $classesAdded = array();
 
         foreach ($classes as $class => $method) {
@@ -192,7 +200,11 @@ class object_api
             } else if (str_starts_with($param, 'control') or str_ends_with($param, 'Control') or str_ends_with($class, 'Control') or strpos($method, 'Control') != 0) {
                 $type = 'Control';
             } else {
-                print("Unrefined type $type on $param of $class:$method");
+                print("Unrefined type $type on $param of $class:$method\n");
+            }
+        } else if ($type == 'variant') {
+            if ($class == 'Control' and $method == 'AddFilterForEvent') {
+                $type = 'RegisterForEventFilterType';
             }
         }
         return $type;
@@ -204,16 +216,17 @@ class object_api
         if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
             $type = $matches['class'] . $matches['remainder'];
         }
+        $nilable = str_ends_with($type, ':nilable');
+        $type = str_replace(':nilable', '', $type);
         if ($type == 'bool') {
             $type = 'boolean';
         }
         if ($type == 'types') {
             throw new Exception('Add proper `types` handling!');
         }
-        $type = str_replace(':nilable', '|nil', $type);
         
         // Changes that also depend on param
-        if ($param == 'type') {
+        if ($param == 'type' and str_ends_with($type, 'Type')) {
             if (str_ends_with($type, 'PinType')) {
                 // MapDisplayPinType -> pinType
                 $param = 'pinType';
@@ -222,8 +235,14 @@ class object_api
                 $param = $type;
                 $param[0] = strtolower($param[0]);
             }
+        } else if ($param == 'event' and $type == 'integer') {
+            $type = 'Event';
         }
         if (str_starts_with($method, 'Create') and $param == 'name') {
+            $type .= '|nil';
+        }
+        
+        if ($nilable) {
             $type .= '|nil';
         }
         return [$type, $param];

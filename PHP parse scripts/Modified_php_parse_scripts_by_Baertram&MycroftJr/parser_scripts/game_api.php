@@ -13,8 +13,24 @@ class game_api
         global $esoui_API_doc_filename;
         $array = file($esoui_API_doc_filename, FILE_IGNORE_NEW_LINES);
         $methods = $this->parseClasses($array);
+        
+        $array2 = file("_out/_noRelease/eso-classes.txt", FILE_IGNORE_NEW_LINES);
+        
+        // refine the types (this can't be done earlier because it needs to check if names match classes that actually exist)
+        foreach ($methods as $function => $value) {
+            if (isset($value['params'])) {
+                foreach ($value['params'] as $param => $type) {
+                    $methods[$function]['params'][$param] = $this->refineType($array2, $function, $type, $param);
+                }
+            }
+            if (isset($value['return'])) {
+                foreach ($value['return'] as $param => $type) {
+                    $methods[$function]['return'][$param] = $this->refineType($array2, $function, $type, $param);
+                }
+            }
+        }
 
-        $out = "";
+        $out = "--- @meta\n\n";
         foreach ($methods as $function => $value) {
             $docblock = "";
             $luablock = "function $function(";
@@ -54,7 +70,6 @@ class game_api
         }
 
         file_put_contents("_out/eso-api_game.lua", $out);
-
     }
 
     //VM Functions
@@ -93,7 +108,6 @@ class game_api
                             $objects[$methodClean]['privOrProt'] = $matchesPriv['privOrProt'];
 //print_r('  >method after: ' . $method . '\n');
                         }
-
 
                     $parts = explode(",", $matches['params']);
                     foreach ($parts as $part) {
@@ -140,6 +154,23 @@ class game_api
 
         return $objects;
     }
+
+    function refineType($classes, $method, $type, $param) {
+        if ($type == 'object') {
+            $paramAsType = $param;
+            $paramAsType[0] = strtoupper($paramAsType[0]);
+            if (array_search($paramAsType, $classes)) {
+                $type = $paramAsType;
+            } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {
+                $type = 'AnimationTimeline';
+            } else if (str_starts_with($param, 'control') or str_ends_with($param, 'Control') or strpos($method, 'Control') != 0) {
+                $type = 'Control';
+            } else {
+                print("Unrefined type $type on $param of $method\n");
+            }
+        }
+        return $type;
+    }
     
     function processParam($method, $type, $param)
     {
@@ -148,13 +179,14 @@ class game_api
         if (preg_match('/\[(?P<attr>.*)?\|#(?P<class>.*)?\](?P<remainder>.*)/', $type, $matches)) {
             $type = $matches['class'] . $matches['remainder'];
         }
+        $nilable = str_ends_with($type, ':nilable');
+        $type = str_replace(':nilable', '', $type);
         if ($type == 'bool') {
             $type = 'boolean';
         }
         if ($type == 'types') {
             $type = '...';
         }
-        $type = str_replace(':nilable', '|nil', $type);
         
         // Param-only changes
         if ($param == 'function') {
@@ -175,6 +207,12 @@ class game_api
             // CurrencyType -> currencyType
             $param = $type;
             $param[0] = strtolower($param[0]);
+        } else if ($param == 'event' and $type == 'integer') {
+            $type = 'Event';
+        }
+        
+        if ($nilable) {
+            $type .= '|nil';
         }
         return [$type, $param];
     }
