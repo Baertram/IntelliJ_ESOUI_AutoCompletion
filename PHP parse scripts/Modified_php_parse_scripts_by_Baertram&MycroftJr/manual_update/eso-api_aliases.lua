@@ -6,7 +6,6 @@
 --- @alias object ZO_Object
 --- @alias textureName string
 --- @alias bool boolean
---- @alias type any
 
 
 --- @alias layout_measurement integer
