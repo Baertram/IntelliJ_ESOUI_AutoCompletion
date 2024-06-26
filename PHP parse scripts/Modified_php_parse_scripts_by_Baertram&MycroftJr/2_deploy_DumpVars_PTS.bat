@@ -22,4 +22,6 @@ if %ERRORLEVEL% == 0 (
 echo ---------------------------------------------------------------------------
 echo.
 echo -Finished-
+echo Please read the instructions at \!ReadMe\!!!HOWTO_parse.txt
+echo Go on with 3_finish_ESOUIDocumentation_PTS.bat AFTER running the DumpVars addon ingame on PTS!
 pause

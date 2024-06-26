@@ -1,4 +1,4 @@
-var GuiXml ={
+{
     "GuiXml": {
         "childs": {
             "Animations": {
@@ -890,4 +890,4 @@ var GuiXml ={
             }
         }
     }
-};
+}

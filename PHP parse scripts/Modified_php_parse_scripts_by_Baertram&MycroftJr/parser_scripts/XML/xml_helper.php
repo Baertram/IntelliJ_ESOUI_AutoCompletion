@@ -42,8 +42,12 @@ class xml_parser
         // $out = $this->removeInherits($array, $tree2);
         //    print_r($out);
 
-
-        file_put_contents("_out/XML/GuiXml.json", json_encode($out, JSON_PRETTY_PRINT));
+        $jsonOut = json_encode($out, JSON_PRETTY_PRINT);
+        //Create a .json file which content's manually need to be put into a javascript file
+        file_put_contents("_out/xml/GuiXml.json", $jsonOut);
+        //Trying to directly create the javascript file instead
+        $jsOut = 'var GuiXml =' . $jsonOut . ';';
+        file_put_contents("_out/xml/GuiXml.js", $jsOut);
 
         echo "t1: ".count($tree, 1)." t2:".count($out, 1)."\n";
     }

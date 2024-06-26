@@ -19,14 +19,11 @@ echo ---------------------------------------------------------------------------
 echo.
 echo Parsing XML...
 php.exe "./parser_scripts/XML/xml_helper.php"
-echo Done - Created file "/_out/XML/GuiXml.json"
+echo Done - Created files "/_out/xml/GuiXml.json" and "/_out/xml/GuiXml.js"
 echo.
-echo Please copy total contents (beginning at { and ending at }) of created file "/generated/GuiXml.json" into file "_release/xml/GuiXML.js", after the comment and before the ;
-echo Afterwards edit the file "_release/XML/index.html", search for "for ESOUI APIVersion" and replace the APIversion number behind the text with the actual APIVersion number, which can be obtained ingame via /script d(GetAPIVersion())
-echo Read file "/readmes/!!!HOWTO_parse.txt", step 4
 echo ---------------------------------------------------------------------------
 echo.
-echo Parsing global variables - Step 1/2 ...
+echo Parsing global variables - Step 1 / 2 ...
 php.exe "./parser_scripts/global_vars.php"
 echo Done - Created file "/_out/DumpVars_constants.lua". 
 echo.
@@ -39,11 +36,10 @@ echo ---------------------------------------------------------------------------
 echo.
 echo - Manual file checks needed -".
 echo Please manually check if contents of file "/manual_update/eso-api_base_Manual_NonGenerated.lua" need to be changed/enhanced!
-echo Please manually check if contents of file "/manual_update/eso-sounds.lua" need to be changed/enhanced.
-echo Find the current SOUNDS table at /esoui/libraries/globals/soundids.lua, e.g. GitHub (branch of APIVersion) https://github.com/esoui/esoui/blob/live/esoui/libraries/globals/soundids.lua
 echo ---------------------------------------------------------------------------
 echo.
 echo -Finished-
+echo Please go on with 2_deployDumpVars(_PTS).bat and/or read the instructions at \!ReadMe\!!!HOWTO_parse.txt
 
 pause
 

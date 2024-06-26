@@ -16,4 +16,5 @@ if %ERRORLEVEL% == 0 (
 echo ---------------------------------------------------------------------------
 echo.
 echo -Finished-
+echo Go on with 4_buildRelease.bat
 pause
