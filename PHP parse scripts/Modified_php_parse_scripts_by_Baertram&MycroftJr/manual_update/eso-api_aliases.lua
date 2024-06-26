@@ -6,7 +6,3 @@
 --- @alias luaindex integer
 
 --- @alias textureName string
--- @alias type any
-
--- @alias QuestConditionType number
--- @alias variant RegisterForEventFilterType ...
