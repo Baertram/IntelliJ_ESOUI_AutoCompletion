@@ -1,4 +1,5 @@
 -- Global constants
+MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
 --- @type ZO_ColorDef
 ZO_DEFAULT_DISABLED_COLOR = {
 	["a"] = 1,

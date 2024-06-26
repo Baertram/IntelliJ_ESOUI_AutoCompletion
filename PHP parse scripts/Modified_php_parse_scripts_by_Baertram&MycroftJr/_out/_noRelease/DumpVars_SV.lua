@@ -25040,6 +25040,7 @@ DumpVars_Dump =
                     },
                     ["constants"] = 
                     {
+                        ["MAX_TEXT_CHAT_INPUT_CHARACTERS"] = 350,
                         ["ZO_DEFAULT_DISABLED_COLOR"] = 
                         {
                             ["a"] = 1,
