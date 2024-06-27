@@ -138,11 +138,10 @@ class object_api
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                                 [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
                                 // e.g. The last 3 arguments of Control:SetHandler are actually optional
-                                if (
-                                    ($tag == 'Control' and $methodClean == 'SetHandler' and isset($objects[$tag][$methodClean]['params']['functionRef']))
+                                if (($tag == 'Control' and $methodClean == 'SetHandler' and isset($objects[$tag][$methodClean]['params']['functionRef']))
                                     or ($tag == 'Control' and $methodClean == 'SetAnchor' and ($param == 'relativeTo' or isset($objects[$tag][$methodClean]['params']['relativePoint'])))
-									or ($tag == 'Control' and $methodClean == 'SetAnchorFill')
-									or ($tag == 'WindowManager' and $methodClean == 'CreateControlFromVirtual' and isset($objects[$tag][$methodClean]['params']['virtualName']))
+                                    or ($tag == 'Control' and $methodClean == 'SetAnchorFill')
+                                    or ($tag == 'WindowManager' and $methodClean == 'CreateControlFromVirtual' and isset($objects[$tag][$methodClean]['params']['virtualName']))
                                 ) {
                                     if (!str_ends_with($type, '|nil')) {
                                         $type .= '|nil';
@@ -188,6 +187,8 @@ class object_api
     }
     
     function refineType($objects, $class, $method, $type, $param) {
+        $isNilable = str_ends_with($type, '|nil');
+        $type = str_replace('|nil', '', $type);
         if ($type == 'object') {
             $paramAsType = $param;
             $paramAsType[0] = strtoupper($paramAsType[0]);
@@ -208,6 +209,9 @@ class object_api
             if ($class == 'Control' and $method == 'AddFilterForEvent') {
                 $type = 'RegisterForEventFilterType';
             }
+        }
+        if ($isNilable) {
+            $type .= '|nil';
         }
         return $type;
     }
@@ -240,11 +244,8 @@ class object_api
         } else if ($param == 'event' and $type == 'integer') {
             $type = 'Event';
         }
-        if (str_starts_with($method, 'Create') and $param == 'name') {
-            $type .= '|nil';
-        }
         
-        if ($nilable) {
+        if ($nilable or (str_starts_with($method, 'Create') and $param == 'name')) {
             $type .= '|nil';
         }
         return [$type, $param];
