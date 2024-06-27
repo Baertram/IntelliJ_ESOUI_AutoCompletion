@@ -428,32 +428,11 @@ function ZO_CallbackObjectMixin:ClearCallbackRegistry() end
 function ZO_CallbackObjectMixin:GetFireCallbackDepth() end
 function ZO_CallbackObjectMixin:GetFireCallbackDepth() end
 
-
--------------------------------------------------------------------------------
---- @class ZO_CallbackObject
+--- @class ZO_CallbackObject: ZO_CallbackObjectMixin
 ZO_CallbackObject = {}
-function ZO_CallbackObject:RegisterCallback(eventName, callback, arg, priority) end
-function ZO_CallbackObject:UnregisterCallback(eventName, callback) end
-function ZO_CallbackObject:UnregisterAllCallbacks(eventName) end
-function ZO_CallbackObject:SetHandleOnce(handleOnce) end
-function ZO_CallbackObject:FireCallbacks(eventName, ...) end
-function ZO_CallbackObject:Clean(eventName) end
-function ZO_CallbackObject:ClearCallbackRegistry() end
-function ZO_CallbackObject:GetFireCallbackDepth() end
-function ZO_CallbackObject:GetFireCallbackDepth() end
 
--------------------------------------------------------------------------------
---- @class ZO_InitializingCallbackObject
+--- @class ZO_InitializingCallbackObject: ZO_CallbackObjectMixin
 ZO_InitializingCallbackObject  = {}
-function ZO_InitializingCallbackObject:RegisterCallback(eventName, callback, arg, priority) end
-function ZO_InitializingCallbackObject:UnregisterCallback(eventName, callback) end
-function ZO_InitializingCallbackObject:UnregisterAllCallbacks(eventName) end
-function ZO_InitializingCallbackObject:SetHandleOnce(handleOnce) end
-function ZO_InitializingCallbackObject:FireCallbacks(eventName, ...) end
-function ZO_InitializingCallbackObject:Clean(eventName) end
-function ZO_InitializingCallbackObject:ClearCallbackRegistry() end
-function ZO_InitializingCallbackObject:GetFireCallbackDepth() end
-function ZO_InitializingCallbackObject:GetFireCallbackDepth() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_CategoryManager
@@ -1200,8 +1179,8 @@ function ZO_OrderedRefreshGroup:TryClean() end
 -------------------------------------------------------------------------------
 --- @class ZO_BulletList
 ZO_BulletList = {}
---- @return ZO_BulletList
 --- @param control Control
+--- @return ZO_BulletList
 function ZO_BulletList:New(control, labelTemplate, bulletTemplate, secondaryBulletTemplate) end
 function ZO_BulletList:SetLinePaddingY(padding) end
 function ZO_BulletList:SetBulletPaddingX(padding) end
@@ -2679,8 +2658,8 @@ function ZO_SmoothCycleGenerator:GetValue(i) end
 -------------------------------------------------------------------------------
 --- @class ZO_PixelUnitControl
 ZO_PixelUnitControl = {}
---- @return ZO_PixelUnitControl
 --- @param control Control
+--- @return ZO_PixelUnitControl
 function ZO_PixelUnitControl:New(control, pixelSource, baseObject) end
 --- @param control Control
 function ZO_PixelUnitControl:Initialize(control, pixelSource) end
@@ -2944,7 +2923,7 @@ function ZO_RemoteScene:AreFragmentsDoneTransitioning() end
 function ZO_RemoteScene:OnRemoteSceneFinishedFragmentTransition(sequenceNumber) end
 
 -------------------------------------------------------------------------------
---- @class ZO_SceneFragment
+--- @class ZO_SceneFragment: ZO_CallbackObject
 ZO_SceneFragment = {}
 --- @return ZO_SceneFragment
 function ZO_SceneFragment:New(...) end
@@ -2978,16 +2957,14 @@ function ZO_SceneFragment:ComputeIfFragmentShouldShow() end
 function ZO_SceneFragment:Refresh(customShowParam, customHideParam, asAResultOfSceneStateChange, refreshedForScene) end
 
 -------------------------------------------------------------------------------
---- @class ZO_SimpleSceneFragment
+--- @class ZO_SimpleSceneFragment: ZO_SceneFragment
 ZO_SimpleSceneFragment = {}
 --- @return ZO_SimpleSceneFragment
 function ZO_SimpleSceneFragment:New(...) end
 function ZO_SimpleSceneFragment:Initialize(control) end
-function ZO_SimpleSceneFragment:Show() end
-function ZO_SimpleSceneFragment:Hide() end
 
 -------------------------------------------------------------------------------
---- @class ZO_AnimatedSceneFragment
+--- @class ZO_AnimatedSceneFragment: ZO_SceneFragment
 ZO_AnimatedSceneFragment = {}
 function AcquireAnimation(animationTemplate) end
 function ReleaseAnimation(animationTemplate, key) end
@@ -2995,50 +2972,59 @@ function ReleaseAnimation(animationTemplate, key) end
 function ZO_AnimatedSceneFragment:New(...) end
 --- @param control Control
 function ZO_AnimatedSceneFragment:Initialize(animationTemplate, control, alwaysAnimate, duration) end
+--- @return ZO_AnimationObject
 function ZO_AnimatedSceneFragment:GetAnimation() end
+--- @return Control
 function ZO_AnimatedSceneFragment:GetControl() end
 function ZO_AnimatedSceneFragment:AddInstantScene(scene) end
 function ZO_AnimatedSceneFragment:IsAnimatedInCurrentScene() end
-function ZO_AnimatedSceneFragment:Show() end
-function ZO_AnimatedSceneFragment:Hide() end
 
 -------------------------------------------------------------------------------
---- @class ZO_FadeSceneFragment
+--- @class ZO_FadeSceneFragment: ZO_AnimatedSceneFragment
 ZO_FadeSceneFragment = {}
---- @return ZO_FadeSceneFragment
 --- @param control Control
+--- @return ZO_FadeSceneFragment
 function ZO_FadeSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromLeftSceneFragment
+--- @class ZO_TranslateFromLeftSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromLeftSceneFragment = {}
---- @return ZO_TranslateFromLeftSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromLeftSceneFragment
 function ZO_TranslateFromLeftSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromRightSceneFragment
+--- @class ZO_TranslateFromRightSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromRightSceneFragment = {}
---- @return ZO_TranslateFromRightSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromRightSceneFragment
 function ZO_TranslateFromRightSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromBottomSceneFragment
+--- @class ZO_TranslateFromBottomSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromBottomSceneFragment = {}
---- @return ZO_TranslateFromBottomSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromBottomSceneFragment
 function ZO_TranslateFromBottomSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromTopSceneFragment
+--- @class ZO_TranslateFromTopSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromTopSceneFragment = {}
---- @return ZO_TranslateFromTopSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromTopSceneFragment
 function ZO_TranslateFromTopSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ConveyorSceneFragment
+--- @class ZO_CustomAnimationSceneFragment: ZO_SceneFragment
+ZO_CustomAnimationSceneFragment = {}
+--- @param control Control
+function ZO_CustomAnimationSceneFragment:Initialize(control, showAnimationTemplate, hideAnimationTemplate) end
+function ZO_CustomAnimationSceneFragment:GetShowAnimation() end
+function ZO_CustomAnimationSceneFragment:GetHideAnimation() end
+function ZO_CustomAnimationSceneFragment:GetControl()
+
+-------------------------------------------------------------------------------
+--- @class ZO_ConveyorSceneFragment: ZO_SceneFragment
 ZO_ConveyorSceneFragment = {}
 --- @return ZO_ConveyorSceneFragment
 function ZO_ConveyorSceneFragment:New(...) end
@@ -3055,8 +3041,6 @@ function ZO_ConveyorSceneFragment:AddInstantScene(scene) end
 function ZO_ConveyorSceneFragment:IsAnimatedInCurrentScene() end
 function ZO_ConveyorSceneFragment:GetBackgroundFragment() end
 function ZO_ConveyorSceneFragment:ChooseAndPlayAnimation() end
-function ZO_ConveyorSceneFragment:Show() end
-function ZO_ConveyorSceneFragment:Hide() end
 function ZO_ConveyorSceneFragment_SetMovingForward() end
 function ZO_ConveyorSceneFragment_SetMovingBackward() end
 function ZO_ConveyorSceneFragment_ResetMovement() end
@@ -3069,7 +3053,7 @@ function ZO_HideableSceneFragmentMixin:IsHiddenForReason(reason) end
 function ZO_MixinHideableSceneFragment(self) end
 
 -------------------------------------------------------------------------------
---- @class ZO_HUDFadeSceneFragment
+--- @class ZO_HUDFadeSceneFragment: ZO_SceneFragment
 ZO_HUDFadeSceneFragment = {}
 --- @return ZO_HUDFadeSceneFragment
 function ZO_HUDFadeSceneFragment:New(...) end
@@ -3082,13 +3066,12 @@ function ZO_HUDFadeSceneFragment:OnShown() end
 function ZO_HUDFadeSceneFragment:OnHidden() end
 
 -------------------------------------------------------------------------------
---- @class ZO_AnchorSceneFragment
+--- @class ZO_AnchorSceneFragment: ZO_SceneFragment
 ZO_AnchorSceneFragment = {}
 --- @return ZO_AnchorSceneFragment
 function ZO_AnchorSceneFragment:New(...) end
 --- @param control Control
 function ZO_AnchorSceneFragment:Initialize(control, anchor) end
-function ZO_AnchorSceneFragment:Show() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_BackgroundFragment
@@ -3104,13 +3087,11 @@ function ZO_BackgroundFragment:SetHighlightHidden(hidden) end
 function ZO_BackgroundFragment:FadeRightDivider(fadeIn, instant) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ActionLayerFragment
+--- @class ZO_ActionLayerFragment: ZO_SceneFragment
 ZO_ActionLayerFragment = {}
 --- @return ZO_ActionLayerFragment
 function ZO_ActionLayerFragment:New(...) end
 function ZO_ActionLayerFragment:Initialize(actionLayerName) end
-function ZO_ActionLayerFragment:Show() end
-function ZO_ActionLayerFragment:Hide() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_SceneGroup
@@ -4130,8 +4111,8 @@ function ZO_ResizingFloatingScrollTooltip_Gamepad_OnInitialized(control, tooltip
 -------------------------------------------------------------------------------
 --- @class ZO_Tree
 ZO_Tree = {}
---- @return ZO_Tree
 --- @param control Control
+--- @return ZO_Tree
 function ZO_Tree:New(control, defaultIndent, defaultSpacing, width) end
 function ZO_Tree:OnScreenResized() end
 function ZO_Tree:Reset() end

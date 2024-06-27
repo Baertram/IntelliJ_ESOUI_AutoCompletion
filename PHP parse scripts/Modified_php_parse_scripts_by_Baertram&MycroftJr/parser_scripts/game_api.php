@@ -88,36 +88,33 @@ class game_api
                 } else {
                     $process = false;
                 }
-            }
-
-            if ($process) {
+            } else if ($process) {
                 $matches = null;
                 if (preg_match('/\* (?P<method>.*)?\((?P<params>(.*?))\)/', $line, $matches)) {
                     $matchesPriv = null;
                     $method = $matches['method'];
-                    $methodClean = $matches['method'];
+                    $methodClean = $method;
                     $variableReturns = false;
 //print_r($method);
 
-                        //Find *private* or *protected* or *private-attributes* or *protected-attributes* or *public* or *public-attributes *in front of the ( of a function
-                        //* IsInUI *private* (*string* _guiName_)
-                        //* PlaceInTradeWindow *protected* (*luaindex:nilable* _tradeIndex_)
-                        if (preg_match('/\*?.*(?P<privOrProt>\*protected-attributes\*|\*protected\*|\*private-attributes\*|\*private\*|\*public\*|\*public-attributes\*)/m', $method, $matchesPriv)) {
+                    //Find *private* or *protected* or *private-attributes* or *protected-attributes* or *public* or *public-attributes *in front of the ( of a function
+                    //* IsInUI *private* (*string* _guiName_)
+                    //* PlaceInTradeWindow *protected* (*luaindex:nilable* _tradeIndex_)
+                    if (preg_match('/\*?.*(?P<privOrProt>\*protected-attributes\*|\*protected\*|\*private-attributes\*|\*private\*|\*public\*|\*public-attributes\*)/m', $method, $matchesPriv)) {
 //print_r('  >Found *priv/prot*: ' . $matchesPriv['privOrProt'] . ' on: ' . $method);
-                            $methodClean = str_replace(' ' . $matchesPriv['privOrProt'] . ' ', '', $method);
-                            $objects[$methodClean]['privOrProt'] = $matchesPriv['privOrProt'];
+                        $methodClean = str_replace(' ' . $matchesPriv['privOrProt'] . ' ', '', $method);
+                        $objects[$methodClean]['privOrProt'] = $matchesPriv['privOrProt'];
 //print_r('  >method after: ' . $method . '\n');
-                        }
+                    }
 
                     $parts = explode(",", $matches['params']);
                     foreach ($parts as $part) {
                         $matches2 = null;
-
                         if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                             [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
                             if ($methodClean == 'ReloadUI'
-								or ($methodClean = 'SetCameraOptionsPreviewModeEnabled' and $param == 'option')
-							) {
+                                or ($methodClean == 'SetCameraOptionsPreviewModeEnabled' and $param == 'option')
+                            ) {
                                 if (!str_ends_with($type, '|nil')) {
                                     $type .= '|nil';
                                 }
@@ -125,14 +122,9 @@ class game_api
                             $objects[$methodClean]['params'][$param] = $type;
                         }
                     }
-                }
-
-                if (strpos($line, '_Uses variable returns..._') !== false) {
+                } else if (strpos($line, '_Uses variable returns..._') !== false) {
                     $variableReturns = true;
-                }
-
-                $matches = null;
-                if (preg_match('/\*\* _Returns\:_ (?P<parts>.*)/', $line, $matches)) {
+                } else if (preg_match('/\*\* _Returns\:_ (?P<parts>.*)/', $line, $matches)) {
                     $parts = explode(",", $matches['parts']);
                     foreach ($parts as $part) {
                         $matches2 = null;
