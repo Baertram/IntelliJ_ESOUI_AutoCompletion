@@ -140,7 +140,9 @@ class object_api
                                 // e.g. The last 3 arguments of Control:SetHandler are actually optional
                                 if (
                                     ($tag == 'Control' and $methodClean == 'SetHandler' and isset($objects[$tag][$methodClean]['params']['functionRef']))
-                                    or ($tag == 'Control' and $methodClean == 'SetAnchor' and isset($objects[$tag][$methodClean]['params']['relativePoint']))
+                                    or ($tag == 'Control' and $methodClean == 'SetAnchor' and ($param == 'relativeTo' or isset($objects[$tag][$methodClean]['params']['relativePoint'])))
+									or ($tag == 'Control' and $methodClean == 'SetAnchorFill')
+									or ($tag == 'WindowManager' and $methodClean == 'CreateControlFromVirtual' and isset($objects[$tag][$methodClean]['params']['virtualName']))
                                 ) {
                                     if (!str_ends_with($type, '|nil')) {
                                         $type .= '|nil';

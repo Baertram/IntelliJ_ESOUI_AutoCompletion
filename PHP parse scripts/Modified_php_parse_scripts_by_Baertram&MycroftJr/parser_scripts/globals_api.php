@@ -20,7 +20,7 @@ class globals_api
         }
         sort($list);
 		foreach ($list as $idx => $line) {
-			if (strstr($line, '_COLOR =') and strstr($line, '["a"] = ')) {
+			if (strstr($line, '["r"] = ') and strstr($line, '["g"] = ') and strstr($line, '["b"] = ') and strstr($line, '["a"] = ')) {
 				$list[$idx] = "--- @type ZO_ColorDef\n" . $line;
 			}
 		}

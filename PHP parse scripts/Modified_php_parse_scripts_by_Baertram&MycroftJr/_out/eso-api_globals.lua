@@ -2,27 +2,48 @@
 MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
 --- @type ZO_ColorDef
 ZO_DEFAULT_DISABLED_COLOR = {
+	["r"] = 0.3,
 	["a"] = 1,
-	["b"] = 0.3,
 	["g"] = 0.3,
-	["r"] = 0.3
+	["b"] = 0.3
 }
 --- @type ZO_ColorDef
 ZO_DEFAULT_ENABLED_COLOR = {
+	["r"] = 1,
 	["a"] = 1,
-	["b"] = 1,
 	["g"] = 1,
-	["r"] = 1
+	["b"] = 1
+}
+--- @type ZO_ColorDef
+ZO_DISABLED_TEXT = {
+	["r"] = 0.4000000358,
+	["a"] = 1,
+	["g"] = 0.4000000358,
+	["b"] = 0.4000000358
+}
+--- @type ZO_ColorDef
+ZO_NORMAL_TEXT = {
+	["r"] = 0.7725490928,
+	["a"] = 1,
+	["g"] = 0.7607843876,
+	["b"] = 0.6196078658
+}
+--- @type ZO_ColorDef
+ZO_SECOND_CONTRAST_TEXT = {
+	["r"] = 0.4627451301,
+	["a"] = 1,
+	["g"] = 0.7372549176,
+	["b"] = 0.764705956
 }
 ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
 ZO_VALID_LINK_TYPES_CHAT = {
-	["achievement"] = true,
-	["help"] = true,
-	["item"] = true,
-	["ability"] = true,
 	["housing"] = true,
 	["collectible"] = true,
+	["help"] = true,
+	["ability"] = true,
+	["achievement"] = true,
 	["guild"] = true,
+	["item"] = true,
 	["crafted_ability"] = true
 }
 
@@ -16171,6 +16192,12 @@ OWNERSHIP_STATUS_MAX_VALUE = 2
 OWNERSHIP_STATUS_MIN_VALUE = 0
 OWNERSHIP_STATUS_NOT_STOLEN = 1
 OWNERSHIP_STATUS_STOLEN = 2
+
+--- @alias PanelType
+--- | `PANEL_TYPE_CONTROLS` = 2
+--- | `PANEL_TYPE_SETTINGS` = 1
+PANEL_TYPE_CONTROLS = 2
+PANEL_TYPE_SETTINGS = 1
 
 --- @alias ParticleDensity
 --- | `PARTICLE_DENSITY_HIGH` = 2

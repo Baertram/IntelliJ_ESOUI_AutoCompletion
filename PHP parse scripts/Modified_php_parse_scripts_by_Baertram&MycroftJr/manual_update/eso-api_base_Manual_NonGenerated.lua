@@ -115,10 +115,33 @@ function ZO_DataSourceObject:Subclass() end
 
 -------------------------------------------------------------------------------
 
---- @class ZO_InitializingObject
+--- @class ZO_InitializingObject: ZO_Object -- zo_mixin(ZO_InitializingObject, ZO_Object)
 ZO_InitializingObject = {}
 --- @return ZO_InitializingObject
 function ZO_InitializingObject:New(...) end
+
+--- @class ZO_SharedOptions: ZO_InitializingObject
+--- @field controlTable Control[]
+--- @field panelNames string[]
+--- @field isGamepadOptions boolean
+ZO_SharedOptions = {}
+--- @class ZO_KeyboardOptions: ZO_SharedOptions
+--- @field currentPanelId integer
+--- @field control Control
+--- @field colorOptionHighlight Control control:GetNamedChild("Options_Color_SharedHighlight")
+--- @field emptyPanelLabel Control control:GetNamedChild("EmptyPanelLabel")
+--- @field loadingControl Control control:GetNamedChild("Loading")
+ZO_KeyboardOptions = {}
+--- @param panelIdOrString integer|string|SettingSystemPanel
+--- @param panelName string
+--- @param panelType PanelType|nil
+--- @param visible boolean|nil
+function ZO_KeyboardOptions:AddUserPanel(panelIdOrString, panelName, panelType, visible)
+--- @param panelId integer
+function ZO_KeyboardOptions:ChangePanels(panelId)
+
+--- @type ZO_KeyboardOptions
+KEYBOARD_OPTIONS = {}
 
 -------------------------------------------------------------------------------
 --- @class EventManager
@@ -185,7 +208,7 @@ ADDON_MANAGER = {}
 --- @return AddOnManager addOnManager
 function GetAddOnManager() end
 
---- @class Window
+--- @class Window: Control
 --- @field buffer Control
 
 --- @class WindowObjectPool: ZO_ObjectPool
@@ -679,6 +702,7 @@ function ZO_ListBox:SetMaxRows(maxRows) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_ObjectPool
+--- @field m_Factory fun(): ZO_Object
 ZO_ObjectPool = {}
 --- @return ZO_ObjectPool
 function ZO_ObjectPool:New(factoryFunctionOrObjectClass, resetFunction) end
@@ -702,6 +726,17 @@ function ZO_ObjectPool:DestroyAllFreeObjects(destroyFunction) end
 function ZO_ObjectPool_CreateControl(templateName, objectPool, parentControl) end
 function ZO_ObjectPool_CreateNamedControl(name, templateName, objectPool, parentControl) end
 function ZO_ObjectPool_DefaultResetControl(control) end
+
+--- @class ZO_AnimationPool: ZO_ObjectPool
+--- @field m_Factory fun(ZO_AnimationPool): ZO_AnimationObject
+ZO_AnimationPool = {}
+
+--- @class ZO_ControlPool: ZO_ObjectPool
+--- @field m_Factory fun(ZO_ControlPool): Control
+ZO_ControlPool = {}
+
+--- @class ZO_EntryDataPool: ZO_ObjectPool
+ZO_EntryDataPool = {}
 
 -------------------------------------------------------------------------------
 --- @class ZO_PlatformUtils
@@ -1711,6 +1746,22 @@ function ZO_FractionDisplay:New(...) end
 function ZO_FractionDisplay:Initialize(control, font, dividerThickness) end
 function ZO_FractionDisplay:SetHorizontalAlignment(alignment) end
 function ZO_FractionDisplay:SetValues(numerator, denominator) end
+
+-------------------------------------------------------------------------------
+--- @class ZO_GameMenu_Base: ZO_Object
+--- @field control
+--- @field headerControls table<string, Control>
+--- @field navigationTree
+ZO_GameMenu_Base = {}
+
+--- @class ZO_GameMenu_InGame
+--- @field gameMenu ZO_GameMenu_Base
+--- @field owner ZO_GameMenu_Base
+ZO_GameMenu_InGame = {}
+ZO_GameMenu_InGame.gameMenu.control = ZO_GameMenu_InGame
+
+function ZO_GameMenu_AddControlsPanel(data) end
+function ZO_GameMenu_AddSettingPanel(data) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_GamepadSlider
@@ -3213,7 +3264,7 @@ function ZO_SceneGraph:OnUpdate() end
 function ZO_SceneGraph:Render(node, dirtyUpstream) end
 
 -------------------------------------------------------------------------------
---- @class ZO_SceneGraphNode
+--- @class ZO_SceneGraphNode: ZO_Object
 ZO_SceneGraphNode = {}
 --- @return ZO_SceneGraphNode
 function ZO_SceneGraphNode:New(...) end
@@ -3285,6 +3336,43 @@ function ZO_SceneNodeRing:Update(delta) end
 -------------------------------------------------------------------------------
 --[ZO_ScriptProfiler]
 function ZO_ScriptProfiler_GenerateReport() end
+
+-------------------------------------------------------------------------------
+--- @class ZO_ScrollList_DataType
+--- @field height integer
+--- @field setupCallback fun(control: Control, data)
+--- @field hideCallback
+--- @field pool ZO_ControlPool
+--- @field selectSound string
+--- @field selectable boolean
+
+--- @class ZO_ScrollList
+--- @field dataTypes ZO_ScrollList_DataType[]
+--Adds a new control type for the list to handle. It must maintain a consistent size.
+--- @param typeId any A unique identifier to give to CreateDataEntry when you want to add an element of this type.
+--- @param templateName string The name of the virtual control template that will be used to hold this data
+--- @param height integer The control height
+--- @param setupCallback fun(control: Control, data) The function that will be called when a control of this type becomes visible.
+--- @param dataTypeSelectSound string An optional sound to play when a row of this data type is selected.
+--- @param resetControlCallback fun An optional callback when the datatype control gets reset.
+function ZO_ScrollList_AddDataType(self, typeId, templateName, height, setupCallback, hideCallback, dataTypeSelectSound, resetControlCallback) end
+function ZO_ScrollList_Clear(self) end
+function ZO_ScrollList_Commit(self) end
+function ZO_ScrollList_CreateDataEntry(typeId, data, categoryId) end
+--- @param selectionCallback fun
+function ZO_ScrollList_EnableSelection(self, selectionTemplate, selectionCallback) end
+function ZO_ScrollList_GetData(self) end
+function ZO_ScrollList_GetDataList(self) end
+--- @return ZO_ScrollList_DataType
+function ZO_ScrollList_GetDataTypeTable(self, typeId) end
+function ZO_ScrollList_GetHeight(self) end
+function ZO_ScrollList_MouseEnter(self, control) end
+function ZO_ScrollList_MouseExit(self, control) end
+function ZO_ScrollList_RefreshVisible(self, data, overrideSetupCallback) end
+function ZO_ScrollList_SelectData(self, data, control, reselectingDuringRebuild, animateInstantly)
+function ZO_ScrollList_SetHeight(self, height) end
+function ZO_ScrollList_ScrollRelative(self, delta, onScrollCompleteCallback, animateInstantly) end
+function ZO_ScrollList_ScrollAbsolute(self, value) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_SelectionIndicator
@@ -4064,10 +4152,15 @@ function ZO_Tree:Commit(nodeToSelect) end
 function ZO_Tree:SetEnabled(enabled) end
 function ZO_Tree:IsEnabled() end
 function ZO_Tree:RefreshVisible() end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:ComputeEndOfPathControlFinalBottomOffset(currentTreeNode, pathToSelectedNode) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:SetScrollToTargetNode(treeNode) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:ToggleNode(treeNode) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:SetNodeOpen(treeNode, open, userRequested) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:SelectNode(treeNode, reselectingDuringRebuild, bringParentIntoView) end
 function ZO_Tree:ClearSelectedNode() end
 function ZO_Tree:GetSelectedData() end
@@ -4082,7 +4175,7 @@ function ZO_Tree:IsAnimated() end
 function ZO_Tree:FindScrollControl() end
 
 -------------------------------------------------------------------------------
---- @class ZO_TreeNode
+--- @class ZO_TreeNode: ZO_Object
 ZO_TreeNode = {}
 --- @return ZO_TreeNode
 function ZO_TreeNode:New(tree, templateInfo, parentNode, data, childIndent, childSpacing, open) end
@@ -4110,6 +4203,7 @@ function ZO_TreeNode:GetWidth() end
 function ZO_TreeNode:GetTotalWidth() end
 function ZO_TreeNode:GetChildContainer() end
 function ZO_TreeNode:IsLeaf() end
+--- @return ZO_Tree
 function ZO_TreeNode:GetTree() end
 function ZO_TreeNode:GetChildrenTotalHeight() end
 function ZO_TreeNode:UpdateChildrenHeight() end
@@ -4120,6 +4214,7 @@ function ZO_TreeNode:UpdateCurrentChildrenHeightsToRoot() end
 function ZO_TreeNode:UpdateAllChildrenHeightsAndCurrentHeights() end
 function ZO_TreeNode:GetControl() end
 function ZO_TreeNode:GetParent() end
+--- @return ZO_TreeNode[]
 function ZO_TreeNode:GetChildren() end
 function ZO_TreeNode:GetChildSpacing() end
 function ZO_TreeNode:GetChildIndent() end

@@ -1846,7 +1846,7 @@ function Control:Set3DRenderSpaceUsesDepthBuffer(usesDepthBuffer) end
 function Control:SetAlpha(alpha) end --*protected-attributes*
 
 --- @param point AnchorPosition
---- @param relativeTo Control
+--- @param relativeTo object|nil
 --- @param relativePoint AnchorPosition
 --- @param offsetX layout_measurement|nil
 --- @param offsetY layout_measurement|nil
@@ -1854,7 +1854,7 @@ function Control:SetAlpha(alpha) end --*protected-attributes*
 --- @return void
 function Control:SetAnchor(point, relativeTo, relativePoint, offsetX, offsetY, anchorConstrains) end --*protected-attributes*
 
---- @param anchorTargetControl Control
+--- @param anchorTargetControl object|nil
 --- @return void
 function Control:SetAnchorFill(anchorTargetControl) end --*protected-attributes*
 
@@ -4247,7 +4247,7 @@ function WindowManager:CreateControl(name, parent, controlType) end
 --- @param controlName string
 --- @param parent Control
 --- @param virtualName string
---- @param optionalSuffix string
+--- @param optionalSuffix string|nil
 --- @return Control control
 function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName, optionalSuffix) end
 
