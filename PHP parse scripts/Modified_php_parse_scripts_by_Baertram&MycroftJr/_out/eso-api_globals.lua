@@ -2,49 +2,56 @@
 MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
 --- @type ZO_ColorDef
 ZO_DEFAULT_DISABLED_COLOR = {
-	["r"] = 0.3,
 	["b"] = 0.3,
-	["a"] = 1,
-	["g"] = 0.3
+	["r"] = 0.3,
+	["g"] = 0.3,
+	["a"] = 1
 }
 --- @type ZO_ColorDef
 ZO_DEFAULT_ENABLED_COLOR = {
-	["r"] = 1,
 	["b"] = 1,
-	["a"] = 1,
-	["g"] = 1
+	["r"] = 1,
+	["g"] = 1,
+	["a"] = 1
 }
 --- @type ZO_ColorDef
 ZO_DISABLED_TEXT = {
-	["r"] = 0.4000000358,
 	["b"] = 0.4000000358,
-	["a"] = 1,
-	["g"] = 0.4000000358
+	["r"] = 0.4000000358,
+	["g"] = 0.4000000358,
+	["a"] = 1
+}
+--- @type ZO_ColorDef
+ZO_ERROR_COLOR = {
+	["b"] = 0.0980392247,
+	["r"] = 1,
+	["g"] = 0.0980392247,
+	["a"] = 1
 }
 --- @type ZO_ColorDef
 ZO_NORMAL_TEXT = {
-	["r"] = 0.7725490928,
 	["b"] = 0.6196078658,
-	["a"] = 1,
-	["g"] = 0.7607843876
+	["r"] = 0.7725490928,
+	["g"] = 0.7607843876,
+	["a"] = 1
 }
 --- @type ZO_ColorDef
 ZO_SECOND_CONTRAST_TEXT = {
-	["r"] = 0.4627451301,
 	["b"] = 0.764705956,
-	["a"] = 1,
-	["g"] = 0.7372549176
+	["r"] = 0.4627451301,
+	["g"] = 0.7372549176,
+	["a"] = 1
 }
 ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
 ZO_VALID_LINK_TYPES_CHAT = {
-	["guild"] = true,
-	["achievement"] = true,
-	["item"] = true,
 	["crafted_ability"] = true,
-	["ability"] = true,
-	["collectible"] = true,
+	["item"] = true,
+	["housing"] = true,
+	["guild"] = true,
 	["help"] = true,
-	["housing"] = true
+	["achievement"] = true,
+	["ability"] = true,
+	["collectible"] = true
 }
 
 --- @alias AbilityProgressionResult
@@ -26742,7 +26749,7 @@ SCT_UNIT_TYPE_OTHER_PLAYERS = 3
 --- | `SI_QUESTTYPE3` = 2803
 --- | `SI_QUESTTYPE4` = 2804
 --- | `SI_QUESTTYPE5` = 2805
---- | `SI_QUESTTYPE6` = 15972
+--- | `SI_QUESTTYPE6` = 16438
 --- | `SI_QUESTTYPE7` = 2807
 --- | `SI_QUESTTYPE8` = 2808
 --- | `SI_QUESTTYPE9` = 2809
@@ -37742,7 +37749,7 @@ SI_QUESTTYPE2 = 2802
 SI_QUESTTYPE3 = 2803
 SI_QUESTTYPE4 = 2804
 SI_QUESTTYPE5 = 2805
-SI_QUESTTYPE6 = 15972
+SI_QUESTTYPE6 = 16438
 SI_QUESTTYPE7 = 2807
 SI_QUESTTYPE8 = 2808
 SI_QUESTTYPE9 = 2809

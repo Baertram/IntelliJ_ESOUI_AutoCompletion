@@ -1185,7 +1185,7 @@ function ButtonControl:SetPressedTexture(textureFilename) end
 function ButtonControl:SetShowingHighlight(showingHighlight) end
 
 --- @param newState ButtonState
---- @param locked boolean
+--- @param locked boolean|nil
 --- @return void
 function ButtonControl:SetState(newState, locked) end
 
@@ -1847,7 +1847,7 @@ function Control:SetAlpha(alpha) end --*protected-attributes*
 
 --- @param point AnchorPosition
 --- @param relativeTo Control|nil
---- @param relativePoint AnchorPosition
+--- @param relativePoint AnchorPosition|nil
 --- @param offsetX layout_measurement|nil
 --- @param offsetY layout_measurement|nil
 --- @param anchorConstrains AnchorConstrains|nil
@@ -4244,7 +4244,7 @@ function WindowManager:CompareControlVisualOrder(controlA, controlB) end
 --- @return Control control
 function WindowManager:CreateControl(name, parent, controlType) end
 
---- @param controlName string
+--- @param controlName string|nil
 --- @param parent Control
 --- @param virtualName string
 --- @param optionalSuffix string|nil

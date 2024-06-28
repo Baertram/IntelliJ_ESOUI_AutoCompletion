@@ -137,11 +137,13 @@ class object_api
                             $matches2 = null;
                             if (preg_match('/\*(?P<type>.*)?\* _(?P<param>.*?)_/', $part, $matches2)) {
                                 [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
+                                // TODO: move these to a customSomething.txt
                                 // e.g. The last 3 arguments of Control:SetHandler are actually optional
-                                if (($tag == 'Control' and $methodClean == 'SetHandler' and isset($objects[$tag][$methodClean]['params']['functionRef']))
-                                    or ($tag == 'Control' and $methodClean == 'SetAnchor' and ($param == 'relativeTo' or isset($objects[$tag][$methodClean]['params']['relativePoint'])))
+                                if (($tag == 'ButtonControl' and $methodClean == 'SetState' and isset($objects[$tag][$methodClean]['params']['newState']))
+                                    or ($tag == 'Control' and $methodClean == 'SetHandler' and isset($objects[$tag][$methodClean]['params']['functionRef']))
+                                    or ($tag == 'Control' and $methodClean == 'SetAnchor' and isset($objects[$tag][$methodClean]['params']['point']))
                                     or ($tag == 'Control' and $methodClean == 'SetAnchorFill')
-                                    or ($tag == 'WindowManager' and $methodClean == 'CreateControlFromVirtual' and isset($objects[$tag][$methodClean]['params']['virtualName']))
+                                    or ($tag == 'WindowManager' and $methodClean == 'CreateControlFromVirtual' and ($param == 'controlName' or $param == 'optionalSuffix'))
                                 ) {
                                     if (!str_ends_with($type, '|nil')) {
                                         $type .= '|nil';

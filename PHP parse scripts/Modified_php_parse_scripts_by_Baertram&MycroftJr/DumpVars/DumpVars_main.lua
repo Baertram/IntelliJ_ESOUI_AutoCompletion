@@ -5,20 +5,18 @@ DumpVars = DumpVars or {}
 local addonVars = {}
 addonVars.gAddonName				= "DumpVars"
 addonVars.addonAuthor 				= 'Baertram'
-addonVars.addonVersion		   		= 0.03 -- Changing this will reset SavedVariables!
+addonVars.addonVersion		   		= 0.04 -- Changing this will reset SavedVariables!
 addonVars.addonSavedVariablesName	= "DumpVars_Dump"
 addonVars.gAddonLoaded				= false
 
-local settings = {}
-settings.enums = {}
-settings.constants = {}
-settings.sounds = {}
+local settings
 
 local function DumpVarsNow(arg)
 	local doLogout = (arg ~= nil and arg == "logout" and true) or false
 	d("==================================")
 	d("[DumpVars - Dumping enums now]" .. (doLogout == true and " Logout: YES" or " ReloadUI: YES"))
 
+	for k, _ in pairs(settings) do settings[k] = nil end
 	--Dump the enums
 	local didAnything = false
 	local cnt = 0
@@ -116,7 +114,8 @@ local function DumpVars_Loaded(eventCode, addOnName)
 	RegisterSlashCommands()
 
 	--Load the saved variables
-	settings = ZO_SavedVars:NewAccountWide(addonVars.addonSavedVariablesName, addonVars.addonVersion, "Settings", defaults)
+	DumpVars_Dump = DumpVars_Dump or {}
+	settings = DumpVars_Dump
 
 	d("DumpVars - Loaded")
 	addonVars.gAddonLoaded = true
