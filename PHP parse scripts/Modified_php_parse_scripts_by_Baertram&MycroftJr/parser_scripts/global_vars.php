@@ -13,6 +13,8 @@ class global_vars
         global $esoui_API_doc_filename;
         $array = file($esoui_API_doc_filename, FILE_IGNORE_NEW_LINES);
         [$classes, $apiVersion] = $this->parseClasses($array);
+        $globals = $classes['Globals'];
+        unset($classes['Globals']);
         
         // Try to download globals.txt to read items from
         if (file_put_contents("_out/_noRelease/globals.txt", fopen("https://esoapi.uesp.net/$apiVersion/globals.txt", 'r'))) {
@@ -44,6 +46,9 @@ class global_vars
         $out .= "\n\nDumpVars.constantsToDump = {\n";
         $constants = file("manual_update/customConstants.txt", FILE_IGNORE_NEW_LINES);
         foreach ($constants as $var) {
+            if ($var != "") $out .= "\t['$var'] = $var,\n";
+        }
+        foreach ($globals as $var) {
             $out .= "\t['$var'] = $var,\n";
         }
         $out = substr($out, 0,-2)."\n}";
@@ -121,11 +126,13 @@ class global_vars
         $patterns = [];
         $enumName = null;
         foreach ($enumTxt as $line) {
-            if ($enumName == null and $line != "") {
-                $enumName = $line;
-            } else {
-                $patterns[$enumName] = "/" . $line . "/";
-                $enumName = null;
+            if ($line != "") {
+                if ($enumName == null) {
+                    $enumName = $line;
+                } else {
+                    $patterns[$enumName] = "/" . $line . "/";
+                    $enumName = null;
+                }
             }
         }
         

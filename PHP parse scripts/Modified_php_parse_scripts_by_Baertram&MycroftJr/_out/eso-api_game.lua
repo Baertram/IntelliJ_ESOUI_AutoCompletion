@@ -16279,3 +16279,159 @@ function GetLFGActivityRewardDescriptionOverride(rewardUIDataId) end
 --- @return integer numAttachments, integer attachedMoney, integer codAmount
 function GetMailAttachmentInfo(mailId) end
 
+--- @return WindowManager windowManager
+function GetWindowManager() end
+
+--- @param control Control
+--- @param leftOffset number
+--- @param topOffset number
+--- @param rightOffset number
+--- @param bottomOffset number
+--- @return boolean isOver
+function MouseIsOver(control, leftOffset, topOffset, rightOffset, bottomOffset) end
+
+--- @param control Control
+--- @param leftOffset number
+--- @param topOffset number
+--- @param rightOffset number
+--- @param bottomOffset number
+--- @return boolean isInside
+function MouseIsInside(control, leftOffset, topOffset, rightOffset, bottomOffset) end
+
+--- @return number deltaX, number deltaY
+function GetUIMouseDeltas() end
+
+--- @return number scale
+function GetUIGlobalScale() end
+
+--- @return number scale
+function GetUICustomScale() end
+
+--- @param formatString string
+--- @param arg1 string
+--- @param arg2 string
+--- @param arg3 string
+--- @param arg4 string
+--- @param arg5 string
+--- @param arg6 string
+--- @param arg7 string
+--- @return string localizedString
+function LocalizeString(formatString, arg1, arg2, arg3, arg4, arg5, arg6, arg7) end
+
+--- @return AnimationManager animationManager
+function GetAnimationManager() end
+
+--- @return AddOnManager addOnManager
+function GetAddOnManager() end
+
+--- @param originalTexture string
+--- @param newTexture string
+--- @return void
+function RedirectTexture(originalTexture, newTexture) end
+
+--- @param text string
+--- @param allowMarkupType AllowMarkupType
+--- @return string escapedText
+function EscapeMarkup(text, allowMarkupType) end
+
+--- @param fontSymbolName string
+--- @param fontDescriptor string
+--- @return FontObject fontObject
+function CreateFont(fontSymbolName, fontDescriptor) end
+
+--- @return integer numFiles
+function GetNumControlCreatingSources() end
+
+--- @param index luaindex
+--- @return string sourceName
+function GetControlCreatingSourceName(index) end
+
+--- @param sourceName string
+--- @return integer numCallSites
+function GetNumControlCreatingSourceCallSites(sourceName) end
+
+--- @param sourceName string
+--- @param index luaindex
+--- @return string creationStack, integer count
+function GetControlCreatingSourceCallSiteInfo(sourceName, index) end
+
+--- @return boolean enabled
+function IsScriptProfilerEnabled() end
+
+--- @return integer numFrames
+function GetScriptProfilerNumFrames() end
+
+--- @param frameIndex luaindex
+--- @return integer numRecords
+function GetScriptProfilerFrameNumRecords(frameIndex) end
+
+--- @param frameIndex luaindex
+--- @param recordIndex luaindex
+--- @return luaindex recordDataIndex, number startTimeNS, number endTimeNS, luaindex|nil callerRecordIndex, ScriptProfilerRecordDataType recordDataType
+function GetScriptProfilerRecordInfo(frameIndex, recordIndex) end
+
+--- @return integer numClosures
+function GetScriptProfilerNumClosures() end
+
+--- @param recordDataIndex luaindex
+--- @return string displayName, string fileName, integer fileLineNumber
+function GetScriptProfilerClosureInfo(recordDataIndex) end
+
+--- @return integer numCFunctions
+function GetScriptProfilerNumCFunctions() end
+
+--- @param recordDataIndex luaindex
+--- @return string functionName
+function GetScriptProfilerCFunctionInfo(recordDataIndex) end
+
+--- @return integer numGarbageCollectionTypes
+function GetScriptProfilerNumGarbageCollectionTypes() end
+
+--- @param recordDataIndex luaindex
+--- @return ScriptProfilerGarbageCollectionType GarbageCollectionType
+function GetScriptProfilerGarbageCollectionInfo(recordDataIndex) end
+
+--- @param userEventData string
+--- @return void
+function RecordScriptProfilerUserEvent(userEventData) end
+
+--- @return integer numUserEvents
+function GetScriptProfilerNumUserEvents() end
+
+--- @param recordDataIndex luaindex
+--- @return string userEventData
+function GetScriptProfilerUserEventInfo(recordDataIndex) end
+
+--- @param space Space
+--- @return number forwardX, number forwardY, number forwardZ
+function GetCameraForward(space) end
+
+--- @return number minWidth
+function GetMinUICanvasWidth() end
+
+--- @return number minHeight
+function GetMinUICanvasHeight() end
+
+--- @return number FoVYRadians
+function GetInterfaceVerticalFieldOfView() end
+
+--- @param FoVYRadians number
+--- @return void
+function SetInterfaceVerticalFieldOfView(FoVYRadians) end
+
+--- @param text string
+--- @return void
+function CopyToClipboard(text) end --*private*
+
+--- @param red number
+--- @param green number
+--- @param blue number
+--- @return number hue, number saturation, number value
+function ConvertRGBToHSV(red, green, blue) end
+
+--- @param red number
+--- @param green number
+--- @param blue number
+--- @return number hue, number saturation, number lightness
+function ConvertRGBToHSL(red, green, blue) end
+

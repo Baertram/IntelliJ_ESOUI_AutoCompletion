@@ -4,3 +4,5 @@ QuestConditionType
 (QUEST_CONDITION_TYPE_\S+)
 SafeStringKey
 (SI_\S+) = \d+ = "[^"]*"
+SortOrder
+(ZO_SORT_ORDER_\S+)

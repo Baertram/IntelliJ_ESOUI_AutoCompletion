@@ -78,26 +78,34 @@ class object_api
         $tag = null;
         $objects = [];
         $subclasses = [];
+        $blankLines = 0;
 
         foreach ($array as $line) {
             $matches = [];
+            // There is currently a section at the end of h2 Object API, after h3 WindowManager's section, 
+            // where there's 2 blank lines but no new header before a set of global functions.
+            if (trim($line) == '') {
+                $blankLines += 1;
+                if ($blankLines >= 2 and $tag) {
+                    $tag = null;
+                }
+            } else {
+                $blankLines = 0;
+            }
+
             if (preg_match('/h2\. (?P<tag>.*)?/', $line, $matches)) {
                 if ($matches['tag'] == "Object API") {
                     $process = true;
                 } else {
                     $process = false;
                 }
-            }
-
-            if ($process) {
+            } else if ($process) {
                 $matches = null;
                 if (preg_match('/h3\. (?P<class>.*)/', $line, $matches)) {
                     $tag = $matches['class'];
                     $objects[$tag] = [];
                     $parseSubclasses = false;
-                }
-
-                if ($tag) {
+                } else if ($tag) {
                     $matches = null;
                     if (preg_match("/Objects that inherit behavior from \*$tag\*/", $line)) {
                         $parseSubclasses = true;

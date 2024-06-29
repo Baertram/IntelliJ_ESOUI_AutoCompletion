@@ -19,34 +19,44 @@ class globals_api
             $list[] = "$var = $val";
         }
         sort($list);
-		foreach ($list as $idx => $line) {
-			if (strstr($line, '["r"] = ') and strstr($line, '["g"] = ') and strstr($line, '["b"] = ') and strstr($line, '["a"] = ')) {
-				$list[$idx] = "--- @type ZO_ColorDef\n" . $line;
-			}
-		}
+        foreach ($list as $idx => $line) {
+            if (strstr($line, '["r"] = ') and strstr($line, '["g"] = ') and strstr($line, '["b"] = ') and strstr($line, '["a"] = ')) {
+                $list[$idx] = "--- @type ZO_ColorDef\n" . $line;
+            }
+        }
         $out .= implode("\n", $list) . "\n\n";
 
         $list = [];
         foreach ($data['enums'] as $enumName => $values) {
-            $e = "--- @alias $enumName\n";
+            // $alias = "--- @alias $enumName\n";
+            $alias = "--- @alias $enumName ";
             // Sort by enum name before doing anything
             $list2 = [];
+            $list3 = [];
             foreach ($values as $var => $val) {
-                $list2[$var] = ["--- | `$var` = $val\n", "$var = $val\n"];
+                // TODO: restore this to $list2[] = ["$var = $val\n", "--- | `$var` = $val\n"]; if https://github.com/LuaLS/lua-language-server/issues/2732 is fixed
+                $list2[] = ["$var = $val\n"];
+                $list3[$val] = "$val";
             }
             sort($list2);
-            
+            sort($list3);
+
             // In sorted enum name order, assemble the alias and value blocks
-            $e2 = "";
-            $e3 = "";
-            foreach ($list2 as $_ => $pair) {
-                $e2 .= $pair[0];
-                $e3 .= $pair[1];
+            $vars = "";
+            $aliases = implode('|', $list3);
+            foreach ($list2 as $pair) {
+                $vars .= $pair[0];
+                // $aliases .= $pair[1];
             }
-            $list[] = $e . $e2 . $e3;
+            // $list[$enumName] = $vars . $alias . substr($aliases, 0, -1) . "\n";
+            $list[] = $vars . $alias . $aliases . "\n";
         }
+        // ksort($list)
         sort($list);
         $out .= implode("\n", $list) . "\n";
+        /*foreach ($list as $enumName => $lines) {
+            $out .= $lines . "\n";
+        }*/
         file_put_contents("_out/eso-api_globals.lua", $out);
 
         /* Could be deactivated as whole list of sounds can be found here:

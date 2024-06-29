@@ -79,11 +79,22 @@ class game_api
         $process = false;
         $tag = null;
         $objects = [];
+        $blankLines = 0;
 
         foreach ($array as $line) {
             $matches = [];
-            if (preg_match('/h2\. (?P<tag>.*)?/', $line, $matches)) {
-                if ($matches['tag'] == "VM Functions" || $matches['tag'] == "Game API") {
+            // There is currently a section at the end of h2 Object API, after h3 WindowManager's section, 
+            // where there's 2 blank lines but no new header before a set of global functions.
+            if (!$process and trim($line) == '') {
+                if (++$blankLines >= 2) {
+                    $process = true;
+                }
+            } else {
+                $blankLines = 0;
+            }
+
+            if (preg_match('/h(?P<level>\d)\. (?P<tag>.*)?/', $line, $matches)) {
+                if ($matches['level'] == "2" and $matches['tag'] == "VM Functions" || $matches['tag'] == "Game API") {
                     $process = true;
                 } else {
                     $process = false;
@@ -153,7 +164,7 @@ class game_api
         if ($type == 'object') {
             $paramAsType = $param;
             $paramAsType[0] = strtoupper($paramAsType[0]);
-            if (array_search($paramAsType, $classes)) {
+            if (in_array($paramAsType, $classes)) {
                 $type = $paramAsType;
             } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {
                 $type = 'AnimationTimeline';
