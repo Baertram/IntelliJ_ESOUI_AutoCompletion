@@ -12,6 +12,8 @@
 
 include_once dirname(__FILE__)."/../esouiAPIDoc.php";
 
+global $currentAPIVersion;
+
 class xml_parser
 {
     private $attributes = [];
@@ -20,11 +22,14 @@ class xml_parser
     private $array = [];
     private $keys = [];
 
+
     public function __construct()
     {
-        global $esoui_API_doc_filename;
+        global $esoui_API_doc_filename, $currentAPIVersion;
         $array = file($esoui_API_doc_filename, FILE_IGNORE_NEW_LINES);
-        $this->parseAttributes($array);
+
+        $this->parseAttributes($array); //set's the $currentAPIVersion
+
 
         $this->classes = $this->parseClasses($array);
         //print_r($this->classes);
@@ -50,6 +55,33 @@ class xml_parser
         file_put_contents("_out/xml/GuiXml.js", $jsOut);
 
         echo "t1: ".count($tree, 1)." t2:".count($out, 1)."\n";
+
+        if ( $currentAPIVersion != null ) {
+            $this->parseXMLHelper_HTML();
+        }
+    }
+
+    public function parseXMLHelper_HTML()
+    {
+        function replace_a_line($line) {
+            global $currentAPIVersion;
+            $matchesAPIVersion = [];
+            if ( stristr($line,'for API level') ) {
+                preg_match("/for API level (?P<apiVersion>\d+)/", $line, $matchesAPIVersion);
+                $apiVersion = $matchesAPIVersion['apiVersion'];
+                if ( $apiVersion != null ) {
+                    print(">APIVersion found: " . $apiVersion . " / Current API version: " . $currentAPIVersion ."\n");
+                    if ( $apiVersion != $currentAPIVersion ) {
+                        return "    Here's a helper for understanding valid layout xml structure for API level " . $currentAPIVersion . "\n";
+                    }
+                }
+            }
+            return $line . "\n";
+        }
+
+        $arrayHTML = file('_release/xml/index.html', FILE_IGNORE_NEW_LINES);
+        $dataNew = array_map('replace_a_line', $arrayHTML);
+        file_put_contents('_release/xml/index.html', $dataNew);
     }
 
     function mergeSubClasses($data)
@@ -93,23 +125,30 @@ class xml_parser
     {
         $process1 = false;
         $process2 = false;
+        global $currentAPIVersion;
 
         foreach ($array as $line) {
-            if ($line == "h2. UI XML Layout") {
-                $process1 = true;
+            $matchesAPIVersion = [];
+            if (preg_match('/h1\. ESO UI Documentation for API Version (?P<version>\d+)/', $line, $matchesAPIVersion)) {
+                $currentAPIVersion = $matchesAPIVersion['version'];
             }
-            if ($process1) {
-                $matches = null;
-                if (preg_match('/h(?P<number>\d)\. .*?/', $line, $matches)) {
-                    if ($matches['number'] == 4) {
-                        $process2 = true;
-                    } elseif ($matches['number'] == 5) {
-                        return;
-                    }
+            else {
+                if ($line == "h2. UI XML Layout") {
+                    $process1 = true;
                 }
-                if ($process2) {
-                    if (preg_match('/\* (?P<attr>.*?) \*(?P<type>.*?)\*/', $line, $matches)) {
-                        $this->attributes[$matches['attr']] = $matches['type'];
+                if ($process1) {
+                    $matches = null;
+                    if (preg_match('/h(?P<number>\d)\. .*?/', $line, $matches)) {
+                        if ($matches['number'] == 4) {
+                            $process2 = true;
+                        } elseif ($matches['number'] == 5) {
+                            return;
+                        }
+                    }
+                    if ($process2) {
+                        if (preg_match('/\* (?P<attr>.*?) \*(?P<type>.*?)\*/', $line, $matches)) {
+                            $this->attributes[$matches['attr']] = $matches['type'];
+                        }
                     }
                 }
             }
@@ -253,6 +292,7 @@ class xml_parser
 
         return $tree;
     }
+
 
 }
 
