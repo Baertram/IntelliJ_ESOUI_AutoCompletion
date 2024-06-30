@@ -37,7 +37,11 @@ class globals_api
                 foreach ($values as $var => $val) {
                     // TODO: restore this to $list2[] = ["$var = $val\n", "--- | `$var` = $val\n"]; if https://github.com/LuaLS/lua-language-server/issues/2732 is fixed
                     $list2[] = ["$var = $val\n"];
-                    $list3[$val] = "$val";
+                    if ( $val == "false" ) {
+                        $list3[$val] = "boolean " . $val;
+                    } else {
+                        $list3[$val] = "$val";
+                    }
                 }
                 sort($list2);
                 sort($list3);
