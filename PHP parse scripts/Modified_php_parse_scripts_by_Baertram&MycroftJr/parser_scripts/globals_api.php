@@ -27,29 +27,31 @@ class globals_api
         $out .= implode("\n", $list) . "\n\n";
 
         $list = [];
-        foreach ($data['enums'] as $enumName => $values) {
-            // $alias = "--- @alias $enumName\n";
-            $alias = "--- @alias $enumName ";
-            // Sort by enum name before doing anything
-            $list2 = [];
-            $list3 = [];
-            foreach ($values as $var => $val) {
-                // TODO: restore this to $list2[] = ["$var = $val\n", "--- | `$var` = $val\n"]; if https://github.com/LuaLS/lua-language-server/issues/2732 is fixed
-                $list2[] = ["$var = $val\n"];
-                $list3[$val] = "$val";
-            }
-            sort($list2);
-            sort($list3);
+        if ( key_exists('enums', $data) ) {
+            foreach ($data['enums'] as $enumName => $values) {
+                // $alias = "--- @alias $enumName\n";
+                $alias = "--- @alias $enumName ";
+                // Sort by enum name before doing anything
+                $list2 = [];
+                $list3 = [];
+                foreach ($values as $var => $val) {
+                    // TODO: restore this to $list2[] = ["$var = $val\n", "--- | `$var` = $val\n"]; if https://github.com/LuaLS/lua-language-server/issues/2732 is fixed
+                    $list2[] = ["$var = $val\n"];
+                    $list3[$val] = "$val";
+                }
+                sort($list2);
+                sort($list3);
 
-            // In sorted enum name order, assemble the alias and value blocks
-            $vars = "";
-            $aliases = implode('|', $list3);
-            foreach ($list2 as $pair) {
-                $vars .= $pair[0];
-                // $aliases .= $pair[1];
+                // In sorted enum name order, assemble the alias and value blocks
+                $vars = "";
+                $aliases = implode('|', $list3);
+                foreach ($list2 as $pair) {
+                    $vars .= $pair[0];
+                    // $aliases .= $pair[1];
+                }
+                // $list[$enumName] = $vars . $alias . substr($aliases, 0, -1) . "\n";
+                $list[] = $vars . $alias . $aliases . "\n";
             }
-            // $list[$enumName] = $vars . $alias . substr($aliases, 0, -1) . "\n";
-            $list[] = $vars . $alias . $aliases . "\n";
         }
         // ksort($list)
         sort($list);
