@@ -145,10 +145,10 @@ function AnimationObject:SetEasingFunction(functionRef) end
 function AnimationObject:SetEnabled(enabled) end
 
 --- @param eventName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function AnimationObject:SetHandler(eventName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -909,11 +909,11 @@ function AnimationTimeline:PlayBackward() end
 --- @return void
 function AnimationTimeline:PlayForward() end
 
---- @param offsetMs integer
+--- @param offsetMs integer|nil
 --- @return void
 function AnimationTimeline:PlayFromEnd(offsetMs) end
 
---- @param offsetMs integer
+--- @param offsetMs integer|nil
 --- @return void
 function AnimationTimeline:PlayFromStart(offsetMs) end
 
@@ -952,10 +952,10 @@ function AnimationTimeline:SetCallbackOffset(callback, offset) end
 function AnimationTimeline:SetEnabled(enabled) end
 
 --- @param eventName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function AnimationTimeline:SetHandler(eventName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -1009,28 +1009,28 @@ function BackdropControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function BackdropControl:SetCenterColor(r, g, b, a) end
 
 --- @param filename string
---- @param tilingInterval layout_measurement
---- @param addressMode TextureAddressMode
+--- @param tilingInterval layout_measurement|nil
+--- @param addressMode TextureAddressMode|nil
 --- @return void
 function BackdropControl:SetCenterTexture(filename, tilingInterval, addressMode) end
 
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function BackdropControl:SetEdgeColor(r, g, b, a) end
 
 --- @param filename string
 --- @param edgeFileWidth integer
 --- @param edgeFileHeight integer
---- @param cornerSize layout_measurement
---- @param edgeFilePadding integer
+--- @param cornerSize layout_measurement|nil
+--- @param edgeFilePadding integer|nil
 --- @return void
 function BackdropControl:SetEdgeTexture(filename, edgeFileWidth, edgeFileHeight, cornerSize, edgeFilePadding) end
 
@@ -1086,14 +1086,14 @@ function ButtonControl:SetDesaturation(desaturation) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetDisabledFontColor(r, g, b, a) end
 
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetDisabledPressedFontColor(r, g, b, a) end
 
@@ -1132,7 +1132,7 @@ function ButtonControl:SetMouseOverBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetMouseOverFontColor(r, g, b, a) end
 
@@ -1143,7 +1143,7 @@ function ButtonControl:SetMouseOverTexture(textureFilename) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetNormalFontColor(r, g, b, a) end
 
@@ -1163,7 +1163,7 @@ function ButtonControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetPressedFontColor(r, g, b, a) end
 
@@ -2004,7 +2004,7 @@ function Control:SetFlexShrink(shrink) end
 function Control:SetGaussianBlur(kernelSize, factor) end
 
 --- @param handlerName string
---- @param functionRef function
+--- @param functionRef function|nil
 --- @param name string|nil
 --- @param controlHandlerOrder ControlHandlerOrder|nil
 --- @param targetName string|nil
@@ -2305,7 +2305,7 @@ function CooldownControl:SetDesaturation(desaturation) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function CooldownControl:SetFillColor(r, g, b, a) end
 
@@ -2465,7 +2465,7 @@ function EditControl:SetAsPassword(isPassword) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function EditControl:SetColor(r, g, b, a) end
 
@@ -2484,7 +2484,7 @@ function EditControl:SetDefaultText(defaultText) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function EditControl:SetDefaultTextColor(r, g, b, a) end
 
@@ -2524,12 +2524,12 @@ function EditControl:SetSelection(selectionStartIndex, selectionEndIndex) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function EditControl:SetSelectionColor(r, g, b, a) end
 
 --- @param text string
---- @param suppressCallbackHandler boolean
+--- @param suppressCallbackHandler boolean|nil
 --- @return void
 function EditControl:SetText(text, suppressCallbackHandler) end
 
@@ -2632,7 +2632,7 @@ function LabelControl:GetVerticalAlignment() end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function LabelControl:SetColor(r, g, b, a) end
 
@@ -2695,7 +2695,7 @@ function LabelControl:SetStrikethrough(strikethrough) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function LabelControl:SetStyleColor(r, g, b, a) end
 
@@ -2757,7 +2757,7 @@ function LineControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function LineControl:SetColor(r, g, b, a) end
 
@@ -2915,7 +2915,7 @@ function PolygonControl:SetBorderBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function PolygonControl:SetBorderColor(r, g, b, a) end
 
@@ -2944,7 +2944,7 @@ function PolygonControl:SetCenterBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function PolygonControl:SetCenterColor(r, g, b, a) end
 
@@ -3079,7 +3079,7 @@ function SliderControl:SetBackgroundTopTexture(fileName, texTop, texLeft, texBot
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function SliderControl:SetColor(r, g, b, a) end
 
@@ -3101,14 +3101,14 @@ function SliderControl:SetOrientation(orientation) end
 function SliderControl:SetThumbFlushWithExtents(flush) end
 
 --- @param filename string
---- @param disabledFilename string
---- @param highlightedFilename string
---- @param thumbWidth layout_measurement
---- @param thumbHeight layout_measurement
---- @param texTop number
---- @param texLeft number
---- @param texBottom number
---- @param texRight number
+--- @param disabledFilename string|nil
+--- @param highlightedFilename string|nil
+--- @param thumbWidth layout_measurement|nil
+--- @param thumbHeight layout_measurement|nil
+--- @param texTop number|nil
+--- @param texLeft number|nil
+--- @param texBottom number|nil
+--- @param texRight number|nil
 --- @return void
 function SliderControl:SetThumbTexture(filename, disabledFilename, highlightedFilename, thumbWidth, thumbHeight, texTop, texLeft, texBottom, texRight) end
 
@@ -3174,14 +3174,14 @@ function StatusBarControl:SetBarAlignment(barAlignment) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function StatusBarControl:SetColor(r, g, b, a) end
 
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function StatusBarControl:SetFadeOutGainColor(r, g, b, a) end
 
@@ -3192,7 +3192,7 @@ function StatusBarControl:SetFadeOutLossAdjustedTopValue(topValue) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function StatusBarControl:SetFadeOutLossColor(r, g, b, a) end
 
@@ -3283,10 +3283,10 @@ function SynchronizingObject:Hide() end
 function SynchronizingObject:IsShown() end
 
 --- @param handlerName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function SynchronizingObject:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -3461,7 +3461,7 @@ function TextureCompositeControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function TextureCompositeControl:SetColor(surfaceIndex, r, g, b, a) end
 
@@ -3587,7 +3587,7 @@ function TextureControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function TextureControl:SetColor(r, g, b, a) end
 
@@ -4257,7 +4257,7 @@ function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName
 function WindowManager:CreateCursor(x, y) end
 
 --- @param name string|nil
---- @return Control control
+--- @return TopLevelWindow control
 function WindowManager:CreateTopLevelWindow(name) end
 
 --- @param cursorId integer
@@ -4328,10 +4328,10 @@ function WindowManager:IsUsingCustomCandidateList() end
 function WindowManager:SetFocusByName(name) end
 
 --- @param handlerName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function WindowManager:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
 

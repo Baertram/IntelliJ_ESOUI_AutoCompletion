@@ -147,10 +147,16 @@ class object_api
                                 [$type, $param] = $this->processParam($methodClean, $matches2['type'], $matches2['param']);
                                 // TODO: move these to a customSomething.txt
                                 // e.g. The last 3 arguments of Control:SetHandler are actually optional
-                                if (($tag == 'ButtonControl' and $methodClean == 'SetState' and isset($objects[$tag][$methodClean]['params']['newState']))
-                                    or ($tag == 'Control' and $methodClean == 'SetHandler' and isset($objects[$tag][$methodClean]['params']['functionRef']))
+                                if (($tag == 'AnimationTimeline' and $param == 'offsetMs')
+                                    or ($methodClean == 'SetHandler' and ($param == 'functionRef' or isset($objects[$tag][$methodClean]['params']['functionRef'])))
+                                    or (str_ends_with($methodClean, 'Color') and $param == 'a')
+                                    or ($tag == 'BackdropControl' and $methodClean == 'SetCenterTexture' and isset($objects[$tag][$methodClean]['params']['filename']))
+                                    or ($tag == 'BackdropControl' and $methodClean == 'SetEdgeTexture' and isset($objects[$tag][$methodClean]['params']['edgeFileHeight']))
+                                    or ($tag == 'ButtonControl' and $methodClean == 'SetState' and isset($objects[$tag][$methodClean]['params']['newState']))
                                     or ($tag == 'Control' and $methodClean == 'SetAnchor' and isset($objects[$tag][$methodClean]['params']['point']))
                                     or ($tag == 'Control' and $methodClean == 'SetAnchorFill')
+                                    or ($tag == 'EditControl' and $methodClean == 'SetText' and isset($objects[$tag][$methodClean]['params']['text']))
+                                    or ($tag == 'SliderControl' and $methodClean == 'SetThumbTexture' and isset($objects[$tag][$methodClean]['params']['filename']))
                                     or ($tag == 'WindowManager' and $methodClean == 'CreateControlFromVirtual' and ($param == 'controlName' or $param == 'optionalSuffix'))
                                 ) {
                                     if (!str_ends_with($type, '|nil')) {
@@ -202,10 +208,10 @@ class object_api
         if ($type == 'object') {
             $paramAsType = $param;
             $paramAsType[0] = strtoupper($paramAsType[0]);
-            if (array_key_exists($paramAsType, $objects)) {
-                $type = $paramAsType;
-            } else if (str_ends_with($param, 'TopLevelWindow')) {
+            if (str_ends_with($param, 'TopLevelWindow') or $method == "CreateTopLevelWindow") {
                 $type = 'TopLevelWindow';
+            } else if (array_key_exists($paramAsType, $objects)) {
+                $type = $paramAsType;
             } else if ($param == 'animation') {
                 $type = 'AnimationObject';
             } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {

@@ -105,8 +105,8 @@ end
 function ZO_Object:MultiSubclass(subClassA, subClassB, ...) end
 
 -------------------------------------------------------------------------------
-
 --- @class ZO_DataSourceObject
+--- @field dataSource any
 ZO_DataSourceObject = {}
 function ZO_GenerateDataSourceMetaTableIndexFunction(template) end
 --- @return ZO_DataSourceObject
@@ -114,6 +114,20 @@ function ZO_DataSourceObject:New(template) end
 function ZO_DataSourceObject:GetDataSource() end
 function ZO_DataSourceObject:SetDataSource(dataSource) end
 function ZO_DataSourceObject:Subclass() end
+
+--- @class ZO_EntryData: ZO_DataSourceObject
+--- @field key integer
+ZO_EntryData = {}
+function ZO_EntryData:Initialize(dataSource)
+    self:SetDataSource(dataSource)
+end
+function ZO_EntryData:Reset()
+    self:SetDataSource(nil)
+end
+-- Instead of using ZO_ScrollList_CreateDataEntry, which creates another table,
+-- this will allow the ZO_EntryData to serve all of the functionality a scroll list would need,
+-- as a ZO_EntryData is already the wrapper around the real underlying data that said table exists to wrap
+function ZO_EntryData:SetupAsScrollListDataEntry(typeId, categoryId) end
 
 -------------------------------------------------------------------------------
 
@@ -194,21 +208,8 @@ function EVENT_MANAGER:UnregisterForUpdate(namespace) end
 --- @type AnimationManager
 ANIMATION_MANAGER = {}
 
---- @return AnimationManager animationManager
-function GetAnimationManager() end
-
---- @param self AnimationManager
---- @param timelineName string
---- @param animatedControl Control
---- @return AnimationTimeline timeline
-function ANIMATION_MANAGER:CreateTimelineFromVirtual(timelineName, animatedControl) end
-
--------------------------------------------------------------------------------
---- @class AddonManager
+--- @type AddOnManager
 ADDON_MANAGER = {}
-
---- @return AddOnManager addOnManager
-function GetAddOnManager() end
 
 --- @class Window: Control
 --- @field buffer Control
@@ -787,7 +788,20 @@ function ZO_ControlPool:GetActiveObject(objectKey) end
 function ZO_ControlPool:AcquireObject(objectKey) end
 
 --- @class ZO_EntryDataPool: ZO_ObjectPool
+--- @field m_Factory fun(ZO_EntryDataPool): ZO_EntryData
 ZO_EntryDataPool = {}
+--- @return table<integer, ZO_EntryData>
+function ZO_EntryDataPool:GetActiveObjects() end
+--- @return ZO_EntryData
+function ZO_EntryDataPool:GetActiveObject(objectKey) end
+--- @return ZO_EntryData
+function ZO_EntryDataPool:AcquireObject(objectKey) end
+
+--- @class ZO_PooledObject: ZO_InitializingObject
+ZO_PooledObject = {}
+--- @param pool ZO_ObjectPool
+function ZO_PooledObject:SetPoolAndKey(pool, poolKey) end
+function ZO_PooledObject:ReleaseObject() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_PlatformUtils
@@ -1078,7 +1092,9 @@ function zo_floor            (number) end -- math.floor
 function zo_ceil             (number) end -- math.ceil
 function zo_mod              (number, divisor) end -- math.fmod
 function zo_decimalsplit     (number) end -- math.modf
+--- @type fun(n: number): number
 function zo_abs              (number) end -- math.abs
+--- @type fun(a: number, b: number): number
 function zo_max              (number1, number2) end -- math.max
 function zo_min              (number1, number2) end -- math.min
 function zo_sqrt             (number) end -- math.sqrt
@@ -1167,7 +1183,7 @@ function CreateControlFromVirtual(name, parent, templateName, optionalNameSuffix
 --- @param control Control
 function ApplyTemplateToControl(control, templateName) end
 function CreateControlRangeFromVirtual(name, parent, templateName, rangeMinSuffix, rangeMaxSuffix) end
---- @return Control
+--- @return Control _G[name..suffix]
 function GetControl(name, suffix) end
 function CreateSimpleAnimation(animationType, controlToAnimate, delay) end
 
@@ -1317,7 +1333,7 @@ ZO_COMBOBOX_SUPPRESS_UPDATE = 2
 --- @alias ComboboxUpdateType 1|2
 
 --- @class ZO_ComboBox_Base: ZO_InitializingObject
---- @field m_container ZO_ComboBox_Base self
+--- @field m_container ZO_ComboBox_Control container
 --- @field m_selectedItemText Control control:GetNamedChild("SelectedItemText")
 -- @field m_selectedItemData ? nil
 --- @field m_openDropdown Control control:GetNamedChild("OpenDropdown")
@@ -1400,17 +1416,46 @@ function ZO_ComboBox_Base_ItemSelectedClickHelper(comboBox, item, ignoreCallback
 --- @field m_height integer
 --- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard
 --- @field m_customEntryTemplateInfos nil|table --<entryTemplate, entryInfo>
---- @field m_dropdown Control ZO_ComboBoxDropdown_Keyboard.control
---- @field m_scroll Control ZO_ComboBoxDropdown_Keyboard.scrollControl
+--- @field m_dropdown ZO_ComboBox_Control ZO_ComboBoxDropdown_Keyboard.control
+--- @field m_scroll ZO_ScrollList ZO_ComboBoxDropdown_Keyboard.scrollControl
 ZO_ComboBox = {}
 --- @return ZO_ComboBox
 --- @param container ZO_ComboBox_Control
 function ZO_ComboBox:Initialize(container) end
+function ZO_ComboBox:AddCustomEntryTemplate(entryTemplate, entryHeight, setupFunction) end
+function ZO_ComboBox:AddItemToSelected(item) end
 function ZO_ComboBox:AddMenuItems() end
-function ZO_ComboBox:ShowDropdownInternal() end
-function ZO_ComboBox:HideDropdownInternal() end
+function ZO_ComboBox:ClearAllSelections() end
+function ZO_ComboBox:DisableMultiSelect() end
+function ZO_ComboBox:EnableMultiSelect(multiSelectionTextFormatter, noSelectionText) end
 function ZO_ComboBox:GetMenuType() end
+function ZO_ComboBox:GetNumSelectedEntries() end
+function ZO_ComboBox:HideDropdownInternal() end
+function ZO_ComboBox:HighlightLabel(labelControl, data) end
+function ZO_ComboBox:IsDropdownVisible() end
+function ZO_ComboBox:IsItemSelected(item) end
+function ZO_ComboBox:OnGlobalMouseUp(eventCode, button) end
+function ZO_ComboBox:OnMouseEnterEntryBase(control) end
+function ZO_ComboBox:OnMouseExitEntryBase(control) end
+function ZO_ComboBox:RefreshSelectedItemText() end
+function ZO_ComboBox:RemoveItemFromSelected(item) end
+--- @param dropdownObject ZO_ComboBoxDropdown_Keyboard
+function ZO_ComboBox:SetDropdownObject(dropdownObject) end
+function ZO_ComboBox:SetEntryMouseOverCallbacks(onMouseEnterCallback, onMouseExitCallback) end
+function ZO_ComboBox:SetHeight(height) end
 function ZO_ComboBox:SetHideDropdownCallback(callback) end
+function ZO_ComboBox.SetItemEntryCustomTemplate(itemEntry, entryTemplate) end
+function ZO_ComboBox:SetMaxSelections(maxNumSelections) end
+function ZO_ComboBox:SetMaxSelectionsErrorText(errorText) end
+function ZO_ComboBox:SetMultiSelectionTextFormatter(textFormatter) end
+function ZO_ComboBox:SetNoSelectionText(text) end
+function ZO_ComboBox:SetOnSelectionBlockedCallback(callback) end
+function ZO_ComboBox:SetSelected(index, ignoreCallback) end
+function ZO_ComboBox:GetSelectionBlockedErrorText() end
+function ZO_ComboBox:SetSpacing(spacing) end
+function ZO_ComboBox:ShowDropdownInternal() end
+function ZO_ComboBox:ShowDropdownOnMouseUp() end
+function ZO_ComboBox:UnhighlightLabel(labelControl, data) end
 
 function ZO_ComboBox_Disable(container) end
 function ZO_ComboBox_DropdownClicked(container) end
@@ -1422,19 +1467,30 @@ function ZO_ComboBox_ObjectFromContainer(container) end
 function ZO_ComboBox_OpenDropdown(container) end
 
 -------------------------------------------------------------------------------
+--- @class ZO_ComboBoxDropdown_Keyboard_Entry: ZO_EntryData, Control
+--- @field m_label LabelControl :GetNamedChild("Label")
+--- @field m_ownerZO_ComboBox ZO_ComboBoxDropdown_Keyboard.owner
+--- @field m_data any? data from ZO_ComboBoxDropdown_Keyboard:SetupEntryBase(control, data, list)
+--- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard
+--- @field m_index any from ZO_ComboBoxDropdown_Keyboard:CreateScrollableEntry(item, index, entryType)
+--- @field m_owner ZO_ComboBox ZO_ComboBoxDropdown_Keyboard.owner
+--- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard self
+
 --- @class ZO_ComboBoxDropdown_Keyboard: ZO_InitializingObject
-ZO_ComboBoxDropdown_Keyboard = {}
+--- @field control ZO_ComboBox_Control
+--- @field scrollControl ZO_ScrollList control:GetNamedChild("Scroll")
+--- @field spacing integer 0
+--- @field nextScrollTypeId integer DEFAULT_LAST_ENTRY_ID + 1
+--- @field owner ZO_ComboBox
+ZO_ComboBoxDropdown_Keyboard = nil
 
 function ZO_ComboBoxDropdown_Keyboard:Initialize(control) end
-function ZO_ComboBoxDropdown_Keyboard:SetupEntryLabel(labelControl, data) end
-function ZO_ComboBoxDropdown_Keyboard:SetupEntryBase(control, data, list) end
-function ZO_ComboBoxDropdown_Keyboard:SetupEntry(control, data, list) end
-function ZO_ComboBoxDropdown_Keyboard:SetupScrollList() end
 function ZO_ComboBoxDropdown_Keyboard:AddCustomEntryTemplate(entryTemplate, entryHeight, setupFunction) end
-function ZO_ComboBoxDropdown_Keyboard:SetSpacing(spacing) end
-function ZO_ComboBoxDropdown_Keyboard:Refresh(item) end
+--- @return ZO_EntryData
 function ZO_ComboBoxDropdown_Keyboard:CreateScrollableEntry(item, index, entryType) end
-function ZO_ComboBoxDropdown_Keyboard:Show(comboBox, itemTable, minWidth, maxHeight, spacing) end
+function ZO_ComboBoxDropdown_Keyboard.InitializeFromControl(control) end
+--- @param comboBox ZO_ComboBox
+--- @return boolean
 function ZO_ComboBoxDropdown_Keyboard:IsOwnedByComboBox(comboBox) end
 function ZO_ComboBoxDropdown_Keyboard:IsHidden() end
 function ZO_ComboBoxDropdown_Keyboard:SetHidden(isHidden) end
@@ -1446,7 +1502,14 @@ function ZO_ComboBoxDropdown_Keyboard.OnClicked(control, button, upInside) end
 function ZO_ComboBoxDropdown_Keyboard.OnEntryMouseEnter(control) end
 function ZO_ComboBoxDropdown_Keyboard.OnEntryMouseExit(control) end
 function ZO_ComboBoxDropdown_Keyboard.OnEntryMouseUp(control, button, upInside) end
-function ZO_ComboBoxDropdown_Keyboard.InitializeFromControl(control) end
+function ZO_ComboBoxDropdown_Keyboard:Refresh(item) end
+function ZO_ComboBoxDropdown_Keyboard:SetSpacing(spacing) end
+function ZO_ComboBoxDropdown_Keyboard:SetupEntryLabel(labelControl, data) end
+function ZO_ComboBoxDropdown_Keyboard:SetupEntryBase(control, data, list) end
+function ZO_ComboBoxDropdown_Keyboard:SetupEntry(control, data, list) end
+function ZO_ComboBoxDropdown_Keyboard:SetupScrollList() end
+function ZO_ComboBoxDropdown_Keyboard:Show(comboBox, itemTable, minWidth, maxHeight, spacing) end
+
 
 -------------------------------------------------------------------------------
 --- @class ZO_ScrollableComboBox
@@ -1730,7 +1793,7 @@ DIRECTIONAL_INPUT  = {}
 CLIENT_INPUT  = {}
 
 -------------------------------------------------------------------------------
---- @class ZO_EditBox
+--- @class ZO_EditBox: ZO_CallbackObject
 ZO_EditBox = {}
 --- @return ZO_EditBox
 function ZO_EditBox:New(...) end
@@ -1746,7 +1809,7 @@ function ZO_EditBox:TakeFocus() end
 function ZO_EditBox:LoseFocus() end
 
 -------------------------------------------------------------------------------
---- @class ZO_SavingEditBox
+--- @class ZO_SavingEditBox: ZO_CallbackObject
 ZO_SavingEditBox = {}
 --- @return ZO_SavingEditBox
 function ZO_SavingEditBox:New(...) end
@@ -3466,25 +3529,43 @@ function ZO_SceneNodeRing:Update(delta) end
 function ZO_ScriptProfiler_GenerateReport() end
 
 -------------------------------------------------------------------------------
+--- @class ZO_Scroll
+--- @field scroll ZO_ScrollList GetControl(self, "Scroll"); self.scroll:SetHandler("OnRectHeightChanged", ZO_Scroll_ScrollOrBarOnHeightChanged)
+--- @field scrollbar Control GetControl(self, "ScrollBar"); :SetHandler("OnRectHeightChanged", ZO_Scroll_ScrollOrBarOnHeightChanged)
+--- @field scrollUpButton Control GetControl(self.scrollbar, "Up"); :SetHandler("OnMouseDown", ZO_ScrollUp_OnMouseDown)
+--- @field scrollDownButton Control GetControl(self.scrollbar, "Down"); :SetHandler("OnMouseDown", ZO_ScrollDown_OnMouseDown)
+--- @field isScrollBarEthereal boolean
+--- @field useScrollbar boolean
+--- @field hideScrollBarOnDisabled boolean
+--- @field useFadeGradient boolean
+--- @field animation AnimationObject CreateScrollAnimation(self)[0]
+--- @field timeline AnimationTimeline CreateScrollAnimation(self)[1]
+
+--- @param self ZO_Scroll
+function ZO_Scroll_Initialize(self) end
+
 --- @class ZO_ScrollList_DataType
 --- @field height integer
---- @field setupCallback fun(control: Control, data)
+--- TODO: is any of this correct? lol
+--- @field setupCallback fun(control: Control, data, self: ZO_ScrollList|ZO_ComboBox)
 -- @field hideCallback any?
---- @field pool ZO_ControlPool
+--- @field pool ZO_EntryDataPool
 --- @field selectSound string
 --- @field selectable boolean
 
---- @class ZO_ScrollList
+--- @class ZO_ScrollList: Control
 --- @field dataTypes ZO_ScrollList_DataType[]
+--- @field contents Control GetControl(self, "Contents")
+--- @field scrollbar Control GetControl(self, "ScrollBar")
 
 --Adds a new control type for the list to handle. It must maintain a consistent size.
 --- @param self ZO_ScrollList
 --- @param typeId any A unique identifier to give to CreateDataEntry when you want to add an element of this type.
 --- @param templateName string The name of the virtual control template that will be used to hold this data
 --- @param height integer The control height
---- @param setupCallback fun(control: Control, data) The function that will be called when a control of this type becomes visible.
---- @param dataTypeSelectSound string An optional sound to play when a row of this data type is selected.
---- @param resetControlCallback fun(control: ZO_ScrollList) An optional callback when the datatype control gets reset.
+--- @param setupCallback fun(control: Control, data, self: ZO_ScrollList) The function that will be called when a control of this type becomes visible.
+--- @param dataTypeSelectSound string|nil An optional sound to play when a row of this data type is selected.
+--- @param resetControlCallback fun(control: ZO_ScrollList)|nil An optional callback when the datatype control gets reset.
 function ZO_ScrollList_AddDataType(self, typeId, templateName, height, setupCallback, hideCallback, dataTypeSelectSound, resetControlCallback) end
 --- @param self ZO_ScrollList
 function ZO_ScrollList_Clear(self) end
@@ -3498,8 +3579,8 @@ function ZO_ScrollList_EnableSelection(self, selectionTemplate, selectionCallbac
 function ZO_ScrollList_GetData(self) end
 --- @param self ZO_ScrollList
 function ZO_ScrollList_GetDataList(self) end
---- @return ZO_ScrollList_DataType
 --- @param self ZO_ScrollList
+--- @return ZO_ScrollList_DataType
 function ZO_ScrollList_GetDataTypeTable(self, typeId) end
 --- @param self ZO_ScrollList
 function ZO_ScrollList_GetHeight(self) end
@@ -4150,6 +4231,22 @@ function ZO_TimerBar:Stop() end
 function ZO_TimerBar:Update(time) end
 
 -------------------------------------------------------------------------------
+--- @class InformationTooltipMixin
+InformationTooltipMixin = {}
+function InformationTooltipMixin:AddDivider() end
+function InformationTooltipMixin:AddMoney(tooltip, cost, text, hasEnough) end
+function InformationTooltipMixin:AppendDelveInfo(pin) end
+function InformationTooltipMixin:AppendKillLocationInfo(pin) end    
+function InformationTooltipMixin:AppendWayshrineTooltip(pin) end
+function InformationTooltipMixin:AppendSuggestionActivity(pin) end
+
+--- @class InformationTooltip: InformationTooltipMixin zo_mixin(InformationTooltip, InformationTooltipMixin) in ZO_WorldMapManager:Initialize(control)
+InformationTooltip = {}
+
+function InitializeTooltip(tooltip, owner, point, offsetX, offsetY, relativePoint) end
+function SetTooltipText(tooltip, text, color, colorG, colorB) end
+function ClearTooltip(tooltip) end
+
 --- @class ZO_TooltipStyledObject
 ZO_TooltipStyledObject = {}
 function ZO_TooltipStyledObject:Initialize(parent) end
