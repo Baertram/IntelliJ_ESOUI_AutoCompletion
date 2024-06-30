@@ -26,12 +26,14 @@ class global_vars
         
         $out = "if DumpVars == nil then DumpVars = {} end\n\nDumpVars.enumsToDump = {\n";
 
-        foreach ($customEnums as $enumName => $vars) {
-            $out .= "['$enumName'] = {\n";
-            foreach ($vars as $var) {
-                $out .= "\t['$var'] = $var,\n";
+        if ( isset($customEnums) ) {
+            foreach ($customEnums as $enumName => $vars) {
+                $out .= "['$enumName'] = {\n";
+                foreach ($vars as $var) {
+                    $out .= "\t['$var'] = $var,\n";
+                }
+                $out = substr($out, 0,-2)."\n},\n";
             }
-            $out = substr($out, 0,-2)."\n},\n";
         }
         foreach ($classes as $class => $method) {
             $out .= "['$class'] = {\n";
@@ -45,11 +47,15 @@ class global_vars
         // Now list the non-enum constants to dump
         $out .= "\n\nDumpVars.constantsToDump = {\n";
         $constants = file("manual_update/customConstants.txt", FILE_IGNORE_NEW_LINES);
-        foreach ($constants as $var) {
-            if ($var != "") $out .= "\t['$var'] = $var,\n";
+         if ( isset($constants) ) {
+            foreach ($constants as $var) {
+                if ($var != "") $out .= "\t['$var'] = $var,\n";
+            }
         }
-        foreach ($globals as $var) {
-            $out .= "\t['$var'] = $var,\n";
+        if ( isset($globals) ) {
+            foreach ($globals as $var) {
+                $out .= "\t['$var'] = $var,\n";
+            }
         }
         $out = substr($out, 0,-2)."\n}";
 
@@ -123,29 +129,32 @@ class global_vars
     }
     
     function parseEnums($enumTxt, $global) {
-        $patterns = [];
-        $enumName = null;
-        foreach ($enumTxt as $line) {
-            if ($line != "") {
-                if ($enumName == null) {
-                    $enumName = $line;
-                } else {
-                    $patterns[$enumName] = "/" . $line . "/";
-                    $enumName = null;
+        if ( isset($enumTxt) ) {
+            $patterns = [];
+            $enumName = null;
+            foreach ($enumTxt as $line) {
+                if ($line != "") {
+                    if ($enumName == null) {
+                        $enumName = $line;
+                    } else {
+                        $patterns[$enumName] = "/" . $line . "/";
+                        $enumName = null;
+                    }
                 }
             }
         }
-        
-        $enums = [];
-        foreach ($global as $line) {
-            foreach ($patterns as $enumName => $pattern) {
-                $matches = null;
-                if (preg_match($pattern, $line, $matches)) {
-                    $enums[$enumName][] = $matches[1];
-                }
-            }    
-        }
 
+        $enums = [];
+        if ( isset($global) ) {
+            foreach ($global as $line) {
+                foreach ($patterns as $enumName => $pattern) {
+                    $matches = null;
+                    if (preg_match($pattern, $line, $matches)) {
+                        $enums[$enumName][] = $matches[1];
+                    }
+                }
+            }
+        }
         return $enums;
     }
 }
