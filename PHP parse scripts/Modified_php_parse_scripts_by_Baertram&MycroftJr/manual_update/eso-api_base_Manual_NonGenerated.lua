@@ -3042,14 +3042,6 @@ function ZO_RecentMessages:Update(timeNowMilliseconds) end
 function ZO_RecentMessages:ShouldDisplayMessage(message) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ScrollingSavingEditBox
-ZO_ScrollingSavingEditBox = {}
---- @return ZO_ScrollingSavingEditBox
-function ZO_ScrollingSavingEditBox:New(...) end
-function ZO_ScrollingSavingEditBox:Initialize(control) end
-function ZO_ScrollingSavingEditBox:SetEditing(editing, forceUpdate) end
-
--------------------------------------------------------------------------------
 --- @class ZO_StackFragmentGroup
 ZO_StackFragmentGroup = {}
 --- @return ZO_StackFragmentGroup
