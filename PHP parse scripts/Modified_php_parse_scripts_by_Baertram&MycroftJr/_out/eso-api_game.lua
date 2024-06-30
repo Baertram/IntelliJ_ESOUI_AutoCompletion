@@ -13,9 +13,10 @@ function LoadUntrustedString(script) end
 --- @return void
 function SecurePostHook(targetTable, functionName, hookingFunction) end
 
---- @param tbl table
---- @param lastKey type
---- @return type nextKey, type nextValue
+--- @generic K, V
+--- @param tbl table<K, V>
+--- @param lastKey K
+--- @return K nextKey, V nextValue
 function InsecureNext(tbl, lastKey) end
 
 --- @param functionName string
