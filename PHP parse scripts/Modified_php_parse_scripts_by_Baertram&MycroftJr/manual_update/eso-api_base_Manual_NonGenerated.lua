@@ -1,3 +1,4 @@
+--- @meta
 --Compatibility aliases and constants
 ITEMSTYLE_NONE                      = 0
 ITEMSTYLE_RACIAL_BRETON             = 1
@@ -65,6 +66,8 @@ function ZO_VerifyClassImplementation(finalClass, classTraceback) end
 function RegisterConcreteClass(concreteClass, stackLevel) end
 function RemoveConcreteClass(concreteClass) end
 function ZO_VerifyConcreteClasses() end
+function ZO_ReanchorControlForLeftSidePanel(control) end
+function ZO_ReanchorControlTopHorizontalMenu(control) end
 
 --- @class ZO_Object
 ZO_Object = {}
@@ -102,8 +105,8 @@ end
 function ZO_Object:MultiSubclass(subClassA, subClassB, ...) end
 
 -------------------------------------------------------------------------------
-
 --- @class ZO_DataSourceObject
+--- @field dataSource any
 ZO_DataSourceObject = {}
 function ZO_GenerateDataSourceMetaTableIndexFunction(template) end
 --- @return ZO_DataSourceObject
@@ -112,12 +115,49 @@ function ZO_DataSourceObject:GetDataSource() end
 function ZO_DataSourceObject:SetDataSource(dataSource) end
 function ZO_DataSourceObject:Subclass() end
 
+--- @class ZO_EntryData: ZO_DataSourceObject
+--- @field key integer
+ZO_EntryData = {}
+function ZO_EntryData:Initialize(dataSource)
+    self:SetDataSource(dataSource)
+end
+function ZO_EntryData:Reset()
+    self:SetDataSource(nil)
+end
+-- Instead of using ZO_ScrollList_CreateDataEntry, which creates another table,
+-- this will allow the ZO_EntryData to serve all of the functionality a scroll list would need,
+-- as a ZO_EntryData is already the wrapper around the real underlying data that said table exists to wrap
+function ZO_EntryData:SetupAsScrollListDataEntry(typeId, categoryId) end
+
 -------------------------------------------------------------------------------
 
---- @class ZO_InitializingObject 
-ZO_DataSourceObject = {}
+--- @class ZO_InitializingObject: ZO_Object -- zo_mixin(ZO_InitializingObject, ZO_Object)
+ZO_InitializingObject = {}
 --- @return ZO_InitializingObject
 function ZO_InitializingObject:New(...) end
+
+--- @class ZO_SharedOptions: ZO_InitializingObject
+--- @field controlTable Control[]
+--- @field panelNames string[]
+--- @field isGamepadOptions boolean
+ZO_SharedOptions = {}
+--- @class ZO_KeyboardOptions: ZO_SharedOptions
+--- @field currentPanelId integer
+--- @field control Control
+--- @field colorOptionHighlight Control control:GetNamedChild("Options_Color_SharedHighlight")
+--- @field emptyPanelLabel Control control:GetNamedChild("EmptyPanelLabel")
+--- @field loadingControl Control control:GetNamedChild("Loading")
+ZO_KeyboardOptions = {}
+--- @param panelIdOrString integer|string|SettingSystemPanel
+--- @param panelName string
+--- @param panelType PanelType|nil
+--- @param visible boolean|nil
+function ZO_KeyboardOptions:AddUserPanel(panelIdOrString, panelName, panelType, visible) end
+--- @param panelId integer
+function ZO_KeyboardOptions:ChangePanels(panelId) end
+
+--- @type ZO_KeyboardOptions
+KEYBOARD_OPTIONS = nil
 
 -------------------------------------------------------------------------------
 --- @class EventManager
@@ -168,23 +208,10 @@ function EVENT_MANAGER:UnregisterForUpdate(namespace) end
 --- @type AnimationManager
 ANIMATION_MANAGER = {}
 
---- @return AnimationManager animationManager
-function GetAnimationManager() end
-
---- @param self AnimationManager
---- @param timelineName string
---- @param animatedControl Control
---- @return AnimationTimeline timeline
-function ANIMATION_MANAGER:CreateTimelineFromVirtual(timelineName, animatedControl) end
-
--------------------------------------------------------------------------------
---- @class AddonManager
+--- @type AddOnManager
 ADDON_MANAGER = {}
 
---- @return AddOnManager addOnManager
-function GetAddOnManager() end
-
---- @class Window
+--- @class Window: Control
 --- @field buffer Control
 
 --- @class WindowObjectPool: ZO_ObjectPool
@@ -196,19 +223,8 @@ function WindowObjectPool:GetActiveObjects() end
 --- @field windowPool WindowObjectPool
 --- @field primaryContainer ChatContainer
 CHAT_SYSTEM = KEYBOARD_CHAT_SYSTEM
-CHAT_ROUTER = ZO_ChatRouter:New()
 
-function ZO_GetChatSystem() end
-function ZO_ChatSystem_DoesPlatformUseGamepadChatSystem()  end
-function ZO_ChatSystem_DoesPlatformUseKeyboardChatSystem()  end
-function ZO_ChatSystem_ShouldUseKeyboardChatSystem() end
---- @return table
-function ZO_ChatSystem_GetChannelInfo() end
-function ZO_ChatSystem_GetChannelSwitchLookupTable() end
-function ZO_ChatSystem_GetCategoryColorFromChannel(channelId) end
---- @return table<Event, table<ChannelType, ChatChannelCategories>>, table<Event, ChatCategory>
-function ZO_ChatSystem_GetEventCategoryMappings() end
-function ZO_ChatSystem_GetTrialEventMappings() end
+
 function StartChatInput(chatText, CHAT_CHANNEL_CONSTANT, targetName) end
 
 --- @class ChatContainer
@@ -230,12 +246,16 @@ function ChatContainer:ShowRemoveTabDialog(index) end
 function ChatContainer:ShowOverflowedTabsDropdown()   end
 function ChatContainer:UpdateOverflowArrow() end
 
-
+--- @class SharedChatContainer
+SharedChatContainer = {}
 function SharedChatContainer:ShowContextMenu(tabIndex) end
 
-
 --- @class ZO_ChatSystem
+--- @field windowPool WindowObjectPool
+--- @field primaryContainer ChatContainer
 ZO_ChatSystem = {}
+KEYBOARD_CHAT_SYSTEM = ZO_GetChatSystem()
+CHAT_SYSTEM = KEYBOARD_CHAT_SYSTEM
 --- @return ZO_ChatSystem
 function ZO_ChatSystem:New(...) end
 function ZO_ChatSystem:Initialize(control) end
@@ -263,27 +283,40 @@ function ZO_ChatSystem:IsHidden() end
 function ZO_ChatSystem:OnAgentChatActiveChanged() end
 function ZO_ChatSystem:OnPlayerActivated() end
 
-function ZO_ChatSystem_ShowOptions(control) end
-
-function ZO_ChatWindow_OpenContextMenu(control)end
-
-function ZO_ChatSystem_OnFriendsEnter(control) end
-function ZO_ChatSystem_OnFriendsExit(control) end
-function ZO_ChatSystem_OnFriendsClicked(control) end
-function ZO_ChatSystem_OnMailEnter(control) end
-function ZO_ChatSystem_OnMailExit(control) end
-function ZO_ChatSystem_OnMailClicked(control) end
+function ZO_ChatSystem_DoesPlatformUseGamepadChatSystem()  end
+function ZO_ChatSystem_DoesPlatformUseKeyboardChatSystem()  end
+function ZO_ChatSystem_GetCategoryColorFromChannel(channelId) end
+--- @return table
+function ZO_ChatSystem_GetChannelInfo() end
+function ZO_ChatSystem_GetChannelSwitchLookupTable() end
+--- @return table<Event, table<ChannelType, ChatChannelCategories>>, table<Event, ChatChannelCategories>
+function ZO_ChatSystem_GetEventCategoryMappings() end
+function ZO_ChatSystem_GetTrialEventMappings() end
+function ZO_ChatSystem_OnAgentChatClicked() end
 function ZO_ChatSystem_OnAgentChatEnter(control) end
 function ZO_ChatSystem_OnAgentChatExit(control) end
-function ZO_ChatSystem_OnAgentChatClicked() end
+function ZO_ChatSystem_OnFriendsClicked(control) end
+function ZO_ChatSystem_OnFriendsEnter(control) end
+function ZO_ChatSystem_OnFriendsExit(control) end
+function ZO_ChatSystem_OnInitialized(control) end
+function ZO_ChatSystem_OnMailClicked(control) end
+function ZO_ChatSystem_OnMailEnter(control) end
+function ZO_ChatSystem_OnMailExit(control) end
+function ZO_ChatSystem_OnMinMaxClicked() end
 function ZO_ChatSystem_OnNotificationsClicked(control) end
 function ZO_ChatSystem_OnNotificationsEnter(control) end
 function ZO_ChatSystem_OnNotificationsExit(control) end
-function ZO_ChatSystem_OnMinMaxClicked() end
-function ZO_ChatSystem_OnInitialized(control) end
+function ZO_ChatSystem_ShouldUseKeyboardChatSystem() end
+function ZO_ChatSystem_ShowOptions(control) end
+function ZO_GetChatSystem() end
+
+function StartChatInput(chatText, CHAT_CHANNEL_CONSTANT, targetName) end
+function ZO_ChatWindow_OpenContextMenu(control)end
+
 
 --- @class ZO_ChatRouter
 ZO_ChatRouter = {}
+CHAT_ROUTER = ZO_ChatRouter:New()
 --- @return ZO_ChatRouter
 function ZO_ChatRouter:New(...) end
 function ZO_ChatRouter:Initialize() end
@@ -398,32 +431,11 @@ function ZO_CallbackObjectMixin:ClearCallbackRegistry() end
 function ZO_CallbackObjectMixin:GetFireCallbackDepth() end
 function ZO_CallbackObjectMixin:GetFireCallbackDepth() end
 
-
--------------------------------------------------------------------------------
---- @class ZO_CallbackObject
+--- @class ZO_CallbackObject: ZO_CallbackObjectMixin
 ZO_CallbackObject = {}
-function ZO_CallbackObject:RegisterCallback(eventName, callback, arg, priority) end
-function ZO_CallbackObject:UnregisterCallback(eventName, callback) end
-function ZO_CallbackObject:UnregisterAllCallbacks(eventName) end
-function ZO_CallbackObject:SetHandleOnce(handleOnce) end
-function ZO_CallbackObject:FireCallbacks(eventName, ...) end
-function ZO_CallbackObject:Clean(eventName) end
-function ZO_CallbackObject:ClearCallbackRegistry() end
-function ZO_CallbackObject:GetFireCallbackDepth() end
-function ZO_CallbackObject:GetFireCallbackDepth() end
 
--------------------------------------------------------------------------------
---- @class ZO_InitializingCallbackObject
+--- @class ZO_InitializingCallbackObject: ZO_CallbackObjectMixin
 ZO_InitializingCallbackObject  = {}
-function ZO_InitializingCallbackObject:RegisterCallback(eventName, callback, arg, priority) end
-function ZO_InitializingCallbackObject:UnregisterCallback(eventName, callback) end
-function ZO_InitializingCallbackObject:UnregisterAllCallbacks(eventName) end
-function ZO_InitializingCallbackObject:SetHandleOnce(handleOnce) end
-function ZO_InitializingCallbackObject:FireCallbacks(eventName, ...) end
-function ZO_InitializingCallbackObject:Clean(eventName) end
-function ZO_InitializingCallbackObject:ClearCallbackRegistry() end
-function ZO_InitializingCallbackObject:GetFireCallbackDepth() end
-function ZO_InitializingCallbackObject:GetFireCallbackDepth() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_CategoryManager
@@ -489,6 +501,62 @@ function ZO_ColorDef.RGBAToHex(r, g, b, a) end
 function ZO_ColorDef.FloatsToHex(r, g, b, a) end
 function ZO_ColorDef.HexToRGBA(hexColor) end
 function ZO_ColorDef.HexToFloats(hexColor) end
+
+-------------------------------------------------------------------------------
+--- @class ZO_ColorPicker_Shared: ZO_Object
+ZO_ColorPicker_Shared = {}
+--- @return ZO_ColorPicker_Shared
+function ZO_ColorPicker_Shared:New(...) end
+--- @param control Control
+function ZO_ColorPicker_Shared:Initialize(control, dialogName) end
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a number
+function ZO_ColorPicker_Shared:UpdateColors(r, g, b, a) end
+--- @param r number
+--- @param g number
+--- @param b number
+function ZO_ColorPicker_Shared:OnColorSet(r, g, b) end
+function ZO_ColorPicker_Shared:OnValueSet(value) end
+function ZO_ColorPicker_Shared:OnAlphaSet(value) end
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a number
+function ZO_ColorPicker_Shared:SetColor(r, g, b, a) end
+--- @return number r, number g, number b, number|nil a
+function ZO_ColorPicker_Shared:GetColors() end
+function ZO_ColorPicker_Shared:Confirm() end
+function ZO_ColorPicker_Shared:Cancel() end
+--- @param colorSelectedCallback fun(newR: number, newG: number, newB: number, newA: number)
+--- @param r number|nil default 1
+--- @param g number|nil default 1
+--- @param b number|nil default 1
+--- @param a number|nil
+function ZO_ColorPicker_Shared:Show(colorSelectedCallback, r, g, b, a) end
+--- @return boolean
+function ZO_ColorPicker_Shared:IsShown() end
+function ZO_ColorPicker_Shared:UpdateLayout() end
+function ZO_ColorPicker_Shared:SetHasAlphaContentHeight(height) end
+function ZO_ColorPicker_Shared:SetDoesntHaveAlphaContentHeight(height) end
+--- @param alphaLowerLimit number 0-1
+--- @param alphaUpperLimit number 0-1
+function ZO_ColorPicker_Shared:SetAlphaLimits(alphaLowerLimit, alphaUpperLimit) end
+
+--- @class ZO_ColorPicker_Gamepad: ZO_ColorPicker_Shared
+ZO_ColorPicker_Gamepad = {}
+--- @type ZO_ColorPicker_Gamepad
+COLOR_PICKER_GAMEPAD = {}
+--- @return ZO_ColorPicker_Gamepad
+function ZO_ColorPicker_Gamepad:New(self) end
+
+--- @class ZO_ColorPicker_Keyboard: ZO_ColorPicker_Shared
+ZO_ColorPicker_Keyboard = {}
+--- @type ZO_ColorPicker_Keyboard
+COLOR_PICKER = {}
+--- @return ZO_ColorPicker_Keyboard
+function ZO_ColorPicker_Keyboard:New(self) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_Easing
@@ -672,6 +740,7 @@ function ZO_ListBox:SetMaxRows(maxRows) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_ObjectPool
+--- @field m_Factory fun(ZO_ObjectPool): ZO_Object
 ZO_ObjectPool = {}
 --- @return ZO_ObjectPool
 function ZO_ObjectPool:New(factoryFunctionOrObjectClass, resetFunction) end
@@ -682,11 +751,13 @@ function ZO_ObjectPool:GetActiveObjectCount() end
 function ZO_ObjectPool:HasActiveObjects() end
 --- @return table<integer, ZO_Object>
 function ZO_ObjectPool:GetActiveObjects() end
+--- @return ZO_Object
 function ZO_ObjectPool:GetActiveObject(objectKey) end
 function ZO_ObjectPool:ActiveObjectIterator(filterFunctions) end
 function ZO_ObjectPool:GetFreeObjectCount() end
 function ZO_ObjectPool:ActiveAndFreeObjectIterator(filterFunctions) end
 function ZO_ObjectPool:SetCustomAcquireBehavior(customAcquireBehavior) end
+--- @return ZO_Object
 function ZO_ObjectPool:AcquireObject(objectKey) end
 function ZO_ObjectPool:ReleaseObject(objectKey) end
 function ZO_ObjectPool:ReleaseAllObjects() end
@@ -695,6 +766,42 @@ function ZO_ObjectPool:DestroyAllFreeObjects(destroyFunction) end
 function ZO_ObjectPool_CreateControl(templateName, objectPool, parentControl) end
 function ZO_ObjectPool_CreateNamedControl(name, templateName, objectPool, parentControl) end
 function ZO_ObjectPool_DefaultResetControl(control) end
+
+--- @class ZO_AnimationPool: ZO_ObjectPool
+--- @field m_Factory fun(ZO_AnimationPool): AnimationObject
+ZO_AnimationPool = {}
+--- @return table<integer, AnimationObject>
+function ZO_AnimationPool:GetActiveObjects() end
+--- @return AnimationObject
+function ZO_AnimationPool:GetActiveObject(objectKey) end
+--- @return AnimationObject
+function ZO_AnimationPool:AcquireObject(objectKey) end
+
+--- @class ZO_ControlPool: ZO_ObjectPool
+--- @field m_Factory fun(ZO_ControlPool): Control
+ZO_ControlPool = {}
+--- @return table<integer, Control>
+function ZO_ControlPool:GetActiveObjects() end
+--- @return Control
+function ZO_ControlPool:GetActiveObject(objectKey) end
+--- @return Control
+function ZO_ControlPool:AcquireObject(objectKey) end
+
+--- @class ZO_EntryDataPool: ZO_ObjectPool
+--- @field m_Factory fun(ZO_EntryDataPool): ZO_EntryData
+ZO_EntryDataPool = {}
+--- @return table<integer, ZO_EntryData>
+function ZO_EntryDataPool:GetActiveObjects() end
+--- @return ZO_EntryData
+function ZO_EntryDataPool:GetActiveObject(objectKey) end
+--- @return ZO_EntryData
+function ZO_EntryDataPool:AcquireObject(objectKey) end
+
+--- @class ZO_PooledObject: ZO_InitializingObject
+ZO_PooledObject = {}
+--- @param pool ZO_ObjectPool
+function ZO_PooledObject:SetPoolAndKey(pool, poolKey) end
+function ZO_PooledObject:ReleaseObject() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_PlatformUtils
@@ -784,7 +891,7 @@ function ZO_SavedVars:NewCharacterIdSettings(savedVariableTable, version, namesp
 function ZO_SavedVars:NewAccountWide(savedVariableTable, version, namespace, defaults, profile, displayName) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ScrollAnimationUtils
+--[ZO_ScrollAnimationUtils]
 function ZO_SetSliderValueAnimated(self, targetValue) end
 function ZO_UpdateScrollFade(useFadeGradient, scroll, scrollDirection, maxFadeGradientSize) end
 function ZO_OnAnimationStop(animationObject, control) end
@@ -795,6 +902,12 @@ function ZO_CreateScrollAnimation(scrollObject) end
 function ZO_ScrollRelative(self, verticalDelta) end
 function ZO_ScrollAnimation_MoveWindow(self, value) end
 function ZO_ScrollAnimation_OnExtentsChanged(self) end
+
+-------------------------------------------------------------------------------
+function ZO_Scroll_SetUseFadeGradient(self, useFadeGradient) end
+--- @param hide boolean
+function ZO_Scroll_SetHideScrollbarOnDisable(self, hide) end
+function ZO_VerticalScrollbarBase_OnMouseExit(self) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_TabButtonGroup
@@ -865,7 +978,7 @@ function ZO_AreEqualSets(s1, s2) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_TreeControlNode
-ZO_TreeNode = {}
+ZO_TreeControlNode = {}
 --- @return ZO_TreeControlNode
 function ZO_TreeControlNode:New(myTree, controlData, myParent, childIndent) end
 function ZO_TreeControlNode:SetExpandedCallback(callback) end
@@ -906,6 +1019,7 @@ function ZO_TranslateFromRightSceneAnimation_OnPlay(self, animatingControl) end
 function ZO_TranslateFromBottomSceneAnimation_OnPlay(self, animatingControl) end
 function ZO_TranslateFromTopSceneAnimation_OnPlay(self, animatingControl) end
 
+-------------------------------------------------------------------------------
 --- @class ZO_ReversibleAnimationProvider
 ZO_ReversibleAnimationProvider = {}
 --- @return ZO_ReversibleAnimationProvider
@@ -978,7 +1092,9 @@ function zo_floor            (number) end -- math.floor
 function zo_ceil             (number) end -- math.ceil
 function zo_mod              (number, divisor) end -- math.fmod
 function zo_decimalsplit     (number) end -- math.modf
+--- @type fun(n: number): number
 function zo_abs              (number) end -- math.abs
+--- @type fun(a: number, b: number): number
 function zo_max              (number1, number2) end -- math.max
 function zo_min              (number1, number2) end -- math.min
 function zo_sqrt             (number) end -- math.sqrt
@@ -1042,7 +1158,7 @@ function ZO_CompareMaskFlags(flagsBefore, flagsAfter) end
 
 -------------------------------------------------------------------------------
 --[Globals]
---- @param internalStringKey SafeStringKey
+--- @param safeStringKey SafeStringKey
 --- @return string stringValue
 function GetString(safeStringKey) end
 function NormalizePointToControl(x, y, control) end
@@ -1067,15 +1183,17 @@ function CreateControlFromVirtual(name, parent, templateName, optionalNameSuffix
 --- @param control Control
 function ApplyTemplateToControl(control, templateName) end
 function CreateControlRangeFromVirtual(name, parent, templateName, rangeMinSuffix, rangeMaxSuffix) end
+--- @return Control _G[name..suffix]
 function GetControl(name, suffix) end
 function CreateSimpleAnimation(animationType, controlToAnimate, delay) end
 
 -------------------------------------------------------------------------------
 --[Localization]
---- @param formatString string|SafeStringKey
+--- @param formatString SafeStringKey
 --- @return string
 function zo_strformat(formatString, ...) end
 function ZO_SetCachedStrFormatterOnlyStoreOne(formatter) end
+--- @param formatter SafeStringKey
 --- @return string
 function ZO_CachedStrFormat(formatter, ...) end
 function ZO_ResetCachedStrFormat(formatter) end
@@ -1156,8 +1274,8 @@ function ZO_OrderedRefreshGroup:TryClean() end
 -------------------------------------------------------------------------------
 --- @class ZO_BulletList
 ZO_BulletList = {}
---- @return ZO_BulletList
 --- @param control Control
+--- @return ZO_BulletList
 function ZO_BulletList:New(control, labelTemplate, bulletTemplate, secondaryBulletTemplate) end
 function ZO_BulletList:SetLinePaddingY(padding) end
 function ZO_BulletList:SetBulletPaddingX(padding) end
@@ -1207,7 +1325,30 @@ function ZO_ColorSwatchPicker_SetSelected(colorPicker, index) end
 function ZO_ColorSwatchPicker_SetEnabled(colorPicker, enabled) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ComboBox_Base
+--- @class ZO_ComboBox_Control: Control
+--- @field m_combobox ZO_ComboBox_Base
+
+ZO_COMBOBOX_UPDATE_NOW = 1
+ZO_COMBOBOX_SUPPRESS_UPDATE = 2
+--- @alias ComboboxUpdateType 1|2
+
+--- @class ZO_ComboBox_Base: ZO_InitializingObject
+--- @field m_container ZO_ComboBox_Control container
+--- @field m_selectedItemText Control control:GetNamedChild("SelectedItemText")
+-- @field m_selectedItemData ? nil
+--- @field m_openDropdown Control control:GetNamedChild("OpenDropdown")
+--- @field m_selectedColor ZO_ColorDef { GetInterfaceColor(INTERFACE_COLOR_TYPE_TEXT_COLORS, INTERFACE_TEXT_COLOR_SELECTED) }
+--- @field m_disabledColor ZO_ColorDef
+--- @field m_sortOrder SortOrder
+--- @field m_sortType table ZO_SORT_BY_NAME
+--- @field m_sortsItems boolean
+--- @field m_sortedItems table {}
+--- @field m_isDropdownVisible boolean
+-- @field m_font ? nil
+-- @field m_preshowDropdownFn ? nil
+--- @field m_spacing integer 0
+--- @field m_name string control:GetName()
+--- @field horizontalAlignment TextAlignment
 ZO_ComboBox_Base = {}
 function ZO_ComboBox_Base:ShowDropdownInternal() end
 function ZO_ComboBox_Base:HideDropdownInternal() end
@@ -1215,6 +1356,7 @@ function ZO_ComboBox_Base:OnClearItems() end
 function ZO_ComboBox_Base:OnItemAdded() end
 --- @return ZO_ComboBox_Base
 function ZO_ComboBox_Base:New(...) end
+--- @param container ZO_ComboBox_Control
 function ZO_ComboBox_Base:Initialize(container) end
 function ZO_ComboBox_Base:GetContainer() end
 function ZO_ComboBox_Base:SetPreshowDropdownCallback(fn) end
@@ -1260,23 +1402,114 @@ function ZO_ComboBox_Base:SetItemOnExit(item, handler) end
 function ZO_ComboBox_Base:GetControl() end
 function ZO_ComboBox_Base:SetHorizontalAlignment(alignment) end
 function ZO_ComboBox_Base_ItemSelectedClickHelper(comboBox, item, ignoreCallback) end
-function ZO_ComboBox_ObjectFromContainer(container) end
-function ZO_ComboBox_OpenDropdown(container) end
-function ZO_ComboBox_HideDropdown(container) end
-function ZO_ComboBox_Enable(container) end
-function ZO_ComboBox_Disable(container) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ComboBox
+--- @class ZO_ComboBox: ZO_ComboBox_Base
+--- @field m_font string
+--- @field m_normalColor ZO_ColorDef
+--- @field m_highlightColor ZO_ColorDef
+-- @field m_customEntryTemplateInfos ? nil
+--- @field m_enableMultiSelect boolean
+--- @field m_maxNumSelections integer|nil nil
+--- @field m_multiSelectItemData table {}
+--- @field m_containerWidth integer control:GetWidth()
+--- @field m_height integer
+--- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard
+--- @field m_customEntryTemplateInfos nil|table --<entryTemplate, entryInfo>
+--- @field m_dropdown ZO_ComboBox_Control ZO_ComboBoxDropdown_Keyboard.control
+--- @field m_scroll ZO_ScrollList ZO_ComboBoxDropdown_Keyboard.scrollControl
 ZO_ComboBox = {}
 --- @return ZO_ComboBox
-function ZO_ComboBox:New(container) end
+--- @param container ZO_ComboBox_Control
+function ZO_ComboBox:Initialize(container) end
+function ZO_ComboBox:AddCustomEntryTemplate(entryTemplate, entryHeight, setupFunction) end
+function ZO_ComboBox:AddItemToSelected(item) end
 function ZO_ComboBox:AddMenuItems() end
-function ZO_ComboBox:ShowDropdownInternal() end
-function ZO_ComboBox:HideDropdownInternal() end
+function ZO_ComboBox:ClearAllSelections() end
+function ZO_ComboBox:DisableMultiSelect() end
+function ZO_ComboBox:EnableMultiSelect(multiSelectionTextFormatter, noSelectionText) end
 function ZO_ComboBox:GetMenuType() end
+function ZO_ComboBox:GetNumSelectedEntries() end
+function ZO_ComboBox:HideDropdownInternal() end
+function ZO_ComboBox:HighlightLabel(labelControl, data) end
+function ZO_ComboBox:IsDropdownVisible() end
+function ZO_ComboBox:IsItemSelected(item) end
+function ZO_ComboBox:OnGlobalMouseUp(eventCode, button) end
+function ZO_ComboBox:OnMouseEnterEntryBase(control) end
+function ZO_ComboBox:OnMouseExitEntryBase(control) end
+function ZO_ComboBox:RefreshSelectedItemText() end
+function ZO_ComboBox:RemoveItemFromSelected(item) end
+--- @param dropdownObject ZO_ComboBoxDropdown_Keyboard
+function ZO_ComboBox:SetDropdownObject(dropdownObject) end
+function ZO_ComboBox:SetEntryMouseOverCallbacks(onMouseEnterCallback, onMouseExitCallback) end
+function ZO_ComboBox:SetHeight(height) end
 function ZO_ComboBox:SetHideDropdownCallback(callback) end
+function ZO_ComboBox.SetItemEntryCustomTemplate(itemEntry, entryTemplate) end
+function ZO_ComboBox:SetMaxSelections(maxNumSelections) end
+function ZO_ComboBox:SetMaxSelectionsErrorText(errorText) end
+function ZO_ComboBox:SetMultiSelectionTextFormatter(textFormatter) end
+function ZO_ComboBox:SetNoSelectionText(text) end
+function ZO_ComboBox:SetOnSelectionBlockedCallback(callback) end
+function ZO_ComboBox:SetSelected(index, ignoreCallback) end
+function ZO_ComboBox:GetSelectionBlockedErrorText() end
+function ZO_ComboBox:SetSpacing(spacing) end
+function ZO_ComboBox:ShowDropdownInternal() end
+function ZO_ComboBox:ShowDropdownOnMouseUp() end
+function ZO_ComboBox:UnhighlightLabel(labelControl, data) end
+
+function ZO_ComboBox_Disable(container) end
 function ZO_ComboBox_DropdownClicked(container) end
+function ZO_ComboBox_Enable(container) end
+function ZO_ComboBox_HideDropdown(container) end
+--- @param container ZO_ComboBox_Control
+--- @return ZO_ComboBox
+function ZO_ComboBox_ObjectFromContainer(container) end
+function ZO_ComboBox_OpenDropdown(container) end
+
+-------------------------------------------------------------------------------
+--- @class ZO_ComboBoxDropdown_Keyboard_Entry: ZO_EntryData, Control
+--- @field m_label LabelControl :GetNamedChild("Label")
+--- @field m_ownerZO_ComboBox ZO_ComboBoxDropdown_Keyboard.owner
+--- @field m_data any? data from ZO_ComboBoxDropdown_Keyboard:SetupEntryBase(control, data, list)
+--- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard
+--- @field m_index any from ZO_ComboBoxDropdown_Keyboard:CreateScrollableEntry(item, index, entryType)
+--- @field m_owner ZO_ComboBox ZO_ComboBoxDropdown_Keyboard.owner
+--- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard self
+
+--- @class ZO_ComboBoxDropdown_Keyboard: ZO_InitializingObject
+--- @field control ZO_ComboBox_Control
+--- @field scrollControl ZO_ScrollList control:GetNamedChild("Scroll")
+--- @field spacing integer 0
+--- @field nextScrollTypeId integer DEFAULT_LAST_ENTRY_ID + 1
+--- @field owner ZO_ComboBox
+ZO_ComboBoxDropdown_Keyboard = nil
+
+function ZO_ComboBoxDropdown_Keyboard:Initialize(control) end
+function ZO_ComboBoxDropdown_Keyboard:AddCustomEntryTemplate(entryTemplate, entryHeight, setupFunction) end
+--- @return ZO_EntryData
+function ZO_ComboBoxDropdown_Keyboard:CreateScrollableEntry(item, index, entryType) end
+function ZO_ComboBoxDropdown_Keyboard.InitializeFromControl(control) end
+--- @param comboBox ZO_ComboBox
+--- @return boolean
+function ZO_ComboBoxDropdown_Keyboard:IsOwnedByComboBox(comboBox) end
+function ZO_ComboBoxDropdown_Keyboard:IsHidden() end
+function ZO_ComboBoxDropdown_Keyboard:SetHidden(isHidden) end
+function ZO_ComboBoxDropdown_Keyboard:IsMouseOverControl() end
+function ZO_ComboBoxDropdown_Keyboard:OnMouseEnterEntry(control) end
+function ZO_ComboBoxDropdown_Keyboard:OnMouseExitEntry(control) end
+function ZO_ComboBoxDropdown_Keyboard:OnEntrySelected(control) end
+function ZO_ComboBoxDropdown_Keyboard.OnClicked(control, button, upInside) end
+function ZO_ComboBoxDropdown_Keyboard.OnEntryMouseEnter(control) end
+function ZO_ComboBoxDropdown_Keyboard.OnEntryMouseExit(control) end
+function ZO_ComboBoxDropdown_Keyboard.OnEntryMouseUp(control, button, upInside) end
+function ZO_ComboBoxDropdown_Keyboard:Refresh(item) end
+function ZO_ComboBoxDropdown_Keyboard:SetSpacing(spacing) end
+function ZO_ComboBoxDropdown_Keyboard:SetupEntryLabel(labelControl, data) end
+function ZO_ComboBoxDropdown_Keyboard:SetupEntryBase(control, data, list) end
+function ZO_ComboBoxDropdown_Keyboard:SetupEntry(control, data, list) end
+function ZO_ComboBoxDropdown_Keyboard:SetupScrollList() end
+function ZO_ComboBoxDropdown_Keyboard:Show(comboBox, itemTable, minWidth, maxHeight, spacing) end
+
 
 -------------------------------------------------------------------------------
 --- @class ZO_ScrollableComboBox
@@ -1560,7 +1793,7 @@ DIRECTIONAL_INPUT  = {}
 CLIENT_INPUT  = {}
 
 -------------------------------------------------------------------------------
---- @class ZO_EditBox
+--- @class ZO_EditBox: ZO_CallbackObject
 ZO_EditBox = {}
 --- @return ZO_EditBox
 function ZO_EditBox:New(...) end
@@ -1576,7 +1809,7 @@ function ZO_EditBox:TakeFocus() end
 function ZO_EditBox:LoseFocus() end
 
 -------------------------------------------------------------------------------
---- @class ZO_SavingEditBox
+--- @class ZO_SavingEditBox: ZO_CallbackObject
 ZO_SavingEditBox = {}
 --- @return ZO_SavingEditBox
 function ZO_SavingEditBox:New(...) end
@@ -1704,6 +1937,22 @@ function ZO_FractionDisplay:SetHorizontalAlignment(alignment) end
 function ZO_FractionDisplay:SetValues(numerator, denominator) end
 
 -------------------------------------------------------------------------------
+--- @class ZO_GameMenu_Base: ZO_Object
+--- @field control ZO_GameMenu_InGame
+--- @field headerControls table<string, Control>
+-- @field navigationTree any?
+ZO_GameMenu_Base = {}
+
+--- @class ZO_GameMenu_InGame
+--- @field gameMenu ZO_GameMenu_Base
+--- @field owner ZO_GameMenu_Base
+ZO_GameMenu_InGame = {}
+ZO_GameMenu_InGame.gameMenu.control = ZO_GameMenu_InGame
+
+function ZO_GameMenu_AddControlsPanel(data) end
+function ZO_GameMenu_AddSettingPanel(data) end
+
+-------------------------------------------------------------------------------
 --- @class ZO_GamepadSlider
 ZO_GamepadSlider = {}
 function ZO_GamepadSlider:Initialize() end
@@ -1740,9 +1989,9 @@ function ZO_HiddenReasons:SetShownForReason(reason, shown) end
 function ZO_HiddenReasons:IsHidden() end
 
 -------------------------------------------------------------------------------
---- @class ZO_HorizontalMenu
-ZO_HorizontalMenu = {}
---- @return ZO_HorizontalMenu
+--- @class ZO_Horizontal_Menu
+ZO_Horizontal_Menu = {}
+--- @return ZO_Horizontal_Menu
 function ZO_Horizontal_Menu:New(...) end
 --- @param control Control
 function ZO_Horizontal_Menu:Initialize(control, anchorStyle) end
@@ -2430,7 +2679,7 @@ function ZO_ParametricScrollList:WhenInactiveSetTargetControlHidden(hidden) end
 function ZO_ParametricScrollList_OnMouseWheel(control, delta) end
 -------------------------------------------------------------------------------
 --- @class ZO_Particle
-ZO_Particle = new
+ZO_Particle = {}
 --- @return ZO_Particle
 function ZO_Particle:New(...) end
 function ZO_Particle:Initialize() end
@@ -2619,8 +2868,8 @@ function ZO_SmoothCycleGenerator:GetValue(i) end
 -------------------------------------------------------------------------------
 --- @class ZO_PixelUnitControl
 ZO_PixelUnitControl = {}
---- @return ZO_PixelUnitControl
 --- @param control Control
+--- @return ZO_PixelUnitControl
 function ZO_PixelUnitControl:New(control, pixelSource, baseObject) end
 --- @param control Control
 function ZO_PixelUnitControl:Initialize(control, pixelSource) end
@@ -2795,6 +3044,14 @@ function ZO_RecentMessages:Update(timeNowMilliseconds) end
 function ZO_RecentMessages:ShouldDisplayMessage(message) end
 
 -------------------------------------------------------------------------------
+--- @class ZO_ScrollingSavingEditBox
+ZO_ScrollingSavingEditBox = {}
+--- @return ZO_ScrollingSavingEditBox
+function ZO_ScrollingSavingEditBox:New(...) end
+function ZO_ScrollingSavingEditBox:Initialize(control) end
+function ZO_ScrollingSavingEditBox:SetEditing(editing, forceUpdate) end
+
+-------------------------------------------------------------------------------
 --- @class ZO_StackFragmentGroup
 ZO_StackFragmentGroup = {}
 --- @return ZO_StackFragmentGroup
@@ -2876,7 +3133,7 @@ function ZO_RemoteScene:AreFragmentsDoneTransitioning() end
 function ZO_RemoteScene:OnRemoteSceneFinishedFragmentTransition(sequenceNumber) end
 
 -------------------------------------------------------------------------------
---- @class ZO_SceneFragment
+--- @class ZO_SceneFragment: ZO_CallbackObject
 ZO_SceneFragment = {}
 --- @return ZO_SceneFragment
 function ZO_SceneFragment:New(...) end
@@ -2910,16 +3167,14 @@ function ZO_SceneFragment:ComputeIfFragmentShouldShow() end
 function ZO_SceneFragment:Refresh(customShowParam, customHideParam, asAResultOfSceneStateChange, refreshedForScene) end
 
 -------------------------------------------------------------------------------
---- @class ZO_SimpleSceneFragment
+--- @class ZO_SimpleSceneFragment: ZO_SceneFragment
 ZO_SimpleSceneFragment = {}
 --- @return ZO_SimpleSceneFragment
 function ZO_SimpleSceneFragment:New(...) end
 function ZO_SimpleSceneFragment:Initialize(control) end
-function ZO_SimpleSceneFragment:Show() end
-function ZO_SimpleSceneFragment:Hide() end
 
 -------------------------------------------------------------------------------
---- @class ZO_AnimatedSceneFragment
+--- @class ZO_AnimatedSceneFragment: ZO_SceneFragment
 ZO_AnimatedSceneFragment = {}
 function AcquireAnimation(animationTemplate) end
 function ReleaseAnimation(animationTemplate, key) end
@@ -2927,50 +3182,59 @@ function ReleaseAnimation(animationTemplate, key) end
 function ZO_AnimatedSceneFragment:New(...) end
 --- @param control Control
 function ZO_AnimatedSceneFragment:Initialize(animationTemplate, control, alwaysAnimate, duration) end
+--- @return AnimationObject
 function ZO_AnimatedSceneFragment:GetAnimation() end
+--- @return Control
 function ZO_AnimatedSceneFragment:GetControl() end
 function ZO_AnimatedSceneFragment:AddInstantScene(scene) end
 function ZO_AnimatedSceneFragment:IsAnimatedInCurrentScene() end
-function ZO_AnimatedSceneFragment:Show() end
-function ZO_AnimatedSceneFragment:Hide() end
 
 -------------------------------------------------------------------------------
---- @class ZO_FadeSceneFragment
+--- @class ZO_FadeSceneFragment: ZO_AnimatedSceneFragment
 ZO_FadeSceneFragment = {}
---- @return ZO_FadeSceneFragment
 --- @param control Control
+--- @return ZO_FadeSceneFragment
 function ZO_FadeSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromLeftSceneFragment
+--- @class ZO_TranslateFromLeftSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromLeftSceneFragment = {}
---- @return ZO_TranslateFromLeftSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromLeftSceneFragment
 function ZO_TranslateFromLeftSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromRightSceneFragment
+--- @class ZO_TranslateFromRightSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromRightSceneFragment = {}
---- @return ZO_TranslateFromRightSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromRightSceneFragment
 function ZO_TranslateFromRightSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromBottomSceneFragment
+--- @class ZO_TranslateFromBottomSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromBottomSceneFragment = {}
---- @return ZO_TranslateFromBottomSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromBottomSceneFragment
 function ZO_TranslateFromBottomSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_TranslateFromTopSceneFragment
+--- @class ZO_TranslateFromTopSceneFragment: ZO_AnimatedSceneFragment
 ZO_TranslateFromTopSceneFragment = {}
---- @return ZO_TranslateFromTopSceneFragment
 --- @param control Control
+--- @return ZO_TranslateFromTopSceneFragment
 function ZO_TranslateFromTopSceneFragment:New(control, alwaysAnimate, duration) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ConveyorSceneFragment
+--- @class ZO_CustomAnimationSceneFragment: ZO_SceneFragment
+ZO_CustomAnimationSceneFragment = {}
+--- @param control Control
+function ZO_CustomAnimationSceneFragment:Initialize(control, showAnimationTemplate, hideAnimationTemplate) end
+function ZO_CustomAnimationSceneFragment:GetShowAnimation() end
+function ZO_CustomAnimationSceneFragment:GetHideAnimation() end
+function ZO_CustomAnimationSceneFragment:GetControl() end
+
+-------------------------------------------------------------------------------
+--- @class ZO_ConveyorSceneFragment: ZO_SceneFragment
 ZO_ConveyorSceneFragment = {}
 --- @return ZO_ConveyorSceneFragment
 function ZO_ConveyorSceneFragment:New(...) end
@@ -2987,8 +3251,6 @@ function ZO_ConveyorSceneFragment:AddInstantScene(scene) end
 function ZO_ConveyorSceneFragment:IsAnimatedInCurrentScene() end
 function ZO_ConveyorSceneFragment:GetBackgroundFragment() end
 function ZO_ConveyorSceneFragment:ChooseAndPlayAnimation() end
-function ZO_ConveyorSceneFragment:Show() end
-function ZO_ConveyorSceneFragment:Hide() end
 function ZO_ConveyorSceneFragment_SetMovingForward() end
 function ZO_ConveyorSceneFragment_SetMovingBackward() end
 function ZO_ConveyorSceneFragment_ResetMovement() end
@@ -3001,7 +3263,7 @@ function ZO_HideableSceneFragmentMixin:IsHiddenForReason(reason) end
 function ZO_MixinHideableSceneFragment(self) end
 
 -------------------------------------------------------------------------------
---- @class ZO_HUDFadeSceneFragment
+--- @class ZO_HUDFadeSceneFragment: ZO_SceneFragment
 ZO_HUDFadeSceneFragment = {}
 --- @return ZO_HUDFadeSceneFragment
 function ZO_HUDFadeSceneFragment:New(...) end
@@ -3014,13 +3276,12 @@ function ZO_HUDFadeSceneFragment:OnShown() end
 function ZO_HUDFadeSceneFragment:OnHidden() end
 
 -------------------------------------------------------------------------------
---- @class ZO_AnchorSceneFragment
+--- @class ZO_AnchorSceneFragment: ZO_SceneFragment
 ZO_AnchorSceneFragment = {}
 --- @return ZO_AnchorSceneFragment
 function ZO_AnchorSceneFragment:New(...) end
 --- @param control Control
 function ZO_AnchorSceneFragment:Initialize(control, anchor) end
-function ZO_AnchorSceneFragment:Show() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_BackgroundFragment
@@ -3036,13 +3297,11 @@ function ZO_BackgroundFragment:SetHighlightHidden(hidden) end
 function ZO_BackgroundFragment:FadeRightDivider(fadeIn, instant) end
 
 -------------------------------------------------------------------------------
---- @class ZO_ActionLayerFragment
+--- @class ZO_ActionLayerFragment: ZO_SceneFragment
 ZO_ActionLayerFragment = {}
 --- @return ZO_ActionLayerFragment
 function ZO_ActionLayerFragment:New(...) end
 function ZO_ActionLayerFragment:Initialize(actionLayerName) end
-function ZO_ActionLayerFragment:Show() end
-function ZO_ActionLayerFragment:Hide() end
 
 -------------------------------------------------------------------------------
 --- @class ZO_SceneGroup
@@ -3196,7 +3455,7 @@ function ZO_SceneGraph:OnUpdate() end
 function ZO_SceneGraph:Render(node, dirtyUpstream) end
 
 -------------------------------------------------------------------------------
---- @class ZO_SceneGraphNode
+--- @class ZO_SceneGraphNode: ZO_Object
 ZO_SceneGraphNode = {}
 --- @return ZO_SceneGraphNode
 function ZO_SceneGraphNode:New(...) end
@@ -3268,6 +3527,77 @@ function ZO_SceneNodeRing:Update(delta) end
 -------------------------------------------------------------------------------
 --[ZO_ScriptProfiler]
 function ZO_ScriptProfiler_GenerateReport() end
+
+-------------------------------------------------------------------------------
+--- @class ZO_Scroll
+--- @field scroll ZO_ScrollList GetControl(self, "Scroll"); self.scroll:SetHandler("OnRectHeightChanged", ZO_Scroll_ScrollOrBarOnHeightChanged)
+--- @field scrollbar Control GetControl(self, "ScrollBar"); :SetHandler("OnRectHeightChanged", ZO_Scroll_ScrollOrBarOnHeightChanged)
+--- @field scrollUpButton Control GetControl(self.scrollbar, "Up"); :SetHandler("OnMouseDown", ZO_ScrollUp_OnMouseDown)
+--- @field scrollDownButton Control GetControl(self.scrollbar, "Down"); :SetHandler("OnMouseDown", ZO_ScrollDown_OnMouseDown)
+--- @field isScrollBarEthereal boolean
+--- @field useScrollbar boolean
+--- @field hideScrollBarOnDisabled boolean
+--- @field useFadeGradient boolean
+--- @field animation AnimationObject CreateScrollAnimation(self)[0]
+--- @field timeline AnimationTimeline CreateScrollAnimation(self)[1]
+
+--- @param self ZO_Scroll
+function ZO_Scroll_Initialize(self) end
+
+--- @class ZO_ScrollList_DataType
+--- @field height integer
+--- TODO: is any of this correct? lol
+--- @field setupCallback fun(control: Control, data, self: ZO_ScrollList|ZO_ComboBox)
+-- @field hideCallback any?
+--- @field pool ZO_EntryDataPool
+--- @field selectSound string
+--- @field selectable boolean
+
+--- @class ZO_ScrollList: Control
+--- @field dataTypes ZO_ScrollList_DataType[]
+--- @field contents Control GetControl(self, "Contents")
+--- @field scrollbar Control GetControl(self, "ScrollBar")
+
+--Adds a new control type for the list to handle. It must maintain a consistent size.
+--- @param self ZO_ScrollList
+--- @param typeId any A unique identifier to give to CreateDataEntry when you want to add an element of this type.
+--- @param templateName string The name of the virtual control template that will be used to hold this data
+--- @param height integer The control height
+--- @param setupCallback fun(control: Control, data, self: ZO_ScrollList) The function that will be called when a control of this type becomes visible.
+--- @param dataTypeSelectSound string|nil An optional sound to play when a row of this data type is selected.
+--- @param resetControlCallback fun(control: ZO_ScrollList)|nil An optional callback when the datatype control gets reset.
+function ZO_ScrollList_AddDataType(self, typeId, templateName, height, setupCallback, hideCallback, dataTypeSelectSound, resetControlCallback) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_Clear(self) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_Commit(self) end
+function ZO_ScrollList_CreateDataEntry(typeId, data, categoryId) end
+--- @param self ZO_ScrollList
+--- @param selectionCallback fun(previouslySelectedData, self.selectedData, reselectingDuringRebuild)
+function ZO_ScrollList_EnableSelection(self, selectionTemplate, selectionCallback) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_GetData(self) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_GetDataList(self) end
+--- @param self ZO_ScrollList
+--- @return ZO_ScrollList_DataType
+function ZO_ScrollList_GetDataTypeTable(self, typeId) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_GetHeight(self) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_MouseEnter(self, control) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_MouseExit(self, control) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_RefreshVisible(self, data, overrideSetupCallback) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_SelectData(self, data, control, reselectingDuringRebuild, animateInstantly) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_SetHeight(self, height) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_ScrollRelative(self, delta, onScrollCompleteCallback, animateInstantly) end
+--- @param self ZO_ScrollList
+function ZO_ScrollList_ScrollAbsolute(self, value) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_SelectionIndicator
@@ -3901,6 +4231,22 @@ function ZO_TimerBar:Stop() end
 function ZO_TimerBar:Update(time) end
 
 -------------------------------------------------------------------------------
+--- @class InformationTooltipMixin
+InformationTooltipMixin = {}
+function InformationTooltipMixin:AddDivider() end
+function InformationTooltipMixin:AddMoney(tooltip, cost, text, hasEnough) end
+function InformationTooltipMixin:AppendDelveInfo(pin) end
+function InformationTooltipMixin:AppendKillLocationInfo(pin) end    
+function InformationTooltipMixin:AppendWayshrineTooltip(pin) end
+function InformationTooltipMixin:AppendSuggestionActivity(pin) end
+
+--- @class InformationTooltip: InformationTooltipMixin zo_mixin(InformationTooltip, InformationTooltipMixin) in ZO_WorldMapManager:Initialize(control)
+InformationTooltip = {}
+
+function InitializeTooltip(tooltip, owner, point, offsetX, offsetY, relativePoint) end
+function SetTooltipText(tooltip, text, color, colorG, colorB) end
+function ClearTooltip(tooltip) end
+
 --- @class ZO_TooltipStyledObject
 ZO_TooltipStyledObject = {}
 function ZO_TooltipStyledObject:Initialize(parent) end
@@ -4025,8 +4371,8 @@ function ZO_ResizingFloatingScrollTooltip_Gamepad_OnInitialized(control, tooltip
 -------------------------------------------------------------------------------
 --- @class ZO_Tree
 ZO_Tree = {}
---- @return ZO_Tree
 --- @param control Control
+--- @return ZO_Tree
 function ZO_Tree:New(control, defaultIndent, defaultSpacing, width) end
 function ZO_Tree:OnScreenResized() end
 function ZO_Tree:Reset() end
@@ -4047,10 +4393,15 @@ function ZO_Tree:Commit(nodeToSelect) end
 function ZO_Tree:SetEnabled(enabled) end
 function ZO_Tree:IsEnabled() end
 function ZO_Tree:RefreshVisible() end
+--- @param currentTreeNode ZO_TreeNode
 function ZO_Tree:ComputeEndOfPathControlFinalBottomOffset(currentTreeNode, pathToSelectedNode) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:SetScrollToTargetNode(treeNode) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:ToggleNode(treeNode) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:SetNodeOpen(treeNode, open, userRequested) end
+--- @param treeNode ZO_TreeNode
 function ZO_Tree:SelectNode(treeNode, reselectingDuringRebuild, bringParentIntoView) end
 function ZO_Tree:ClearSelectedNode() end
 function ZO_Tree:GetSelectedData() end
@@ -4065,7 +4416,7 @@ function ZO_Tree:IsAnimated() end
 function ZO_Tree:FindScrollControl() end
 
 -------------------------------------------------------------------------------
---- @class ZO_TreeNode
+--- @class ZO_TreeNode: ZO_Object
 ZO_TreeNode = {}
 --- @return ZO_TreeNode
 function ZO_TreeNode:New(tree, templateInfo, parentNode, data, childIndent, childSpacing, open) end
@@ -4093,6 +4444,7 @@ function ZO_TreeNode:GetWidth() end
 function ZO_TreeNode:GetTotalWidth() end
 function ZO_TreeNode:GetChildContainer() end
 function ZO_TreeNode:IsLeaf() end
+--- @return ZO_Tree
 function ZO_TreeNode:GetTree() end
 function ZO_TreeNode:GetChildrenTotalHeight() end
 function ZO_TreeNode:UpdateChildrenHeight() end
@@ -4103,6 +4455,7 @@ function ZO_TreeNode:UpdateCurrentChildrenHeightsToRoot() end
 function ZO_TreeNode:UpdateAllChildrenHeightsAndCurrentHeights() end
 function ZO_TreeNode:GetControl() end
 function ZO_TreeNode:GetParent() end
+--- @return ZO_TreeNode[]
 function ZO_TreeNode:GetChildren() end
 function ZO_TreeNode:GetChildSpacing() end
 function ZO_TreeNode:GetChildIndent() end
@@ -4192,8 +4545,10 @@ function ZO_ValidAccountNameInstructions:New(...) end
 function ZO_ValidAccountNameInstructions:AddInstructions() end
 
 -------------------------------------------------------------------------------
---- @class ZO_GroupList_Manager: ZO_SocialManger
---- @field ZO_Group_IsGroupUnitTag function(string unitTag): boolean
+
+--- @class ZO_SocialManager
+
+--- @class ZO_GroupList_Manager: ZO_SocialManager
 --- @field masterList {}[]
 GROUP_LIST_MANAGER = {}
 
@@ -4265,87 +4620,12 @@ function ZO_Options_OnMouseEnter(ctrl) end
 --- @param ctrl Control
 function ZO_Options_OnMouseExit(ctrl) end
 
---- @alias SafeStringKey
---- | `SI_ADDON_MANAGER_ADVANCED_UI_ERRORS` = 152 = "Advanced UI Errors"
---- | `SI_ADDON_MANAGER_AUTHOR` = 149 = "Author"
---- | `SI_ADDON_MANAGER_CHARACTER_SELECT_ALL` = 151 = "All Characters"
---- | `SI_ADDON_MANAGER_CHARACTER_SELECT_LABEL` = 150 = "Configure for:"
---- | `SI_ADDON_MANAGER_DEPENDENCIES` = 153 = "Required Add-Ons:"
---- | `SI_ADDON_MANAGER_DEPENDENCY` = 154 = "Dependency"
---- | `SI_ADDON_MANAGER_DEPENDENCY_DISABLED` = 162 = "<<1>> (Disabled)"
---- | `SI_ADDON_MANAGER_DEPENDENCY_MISSING` = 161 = "<<1>> (Missing)"
---- | `SI_ADDON_MANAGER_DEPENDENCY_TOO_LOW_VERSION` = 163 = "<<1>> (Newer Version Required)"
---- | `SI_ADDON_MANAGER_ENABLED` = 147 = "Enabled"
---- | `SI_ADDON_MANAGER_NAME` = 146 = "Name"
---- | `SI_ADDON_MANAGER_NOTES` = 148 = "Notes"
---- | `SI_ADDON_MANAGER_RELOAD` = 159 = "Reload UI"
---- | `SI_ADDON_MANAGER_SECTION_LIBRARIES` = 145 = "Libraries"
---- | `SI_ADDON_MANAGER_STATE_STRING` = 155 = "<<1>>, <<2>>"
---- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_ALL` = 156 = "This add-on is enabled for all your characters."
---- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_NONE` = 157 = "This add-on is not enabled for any of your characters."
---- | `SI_ADDON_MANAGER_TOOLTIP_ENABLED_SOME` = 158 = "This add-on is enabled for some of your characters."
---- | `SI_ADDON_MANAGER_VIEW_EULA` = 160 = "View EULA"
---- | `SI_DIALOG_CANCEL` = 336 = "Cancel"
---- | `SI_DIALOG_CLOSE` = 341 = "Close"
---- | `SI_DIALOG_CONFIRM` = 340 = "Confirm"
---- | `SI_INTERFACE_OPTIONS_RESET_TO_DEFAULT_TOOLTIP` = 6041 = "Reset to Default"
---- | `SI_OPTIONS_RESET` = 359 = "Reset"
---- | `SI_OPTIONS_RESET_ALL_PROMPT` = 358 = "Are you sure you want to reset all options panels to their default settings?"
---- | `SI_OPTIONS_RESET_PROMPT = 357` = "Are you sure you want to reset this options panel to its default settings?"
---- | `SI_OPTIONS_RESET_TITLE = 356` = "Reset to Defaults"
---- | `SI_PLAYER_NAME` = 184 "<<1>>"
---- | `SI_UNIT_NAME` = 165 "<<1>>"
-SI_ADDON_MANAGER_ADVANCED_UI_ERRORS = 152 -- "Advanced UI Errors"
-SI_ADDON_MANAGER_AUTHOR = 149 -- "Author"
-SI_ADDON_MANAGER_CHARACTER_SELECT_ALL = 151 -- "All Characters"
-SI_ADDON_MANAGER_CHARACTER_SELECT_LABEL = 150 -- "Configure for:"
-SI_ADDON_MANAGER_DEPENDENCIES = 153 -- "Required Add-Ons:"
-SI_ADDON_MANAGER_DEPENDENCY = 154 -- "Dependency"
-SI_ADDON_MANAGER_DEPENDENCY_DISABLED = 162 -- "<<1>> (Disabled)"
-SI_ADDON_MANAGER_DEPENDENCY_MISSING = 161 -- "<<1>> (Missing)"
-SI_ADDON_MANAGER_DEPENDENCY_TOO_LOW_VERSION = 163 -- "<<1>> (Newer Version Required)"
-SI_ADDON_MANAGER_ENABLED = 147 -- "Enabled"
-SI_ADDON_MANAGER_NAME = 146 -- "Name"
-SI_ADDON_MANAGER_NOTES = 148 -- "Notes"
-SI_ADDON_MANAGER_RELOAD = 159 -- "Reload UI"
-SI_ADDON_MANAGER_SECTION_LIBRARIES = 145 --Libraries"
-SI_ADDON_MANAGER_STATE_STRING = 155 -- "<<1>>, <<2>>"
-SI_ADDON_MANAGER_TOOLTIP_ENABLED_ALL = 156 -- "This add-on is enabled for all your characters."
-SI_ADDON_MANAGER_TOOLTIP_ENABLED_NONE = 157 -- "This add-on is not enabled for any of your characters."
-SI_ADDON_MANAGER_TOOLTIP_ENABLED_SOME = 158 -- "This add-on is enabled for some of your characters."
-SI_ADDON_MANAGER_VIEW_EULA = 160 -- "View EULA"
-SI_DIALOG_CANCEL = 336 --= "Cancel"
-SI_DIALOG_CLOSE = 341 --= "Close"
-SI_DIALOG_CONFIRM = 340 --= "Confirm"
-SI_INTERFACE_OPTIONS_RESET_TO_DEFAULT_TOOLTIP = 6041 --= "Reset to Default"
-SI_OPTIONS_RESET = 359 --= "Reset"
-SI_OPTIONS_RESET_ALL_PROMPT = 358 --= "Are you sure you want to reset all options panels to their default settings?"
-SI_OPTIONS_RESET_PROMPT = 357 --= "Are you sure you want to reset this options panel to its default settings?"
-SI_OPTIONS_RESET_TITLE = 356 --= "Reset to Defaults"
-SI_PLAYER_NAME = 184 --= "<<1>>"
-SI_UNIT_NAME = 165 --= "<<1>>"
-
 --- @type WindowManager
 WINDOW_MANAGER = {}
---- @type ZO_ColorDef
-ZO_DEFAULT_DISABLED_COLOR = {a = 1,	b = 0.3, g = 0.3, r = 0.3}
---- @type ZO_ColorDef
-ZO_DEFAULT_ENABLED_COLOR = {a = 1, b = 1, g = 1, r = 1}
 
 ESO_Dialogs = {}
 SLASH_COMMANDS = {}
 ZO_Ingame_SavedVariables = {}
 
-MAX_TEXT_CHAT_INPUT_CHARACTERS = 350
-
-ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
-ZO_VALID_LINK_TYPES_CHAT = {
-	ability = true,
-	achievement = true,
-	collectible = true,
-	crafted_ability = true,
-	guild = true,
-	help = true,
-	housing = true,
-	item = true,
-}
+ZO_SORT_BY_NAME = {}
+ZO_SORT_BY_NAME_NUMERIC = {}

@@ -4,38 +4,59 @@
 	to generate lua files for IDE helpers.
 */
 
-include_once dirname(__FILE__)."/esouiAPIDoc.php";
-
 class globals_api
 {
     public function __construct()
     {
-        global $esoui_API_doc_filename;
-        $array = file($esoui_API_doc_filename, FILE_IGNORE_NEW_LINES);
-        $classes = $this->parseClasses($array);
         //Read the file copied from live/SavedVariables/DumpVars.lua, which was created for addon /live/AddOns/DumpVars
         //and copied over to the _out/ folder as new filename DumpVars_SV.lua
-        $array2 = file("_out/_noRelease/DumpVars_SV.lua", FILE_IGNORE_NEW_LINES);
-        $data = $this->parseData($array2);
+        $array = file("_out/_noRelease/DumpVars_SV.lua", FILE_IGNORE_NEW_LINES);
+        $data = $this->parseData($array);
 
-        $out = "";
-        $constants = $data['constants'];
-        foreach ($classes as $class => $method) {
-            if ($class != 'Global') {
-                $out .= "--- @alias $class\n";
-                foreach ($method as $var) {
-                    if (isset($constants[$var])) {
-                        $out .= "--- | `$var` = $constants[$var]\n";
-                    }
-                }
-            }
-            foreach ($method as $var) {
-                if (isset($constants[$var])) {
-                    $out .= "$var = $constants[$var]\n";
-                }
-            }
-            $out .= "\n";
+        $out = "-- Global constants\n";
+        $list = [];
+        foreach ($data['constants'] as $var => $val) {
+            $list[] = "$var = $val";
         }
+        sort($list);
+        foreach ($list as $idx => $line) {
+            if (strstr($line, '["r"] = ') and strstr($line, '["g"] = ') and strstr($line, '["b"] = ') and strstr($line, '["a"] = ')) {
+                $list[$idx] = "--- @type ZO_ColorDef\n" . $line;
+            }
+        }
+        $out .= implode("\n", $list) . "\n\n";
+
+        $list = [];
+        foreach ($data['enums'] as $enumName => $values) {
+            // $alias = "--- @alias $enumName\n";
+            $alias = "--- @alias $enumName ";
+            // Sort by enum name before doing anything
+            $list2 = [];
+            $list3 = [];
+            foreach ($values as $var => $val) {
+                // TODO: restore this to $list2[] = ["$var = $val\n", "--- | `$var` = $val\n"]; if https://github.com/LuaLS/lua-language-server/issues/2732 is fixed
+                $list2[] = ["$var = $val\n"];
+                $list3[$val] = "$val";
+            }
+            sort($list2);
+            sort($list3);
+
+            // In sorted enum name order, assemble the alias and value blocks
+            $vars = "";
+            $aliases = implode('|', $list3);
+            foreach ($list2 as $pair) {
+                $vars .= $pair[0];
+                // $aliases .= $pair[1];
+            }
+            // $list[$enumName] = $vars . $alias . substr($aliases, 0, -1) . "\n";
+            $list[] = $vars . $alias . $aliases . "\n";
+        }
+        // ksort($list)
+        sort($list);
+        $out .= implode("\n", $list) . "\n";
+        /*foreach ($list as $enumName => $lines) {
+            $out .= $lines . "\n";
+        }*/
         file_put_contents("_out/eso-api_globals.lua", $out);
 
         /* Could be deactivated as whole list of sounds can be found here:
@@ -61,90 +82,67 @@ class globals_api
         }
     }
 
-
-    public function parseClasses($array)
-    {
-        $process = false;
-        $tag = null;
-        $objects = [];
-
-        foreach ($array as $line) {
-            $matches = [];
-            if (preg_match('/h2\. (?P<tag>.*)?/', $line, $matches)) {
-                if ($matches['tag'] == "Global Variables") {
-                    $process = true;
-                } else {
-                    $process = false;
-                }
-            }
-
-            if ($process) {
-                $matches = null;
-                if (preg_match('/h5\. (?P<section>.*)/', $line, $matches)) {
-                    // First wrap up the previous section
-                    if ($tag) {
-                        sort($objects[$tag]);
-                        $count = count($objects[$tag]);
-                        if ($count >= 2) {
-                            // Calculate the greatest common prefix https://stackoverflow.com/a/35838357/7376471
-                            $s1 = $objects[$tag][0];        // First string
-                            $s2 = $objects[$tag][$count-1]; // Last string
-                            $len = min(strlen($s1), strlen($s2));
-
-                            // While we still have strings to compare,
-                            // if the indexed character is the same in both strings,
-                            // increment the index. 
-                            for ($i=0; $i<$len && $s1[$i] == $s2[$i]; $i++);
-
-                            $prefix = substr($s1, 0, $i);
-                            // end of startoverflow
-
-                            if ($prefix != '') {
-                                $lastUnderscore = strrpos($prefix, '_');
-                                $prefix = substr($prefix, 0, $lastUnderscore+1);
-                                $objects[$tag][] = $prefix . 'MIN_VALUE';
-                                $objects[$tag][] = $prefix . 'MAX_VALUE';
-                                $objects[$tag][] = $prefix . 'ITERATION_BEGIN';
-                                $objects[$tag][] = $prefix . 'ITERATION_END';
-                            }
-                        }
-                    }
-                    
-                    // Then start the new section
-                    $tag = $matches['section'];
-                }
-
-                if ($tag) {
-                    $matches = null;
-                    if (preg_match('/\* (?P<var>.*)/', $line, $matches)) {
-                        $method = $matches['var'];
-                        $objects[$tag][] = $method;
-                    }
-                }
-            }
-        }
-        return $objects;
-    }
-
     public function parseData($array)
     {
-        $process = false;
-        //$tag = null;
         $data = [];
+        $cat = null;
+        $tag = null;
+        $val = "";
 
         foreach ($array as $line) {
             $matches = [];
-            if (preg_match('/\["(?P<key>.*)?"] =\s*$/', $line, $matches)) {
+            if (preg_match('/\["(?P<key>.*)?"\] =\s*$/', $line, $matches)) {
                 $key = $matches['key'];
-                if ($key == 'sounds' or $key == 'constants') {
-                    $process = true;
+                if ($key == 'sounds' or $key == 'constants' or $key == 'enums') {
+                    $cat = $key;
+                    $tag = null;
+                } else if ($cat == 'constants' or $cat == 'enums') {
+                    $tag = $key;
+                    $val = "";
                 } else {
-                    $process = false;
+                    $cat = null;
+                    $tag = null;
                 }
-            } else if ($process) {
+            } else if ($cat) {
                 $matches = null;
-                if (preg_match('/\["(?P<variable>.*)?"] = (?P<value>[^\s,]*)/', $line, $matches)) {
-                    $data[$key][$matches['variable']] = $matches['value'];
+                if ($cat == 'constants' and $tag) {
+                    // Assemble the value in $val
+                    $line = trim($line);
+                    if ($line[0] == '}') {
+                        // This is the end of the value, so pack it up
+                        $val = substr($val, 0, strrpos($val, ','));
+                        if (strstr($val, "\n")) {
+                            $val .= "\n";
+                        }
+                        $val .= '}';
+                        $data[$cat][$tag] = $val;
+                        $tag = null;
+                    } else {
+                        $matches2 = null;
+                        if (preg_match('/\[(\d+)\] = \1,/', $line, $matches2)) {
+                            $val .= $matches2[1] . ', ';
+                        } else {
+                            if ($line != '{') {
+                                $val .= "\n";
+                                    if (str_ends_with($line, ',')) {
+                                    // Remove trailing 0s if the value has decimals
+                                    if (strstr($line, '.')) {
+                                        $line = rtrim(rtrim($line, ','), '0') . ',';
+                                    }
+                                    $val .= "\t";
+                                }
+                            }
+                            $val .= $line;
+                        }
+                    }
+                } else if (preg_match('/\["(?P<variable>.*)?"\] = (?P<value>[^\s,]*)/', $line, $matches)) {
+                    if ($matches['variable'] != 'version') {
+                        if ($cat == 'enums') {
+                            $data[$cat][$tag][$matches['variable']] = $matches['value'];
+                        } else {
+                            $data[$cat][$matches['variable']] = $matches['value'];
+                        }
+                    }
                 }
             }
         }

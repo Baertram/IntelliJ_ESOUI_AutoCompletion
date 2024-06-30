@@ -14,12 +14,7 @@ class events_api
         $array = file($esoui_API_doc_filename, FILE_IGNORE_NEW_LINES);
         $methods = $this->parseClasses($array);
 
-        $out = "--- @alias Event ";
-        foreach ($methods as $function => $value) {
-            $out .= "`$function`|";
-        }
-        $out = substr($out, 0,-1) . "\n\n";
-        
+        $out = "--- @meta\n";
         foreach ($methods as $function => $value) {
             $docblock = "";
             $luablock = "function $function(eventId";
@@ -54,6 +49,12 @@ class events_api
 
             $out .= $docblock.$luablock."\n\n";
         }
+        
+        $out .= "--- @alias Event ";
+        foreach ($methods as $function => $value) {
+            $out .= "`$function`|";
+        }
+        $out = substr($out, 0,-1) . "\n\n";
 
         file_put_contents("_out/eso-api_events.lua", $out);
 
@@ -80,7 +81,7 @@ class events_api
             if ($process) {
                 $matches = null;
                 //Match event name with parameters
-                if (preg_match('/\* (?P<method>.*)?\((?P<params>(.*?))\)/', $line, $matches)) {
+                if (preg_match('/\* (?P<method>\S*)?\s*\((?P<params>(.*?))\)/', $line, $matches)) {
                     $matchesPriv = null;
                     $method = $matches['method'];
                     $methodClean = $matches['method'];
@@ -117,7 +118,7 @@ class events_api
                 else {
                     $matches = null;
                     //Only match event name without parameters
-                    if (preg_match('/\* (?P<method>.*)/', $line, $matches)) {
+                    if (preg_match('/\* (?P<method>\S*)/', $line, $matches)) {
                         $method = $matches['method'];
                         $methodClean = $matches['method'];
                         $objects[$methodClean] = $method;

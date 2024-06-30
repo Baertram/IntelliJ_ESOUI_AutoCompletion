@@ -1,3 +1,5 @@
+--- @meta
+
 --- @class AddOnManager: ZO_Object
 AddOnManager = {}
 --- @param relevantFilter string
@@ -143,10 +145,10 @@ function AnimationObject:SetEasingFunction(functionRef) end
 function AnimationObject:SetEnabled(enabled) end
 
 --- @param eventName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function AnimationObject:SetHandler(eventName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -907,11 +909,11 @@ function AnimationTimeline:PlayBackward() end
 --- @return void
 function AnimationTimeline:PlayForward() end
 
---- @param offsetMs integer
+--- @param offsetMs integer|nil
 --- @return void
 function AnimationTimeline:PlayFromEnd(offsetMs) end
 
---- @param offsetMs integer
+--- @param offsetMs integer|nil
 --- @return void
 function AnimationTimeline:PlayFromStart(offsetMs) end
 
@@ -950,10 +952,10 @@ function AnimationTimeline:SetCallbackOffset(callback, offset) end
 function AnimationTimeline:SetEnabled(enabled) end
 
 --- @param eventName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function AnimationTimeline:SetHandler(eventName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -1007,28 +1009,28 @@ function BackdropControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function BackdropControl:SetCenterColor(r, g, b, a) end
 
 --- @param filename string
---- @param tilingInterval layout_measurement
---- @param addressMode TextureAddressMode
+--- @param tilingInterval layout_measurement|nil
+--- @param addressMode TextureAddressMode|nil
 --- @return void
 function BackdropControl:SetCenterTexture(filename, tilingInterval, addressMode) end
 
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function BackdropControl:SetEdgeColor(r, g, b, a) end
 
 --- @param filename string
 --- @param edgeFileWidth integer
 --- @param edgeFileHeight integer
---- @param cornerSize layout_measurement
---- @param edgeFilePadding integer
+--- @param cornerSize layout_measurement|nil
+--- @param edgeFilePadding integer|nil
 --- @return void
 function BackdropControl:SetEdgeTexture(filename, edgeFileWidth, edgeFileHeight, cornerSize, edgeFilePadding) end
 
@@ -1084,14 +1086,14 @@ function ButtonControl:SetDesaturation(desaturation) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetDisabledFontColor(r, g, b, a) end
 
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetDisabledPressedFontColor(r, g, b, a) end
 
@@ -1130,7 +1132,7 @@ function ButtonControl:SetMouseOverBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetMouseOverFontColor(r, g, b, a) end
 
@@ -1141,7 +1143,7 @@ function ButtonControl:SetMouseOverTexture(textureFilename) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetNormalFontColor(r, g, b, a) end
 
@@ -1161,7 +1163,7 @@ function ButtonControl:SetPixelRoundingEnabled(pixelRoundingEnabled) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function ButtonControl:SetPressedFontColor(r, g, b, a) end
 
@@ -1183,7 +1185,7 @@ function ButtonControl:SetPressedTexture(textureFilename) end
 function ButtonControl:SetShowingHighlight(showingHighlight) end
 
 --- @param newState ButtonState
---- @param locked boolean
+--- @param locked boolean|nil
 --- @return void
 function ButtonControl:SetState(newState, locked) end
 
@@ -1341,8 +1343,8 @@ function CompassDisplayControl:SetScaleDropoffBehavior(pinType, closeScale, farS
 
 --- @class Control: ZO_Object
 Control = {}
---- @param event integer
---- @param filterParameter variant
+--- @param event Event
+--- @param filterParameter RegisterForEventFilterType
 --- @return boolean success
 function Control:AddFilterForEvent(event, filterParameter) end
 
@@ -1789,7 +1791,7 @@ function Control:ProjectRectToScreenAndComputeClampedAABBPoint(point) end
 --- @return number screenX, number screenY
 function Control:ProjectToScreen(normalizedX, normalizedY) end
 
---- @param event integer
+--- @param event Event
 --- @param callback function
 --- @return boolean success
 function Control:RegisterForEvent(event, callback) end
@@ -1844,15 +1846,15 @@ function Control:Set3DRenderSpaceUsesDepthBuffer(usesDepthBuffer) end
 function Control:SetAlpha(alpha) end --*protected-attributes*
 
 --- @param point AnchorPosition
---- @param relativeTo Control
---- @param relativePoint AnchorPosition
---- @param offsetX layout_measurement
---- @param offsetY layout_measurement
---- @param anchorConstrains AnchorConstrains
+--- @param relativeTo Control|nil
+--- @param relativePoint AnchorPosition|nil
+--- @param offsetX layout_measurement|nil
+--- @param offsetY layout_measurement|nil
+--- @param anchorConstrains AnchorConstrains|nil
 --- @return void
 function Control:SetAnchor(point, relativeTo, relativePoint, offsetX, offsetY, anchorConstrains) end --*protected-attributes*
 
---- @param anchorTargetControl Control
+--- @param anchorTargetControl Control|nil
 --- @return void
 function Control:SetAnchorFill(anchorTargetControl) end --*protected-attributes*
 
@@ -2002,10 +2004,10 @@ function Control:SetFlexShrink(shrink) end
 function Control:SetGaussianBlur(kernelSize, factor) end
 
 --- @param handlerName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function Control:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -2270,7 +2272,7 @@ function Control:SuggestWidth(width) end --*protected-attributes*
 --- @return void
 function Control:ToggleHidden() end --*protected-attributes*
 
---- @param event integer
+--- @param event Event
 --- @return boolean success
 function Control:UnregisterForEvent(event) end
 
@@ -2303,7 +2305,7 @@ function CooldownControl:SetDesaturation(desaturation) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function CooldownControl:SetFillColor(r, g, b, a) end
 
@@ -2463,7 +2465,7 @@ function EditControl:SetAsPassword(isPassword) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function EditControl:SetColor(r, g, b, a) end
 
@@ -2482,7 +2484,7 @@ function EditControl:SetDefaultText(defaultText) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function EditControl:SetDefaultTextColor(r, g, b, a) end
 
@@ -2522,12 +2524,12 @@ function EditControl:SetSelection(selectionStartIndex, selectionEndIndex) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function EditControl:SetSelectionColor(r, g, b, a) end
 
 --- @param text string
---- @param suppressCallbackHandler boolean
+--- @param suppressCallbackHandler boolean|nil
 --- @return void
 function EditControl:SetText(text, suppressCallbackHandler) end
 
@@ -2630,7 +2632,7 @@ function LabelControl:GetVerticalAlignment() end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function LabelControl:SetColor(r, g, b, a) end
 
@@ -2693,7 +2695,7 @@ function LabelControl:SetStrikethrough(strikethrough) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function LabelControl:SetStyleColor(r, g, b, a) end
 
@@ -2755,7 +2757,7 @@ function LineControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function LineControl:SetColor(r, g, b, a) end
 
@@ -2913,7 +2915,7 @@ function PolygonControl:SetBorderBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function PolygonControl:SetBorderColor(r, g, b, a) end
 
@@ -2942,7 +2944,7 @@ function PolygonControl:SetCenterBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function PolygonControl:SetCenterColor(r, g, b, a) end
 
@@ -3077,7 +3079,7 @@ function SliderControl:SetBackgroundTopTexture(fileName, texTop, texLeft, texBot
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function SliderControl:SetColor(r, g, b, a) end
 
@@ -3099,14 +3101,14 @@ function SliderControl:SetOrientation(orientation) end
 function SliderControl:SetThumbFlushWithExtents(flush) end
 
 --- @param filename string
---- @param disabledFilename string
---- @param highlightedFilename string
---- @param thumbWidth layout_measurement
---- @param thumbHeight layout_measurement
---- @param texTop number
---- @param texLeft number
---- @param texBottom number
---- @param texRight number
+--- @param disabledFilename string|nil
+--- @param highlightedFilename string|nil
+--- @param thumbWidth layout_measurement|nil
+--- @param thumbHeight layout_measurement|nil
+--- @param texTop number|nil
+--- @param texLeft number|nil
+--- @param texBottom number|nil
+--- @param texRight number|nil
 --- @return void
 function SliderControl:SetThumbTexture(filename, disabledFilename, highlightedFilename, thumbWidth, thumbHeight, texTop, texLeft, texBottom, texRight) end
 
@@ -3172,14 +3174,14 @@ function StatusBarControl:SetBarAlignment(barAlignment) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function StatusBarControl:SetColor(r, g, b, a) end
 
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function StatusBarControl:SetFadeOutGainColor(r, g, b, a) end
 
@@ -3190,7 +3192,7 @@ function StatusBarControl:SetFadeOutLossAdjustedTopValue(topValue) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function StatusBarControl:SetFadeOutLossColor(r, g, b, a) end
 
@@ -3281,10 +3283,10 @@ function SynchronizingObject:Hide() end
 function SynchronizingObject:IsShown() end
 
 --- @param handlerName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function SynchronizingObject:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -3459,7 +3461,7 @@ function TextureCompositeControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function TextureCompositeControl:SetColor(surfaceIndex, r, g, b, a) end
 
@@ -3585,7 +3587,7 @@ function TextureControl:SetBlendMode(blendMode) end
 --- @param r number
 --- @param g number
 --- @param b number
---- @param a number
+--- @param a number|nil
 --- @return void
 function TextureControl:SetColor(r, g, b, a) end
 
@@ -4242,10 +4244,10 @@ function WindowManager:CompareControlVisualOrder(controlA, controlB) end
 --- @return Control control
 function WindowManager:CreateControl(name, parent, controlType) end
 
---- @param controlName string
+--- @param controlName string|nil
 --- @param parent Control
 --- @param virtualName string
---- @param optionalSuffix string
+--- @param optionalSuffix string|nil
 --- @return Control control
 function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName, optionalSuffix) end
 
@@ -4255,7 +4257,7 @@ function WindowManager:CreateControlFromVirtual(controlName, parent, virtualName
 function WindowManager:CreateCursor(x, y) end
 
 --- @param name string|nil
---- @return Control control
+--- @return TopLevelWindow control
 function WindowManager:CreateTopLevelWindow(name) end
 
 --- @param cursorId integer
@@ -4326,10 +4328,10 @@ function WindowManager:IsUsingCustomCandidateList() end
 function WindowManager:SetFocusByName(name) end
 
 --- @param handlerName string
---- @param functionRef function
---- @param name string
---- @param controlHandlerOrder ControlHandlerOrder
---- @param targetName string
+--- @param functionRef function|nil
+--- @param name string|nil
+--- @param controlHandlerOrder ControlHandlerOrder|nil
+--- @param targetName string|nil
 --- @return void
 function WindowManager:SetHandler(handlerName, functionRef, name, controlHandlerOrder, targetName) end
 
@@ -4346,166 +4348,4 @@ function WindowManager:SetMouseFocusByName(name) end
 --- @param y layout_measurement
 --- @return void
 function WindowManager:UpdateCursorPosition(cursorId, x, y) end
-
---- @return WindowManager windowManager
-function WindowManager:GetWindowManager() end
-
---- @param control Control
---- @param leftOffset number
---- @param topOffset number
---- @param rightOffset number
---- @param bottomOffset number
---- @return boolean isOver
-function WindowManager:MouseIsOver(control, leftOffset, topOffset, rightOffset, bottomOffset) end
-
---- @param control Control
---- @param leftOffset number
---- @param topOffset number
---- @param rightOffset number
---- @param bottomOffset number
---- @return boolean isInside
-function WindowManager:MouseIsInside(control, leftOffset, topOffset, rightOffset, bottomOffset) end
-
---- @return number deltaX, number deltaY
-function WindowManager:GetUIMouseDeltas() end
-
---- @return number scale
-function WindowManager:GetUIGlobalScale() end
-
---- @return number scale
-function WindowManager:GetUICustomScale() end
-
---- @param formatString string
---- @param arg1 string
---- @param arg2 string
---- @param arg3 string
---- @param arg4 string
---- @param arg5 string
---- @param arg6 string
---- @param arg7 string
---- @return string localizedString
-function WindowManager:LocalizeString(formatString, arg1, arg2, arg3, arg4, arg5, arg6, arg7) end
-
---- @return AnimationManager animationManager
-function WindowManager:GetAnimationManager() end
-
---- @return AddOnManager addOnManager
-function WindowManager:GetAddOnManager() end
-
---- @param originalTexture string
---- @param newTexture string
---- @return void
-function WindowManager:RedirectTexture(originalTexture, newTexture) end
-
---- @param text string
---- @param allowMarkupType AllowMarkupType
---- @return string escapedText
-function WindowManager:EscapeMarkup(text, allowMarkupType) end
-
---- @param fontSymbolName string
---- @param fontDescriptor string
---- @return FontObject fontObject
-function WindowManager:CreateFont(fontSymbolName, fontDescriptor) end
-
---- @return integer numFiles
-function WindowManager:GetNumControlCreatingSources() end
-
---- @param index luaindex
---- @return string sourceName
-function WindowManager:GetControlCreatingSourceName(index) end
-
---- @param sourceName string
---- @return integer numCallSites
-function WindowManager:GetNumControlCreatingSourceCallSites(sourceName) end
-
---- @param sourceName string
---- @param index luaindex
---- @return string creationStack, integer count
-function WindowManager:GetControlCreatingSourceCallSiteInfo(sourceName, index) end
-
---- @return void
-function WindowManager:StartScriptProfiler() end
-
---- @return void
-function WindowManager:StopScriptProfiler() end
-
---- @return boolean enabled
-function WindowManager:IsScriptProfilerEnabled() end
-
---- @return integer numFrames
-function WindowManager:GetScriptProfilerNumFrames() end
-
---- @param frameIndex luaindex
---- @return integer numRecords
-function WindowManager:GetScriptProfilerFrameNumRecords(frameIndex) end
-
---- @param frameIndex luaindex
---- @param recordIndex luaindex
---- @return luaindex recordDataIndex, number startTimeNS, number endTimeNS, luaindex|nil callerRecordIndex, ScriptProfilerRecordDataType recordDataType
-function WindowManager:GetScriptProfilerRecordInfo(frameIndex, recordIndex) end
-
---- @return integer numClosures
-function WindowManager:GetScriptProfilerNumClosures() end
-
---- @param recordDataIndex luaindex
---- @return string displayName, string fileName, integer fileLineNumber
-function WindowManager:GetScriptProfilerClosureInfo(recordDataIndex) end
-
---- @return integer numCFunctions
-function WindowManager:GetScriptProfilerNumCFunctions() end
-
---- @param recordDataIndex luaindex
---- @return string functionName
-function WindowManager:GetScriptProfilerCFunctionInfo(recordDataIndex) end
-
---- @return integer numGarbageCollectionTypes
-function WindowManager:GetScriptProfilerNumGarbageCollectionTypes() end
-
---- @param recordDataIndex luaindex
---- @return ScriptProfilerGarbageCollectionType GarbageCollectionType
-function WindowManager:GetScriptProfilerGarbageCollectionInfo(recordDataIndex) end
-
---- @param userEventData string
---- @return void
-function WindowManager:RecordScriptProfilerUserEvent(userEventData) end
-
---- @return integer numUserEvents
-function WindowManager:GetScriptProfilerNumUserEvents() end
-
---- @param recordDataIndex luaindex
---- @return string userEventData
-function WindowManager:GetScriptProfilerUserEventInfo(recordDataIndex) end
-
---- @param space Space
---- @return number forwardX, number forwardY, number forwardZ
-function WindowManager:GetCameraForward(space) end
-
---- @return number minWidth
-function WindowManager:GetMinUICanvasWidth() end
-
---- @return number minHeight
-function WindowManager:GetMinUICanvasHeight() end
-
---- @return number FoVYRadians
-function WindowManager:GetInterfaceVerticalFieldOfView() end
-
---- @param FoVYRadians number
---- @return void
-function WindowManager:SetInterfaceVerticalFieldOfView(FoVYRadians) end
-
---- @param text string
---- @return void
-function WindowManager:CopyToClipboard(text) end --*private*
-
---- @param red number
---- @param green number
---- @param blue number
---- @return number hue, number saturation, number value
-function WindowManager:ConvertRGBToHSV(red, green, blue) end
-
---- @param red number
---- @param green number
---- @param blue number
---- @return number hue, number saturation, number lightness
-function WindowManager:ConvertRGBToHSL(red, green, blue) end
 

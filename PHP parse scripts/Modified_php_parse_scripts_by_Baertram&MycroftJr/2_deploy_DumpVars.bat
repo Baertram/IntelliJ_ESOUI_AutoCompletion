@@ -1,5 +1,5 @@
 @ECHO OFF
-echo -Copying created DumpVars_constants.lua and DumpVars addon to live/AddOns/DumpVars-
+echo -Copying created DumpVars_vars.lua and DumpVars addon to live/AddOns/DumpVars-
 echo ---------------------------------------------------------------------------
 echo.
 set "esouiDumpVarsAddonPath=%USERPROFILE%\Documents\Elder Scrolls Online\live\AddOns\DumpVars"
@@ -10,11 +10,11 @@ xcopy "DumpVars\" "%esouiDumpVarsAddonPath%\" /s /E /y
 if %ERRORLEVEL% == 0 (
     echo Successfully copied DumpVars addon folder to: %esouiDumpVarsAddonPath%
 
-    copy "_out\_noRelease\DumpVars_constants.lua" "%esouiDumpVarsAddonPath%\DumpVars_constants.lua" /Y
+    copy "_out\_noRelease\DumpVars_vars.lua" "%esouiDumpVarsAddonPath%\DumpVars_vars.lua" /Y
     if %ERRORLEVEL% == 0 (
-        echo Successfully copied \_out\_noRelease\DumpVars_constants.lua to: %esouiDumpVarsAddonPath%
+        echo Successfully copied \_out\_noRelease\DumpVars_vars.lua to: %esouiDumpVarsAddonPath%
     ) else (
-        echo An error occured during file copy \_out\_noRelease\DumpVars_constants.lua, to %esouiDumpVarsAddonPath%
+        echo An error occured during file copy \_out\_noRelease\DumpVars_vars.lua, to %esouiDumpVarsAddonPath%
     )
 ) else (
     echo An error occured during folder copy DumpVars, to %esouiDumpVarsAddonPath%
