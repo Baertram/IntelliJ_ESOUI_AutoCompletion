@@ -205,25 +205,25 @@ class object_api
     function refineType($objects, $class, $method, $type, $param) {
         $isNilable = str_ends_with($type, '|nil');
         $type = str_replace('|nil', '', $type);
-        if ($type == 'object') {
-            $paramAsType = $param;
-            $paramAsType[0] = strtoupper($paramAsType[0]);
-            if (str_ends_with($param, 'TopLevelWindow') or $method == "CreateTopLevelWindow") {
-                $type = 'TopLevelWindow';
-            } else if (array_key_exists($paramAsType, $objects)) {
-                $type = $paramAsType;
-            } else if ($param == 'animation') {
-                $type = 'AnimationObject';
-            } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {
-                $type = 'AnimationTimeline';
-            } else if (str_starts_with($param, 'control') or str_ends_with($param, 'Control') or str_ends_with($class, 'Control') or strpos($method, 'Control') != 0) {
-                $type = 'Control';
-            } else {
-                print("Unrefined type $type on $param of $class:$method\n");
-            }
-        } else if ($type == 'variant') {
+        if ($type == 'object' or $type == 'type' or $type == 'variant') {
             if ($class == 'Control' and $method == 'AddFilterForEvent') {
                 $type = 'RegisterForEventFilterType';
+            } else if (str_ends_with($param, 'TopLevelWindow') or $method == "CreateTopLevelWindow") {
+                $type = 'TopLevelWindow';
+            } else {
+                $paramAsType = $param;
+                $paramAsType[0] = strtoupper($paramAsType[0]);
+                if (array_key_exists($paramAsType, $objects)) {
+                    $type = $paramAsType;
+                } else if ($param == 'animation') {
+                    $type = 'AnimationObject';
+                } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {
+                    $type = 'AnimationTimeline';
+                } else if (str_starts_with($param, 'control') or str_ends_with($param, 'Control') or str_ends_with($class, 'Control') or strpos($method, 'Control') != 0) {
+                    $type = 'Control';
+                } else {
+                    print("Unrefined type '$type' on '$param' of '$class:$method'\n");
+                }
             }
         }
         if ($isNilable) {

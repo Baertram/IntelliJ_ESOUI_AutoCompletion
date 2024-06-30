@@ -110,79 +110,79 @@ WESTERN_SKYRIM_ZONE_ID = 1160
 ZO_COMBO_BOX_ENTRY_TEMPLATE_HEIGHT = 25
 --- @type ZO_ColorDef
 ZO_DEFAULT_DISABLED_COLOR = {
-	["a"] = 1,
 	["b"] = 0.3,
-	["r"] = 0.3,
-	["g"] = 0.3
+	["g"] = 0.3,
+	["a"] = 1,
+	["r"] = 0.3
 }
 --- @type ZO_ColorDef
 ZO_DEFAULT_DISABLED_MOUSEOVER_COLOR = {
-	["a"] = 1,
 	["b"] = 0.5,
-	["r"] = 0.5,
-	["g"] = 0.5
+	["g"] = 0.5,
+	["a"] = 1,
+	["r"] = 0.5
 }
 --- @type ZO_ColorDef
 ZO_DEFAULT_ENABLED_COLOR = {
-	["a"] = 1,
 	["b"] = 1,
-	["r"] = 1,
-	["g"] = 1
+	["g"] = 1,
+	["a"] = 1,
+	["r"] = 1
 }
 --- @type ZO_ColorDef
 ZO_DISABLED_TEXT = {
-	["a"] = 1,
 	["b"] = 0.4000000358,
-	["r"] = 0.4000000358,
-	["g"] = 0.4000000358
+	["g"] = 0.4000000358,
+	["a"] = 1,
+	["r"] = 0.4000000358
 }
 --- @type ZO_ColorDef
 ZO_ERROR_COLOR = {
-	["a"] = 1,
 	["b"] = 0.0980392247,
-	["r"] = 1,
-	["g"] = 0.0980392247
+	["g"] = 0.0980392247,
+	["a"] = 1,
+	["r"] = 1
 }
 --- @type ZO_ColorDef
 ZO_HIGHLIGHT_TEXT = {
-	["a"] = 1,
 	["b"] = 0.7450980544,
-	["r"] = 0.9372549653,
-	["g"] = 0.9215686917
+	["g"] = 0.9215686917,
+	["a"] = 1,
+	["r"] = 0.9372549653
 }
 --- @type ZO_ColorDef
 ZO_NORMAL_TEXT = {
-	["a"] = 1,
 	["b"] = 0.6196078658,
-	["r"] = 0.7725490928,
-	["g"] = 0.7607843876
+	["g"] = 0.7607843876,
+	["a"] = 1,
+	["r"] = 0.7725490928
 }
 ZO_SCROLLABLE_COMBO_BOX_LIST_PADDING_Y = 5
 ZO_SCROLL_BAR_WIDTH = 16
 --- @type ZO_ColorDef
 ZO_SECOND_CONTRAST_TEXT = {
-	["a"] = 1,
 	["b"] = 0.764705956,
-	["r"] = 0.4627451301,
-	["g"] = 0.7372549176
+	["g"] = 0.7372549176,
+	["a"] = 1,
+	["r"] = 0.4627451301
 }
 ZO_VALID_CURRENCY_TYPES = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
 ZO_VALID_LINK_TYPES_CHAT = {
-	["achievement"] = true,
-	["ability"] = true,
-	["crafted_ability"] = true,
 	["guild"] = true,
 	["item"] = true,
-	["housing"] = true,
+	["achievement"] = true,
+	["collectible"] = true,
 	["help"] = true,
-	["collectible"] = true
+	["crafted_ability"] = true,
+	["ability"] = true,
+	["housing"] = true
 }
 --- @type ZO_ColorDef
 ZO_WHITE = {
-	["a"] = 1,
 	["b"] = 1,
-	["r"] = 1,
-	["g"] = 1
+	["g"] = 1,
+	["a"] = 1,
+	["r"] = 1
 }
 
 ABILITY_PROGRESSION_RESULT_ABILITY_NOT_KNOWN = 1
@@ -23570,5 +23570,5 @@ ZONE_DISPLAY_TYPE_ZONE_STORY = 10
 
 ZO_SORT_ORDER_DOWN = false
 ZO_SORT_ORDER_UP = true
---- @alias SortOrder false|true
+--- @alias SortOrder boolean false|true
 

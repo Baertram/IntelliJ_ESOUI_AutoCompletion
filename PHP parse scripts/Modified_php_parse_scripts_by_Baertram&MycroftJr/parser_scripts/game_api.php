@@ -18,15 +18,19 @@ class game_api
         
         // refine the types (this can't be done earlier because it needs to check if names match classes that actually exist)
         foreach ($methods as $function => $value) {
+            $generics = [];
             if (isset($value['params'])) {
                 foreach ($value['params'] as $param => $type) {
-                    $methods[$function]['params'][$param] = $this->refineType($array2, $function, $type, $param);
+                    $methods[$function]['params'][$param] = $this->refineType($array2, $function, $type, $param, $generics);
                 }
             }
             if (isset($value['return'])) {
                 foreach ($value['return'] as $param => $type) {
-                    $methods[$function]['return'][$param] = $this->refineType($array2, $function, $type, $param);
+                    $methods[$function]['return'][$param] = $this->refineType($array2, $function, $type, $param, $generics);
                 }
+            }
+            if (!empty($generics)) {
+                $methods[$function]['generics'] = $generics;
             }
         }
 
@@ -35,6 +39,10 @@ class game_api
             $docblock = "";
             $luablock = "function $function(";
             $addPrivOrProtEnding = false;
+            
+            if (isset($value['generics'])) {
+                $docblock .= "--- @generic " . implode(', ', $value['generics']) . "\n";
+            }
 
             if (isset($value['params'])) {
                 foreach ($value['params'] as $param => $type) {
@@ -160,19 +168,37 @@ class game_api
         return $objects;
     }
 
-    function refineType($classes, $method, $type, $param) {
-        if ($type == 'object') {
-            $paramAsType = $param;
-            $paramAsType[0] = strtoupper($paramAsType[0]);
-            if (in_array($paramAsType, $classes)) {
-                $type = $paramAsType;
-            } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {
-                $type = 'AnimationTimeline';
-            } else if (str_starts_with($param, 'control') or str_ends_with($param, 'Control') or strpos($method, 'Control') != 0) {
-                $type = 'Control';
-            } else {
-                print("Unrefined type $type on $param of $method\n");
+    function refineType($classes, $method, $type, $param, & $generics) {
+        $isNilable = str_ends_with($type, '|nil');
+        $type = str_replace('|nil', '', $type);
+        if ($type == 'table' and $method == 'InsecureNext') {
+            $type = 'table<K, V>';
+        } else if ($type == 'object' or $type == 'type') {
+            $generic = null;
+            if ($type == 'type' and str_ends_with($param, 'Key')) {
+                $generic = $type = 'K';
+            } else if ($type == 'type' and str_ends_with($param, 'Value')) {
+                $generic = $type = 'V';
             }
+
+            if ($generic) {
+                if (!in_array($generic, $generics)) $generics[] = $generic;
+            } else {
+                $paramAsType = $param;
+                $paramAsType[0] = strtoupper($paramAsType[0]);
+                if (in_array($paramAsType, $classes)) {
+                    $type = $paramAsType;
+                } else if ($param == 'timeline' or str_ends_with($param, 'Timeline')) {
+                    $type = 'AnimationTimeline';
+                } else if (str_starts_with($param, 'control') or str_ends_with($param, 'Control') or strpos($method, 'Control') != 0) {
+                    $type = 'Control';
+                } else {
+                    print("Unrefined type '$type' on '$param' of '$method'\n");
+                }
+            }
+        }
+        if ($isNilable) {
+            $type .= '|nil';
         }
         return $type;
     }

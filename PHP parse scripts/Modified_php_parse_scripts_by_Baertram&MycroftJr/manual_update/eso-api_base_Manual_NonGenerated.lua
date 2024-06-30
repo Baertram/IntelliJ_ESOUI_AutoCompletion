@@ -1468,13 +1468,11 @@ function ZO_ComboBox_OpenDropdown(container) end
 
 -------------------------------------------------------------------------------
 --- @class ZO_ComboBoxDropdown_Keyboard_Entry: ZO_EntryData, Control
---- @field m_label LabelControl :GetNamedChild("Label")
---- @field m_ownerZO_ComboBox ZO_ComboBoxDropdown_Keyboard.owner
---- @field m_data any? data from ZO_ComboBoxDropdown_Keyboard:SetupEntryBase(control, data, list)
+-- @field m_data any data from ZO_ComboBoxDropdown_Keyboard:SetupEntryBase(control, data, list)
 --- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard
---- @field m_index any from ZO_ComboBoxDropdown_Keyboard:CreateScrollableEntry(item, index, entryType)
+-- @field m_index any from ZO_ComboBoxDropdown_Keyboard:CreateScrollableEntry(item, index, entryType)
+--- @field m_label LabelControl :GetNamedChild("Label")
 --- @field m_owner ZO_ComboBox ZO_ComboBoxDropdown_Keyboard.owner
---- @field m_dropdownObject ZO_ComboBoxDropdown_Keyboard self
 
 --- @class ZO_ComboBoxDropdown_Keyboard: ZO_InitializingObject
 --- @field control ZO_ComboBox_Control
