@@ -1,2 +1,0 @@
---Aliases only needed for the LuaLS plugin
---- @alias void nil
