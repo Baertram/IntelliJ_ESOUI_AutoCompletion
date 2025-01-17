@@ -2,7 +2,7 @@
 echo -Copying created DumpVars PTS SavedVariables back to /_out/ folder-
 echo ---------------------------------------------------------------------------
 echo.
-set "esouiSVPath=%USERPROFILE%\Documents\Elder Scrolls Online\live\SavedVariables"
+set "esouiSVPath=%USERPROFILE%\Documents\Elder Scrolls Online\PTS\SavedVariables"
 echo Copying %esouiSVPath%\DumpVars.lua to /_out/_noRelease/DumpVars_SV.lua
 copy "%esouiSVPath%\DumpVars.lua" "_out/_noRelease/DumpVars_SV.lua" /Y
 if %ERRORLEVEL% == 0 (

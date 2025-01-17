@@ -490,6 +490,9 @@
                             },
                             "WaveBounds": {
                                 "attributes": []
+                            },
+                            "WaveDampingCoefficients": {
+                                "attributes": []
                             }
                         }
                     },

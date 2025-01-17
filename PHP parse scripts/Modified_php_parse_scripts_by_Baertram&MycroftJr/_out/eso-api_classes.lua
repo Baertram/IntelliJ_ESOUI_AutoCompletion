@@ -1722,6 +1722,9 @@ function Control:GetWaveAngle() end
 --- @return number minX, number maxX, number minY, number maxY
 function Control:GetWaveBounds() end
 
+--- @return number minX, number maxX, number minY, number maxY
+function Control:GetWaveDampingCoefficients() end
+
 --- @return number frequency
 function Control:GetWaveFrequency() end
 
@@ -1919,6 +1922,14 @@ function Control:SetClampedToScreen(clamped) end
 --- @param bottom number
 --- @return void
 function Control:SetClampedToScreenInsets(left, top, right, bottom) end
+
+--- @param alpha number
+--- @return void
+function Control:SetControlAlpha(alpha) end --*protected-attributes*
+
+--- @param scale number
+--- @return void
+function Control:SetControlScale(scale) end --*protected-attributes*
 
 --- @param minWidth layout_measurement
 --- @param minHeight layout_measurement
@@ -2234,6 +2245,13 @@ function Control:SetWaveAngle(angleRadians) end
 --- @return void
 function Control:SetWaveBounds(minX, maxX, minY, maxY) end
 
+--- @param minX number
+--- @param maxX number
+--- @param minY number
+--- @param maxY number
+--- @return void
+function Control:SetWaveDampingCoefficients(minX, maxX, minY, maxY) end
+
 --- @param frequency number
 --- @return void
 function Control:SetWaveFrequency(frequency) end
@@ -2396,8 +2414,20 @@ function EditControl:GetDefaultText() end
 --- @return boolean enabled
 function EditControl:GetEditEnabled() end
 
+--- @return string text
+function EditControl:GetFont() end
+
+--- @return string text
+function EditControl:GetFontFaceName() end
+
 --- @return number fontHeightUIUnits
 function EditControl:GetFontHeight() end
+
+--- @return number fontSize
+function EditControl:GetFontSize() end
+
+--- @return string text
+function EditControl:GetFontStyle() end
 
 --- @return number leftControlSpace, number topControlSpace, number rightControlSpace, number bottomControlSpace
 function EditControl:GetIMECompositionExclusionArea() end
@@ -2581,11 +2611,23 @@ function LabelControl:DidLineWrap() end
 --- @return number r, number g, number b, number a
 function LabelControl:GetColor() end
 
+--- @return number r, number g, number b, number a
+function LabelControl:GetControlColor() end
+
+--- @return string text
+function LabelControl:GetFont() end
+
 --- @return string text
 function LabelControl:GetFontFaceName() end
 
 --- @return number fontHeightUIUnits
 function LabelControl:GetFontHeight() end
+
+--- @return number fontSize
+function LabelControl:GetFontSize() end
+
+--- @return string text
+function LabelControl:GetFontStyle() end
 
 --- @return TextAlignment align
 function LabelControl:GetHorizontalAlignment() end
@@ -2635,6 +2677,13 @@ function LabelControl:GetVerticalAlignment() end
 --- @param a number|nil
 --- @return void
 function LabelControl:SetColor(r, g, b, a) end
+
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a number|nil
+--- @return void
+function LabelControl:SetControlColor(r, g, b, a) end
 
 --- @param desaturation number
 --- @return void
@@ -3536,6 +3585,9 @@ function TextureControl:GetBlendMode() end
 --- @return number r, number g, number b, number a
 function TextureControl:GetColor() end
 
+--- @return number r, number g, number b, number a
+function TextureControl:GetControlColor() end
+
 --- @return number desaturation
 function TextureControl:GetDesaturation() end
 
@@ -3591,6 +3643,13 @@ function TextureControl:SetBlendMode(blendMode) end
 --- @return void
 function TextureControl:SetColor(r, g, b, a) end
 
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a number|nil
+--- @return void
+function TextureControl:SetControlColor(r, g, b, a) end
+
 --- @param desaturation number
 --- @return void
 function TextureControl:SetDesaturation(desaturation) end
@@ -3633,6 +3692,10 @@ function TextureControl:SetTextureCoords(left, right, top, bottom) end
 --- @param angleInRadians number
 --- @return void
 function TextureControl:SetTextureCoordsRotation(angleInRadians) end
+
+--- @param filename string
+--- @return void
+function TextureControl:SetTextureFileName(filename) end
 
 --- @param releaseOption ReleaseReferenceOptions
 --- @return void

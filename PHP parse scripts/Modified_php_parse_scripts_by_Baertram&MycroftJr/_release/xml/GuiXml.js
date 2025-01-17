@@ -490,6 +490,9 @@ var GuiXml ={
                             },
                             "WaveBounds": {
                                 "attributes": []
+                            },
+                            "WaveDampingCoefficients": {
+                                "attributes": []
                             }
                         }
                     },

@@ -16,13 +16,22 @@ class global_vars
         $globals = $classes['Globals'];
         unset($classes['Globals']);
         
-        // Try to download globals.txt to read items from
-        if (file_put_contents("_out/_noRelease/globals.txt", fopen("https://esoapi.uesp.net/$apiVersion/globals.txt", 'r'))) {
-            // Parse custom enums out of globals.txt using the names and patterns in customEnums.txt
-            $glob = file("_out/_noRelease/globals.txt", FILE_IGNORE_NEW_LINES);
-            $enums = file("manual_update/customEnums.txt", FILE_IGNORE_NEW_LINES);
-            $customEnums = $this->parseEnums($enums, $glob);
-        }
+        // Try to download globals.txt to read items from -> Current APIVersion
+		$UESP_globalsOfAPIVersion = fopen("https://esoapi.uesp.net/$apiVersion/globals.txt", 'r');
+		// Because UESP globals.txt might take weeks to update we try to use the last available APIversion's globals.txt
+		if ( $UESP_globalsOfAPIVersion === false ) {
+			$apiVersionBefore = strval(intval($apiVersion) - 1);
+			$UESP_globalsOfAPIVersion = fopen("https://esoapi.uesp.net/$apiVersionBefore/globals.txt", 'r');
+		}
+		
+		if ( isset($UESP_globalsOfAPIVersion) ) {
+			if (file_put_contents("_out/_noRelease/globals.txt", $UESP_globalsOfAPIVersion)) {
+				// Parse custom enums out of globals.txt using the names and patterns in customEnums.txt
+				$glob = file("_out/_noRelease/globals.txt", FILE_IGNORE_NEW_LINES);
+				$enums = file("manual_update/customEnums.txt", FILE_IGNORE_NEW_LINES);
+				$customEnums = $this->parseEnums($enums, $glob);
+			}
+		}
         
         $out = "if DumpVars == nil then DumpVars = {} end\n\nDumpVars.enumsToDump = {\n";
 

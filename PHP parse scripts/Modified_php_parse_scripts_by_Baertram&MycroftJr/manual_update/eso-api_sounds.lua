@@ -238,15 +238,19 @@ SOUNDS =
     WRIT_VOUCHER_TRANSACT           = "WritVoucher_Transact",
 
     -- Undaunted key sounds
-    UNDAUNTED_KEY_TRANSACT           = "Undaunted_Transact",
+    UNDAUNTED_KEY_TRANSACT          = "Undaunted_Transact",
 
     -- Event Ticket sounds
     EVENT_TICKET_ACQUIRE            = "EventTicket_Acquire",
     EVENT_TICKET_TRANSACT           = "EventTicket_Transact",
 
     -- Endless Dungeon currency sounds
-    ARCHIVAL_FORTUNES_ACQUIRE            = "EndlessDungeonCurrency_Acquire",
-    ARCHIVAL_FORTUNES_TRANSACT           = "EndlessDungeonCurrency_Transact",
+    ARCHIVAL_FORTUNES_ACQUIRE       = "EndlessDungeonCurrency_Acquire",
+    ARCHIVAL_FORTUNES_TRANSACT      = "EndlessDungeonCurrency_Transact",
+
+    -- Imperial Fragment currency sounds
+    IMPERIAL_FRAGMENTS_ACQUIRE  = "ImperialFragment_Acquire",
+    IMPERIAL_FRAGMENTS_TRANSACT = "ImperialFragment_Transact",
 
     --Justice sounds
     JUSTICE_STATE_CHANGED           = "Justice_StateChanged",
@@ -292,6 +296,7 @@ SOUNDS =
     BATTLEGROUND_MATCH_WON = "BG_MatchWon",
     BATTLEGROUND_MATCH_LOST = "BG_MatchLost",
     BATTLEGROUND_ONE_MINUTE_WARNING = "BG_One_Minute_Warning",
+    BATTLEGROUND_LEAVE_MATCH = "BG_LeaveMatch",
 
     -- Battleground capture flag objective sounds
     BATTLEGROUND_CAPTURE_FLAG_TAKEN_OWN_TEAM = "BG_CTF_FlagTaken_OwnTeam",
@@ -323,6 +328,30 @@ SOUNDS =
     BATTLEGROUND_KILL_KILLED_BY_MY_TEAM = "BG_Kill_KilledByMyTeam",
     BATTLEGROUND_KILL_STOLEN_BY_ENEMY_TEAM = "BG_Kill_StolenByEnemyTeam",
     BATTLEGROUND_KILL_KILLED_BY_ENEMY_TEAM = "BG_Kill_KilledByEnemyTeam",
+
+    -- Battleground Rounds Sounds
+    BATTLEGROUND_ROUND_STARTING = "BG_Round_Starting",
+    BATTLEGROUND_FINAL_ROUND_STARTING = "BG_Final_Round_Starting",
+    BATTLEGROUND_SCOREBOARD_NEXT_ROUND = "BG_Scoreboard_Next_Round",
+    BATTLEGROUND_SCOREBOARD_PREVIOUS_ROUND = "BG_Scoreboard_Previous_Round",
+
+    BATTLEGROUND_ROUND_RECAP_SCREEN_WIN = "BG_Round_Recap_Screen_Win",
+    BATTLEGROUND_ROUND_RECAP_SCREEN_FINAL_WIN = "BG_Round_Recap_Screen_Final_Win",
+    BATTLEGROUND_ROUND_RECAP_SCREEN_LOSE = "BG_Round_Recap_Screen_Lose",
+    BATTLEGROUND_ROUND_RECAP_SCREEN_END = "BG_Round_Recap_Screen_End",
+    BATTLEGROUND_ROUND_RECAP_FLAG_START = "BG_Round_Recap_Flag_Start",
+    BATTLEGROUND_ROUND_RECAP_FLAG_SCORE_FADE = "BG_Round_Recap_Flag_Score_Fade",
+    BATTLEGROUND_ROUND_RECAP_FLAG_SCORE_COUNT = "BG_Round_Recap_Flag_Score_Count",
+
+    --Battleground Scoreboard Sounds
+    BATTLEGROUND_SCOREBOARD_OPEN = "BG_Scoreboard_Open",
+    BATTLEGROUND_SCOREBOARD_CLOSE = "BG_Scoreboard_Close",
+
+    --Battleground Spectator Camera Sounds
+    BATTLEGROUND_SPECTATOR_CAMERA_OPEN = "BG_Spectator_Cam_Open",
+    BATTLEGROUND_SPECTATOR_CAMERA_CLOSE = "BG_Spectator_Cam_Close",
+    BATTLEGROUND_SPECTATOR_CAMERA_NEXT = "BG_Spectator_Cam_Next",
+    BATTLEGROUND_SPECTATOR_CAMERA_PREVIOUS = "BG_Spectator_Cam_Previous",
 
     -- AVA sounds
     ELDER_SCROLL_CAPTURED_BY_ALDMERI = "ElderScroll_Captured_Aldmeri",
@@ -453,6 +482,7 @@ SOUNDS =
     LOCKPICKING_UNLOCKED            = "Lockpicking_unlocked",
     LOCKPICKING_FAILED              = "Lockpicking_failed",
     LOCKPICKING_BREAK               = "Lockpicking_lockpick_broke",
+    LOCKPICKING_BREAK_PREVENTED     = "Lockpicking_lockpick_break_prevented",
     LOCKPICKING_CONTACT             = "Lockpicking_lockpick_contact",
     LOCKPICKING_CHAMBER_STRESS      = "Lockpicking_chamber_stress",
     LOCKPICKING_CHAMBER_START       = "Lockpicking_chamber_start",
@@ -1079,6 +1109,21 @@ SOUNDS =
     GROUP_FINDER_APPLICATION_NOTIFICATION = "GroupFinder_ApplicationNotification",
     GROUP_FINDER_GROUP_LISTING_CREATE_EDIT = "GroupFinder_GroupListing_CreateEdit",
 
+    -- House Tours
+    HOUSE_TOURS_ADDED_FAVORITE_HOUSE = "HouseTours_FavoriteHouseAdded",
+    HOUSE_TOURS_REMOVED_FAVORITE_HOUSE = "HouseTours_FavoriteHouseRemoved",
+    HOUSE_TOURS_RECOMMENDED_HOUSE = "HouseTours_HouseRecommended",
+
     -- Instances
     INSTANCE_SHUTDOWN = "Instance_Shutdown",
+
+    -- Promotional Events
+    PROMOTIONAL_EVENTS_ANNOUNCE = "PromotionalEvents_Announce",
+    PROMOTIONAL_EVENTS_WINDOW_OPEN = "PromotionalEvents_Open",
+    PROMOTIONAL_EVENT_TRACK_ACTIVITY_CLICK = "PromotionalEvent_TrackActivity_Click",
+    PROMOTIONAL_EVENT_TRACK_ACTIVITY_UNCLICK = "PromotionalEvent_TrackActivity_Unclick",
+    PROMOTIONAL_EVENT_CLAIM_REWARD = "PromotionalEvent_ClaimReward",
+    PROMOTIONAL_EVENT_CLAIM_CAPSTONE_REWARD = "PromotionalEvent_ClaimCapstoneReward",
+    PROMOTIONAL_EVENT_CAPSTONE_CELEBRATION_HEADER_CLICK = "PromotionalEvent_CapstoneCelebrationHeader_Click",
+    PROMOTIONAL_EVENT_REWARD_TO_CLAIM_PROMPT = "PromotionalEvent_RewardToClaim_Prompt",
 }
