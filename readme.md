@@ -1,3 +1,7 @@
+!!!THESE SCRIPTS HERE ARE THE OLD ONES, NOT RESPECTING UESP GLOBALS AND NOT PROVIDING AUTOMATED FILE COPY HANDLING VIA BAT FILES!!!
+-> Check the other branch "esoui_php_parse_scripts_MycroftJr" for more modern scripts
+---------------------------------------------------------------
+
 Auto completion (and harcoded helper files) for "IntelliJ IDEA" and a lua plugin like "EmmyLua",
 based on the ZOs distributed ESOUIDocumentationPXX.txt files (see ESOUI wiki -> APIversion history (https://wiki.esoui.com/APIVersion) -> API TXT Documentation).
 
