@@ -1,0 +1,52 @@
+1. Run the php script file   "global_vars.php" (or "parse_ESOUIDocumentation.bat")
+A file named  "DumpVars_vars.lua" will be created in "out"
+2. Run "deploy_DumpVars.bat" OR copy the folder /DumpVars with all contents (DumpVars.txt, DumpVars_main.lua) to your addons folder live/Addons
+-> Read here how to find the addons folder: https://www.esoui.com/forums/faq.php?faq=install#faq_howto_install
+2b. If you didn't run the deploy bat, put the created file "DumpVars_vars.lua" into the folder live/AddOns/DumpVars
+3. Login to ESO
+4. Activate the addon DumpVars (maybe enable the checkbox "Allout oudated addons" or modify the /Dumpvars/
+5. Login to your character
+6. Ingame use this chat command and press the RETURN key to run the DumpVars
+/dumpvars
+7. Watch the chat output.
+Either an automatic ReloadUI will happen, or do a manual reloadui after chat ouput said it's finished.
+8. Logout
+9. Navigate to the live/SavedVariables folder and copy the file DumpVars.lua -> It's the file containing the dumped global
+variables AND their values as table "Dumped constant name" = value now
+e.g.
+    ["Default"] =
+    {
+        ["@YourAccountName"] =
+        {
+            ["$AccountWide"] =
+            {
+                ["Settings"] =
+                {
+                    ["constants"] =
+                    {
+                        [1000xx APIVersion of the server you dumped the variables on] =
+                        {
+                            ["ADDITIONAL_INTERACT_INFO_EMPTY"] = "2",
+                            ["CRAFTING_TYPE_JEWELRYCRAFTING"] = "7",
+                            ["SOCIAL_RESULT_NO_GUILD_LEADER_RANK_DEFINED"] = "49",
+                            ["LFG_ROLE_TANK"] = "2",
+                            ["OPTIONS_CUSTOM_SETTING_SOCIAL_CHAT_COLOR_SAY"] = "7",
+...
+						}, --closing "1000xx APIVersion of the server you dumped the variables on"
+					}, --closing "constants"
+                }, --closing Settings
+			},	--closing "$AccountWide"
+        }, --closing "@YourAccountName"
+    } --closing "Default"
+10. Copy the contents of the table "1000xx APIVersion of the server you dumped the variables on", so just the variable with it's value like
+                            ["ADDITIONAL_INTERACT_INFO_EMPTY"] = "2",
+                            ["CRAFTING_TYPE_JEWELRYCRAFTING"] = "7",
+                            ["SOCIAL_RESULT_NO_GUILD_LEADER_RANK_DEFINED"] = "49",
+                            ["LFG_ROLE_TANK"] = "2",
+                            ["OPTIONS_CUSTOM_SETTING_SOCIAL_CHAT_COLOR_SAY"] = "7",
+
+to a new txt file e.g. "eso_api-globals.lua"
+You need to remove the table structure around the savedvars data and just put constant = value into a lua file!
+If you wish to you can split the contents of the DumpVars savedvards into 2 files so the ["sounds"] will get into an own file, e.g. "eso_api_sounds.lua".
+Remove the [" and "] around the constant names (globals and sounds), and remove the , character at the line end!
+You may sort the files afterwards online via e.g. https://www.online-utility.org/text/sort.jsp so the constants are sorted alphabetically!

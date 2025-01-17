@@ -1,0 +1,4 @@
+--Aliases only needed for the EmmyLua plugin
+--- @alias integer number
+--- @alias false boolean 
+--- @alias true boolean
