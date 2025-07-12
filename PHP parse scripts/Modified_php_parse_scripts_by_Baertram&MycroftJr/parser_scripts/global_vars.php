@@ -6,6 +6,11 @@
 
 include_once dirname(__FILE__)."/esouiAPIDoc.php";
 
+function UR_exists($url){
+   $headers=get_headers($url);
+   return stripos($headers[0],"200 OK")?true:false;
+}
+
 class global_vars
 {
     public function __construct()
@@ -16,13 +21,26 @@ class global_vars
         $globals = $classes['Globals'];
         unset($classes['Globals']);
         
+		$apiVersionBefore = $apiVersion;
         // Try to download globals.txt to read items from -> Current APIVersion
-		$UESP_globalsOfAPIVersion = fopen("https://esoapi.uesp.net/$apiVersion/globals.txt", 'r');
-		// Because UESP globals.txt might take weeks to update we try to use the last available APIversion's globals.txt
-		if ( $UESP_globalsOfAPIVersion === false ) {
+		if ( UR_exists("https://esoapi.uesp.net/$apiVersion/globals.txt") ) {
+			$UESP_globalsOfAPIVersion = fopen("https://esoapi.uesp.net/$apiVersion/globals.txt", 'r');
+		} else {
+			// Because UESP globals.txt might take weeks to update we try to use the last available APIversion's globals.txt
 			$apiVersionBefore = strval(intval($apiVersion) - 1);
-			$UESP_globalsOfAPIVersion = fopen("https://esoapi.uesp.net/$apiVersionBefore/globals.txt", 'r');
-		}
+			print '[ERROR]New APIVersion globals.txt not found at UESP. Using version ' . $apiVersionBefore;
+			if ( UR_exists("https://esoapi.uesp.net/$apiVersionBefore/globals.txt") ) {
+				$UESP_globalsOfAPIVersion = fopen("https://esoapi.uesp.net/$apiVersionBefore/globals.txt", 'r');
+			} else {
+				print '[ERROR]New APIVersion globals.txt not found at UESP. Using version ' . $apiVersionBefore;
+				$apiVersionBefore = strval(intval($apiVersion) - 2);
+				if ( UR_exists("https://esoapi.uesp.net/$apiVersionBefore/globals.txt") ) {
+					$UESP_globalsOfAPIVersion = fopen("https://esoapi.uesp.net/$apiVersionBefore/globals.txt", 'r');
+				} else {
+					print '[ERROR]APIVersion globals.txt not found at UESP!';
+				}
+			}
+		}	
 		
 		if ( isset($UESP_globalsOfAPIVersion) ) {
 			if (file_put_contents("_out/_noRelease/globals.txt", $UESP_globalsOfAPIVersion)) {
