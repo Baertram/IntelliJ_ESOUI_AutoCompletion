@@ -9,6 +9,7 @@
 	And put the downloaded globals.txt file into this folder:
 	-> See variable $cachedFile below, usual folder would be "_out/_noRelease/globals.txt"
 */
+ini_set('memory_limit', '512M'); 
 
 include_once dirname(__FILE__)."/esouiAPIDoc.php";
 
